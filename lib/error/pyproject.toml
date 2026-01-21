@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jarbin_toolkit_error"
-version = "0.1.0"
+version = "0.1.0.0"
 description = "Error tools (Formated error / better visual / etc...)"
 authors = [
     { name = "Nathan Jarjarbin", email = "nathan.amaraggi@epitech.eu" }
@@ -40,6 +40,3 @@ local_scheme = "dirty-tag"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["jarbin_toolkit_error*"]
-
-[tool.setuptools.package-data]
-"jarbin_toolkit_error" = ["config.ini"]

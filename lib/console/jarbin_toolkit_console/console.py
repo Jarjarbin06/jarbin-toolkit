@@ -17,9 +17,6 @@ from jarbin_toolkit_console.System.setting import Setting
 Setting.update()
 
 
-if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("INFO", "init", "System.Console: imported")
-
-
 class ConsoleMeta(type):
     """
         Metaclass for Console classe.
@@ -280,6 +277,3 @@ class Console(metaclass=ConsoleMeta):
         ## cannot be tested with pytest ##
 
         stream.flush() # pragma: no cover
-
-
-if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("INFO", "init", "System.Console: created")

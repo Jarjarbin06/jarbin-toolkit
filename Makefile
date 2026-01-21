@@ -1,5 +1,5 @@
 # ============================================================
-# EPITECH_CONSOLE – Makefile
+# Jarbin_ToolKit – Makefile
 # ============================================================
 # Usage:
 #   make help
@@ -72,7 +72,7 @@ reinstall:
 	@make -s uninstall install
 	@echo -e "$(GREEN) [REINSTALL] Package reinstalled$(NC)"
 
-install-all:
+install-all: install
 	@make -sC lib/action install || true
 	@make -sC lib/config install || true
 	@make -sC lib/console install || true
@@ -80,7 +80,7 @@ install-all:
 	@make -sC lib/log install || true
 	@make -sC lib/time install || true
 
-uninstall-all:
+uninstall-all: uninstall
 	@make -sC lib/action uninstall || true
 	@make -sC lib/config uninstall || true
 	@make -sC lib/console uninstall || true
@@ -88,7 +88,7 @@ uninstall-all:
 	@make -sC lib/log uninstall || true
 	@make -sC lib/time uninstall || true
 
-reinstall-all:
+reinstall-all: reinstall
 	@make -sC lib/action reinstall || true
 	@make -sC lib/config reinstall || true
 	@make -sC lib/console reinstall || true
@@ -136,7 +136,7 @@ clean:
 	@rm -frd *.egg-info *.xml trace htmlcov .pytest_cache jarbin_toolkit_console/log/*
 	@echo -e "$(GREEN) [CLEAN] Done$(NC)"
 
-clean-all:
+clean-all: clean
 	@make -sC lib/action clean || true
 	@make -sC lib/config clean || true
 	@make -sC lib/console clean || true

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jarbin_toolkit_time"
-version = "0.1.0"
+version = "0.1.0.0"
 description = "Time tools (Stop-watch / sleep / pause / etc...)"
 authors = [
     { name = "Nathan Jarjarbin", email = "nathan.amaraggi@epitech.eu" }
@@ -40,6 +40,3 @@ local_scheme = "dirty-tag"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["jarbin_toolkit_time*"]
-
-[tool.setuptools.package-data]
-"jarbin_toolkit_time" = ["config.ini"]

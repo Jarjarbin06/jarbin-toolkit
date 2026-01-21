@@ -5,7 +5,7 @@
 <img src="NONE" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="NONE" alt="error loading Jarbin-ToolKit:Error Logo" width="49%" style="display:inline-block;">
 
-# **jarbin-toolkit:error** v0.1.0.0
+# **Jarbin-ToolKit:Error** v0.1.0.0
 <details>
 <summary>Latest development version</summary>
 🟠 UNDER DEVELOPMENT 🟠 v0.1.0.0 🟠
@@ -39,15 +39,7 @@
 
 ## Features
 
-*   **Cool Text Effects**: Easily add colors, bold text, italics, underlines, and even strike through to your terminal text.
-*   **Animations**: Display simple animations. Useful for loading indicators or status displays.
-*   **Progress Bars**: Show the progress of long tasks with customizable progress bars. Provides clear and configurable visual feedback.
-*   **Timers**: Use the built-in stopwatch to measure how long parts of your code take to run.
-*   **Configuration**: Easily manage settings for your applications.
 *   **Error Handling**:  Provides structured and readable error messages.
-*   **Cursor Control**:  Provides methods to move, show, and hide the cursor.
-*   **Line Control**:  Features for clearing lines or the entire screen.
-*   **ANSI Escape Sequence Handling**: Provides classes for generating ANSI escape sequences to control text color, formatting, and cursor movement.
 
 ## Tech-Stack
 
@@ -76,7 +68,7 @@ pip install jarbin_toolkit_error
 If you want the latest version directly from the source, you can install it using `git`:
 ```bash
 git clone -b latest NONE
-make -C jarbin_toolkit_error install
+make -C lib/jarbin_toolkit_error install
 ```
 This downloads the code, then the `install` script handles the installation.
 These commands install the `jarbin-toolkit:error` package and its dependencies (datetime).
@@ -89,30 +81,6 @@ Here are some examples demonstrating how to use `jarbin-toolkit:error`:
 
 ```python
 from jarbin_toolkit_error import Error
-```
-
-## Project-Structure
-
-```
-error/
-├── demo/
-│   └── ...
-├── jarbin_toolkit_error/
-│   ├── Error/
-│   │   ├── __init__.py
-│   │   └── error.py
-│   ├── __init__.py
-│   └── config.ini
-├── script/
-│   └── ...
-├── source/
-│   └── ...
-├── tests/
-│   └── ...
-├── Makefile
-├── MANIFEST.in
-├── pyproject.toml
-└── README.md
 ```
 
 ## API-Reference

@@ -1,5 +1,5 @@
 # ============================================================
-# EPITECH_CONSOLE – Makefile
+# Jarbin_ToolKit – Makefile
 # ============================================================
 # Usage:
 #   make help
@@ -109,7 +109,7 @@ info:
 clean:
 	@echo -e "$(YELLOW) [CLEAN] Removing cache, test, log and build files$(NC)"
 	@find . -type d -name "__pycache__" -exec rm -frd {} +
-	@rm -frd *.egg-info *.xml trace htmlcov .pytest_cache jarbin_toolkit_console/log/*
+	@rm -frd *.egg-info *.xml trace htmlcov .pytest_cache
 	@echo -e "$(GREEN) [CLEAN] Done$(NC)"
 
 # ------------------------------------------------------------

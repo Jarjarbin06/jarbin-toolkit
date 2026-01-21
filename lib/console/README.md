@@ -5,7 +5,7 @@
 <img src="NONE" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="NONE" alt="error loading Jarbin-ToolKit:Console Logo" width="49%" style="display:inline-block;">
 
-# **jarbin-toolkit:console** v0.1.0.0
+# **Jarbin-ToolKit:Console** v0.1.0.0
 <details>
 <summary>Latest development version</summary>
 🟠 UNDER DEVELOPMENT 🟠 v0.1.0.0 🟠
@@ -15,9 +15,9 @@
 🟢 RELEASED 🟢 vNone 🟢
 </details>
 
-[![Python package](https://github.com/Jarjarbin06/epitech_console/actions/workflows/test-package.yml/badge.svg?branch=main)](https://github.com/Jarjarbin06/epitech_console/actions/workflows/test-package.yml)
-[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Stars](https://img.shields.io/github/stars/Jarjarbin06/epitech_console?style=social)](https://github.com/Jarjarbin06/epitech_console)
+[![Python package](None)](None)
+[![License: GPL v3](None)](None)
+[![Stars](None)](None)
 
 ## Description
 
@@ -42,9 +42,6 @@
 *   **Cool Text Effects**: Easily add colors, bold text, italics, underlines, and even strike through to your terminal text.
 *   **Animations**: Display simple animations. Useful for loading indicators or status displays.
 *   **Progress Bars**: Show the progress of long tasks with customizable progress bars. Provides clear and configurable visual feedback.
-*   **Timers**: Use the built-in stopwatch to measure how long parts of your code take to run.
-*   **Configuration**: Easily manage settings for your applications.
-*   **Error Handling**:  Provides structured and readable error messages.
 *   **Cursor Control**:  Provides methods to move, show, and hide the cursor.
 *   **Line Control**:  Features for clearing lines or the entire screen.
 *   **ANSI Escape Sequence Handling**: Provides classes for generating ANSI escape sequences to control text color, formatting, and cursor movement.
@@ -76,7 +73,7 @@ pip install jarbin_toolkit_console
 If you want the latest version directly from the source, you can install it using `git`:
 ```bash
 git clone -b latest NONE
-make -C jarbin_toolkit_console install
+make -C lib/jarbin_toolkit_console install
 ```
 This downloads the code, then the `install` script handles the installation.
 These commands install the `jarbin-toolkit:console` package and its dependencies (datetime).
@@ -174,49 +171,6 @@ for i in range(1001):
 	Console.print(bar.render(delete=True), sleep=0.01, cut=True)
 
 quit(delete_log=True)
-```
-
-## Project-Structure
-
-```
-console/
-├── demo/
-│   └── ...
-├── jarbin_toolkit_console/
-│   ├── Animation/
-│   │   ├── __init__.py
-│   │   ├── animation.py
-│   │   ├── basepack.py
-│   │   ├── progressbar.py
-│   │   ├── spinner.py
-│   │   └── style.py
-│   ├── ANSI/
-│   │   ├── __init__.py
-│   │   ├── ansi.py
-│   │   ├── basepack.py
-│   │   ├── color.py
-│   │   ├── cursor.py
-│   │   └── line.py
-│   ├── System/
-│   │   ├── __init__.py
-│   │   ├── console.py
-│   │   └── setting.py
-│   ├── Text/
-│   │   ├── __init__.py
-│   │   ├── format.py
-│   │   └── text.py
-│   ├── __init__.py
-│   └── config.ini
-├── script/
-│   └── ...
-├── source/
-│   └── ...
-├── tests/
-│   └── ...
-├── Makefile
-├── MANIFEST.in
-├── pyproject.toml
-└── README.md
 ```
 
 ## API-Reference

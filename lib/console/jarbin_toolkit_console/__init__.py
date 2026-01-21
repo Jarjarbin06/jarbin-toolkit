@@ -40,7 +40,7 @@ def _fatal_error(
 ##########
 
 
-try:
+"""try:
     from jarbin_toolkit_console import (
         Animation,
         ANSI,
@@ -52,8 +52,15 @@ try:
 ## cannot be tested with pytest ##
 
 except Exception as error:  # pragma: no cover
-    _fatal_error(error)  # pragma: no cover
+    _fatal_error(error)  # pragma: no cover"""
 
+from jarbin_toolkit_console import (
+    Animation,
+    ANSI,
+    System,
+    Text
+)
+from jarbin_toolkit_console.console import Console
 
 #############
 # Functions #

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+./script/auto-reload-package
+pytest --debug=trace --cov=jarbin_toolkit_time --cov-report=html
+xdg-open htmlcov/index.html
+rm -f .coverage
