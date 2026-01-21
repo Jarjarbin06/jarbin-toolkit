@@ -1,0 +1,15 @@
+#!/bin/bash
+
+python3 demo/demo_animation.py
+echo -n "Press 'enter' to continue..."
+read -r
+python3 demo/demo_ansi.py
+echo -n "Press 'enter' to continue..."
+read -r
+python3 demo/demo_error.py
+echo -n "Press 'enter' to continue..."
+read -r
+python3 demo/demo_system.py
+echo -n "Press 'enter' to continue..."
+read -r
+python3 demo/demo_text.py

@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.11, 3.12, 3.13, 3.14]
+        python-version: [3.8, 3.9, 3.10, 3.11, 3.12, 3.13, 3.14]
 
     steps:
     - uses: actions/checkout@v4
@@ -38,13 +38,24 @@ jobs:
     ##    flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
     ##    # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
     ##    flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Install epitech_console
+    - name: Install jarbin-toolkit
       run: |
-        echo "y" | pip uninstall epitech_console || true
+        cd config
+        echo "y" | pip uninstall jarbin-toolkit-config || true
         pip install -e .
+        cd ../console
+        echo "y" | pip uninstall jarbin-toolkit-console || true
+        pip install -e .
+        cd ../log
+        echo "y" | pip uninstall jarbin-toolkit-log || true
+        pip install -e .
+        cd ../time
+        echo "y" | pip uninstall jarbin-toolkit-time || true
+        pip install -e .
+        cd ..
     - name: Test with pytest (xml)
       run: |
-        pytest --cov=epitech_console --cov-report=xml --cov-report=term-missing
+        pytest --cov=jarbin-toolkit --cov-report=xml --cov-report=term-missing
     - name: Rename coverage file
       run: |
         mv coverage.xml coverage_${{ matrix.python-version }}.xml
