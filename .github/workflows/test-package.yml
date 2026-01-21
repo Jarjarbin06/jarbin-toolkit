@@ -41,7 +41,7 @@ jobs:
     - name: Install jarbin-toolkit
       run: |
         ls
-        cd lib/actions
+        cd lib/action
         echo "y" | pip uninstall jarbin-toolkit-action || true
         pip install -e .
         cd ../config
