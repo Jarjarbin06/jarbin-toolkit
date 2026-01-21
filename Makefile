@@ -73,12 +73,12 @@ reinstall:
 	@echo -e "$(GREEN) [REINSTALL] Package reinstalled$(NC)"
 
 install-all:
-	@make -sC lib/action install
-	@make -sC lib/config install
-	@make -sC lib/console install
-	@make -sC lib/error install
-	@make -sC lib/log install
-	@make -sC lib/time install
+	@make -sC lib/action install || true
+	@make -sC lib/config install || true
+	@make -sC lib/console install || true
+	@make -sC lib/error install || true
+	@make -sC lib/log install || true
+	@make -sC lib/time install || true
 
 uninstall-all:
 	@make -sC lib/action uninstall || true
@@ -89,12 +89,12 @@ uninstall-all:
 	@make -sC lib/time uninstall || true
 
 reinstall-all:
-	@make -sC lib/action reinstall
-	@make -sC lib/config reinstall
-	@make -sC lib/console reinstall
-	@make -sC lib/error reinstall
-	@make -sC lib/log reinstall
-	@make -sC lib/time reinstall
+	@make -sC lib/action reinstall || true
+	@make -sC lib/config reinstall || true
+	@make -sC lib/console reinstall || true
+	@make -sC lib/error reinstall || true
+	@make -sC lib/log reinstall || true
+	@make -sC lib/time reinstall || true
 
 # ------------------------------------------------------------
 # TESTS & CHECKS
