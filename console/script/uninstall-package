@@ -1,3 +1,0 @@
-#!/bin/bash
-
-echo "y" | pip uninstall epitech_console || true

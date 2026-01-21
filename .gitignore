@@ -1,6 +1,7 @@
 trace
 coverage.xml
 *.log
+*.egg-info
 demo/output/*
 perso
 dist

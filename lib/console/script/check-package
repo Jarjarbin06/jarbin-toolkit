@@ -1,0 +1,5 @@
+#!/bin/bash
+
+pip show jarbin_toolkit_console || true
+echo ""
+python -c "import jarbin_toolkit_console as C;C.init();C.quit(delete_log=True)" || true
