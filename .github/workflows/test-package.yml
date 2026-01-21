@@ -40,11 +40,18 @@ jobs:
     ##    flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Install jarbin-toolkit
       run: |
-        cd config
+        ls
+        cd actions
+        echo "y" | pip uninstall jarbin-toolkit-action || true
+        pip install -e .
+        cd ../config
         echo "y" | pip uninstall jarbin-toolkit-config || true
         pip install -e .
         cd ../console
         echo "y" | pip uninstall jarbin-toolkit-console || true
+        pip install -e .
+        cd ../error
+        echo "y" | pip uninstall jarbin-toolkit-error || true
         pip install -e .
         cd ../log
         echo "y" | pip uninstall jarbin-toolkit-log || true
