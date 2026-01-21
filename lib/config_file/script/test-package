@@ -1,5 +1,5 @@
 #!/bin/bash
 
-pytest --debug=trace --cov=jarbin_toolkit_config_file --cov-report=html
+pytest --debug=trace --cov=jarbin_toolkit_config --cov-report=html
 xdg-open htmlcov/index.html
 rm -f .coverage

@@ -16,7 +16,7 @@ PYTHON          ?= python3
 PIP             ?= pip3
 SHELL           := /bin/bash
 SCRIPT_DIR      := script
-PACKAGE_NAME    := jarbin_toolkit_config_file
+PACKAGE_NAME    := jarbin_toolkit_config
 VENV_DIR        := .venv
 
 # Colors (safe for most terminals)

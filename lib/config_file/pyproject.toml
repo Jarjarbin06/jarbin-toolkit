@@ -3,7 +3,7 @@ requires = ["setuptools>=65.0", "wheel", "setuptools_scm[toml]>=6.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "jarbin-toolkit-config_file"
+name = "jarbin-toolkit-config"
 version = "0.1.0.0"
 description = "Config tools (Manage config files)"
 authors = [
@@ -39,5 +39,5 @@ local_scheme = "dirty-tag"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["jarbin_toolkit_config_file*"]
+include = ["jarbin_toolkit_config*"]
 
