@@ -1,6 +1,7 @@
 #############################
 ###                       ###
-###    Epitech Console    ###
+###     Jarbin-ToolKit    ###
+###        console        ###
 ###   ----cursor.py----   ###
 ###                       ###
 ###=======================###
@@ -10,7 +11,7 @@
 
 from builtins import object
 from typing import Any
-from lib.console.jarbin_toolkit_console.System.setting import Setting
+from jarbin_toolkit_console.System.setting import Setting
 
 
 Setting.update()
@@ -26,7 +27,7 @@ class Cursor:
         Manipulate the cursor's position.
     """
 
-    from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+    from jarbin_toolkit_console.ANSI.ansi import ANSI
 
 
     @staticmethod
@@ -43,7 +44,7 @@ class Cursor:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         return ANSI(f"{ANSI.ESC}{n}A")
 
@@ -62,7 +63,7 @@ class Cursor:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         return ANSI(f"{ANSI.ESC}{n}B")
 
@@ -81,7 +82,7 @@ class Cursor:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         return ANSI(f"{ANSI.ESC}{n}D")
 
@@ -100,7 +101,7 @@ class Cursor:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         return ANSI(f"{ANSI.ESC}{n}C")
 
@@ -115,7 +116,7 @@ class Cursor:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         return ANSI(f"{ANSI.ESC}H")
 
@@ -134,7 +135,7 @@ class Cursor:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         return ANSI(f"{ANSI.ESC}{n}F")
 
@@ -153,7 +154,7 @@ class Cursor:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         return ANSI(f"{ANSI.ESC}{n}E")
 
@@ -174,7 +175,7 @@ class Cursor:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         return ANSI(f"{ANSI.ESC}{y};{x}H")
 
@@ -193,7 +194,7 @@ class Cursor:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         return ANSI(f"{ANSI.ESC}{x}G")
 
@@ -208,7 +209,7 @@ class Cursor:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         return ANSI(f"{ANSI.ESC}7")
 
@@ -223,7 +224,7 @@ class Cursor:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         return ANSI(f"{ANSI.ESC}8")
 
@@ -238,7 +239,7 @@ class Cursor:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         return ANSI(f"{ANSI.ESC}?25h")
 
@@ -253,7 +254,7 @@ class Cursor:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         return ANSI(f"{ANSI.ESC}?25l")
 

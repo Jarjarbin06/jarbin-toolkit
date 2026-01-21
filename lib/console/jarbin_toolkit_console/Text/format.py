@@ -1,6 +1,7 @@
 #############################
 ###                       ###
-###    Epitech Console    ###
+###     Jarbin-ToolKit    ###
+###        console        ###
 ###   ----format.py----   ###
 ###                       ###
 ###=======================###
@@ -12,7 +13,7 @@ from builtins import object
 from typing import Any
 
 
-from lib.console.jarbin_toolkit_console.System.setting import Setting
+from jarbin_toolkit_console.System.setting import Setting
 
 
 Setting.update()
@@ -39,7 +40,7 @@ class Format:
                 Any: formatted object.
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.color import Color
+        from jarbin_toolkit_console.ANSI.color import Color
 
         return Format.apply(self, Color(Color.C_RESET))
 
@@ -55,7 +56,7 @@ class Format:
                 Any: formatted object.
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.color import Color
+        from jarbin_toolkit_console.ANSI.color import Color
 
         return Format.apply(self, Color(Color.C_BOLD))
 
@@ -69,7 +70,7 @@ class Format:
             Returns:
                 Any: formatted object.
         """
-        from lib.console.jarbin_toolkit_console.ANSI.color import Color
+        from jarbin_toolkit_console.ANSI.color import Color
 
         return Format.apply(self, Color(Color.C_ITALIC))
 
@@ -84,7 +85,7 @@ class Format:
                 Any: formatted object.
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.color import Color
+        from jarbin_toolkit_console.ANSI.color import Color
 
         return Format.apply(self, Color(Color.C_UNDERLINE))
 
@@ -99,7 +100,7 @@ class Format:
                 Any: formatted object.
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.color import Color
+        from jarbin_toolkit_console.ANSI.color import Color
 
         return Format.apply(self, Color(Color.C_HIDDEN))
 
@@ -114,7 +115,7 @@ class Format:
                 Any: formatted object.
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.color import Color
+        from jarbin_toolkit_console.ANSI.color import Color
 
         return Format.apply(self, Color(Color.C_STRIKETHROUGH))
 
@@ -134,8 +135,8 @@ class Format:
                 Any: formatted object.
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.color import Color
-        from lib.console.jarbin_toolkit_console.ANSI.basepack import BasePack
+        from jarbin_toolkit_console.ANSI.color import Color
+        from jarbin_toolkit_console.ANSI.basepack import BasePack
 
         if title:
             return Format.apply(self, Color(BasePack.P_ERROR[0]))
@@ -157,8 +158,8 @@ class Format:
                 Any: formatted object.
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.color import Color
-        from lib.console.jarbin_toolkit_console.ANSI.basepack import BasePack
+        from jarbin_toolkit_console.ANSI.color import Color
+        from jarbin_toolkit_console.ANSI.basepack import BasePack
 
         if title:
             return Format.apply(self, Color(BasePack.P_WARNING[0]))
@@ -180,8 +181,8 @@ class Format:
                 Any: formatted object.
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.color import Color
-        from lib.console.jarbin_toolkit_console.ANSI.basepack import BasePack
+        from jarbin_toolkit_console.ANSI.color import Color
+        from jarbin_toolkit_console.ANSI.basepack import BasePack
 
         if title:
             return Format.apply(self, Color(BasePack.P_VALID[0]))
@@ -203,8 +204,8 @@ class Format:
                 Any: formatted object.
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.color import Color
-        from lib.console.jarbin_toolkit_console.ANSI.basepack import BasePack
+        from jarbin_toolkit_console.ANSI.color import Color
+        from jarbin_toolkit_console.ANSI.basepack import BasePack
 
         if title:
             return Format.apply(self, Color(BasePack.P_INFO[0]))
@@ -227,11 +228,11 @@ class Format:
                 Any: formatted object.
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.color import Color
-        from lib.console.jarbin_toolkit_console.Text.text import Text
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
-        from lib.console.jarbin_toolkit_console.Animation.animation import Animation
-        from lib.console.jarbin_toolkit_console.Animation.progressbar import ProgressBar
+        from jarbin_toolkit_console.ANSI.color import Color
+        from jarbin_toolkit_console.Text.text import Text
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.Animation.animation import Animation
+        from jarbin_toolkit_console.Animation.progressbar import ProgressBar
 
         if not sequence:
             sequence: ANSI = Color(Color.C_RESET)
@@ -332,7 +333,7 @@ class Format:
                     "Setting"
                 ]
             },
-            "lib.console.jarbin_toolkit_console")
+            "jarbin_toolkit_console")
 
 
 if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("INFO", "init", "Text.Format: created")

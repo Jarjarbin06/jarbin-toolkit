@@ -5,10 +5,10 @@
 <img src="NONE" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="NONE" alt="error loading Jarbin-ToolKit:Console Logo" width="49%" style="display:inline-block;">
 
-# **jarbin-toolkit:console** v0.1.8.3
+# **jarbin-toolkit:console** v0.1.0.0
 <details>
 <summary>Latest development version</summary>
-🟠 UNDER DEVELOPMENT 🟠 v0.1.0 🟠
+🟠 UNDER DEVELOPMENT 🟠 v0.1.0.0 🟠
 </details>
 <details>
 <summary>Latest release</summary>
@@ -176,53 +176,47 @@ for i in range(1001):
 quit(delete_log=True)
 ```
 
-This will check and create a `config.ini` file if it doesn't exist.
-
 ## Project-Structure
 
 ```
-REPO/
-├── ...
-├── console/
-│   ├── demo/
-│   │   └── ...
-│   ├── jarbin_toolkit_console/
-│   │   ├── Animation/
-│   │   │   ├── __init__.py
-│   │   │   ├── animation.py
-│   │   │   ├── basepack.py
-│   │   │   ├── progressbar.py
-│   │   │   ├── spinner.py
-│   │   │   └── style.py
-│   │   ├── ANSI/
-│   │   │   ├── __init__.py
-│   │   │   ├── ansi.py
-│   │   │   ├── basepack.py
-│   │   │   ├── color.py
-│   │   │   ├── cursor.py
-│   │   │   └── line.py
-│   │   ├── log/
-│   │   ├── System/
-│   │   │   ├── __init__.py
-│   │   │   ├── console.py
-│   │   │   ├── setting.py
-│   │   ├── Text/
-│   │   │   ├── __init__.py
-│   │   │   ├── format.py
-│   │   │   └── text.py
+console/
+├── demo/
+│   └── ...
+├── jarbin_toolkit_console/
+│   ├── Animation/
 │   │   ├── __init__.py
-│   │   └── config.ini
-│   ├── script/
-│   │   └── ...
-│   ├── source/
-│   │   └── ...
-│   ├── tests/
-│   │   └── ...
-│   ├── Makefile
-│   ├── MANIFEST.in
-│   ├── pyproject.toml
-│   └── README.md
-└── ...
+│   │   ├── animation.py
+│   │   ├── basepack.py
+│   │   ├── progressbar.py
+│   │   ├── spinner.py
+│   │   └── style.py
+│   ├── ANSI/
+│   │   ├── __init__.py
+│   │   ├── ansi.py
+│   │   ├── basepack.py
+│   │   ├── color.py
+│   │   ├── cursor.py
+│   │   └── line.py
+│   ├── System/
+│   │   ├── __init__.py
+│   │   ├── console.py
+│   │   └── setting.py
+│   ├── Text/
+│   │   ├── __init__.py
+│   │   ├── format.py
+│   │   └── text.py
+│   ├── __init__.py
+│   └── config.ini
+├── script/
+│   └── ...
+├── source/
+│   └── ...
+├── tests/
+│   └── ...
+├── Makefile
+├── MANIFEST.in
+├── pyproject.toml
+└── README.md
 ```
 
 ## API-Reference

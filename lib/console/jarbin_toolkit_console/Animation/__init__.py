@@ -1,6 +1,7 @@
 #############################
 ###                       ###
-###    Epitech Console    ###
+###     Jarbin-ToolKit    ###
+###        console        ###
 ###  ----__init__.py----  ###
 ###                       ###
 ###=======================###
@@ -8,11 +9,11 @@
 #############################
 
 
-from lib.console.jarbin_toolkit_console.Animation.animation import Animation
-from lib.console.jarbin_toolkit_console.Animation.basepack import BasePack
-from lib.console.jarbin_toolkit_console.Animation.progressbar import ProgressBar
-from lib.console.jarbin_toolkit_console.Animation.style import Style
-from lib.console.jarbin_toolkit_console.Animation.spinner import Spinner
+from jarbin_toolkit_console.Animation.animation import Animation
+from jarbin_toolkit_console.Animation.basepack import BasePack
+from jarbin_toolkit_console.Animation.progressbar import ProgressBar
+from jarbin_toolkit_console.Animation.style import Style
+from jarbin_toolkit_console.Animation.spinner import Spinner
 
 
 __all__ : list[str] = [

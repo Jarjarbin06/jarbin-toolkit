@@ -1,6 +1,7 @@
 #############################
 ###                       ###
-###    Epitech Console    ###
+###     Jarbin-ToolKit    ###
+###        console        ###
 ###  ----basepack.py----  ###
 ###                       ###
 ###=======================###
@@ -10,7 +11,7 @@
 
 from builtins import object
 from typing import Any
-from lib.console.jarbin_toolkit_console.System.setting import Setting
+from jarbin_toolkit_console.System.setting import Setting
 
 
 Setting.update()
@@ -33,7 +34,7 @@ class BasePack:
     """
 
 
-    from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+    from jarbin_toolkit_console.ANSI.ansi import ANSI
 
 
     P_ERROR : tuple[ANSI | str, ANSI | str] = ("\033[0m", "\033[0m")
@@ -49,7 +50,7 @@ class BasePack:
             Initialize the BasePack class
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.color import Color
+        from jarbin_toolkit_console.ANSI.color import Color
 
         BasePack.P_ERROR = (Color(Color.C_BG_DARK_RED), Color(Color.C_FG_DARK_RED))
         BasePack.P_WARNING = (Color(Color.C_BG_DARK_YELLOW), Color(Color.C_FG_DARK_YELLOW))

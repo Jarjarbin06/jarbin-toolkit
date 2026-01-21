@@ -1,6 +1,7 @@
 #############################
 ###                       ###
-###    Epitech Console    ###
+###     Jarbin-ToolKit    ###
+###        console        ###
 ###    ----ansi.py----    ###
 ###                       ###
 ###=======================###
@@ -10,8 +11,8 @@
 
 from builtins import object
 from typing import Any
-from lib.console.jarbin_toolkit_console.Text.format import Format
-from lib.console.jarbin_toolkit_console.System.setting import Setting
+from jarbin_toolkit_console.Text.format import Format
+from jarbin_toolkit_console.System.setting import Setting
 
 
 Setting.update()
@@ -70,10 +71,10 @@ class ANSI(Format):
                 ANSI: ANSI sequence
         """
 
-        from lib.console.jarbin_toolkit_console.Animation.animation import Animation
-        from lib.console.jarbin_toolkit_console.Animation.progressbar import ProgressBar
-        from lib.console.jarbin_toolkit_console.Text.text import Text
-        from lib.console.jarbin_toolkit_console.System.stopwatch import StopWatch
+        from jarbin_toolkit_console.Animation.animation import Animation
+        from jarbin_toolkit_console.Animation.progressbar import ProgressBar
+        from jarbin_toolkit_console.Text.text import Text
+        from jarbin_toolkit_console.System.stopwatch import StopWatch
 
         if type(other) in [ANSI]:
             return ANSI(f"{self.sequence}{other.sequence}")

@@ -1,6 +1,7 @@
 #############################
 ###                       ###
-###    Epitech Console    ###
+###     Jarbin-ToolKit    ###
+###        console        ###
 ###   ----spinner.py----  ###
 ###                       ###
 ###=======================###
@@ -10,7 +11,7 @@
 
 from builtins import object
 from typing import Any
-from lib.console.jarbin_toolkit_console.System.setting import Setting
+from jarbin_toolkit_console.System.setting import Setting
 
 
 Setting.update()
@@ -27,8 +28,8 @@ class Spinner:
     """
 
 
-    from lib.console.jarbin_toolkit_console.Animation.animation import Animation
-    from lib.console.jarbin_toolkit_console.Animation.style import Style
+    from jarbin_toolkit_console.Animation.animation import Animation
+    from jarbin_toolkit_console.Animation.style import Style
 
 
     @staticmethod
@@ -46,7 +47,7 @@ class Spinner:
                 Animation: Stick animation.
         """
 
-        from lib.console.jarbin_toolkit_console.Animation.animation import Animation
+        from jarbin_toolkit_console.Animation.animation import Animation
 
         return Animation(
             [
@@ -73,7 +74,7 @@ class Spinner:
                 Animation: Plus animation.
         """
 
-        from lib.console.jarbin_toolkit_console.Animation.animation import Animation
+        from jarbin_toolkit_console.Animation.animation import Animation
 
         return Animation(
             [
@@ -98,7 +99,7 @@ class Spinner:
                 Animation: Cross animation.
         """
 
-        from lib.console.jarbin_toolkit_console.Animation.animation import Animation
+        from jarbin_toolkit_console.Animation.animation import Animation
 
         return Animation(
             [

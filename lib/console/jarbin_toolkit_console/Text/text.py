@@ -1,6 +1,7 @@
 #############################
 ###                       ###
-###    Epitech Console    ###
+###     Jarbin-ToolKit    ###
+###        console        ###
 ###    ----text.py----    ###
 ###                       ###
 ###=======================###
@@ -10,8 +11,8 @@
 
 from builtins import object
 from typing import Any
-from lib.console.jarbin_toolkit_console.Text.format import Format
-from lib.console.jarbin_toolkit_console.System.setting import Setting
+from jarbin_toolkit_console.Text.format import Format
+from jarbin_toolkit_console.System.setting import Setting
 
 
 Setting.update()
@@ -39,7 +40,7 @@ class Text(Format):
                 text (list[Any | str] | ANSI | str, optional): text
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         self.text : str = ""
 

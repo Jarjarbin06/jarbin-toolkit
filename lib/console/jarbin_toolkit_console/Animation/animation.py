@@ -1,6 +1,7 @@
 #############################
 ###                       ###
-###    Epitech Console    ###
+###     Jarbin-ToolKit    ###
+###        console        ###
 ###  ----animation.py---- ###
 ###                       ###
 ###=======================###
@@ -10,8 +11,8 @@
 
 from builtins import object
 from typing import Any
-from lib.console.jarbin_toolkit_console.Text.format import Format
-from lib.console.jarbin_toolkit_console.System.setting import Setting
+from jarbin_toolkit_console.Text.format import Format
+from jarbin_toolkit_console.System.setting import Setting
 
 
 Setting.update()
@@ -28,7 +29,7 @@ class Animation(Format):
     """
 
 
-    from lib.console.jarbin_toolkit_console.ANSI.color import Color
+    from jarbin_toolkit_console.ANSI.color import Color
 
 
     def __init__(
@@ -45,8 +46,8 @@ class Animation(Format):
         ## cannot be tested with pytest ##
 
         if not isinstance(animation, (list, str)): # pragma: no cover
-            from lib.console.jarbin_toolkit_console.Error.error import ErrorType # pragma: no cover
-            from lib.console.jarbin_toolkit_console import quit # pragma: no cover
+            from jarbin_toolkit_console.Error.error import ErrorType # pragma: no cover
+            from jarbin_toolkit_console import quit # pragma: no cover
 
             if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("ERROR", "type", f"Animation.Animation.__init__: animation is of an unsupported type (supported: list[Any], str ; current: {type(animation)})") # pragma: no cover
             quit() # pragma: no cover
@@ -79,15 +80,15 @@ class Animation(Format):
                 Animation: Animation
         """
 
-        from lib.console.jarbin_toolkit_console.Text.text import Text
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
-        from lib.console.jarbin_toolkit_console.System.stopwatch import StopWatch
+        from jarbin_toolkit_console.Text.text import Text
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.System.stopwatch import StopWatch
 
         ## cannot be tested with pytest ##
 
         if not isinstance(other, (Animation, ANSI, Text, StopWatch, str)): # pragma: no cover
-            from lib.console.jarbin_toolkit_console.Error.error import ErrorType # pragma: no cover
-            from lib.console.jarbin_toolkit_console import quit # pragma: no cover
+            from jarbin_toolkit_console.Error.error import ErrorType # pragma: no cover
+            from jarbin_toolkit_console import quit # pragma: no cover
 
             if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("ERROR", "type", f"Animation.Animation.__add__: other is of an unsupported type (supported: Animation, ANSI, Text, StopWatch, str ; current: {type(other)})") # pragma: no cover
             quit() # pragma: no cover
@@ -119,8 +120,8 @@ class Animation(Format):
         ## cannot be tested with pytest ##
 
         if not isinstance(item, int): # pragma: no cover
-            from lib.console.jarbin_toolkit_console.Error.error import ErrorType # pragma: no cover
-            from lib.console.jarbin_toolkit_console import quit # pragma: no cover
+            from jarbin_toolkit_console.Error.error import ErrorType # pragma: no cover
+            from jarbin_toolkit_console import quit # pragma: no cover
 
             if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("ERROR", "type", f"Animation.Animation.__getitem__: item is of an unsupported type (supported: int ; current: {type(item)})") # pragma: no cover
             quit() # pragma: no cover
@@ -147,8 +148,8 @@ class Animation(Format):
                 str: Animation string
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
-        from lib.console.jarbin_toolkit_console.ANSI.color import Color
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.color import Color
 
         ## cannot be tested with pytest ##
 
@@ -221,9 +222,9 @@ class Animation(Format):
                 str: Animation string
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
-        from lib.console.jarbin_toolkit_console.ANSI.cursor import Cursor
-        from lib.console.jarbin_toolkit_console.ANSI.color import Color
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.cursor import Cursor
+        from jarbin_toolkit_console.ANSI.color import Color
 
         ## cannot be tested with pytest ##
 

@@ -1,6 +1,7 @@
 #############################
 ###                       ###
-###    Epitech Console    ###
+###     Jarbin-ToolKit    ###
+###        console        ###
 ###   ----setting.py----  ###
 ###                       ###
 ###=======================###
@@ -38,8 +39,8 @@ class Setting:
     """
 
 
-    from lib.console.jarbin_toolkit_console.System import Log
-    from lib.console.jarbin_toolkit_console.System import Config
+    from jarbin_toolkit_console.System import Log
+    from jarbin_toolkit_console.System import Config
 
 
     S_OS : str | None = None
@@ -70,8 +71,8 @@ class Setting:
         """
 
         from platform import system
-        from lib.console.jarbin_toolkit_console.System import Config
-        from lib.console.jarbin_toolkit_console.System import Log
+        from jarbin_toolkit_console.System import Config
+        from jarbin_toolkit_console.System import Log
 
         Setting.S_OS = system()
 

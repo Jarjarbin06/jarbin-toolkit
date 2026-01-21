@@ -1,6 +1,7 @@
 #############################
 ###                       ###
-###    Epitech Console    ###
+###     Jarbin-ToolKit    ###
+###        console        ###
 ###  ----basepack.py----  ###
 ###                       ###
 ###=======================###
@@ -10,7 +11,7 @@
 
 from builtins import object
 from typing import Any
-from lib.console.jarbin_toolkit_console.System.setting import Setting
+from jarbin_toolkit_console.System.setting import Setting
 
 
 Setting.update()
@@ -39,7 +40,7 @@ class BasePack:
     """
 
 
-    from lib.console.jarbin_toolkit_console.Animation.style import Style
+    from jarbin_toolkit_console.Animation.style import Style
 
 
     P_SLIDE_R = []
@@ -65,14 +66,14 @@ class BasePack:
                 style (Style, optional): Style of the BasePack animations.
         """
 
-        from lib.console.jarbin_toolkit_console.Animation.style import Style
+        from jarbin_toolkit_console.Animation.style import Style
 
         if not type(style) in [Style]:
 
             ## cannot be tested with pytest ##
 
-            from lib.console.jarbin_toolkit_console.Error.error import ErrorType # pragma: no cover
-            from lib.console.jarbin_toolkit_console import quit # pragma: no cover
+            from jarbin_toolkit_console.Error.error import ErrorType # pragma: no cover
+            from jarbin_toolkit_console import quit # pragma: no cover
 
             if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("ERROR", "type", f"Animation.BasePack.update: style is of an unsupported type (supported: Style ; current: {type(style)})") # pragma: no cover
             quit() # pragma: no cover

@@ -1,6 +1,7 @@
 #############################
 ###                       ###
-###    Epitech Console    ###
+###     Jarbin-ToolKit    ###
+###        console        ###
 ###  ----__init__.py----  ###
 ###                       ###
 ###=======================###
@@ -8,11 +9,11 @@
 #############################
 
 
-from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
-from lib.console.jarbin_toolkit_console.ANSI.cursor import Cursor
-from lib.console.jarbin_toolkit_console.ANSI.line import Line
-from lib.console.jarbin_toolkit_console.ANSI.color import Color
-from lib.console.jarbin_toolkit_console.ANSI.basepack import BasePack
+from jarbin_toolkit_console.ANSI.ansi import ANSI
+from jarbin_toolkit_console.ANSI.cursor import Cursor
+from jarbin_toolkit_console.ANSI.line import Line
+from jarbin_toolkit_console.ANSI.color import Color
+from jarbin_toolkit_console.ANSI.basepack import BasePack
 
 
 __all__ : list[str] = [

@@ -1,6 +1,7 @@
 #############################
 ###                       ###
-###    Epitech Console    ###
+###     Jarbin-ToolKit    ###
+###        console        ###
 ###   ----console.py----  ###
 ###                       ###
 ###=======================###
@@ -10,7 +11,7 @@
 
 from builtins import object, type
 from typing import Any
-from lib.console.jarbin_toolkit_console.System.setting import Setting
+from jarbin_toolkit_console.System.setting import Setting
 
 
 Setting.update()
@@ -102,9 +103,9 @@ class Console(metaclass=ConsoleMeta):
                 Text: Text printed on the console.
         """
 
-        from lib.console.jarbin_toolkit_console.System import Time
-        from lib.console.jarbin_toolkit_console.ANSI.color import Color
-        from lib.console.jarbin_toolkit_console.Text.text import Text
+        from jarbin_toolkit_console.System import Time
+        from jarbin_toolkit_console.ANSI.color import Color
+        from jarbin_toolkit_console.Text.text import Text
 
         string_list : list[str]
         string : str = ""

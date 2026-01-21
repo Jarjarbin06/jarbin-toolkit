@@ -1,6 +1,7 @@
 #############################
 ###                       ###
-###    Epitech Console    ###
+###     Jarbin-ToolKit    ###
+###        console        ###
 ###  ----__init__.py----  ###
 ###                       ###
 ###=======================###
@@ -16,8 +17,8 @@ from jarbin_toolkit_config import Config
 import jarbin_toolkit_error as Error
 
 
-from lib.console.jarbin_toolkit_console.System.console import Console
-from lib.console.jarbin_toolkit_console.System.setting import Setting
+from jarbin_toolkit_console.System.console import Console
+from jarbin_toolkit_console.System.setting import Setting
 
 
 from sys import (

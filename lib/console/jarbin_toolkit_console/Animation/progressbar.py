@@ -1,6 +1,7 @@
 #############################
 ###                       ###
-###    Epitech Console    ###
+###     Jarbin-ToolKit    ###
+###        console        ###
 ### ----progressbar.py----###
 ###                       ###
 ###=======================###
@@ -10,8 +11,8 @@
 
 from builtins import object
 from typing import Any
-from lib.console.jarbin_toolkit_console.Text.format import Format
-from lib.console.jarbin_toolkit_console.System.setting import Setting
+from jarbin_toolkit_console.Text.format import Format
+from jarbin_toolkit_console.System.setting import Setting
 
 
 Setting.update()
@@ -27,9 +28,9 @@ class ProgressBar(Format):
         Progress-bar tool.
     """
 
-    from lib.console.jarbin_toolkit_console.Animation.animation import Animation
-    from lib.console.jarbin_toolkit_console.ANSI.color import Color
-    from lib.console.jarbin_toolkit_console.Animation.style import Style
+    from jarbin_toolkit_console.Animation.animation import Animation
+    from jarbin_toolkit_console.ANSI.color import Color
+    from jarbin_toolkit_console.Animation.style import Style
 
 
     def __init__(
@@ -56,8 +57,8 @@ class ProgressBar(Format):
                 spinner_position (str, optional): Progress bar spinner position (b/a).
         """
 
-        from lib.console.jarbin_toolkit_console.Animation.animation import Animation
-        from lib.console.jarbin_toolkit_console.Animation.style import Style
+        from jarbin_toolkit_console.Animation.animation import Animation
+        from jarbin_toolkit_console.Animation.style import Style
 
         def create_progress_bar(
                 new_length : int,
@@ -120,7 +121,7 @@ class ProgressBar(Format):
                 str: Animations string
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.color import Color
+        from jarbin_toolkit_console.ANSI.color import Color
 
         return str(color + self.animation[item] + str(Color(Color.C_RESET)))
 
@@ -142,7 +143,7 @@ class ProgressBar(Format):
                 str: ProgressBar string
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.color import Color
+        from jarbin_toolkit_console.ANSI.color import Color
 
         string : str = ""
 
@@ -220,9 +221,9 @@ class ProgressBar(Format):
                 str: ProgressBar string
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
-        from lib.console.jarbin_toolkit_console.ANSI.line import Line
-        from lib.console.jarbin_toolkit_console.Text.text import Text
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.line import Line
+        from jarbin_toolkit_console.Text.text import Text
 
         string : str = ""
 

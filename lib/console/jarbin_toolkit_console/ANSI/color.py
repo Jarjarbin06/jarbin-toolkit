@@ -1,6 +1,7 @@
 #############################
 ###                       ###
-###    Epitech Console    ###
+###     Jarbin-ToolKit    ###
+###        console        ###
 ###    ----color.py----   ###
 ###                       ###
 ###=======================###
@@ -10,7 +11,7 @@
 
 from builtins import object
 from typing import Any
-from lib.console.jarbin_toolkit_console.System.setting import Setting
+from jarbin_toolkit_console.System.setting import Setting
 
 
 Setting.update()
@@ -72,7 +73,7 @@ class Color:
             C_BG_WHITE (int): BACKGROUND white color code.
     """
 
-    from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+    from jarbin_toolkit_console.ANSI.ansi import ANSI
 
     C_RESET : int = 0
     C_BOLD : int = 1
@@ -145,7 +146,7 @@ class Color:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         if type(color) in [ANSI, str]:
             return ANSI(str(color))
@@ -175,7 +176,7 @@ class Color:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         if 0 <= color <= 255:
             return ANSI(f"{ANSI.ESC}38;5;{color}m")
@@ -197,7 +198,7 @@ class Color:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         if 0 <= color <= 255:
             return ANSI(f"{ANSI.ESC}48;5;{color}m")
@@ -224,7 +225,7 @@ class Color:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         if 0 <= r <= 255 and 0 <= g <= 255 and 0 <= b <= 255:
             return ANSI(f"{ANSI.ESC}38;2;{r};{g};{b}m")
@@ -250,7 +251,7 @@ class Color:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         if 0 <= r <= 255 and 0 <= g <= 255 and 0 <= b <= 255:
             return ANSI(f"{ANSI.ESC}48;2;{r};{g};{b}m")

@@ -1,6 +1,7 @@
 #############################
 ###                       ###
-###    Epitech Console    ###
+###     Jarbin-ToolKit    ###
+###        console        ###
 ###  ----__init__.py----  ###
 ###                       ###
 ###=======================###
@@ -8,8 +9,8 @@
 #############################
 
 
-from lib.console.jarbin_toolkit_console.Text.text import Text
-from lib.console.jarbin_toolkit_console.Text.format import Format
+from jarbin_toolkit_console.Text.text import Text
+from jarbin_toolkit_console.Text.format import Format
 
 
 __all__ : list[str] = [

@@ -1,6 +1,7 @@
 #############################
 ###                       ###
-###    Epitech Console    ###
+###     Jarbin-ToolKit    ###
+###        console        ###
 ###     ----line.py----   ###
 ###                       ###
 ###=======================###
@@ -10,7 +11,7 @@
 
 from builtins import object
 from typing import Any
-from lib.console.jarbin_toolkit_console.System.setting import Setting
+from jarbin_toolkit_console.System.setting import Setting
 
 
 Setting.update()
@@ -26,7 +27,7 @@ class Line:
         Manipulate the lines of the console.
     """
 
-    from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+    from jarbin_toolkit_console.ANSI.ansi import ANSI
 
 
     @staticmethod
@@ -39,7 +40,7 @@ class Line:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         return ANSI(f"{ANSI.ESC}2K")
 
@@ -54,7 +55,7 @@ class Line:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         return ANSI(f"{ANSI.ESC}1K")
 
@@ -69,7 +70,7 @@ class Line:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         return ANSI(f"{ANSI.ESC}K")
 
@@ -84,7 +85,7 @@ class Line:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.ansi import ANSI
+        from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         return ANSI(f"{ANSI.ESC}2J")
 
@@ -99,7 +100,7 @@ class Line:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.cursor import Cursor
+        from jarbin_toolkit_console.ANSI.cursor import Cursor
 
         return Line.clear_screen() + Cursor.top()
 
@@ -118,7 +119,7 @@ class Line:
                 ANSI: ansi sequence
         """
 
-        from lib.console.jarbin_toolkit_console.ANSI.cursor import Cursor
+        from jarbin_toolkit_console.ANSI.cursor import Cursor
 
         return Cursor.previous(n) + Line.clear_line()
 

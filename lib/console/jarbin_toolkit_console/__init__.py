@@ -1,6 +1,7 @@
 #############################
 ###                       ###
-###    Epitech Console    ###
+###     Jarbin-ToolKit    ###
+###        console        ###
 ###  ----__init__.py----  ###
 ###                       ###
 ###=======================###
@@ -40,7 +41,7 @@ def _fatal_error(
 
 
 try:
-    from lib.console.jarbin_toolkit_console import (
+    from jarbin_toolkit_console import (
         Animation,
         ANSI,
         System,
