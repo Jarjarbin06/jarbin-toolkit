@@ -1,7 +1,7 @@
 #############################
 ###                       ###
 ###     Jarbin-ToolKit    ###
-###         error         ###
+###         time          ###
 ###  ----__init__.py----  ###
 ###                       ###
 ###=======================###
@@ -9,27 +9,13 @@
 #############################
 
 
-from jarbin_toolkit_error.error import (
-    Error,
-    ErrorType,
-    ErrorValue,
-    ErrorImport,
-    ErrorLaunch,
-    ErrorLog,
-    ErrorSetting,
-    ErrorConfig
-)
+from jarbin_toolkit_time.time import Time
+from jarbin_toolkit_time.stopwatch import StopWatch
 
 
 __all__ : list[str] = [
-    'Error',
-    'ErrorType',
-    'ErrorValue',
-    'ErrorImport',
-    'ErrorLaunch',
-    'ErrorLog',
-    'ErrorSetting',
-    'ErrorConfig'
+    'Time',
+    'StopWatch'
 ]
 
 

@@ -1,0 +1,157 @@
+# ============================================================
+# EPITECH_CONSOLE – Makefile
+# ============================================================
+# Usage:
+#   make help
+#   make install
+#   make test
+#   make demo
+# ============================================================
+
+# ------------------------------------------------------------
+# CONFIGURATION
+# ------------------------------------------------------------
+
+PYTHON          ?= python3
+PIP             ?= pip3
+SHELL           := /bin/bash
+SCRIPT_DIR      := script
+PACKAGE_NAME    := jarbin_toolkit
+VENV_DIR        := .venv
+
+# Colors (safe for most terminals)
+GREEN           := \033[0;32m
+YELLOW          := \033[0;33m
+RED             := \033[0;31m
+NC              := \033[0m
+
+# ------------------------------------------------------------
+# DEFAULT TARGET
+# ------------------------------------------------------------
+
+.DEFAULT_GOAL := help
+
+# ------------------------------------------------------------
+# HELP
+# ------------------------------------------------------------
+
+help:
+	@echo -e "$(GREEN)Available commands:$(NC)"
+	@echo ""
+	@echo -e "\tmake/make help\t\tShow this help message"
+	@echo ""
+	@echo -e "\tmake install\t\tInstall the package"
+	@echo -e "\tmake uninstall\t\tUninstall the package"
+	@echo -e "\tmake reinstall\t\tReinstall the package"
+	@echo ""
+	@echo -e "\tmake test\t\Test the package (pytest)"
+	@echo -e "\tmake check\t\tShow package info (PyPI)"
+	@echo ""
+	@echo -e "\tmake demo\t\tRun the demo"
+	@echo ""
+	@echo -e "\tmake clean\t\tClean cache and build files"
+	@echo -e "\tmake info\t\tShow package info"
+	@echo ""
+
+# ------------------------------------------------------------
+# PACKAGE MANAGEMENT
+# ------------------------------------------------------------
+
+install:
+	@echo -e "$(YELLOW) [INSTALL] Installing package$(NC)"
+	@./$(SCRIPT_DIR)/install-package
+	@echo -e "$(GREEN) [INSTALL] Installing package$(NC)"
+
+uninstall:
+	@echo -e "$(YELLOW) [UNINSTALL] Uninstalling package$(NC)"
+	@./$(SCRIPT_DIR)/uninstall-package
+	@echo -e "$(GREEN) [UNINSTALL] Package uninstalled$(NC)"
+
+reinstall:
+	@echo -e "$(YELLOW) [REINSTALL] Reinstalling package$(NC)"
+	@make -s uninstall install
+	@echo -e "$(GREEN) [REINSTALL] Package reinstalled$(NC)"
+
+install-all:
+	@make -sC lib/action install
+	@make -sC lib/config install
+	@make -sC lib/console install
+	@make -sC lib/error install
+	@make -sC lib/log install
+	@make -sC lib/time install
+
+uninstall-all:
+	@make -sC lib/action uninstall || true
+	@make -sC lib/config uninstall || true
+	@make -sC lib/console uninstall || true
+	@make -sC lib/error uninstall || true
+	@make -sC lib/log uninstall || true
+	@make -sC lib/time uninstall || true
+
+reinstall-all:
+	@make -sC lib/action reinstall
+	@make -sC lib/config reinstall
+	@make -sC lib/console reinstall
+	@make -sC lib/error reinstall
+	@make -sC lib/log reinstall
+	@make -sC lib/time reinstall
+
+# ------------------------------------------------------------
+# TESTS & CHECKS
+# ------------------------------------------------------------
+
+test:
+	@echo -e "$(YELLOW) [TEST] Running tests$(NC)"
+	@./$(SCRIPT_DIR)/test-package
+	@echo -e "$(GREEN) [TEST] Tests ran$(NC)"
+
+check:
+	@echo -e "$(YELLOW) [CHECK] Checking package$(NC)"
+	@./$(SCRIPT_DIR)/check-package
+	@echo -e "$(GREEN) [CHECK] Package checked$(NC)"
+
+# ------------------------------------------------------------
+# DEMOS
+# ------------------------------------------------------------
+
+demo:
+	@echo -e "$(YELLOW) [DEMO] Running full demo$(NC)"
+	@./$(SCRIPT_DIR)/full_demo && echo -e "$(GREEN) [DEMO] Full demo ran$(NC)" || echo -e "$(RED) [DEMO] Full demo ran with error$(NC)"
+
+# ------------------------------------------------------------
+# INFORMATION
+# ------------------------------------------------------------
+
+info:
+	@echo -e "$(YELLOW) [INFO] Getting package informations$(NC)"
+	@$(PIP) show $(PACKAGE_NAME) >/dev/null 2>&1 && $(PIP) show $(PACKAGE_NAME) && echo -e "$(GREEN) [INFO] Package informations shown$(NC)" || echo -e "$(RED) [INFO] Package not installed$(NC)"
+
+# ------------------------------------------------------------
+# CLEANUP
+# ------------------------------------------------------------
+
+clean:
+	@echo -e "$(YELLOW) [CLEAN] Removing cache, test, log and build files$(NC)"
+	@find . -type d -name "__pycache__" -exec rm -frd {} +
+	@rm -frd *.egg-info *.xml trace htmlcov .pytest_cache jarbin_toolkit_console/log/*
+	@echo -e "$(GREEN) [CLEAN] Done$(NC)"
+
+clean-all:
+	@make -sC lib/action clean || true
+	@make -sC lib/config clean || true
+	@make -sC lib/console clean || true
+	@make -sC lib/error clean || true
+	@make -sC lib/log clean || true
+	@make -sC lib/time clean || true
+
+# ------------------------------------------------------------
+# SAFETY
+# ------------------------------------------------------------
+
+.PHONY: \
+	help \
+	install uninstall reinstall \
+	test check \
+	demo \
+	info \
+	clean

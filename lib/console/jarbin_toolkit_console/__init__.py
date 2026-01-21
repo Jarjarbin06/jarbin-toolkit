@@ -47,6 +47,7 @@ try:
         System,
         Text
     )
+    from jarbin_toolkit_console.console import Console
 
 ## cannot be tested with pytest ##
 

@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel", "setuptools_scm[toml]>=6.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jarbin_toolkit_time"
+version = "0.1.0"
+description = "Time tools (Stop-watch / sleep / pause / etc...)"
+authors = [
+    { name = "Nathan Jarjarbin", email = "nathan.amaraggi@epitech.eu" }
+]
+readme = "README.md"
+requires-python = ">=3.11"
+license = "GPL-3.0-or-later"
+
+dependencies = [
+    "datetime"
+]
+
+classifiers = [
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: OS Independent",
+    "Environment :: Console",
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Terminals",
+    "Topic :: Utilities"
+]
+
+[project.urls]
+Homepage = "https://jarjarbin06.github.io/jarbin-toolkit/"
+Repository = "https://github.com/Jarjarbin06/jarbin-toolkit/"
+Issues = "https://github.com/Jarjarbin06/jarbin-toolkit/issues/"
+
+[tool.setuptools_scm]
+version_scheme = "guess-next-dev"
+local_scheme = "dirty-tag"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["jarbin_toolkit_time*"]
+
+[tool.setuptools.package-data]
+"jarbin_toolkit_time" = ["config.ini"]

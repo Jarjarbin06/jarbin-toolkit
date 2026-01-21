@@ -1,0 +1,8 @@
+#!/bin/bash
+
+make -sC lib/action demo
+make -sC lib/config demo
+make -sC lib/console demo
+make -sC lib/error demo
+make -sC lib/log demo
+make -sC lib/time demo
