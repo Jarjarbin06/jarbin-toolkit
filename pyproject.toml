@@ -3,7 +3,7 @@ requires = ["setuptools>=65.0", "wheel", "setuptools_scm[toml]>=6.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "jarbin_toolkit"
+name = "jarbin-toolkit"
 version = "0.1.0"
 description = "Tools by Jarjarbin06 (Action / Config / Console / Error / Log / Time)"
 authors = [

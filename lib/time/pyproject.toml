@@ -3,7 +3,7 @@ requires = ["setuptools>=65.0", "wheel", "setuptools_scm[toml]>=6.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "jarbin_toolkit_time"
+name = "jarbin-toolkit-time"
 version = "0.1.0.0"
 description = "Time tools (Stop-watch / sleep / pause / etc...)"
 authors = [

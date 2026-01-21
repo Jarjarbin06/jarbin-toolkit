@@ -3,7 +3,7 @@ requires = ["setuptools>=65.0", "wheel", "setuptools_scm[toml]>=6.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "jarbin_toolkit_error"
+name = "jarbin-toolkit-error"
 version = "0.1.0.0"
 description = "Error tools (Formated error / better visual / etc...)"
 authors = [
