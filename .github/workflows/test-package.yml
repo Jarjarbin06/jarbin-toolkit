@@ -41,25 +41,12 @@ jobs:
     - name: Install jarbin-toolkit
       run: |
         ls
-        cd lib/action
-        echo "y" | pip uninstall jarbin-toolkit-action || true
-        pip install -e .
-        cd ../config
-        echo "y" | pip uninstall jarbin-toolkit-config || true
-        pip install -e .
-        cd ../console
-        echo "y" | pip uninstall jarbin-toolkit-console || true
-        pip install -e .
-        cd ../error
-        echo "y" | pip uninstall jarbin-toolkit-error || true
-        pip install -e .
-        cd ../log
-        echo "y" | pip uninstall jarbin-toolkit-log || true
-        pip install -e .
-        cd ../time
-        echo "y" | pip uninstall jarbin-toolkit-time || true
-        pip install -e .
-        cd ../..
+        make -sC lib/action reinstall
+        make -sC lib/config reinstall
+        make -sC lib/error reinstall
+        make -sC lib/log reinstall
+        make -sC lib/time reinstall
+        make -sC lib/console reinstall
     - name: Test with pytest (xml)
       run: |
         pytest --cov=jarbin-toolkit --cov-report=xml --cov-report=term-missing

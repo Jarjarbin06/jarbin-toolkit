@@ -14,7 +14,12 @@ requires-python = ">=3.11"
 license = "GPL-3.0-or-later"
 
 dependencies = [
-    "datetime" #replace with my modules from my library
+    "jarbin-toolkit-action",
+    "jarbin-toolkit-config",
+    "jarbin-toolkit-error",
+    "jarbin-toolkit-log",
+    "jarbin-toolkit-time",
+    "jarbin-toolkit-console"
 ]
 
 classifiers = [
