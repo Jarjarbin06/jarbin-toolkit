@@ -76,7 +76,7 @@ reinstall:
 # TESTS & CHECKS
 # ------------------------------------------------------------
 
-test:
+test: reinstall
 	@echo -e "$(YELLOW) [TEST] Running tests$(NC)"
 	@./$(SCRIPT_DIR)/test-package
 	@echo -e "$(GREEN) [TEST] Tests ran$(NC)"

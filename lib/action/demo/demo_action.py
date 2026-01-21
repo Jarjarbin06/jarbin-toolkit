@@ -13,7 +13,7 @@
 """
 
 
-def system_demo(
+def action_demo(
     ) -> None:
     from jarbin_toolkit_action import (Action, Actions)
 
@@ -90,4 +90,4 @@ def system_demo(
 
 
 if __name__ == "__main__":
-    system_demo()
+    action_demo()

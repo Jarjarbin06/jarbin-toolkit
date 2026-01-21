@@ -16,7 +16,7 @@ PYTHON          ?= python3
 PIP             ?= pip3
 SHELL           := /bin/bash
 SCRIPT_DIR      := script
-PACKAGE_NAME    := jarbin_toolkit_config
+PACKAGE_NAME    := jarbin_toolkit_config_file
 VENV_DIR        := .venv
 
 # Colors (safe for most terminals)
@@ -76,7 +76,7 @@ reinstall:
 # TESTS & CHECKS
 # ------------------------------------------------------------
 
-test:
+test: reinstall
 	@echo -e "$(YELLOW) [TEST] Running tests$(NC)"
 	@./$(SCRIPT_DIR)/test-package
 	@echo -e "$(GREEN) [TEST] Tests ran$(NC)"

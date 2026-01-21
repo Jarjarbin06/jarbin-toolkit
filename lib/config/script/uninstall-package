@@ -1,3 +1,0 @@
-#!/bin/bash
-
-echo "y" | pip uninstall jarbin_toolkit_config || true

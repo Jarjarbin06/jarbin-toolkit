@@ -15,7 +15,7 @@
 """
 
 
-def system_demo(
+def time_demo(
     ) -> None:
     from jarbin_toolkit_time import (Time, StopWatch)
 
@@ -102,9 +102,9 @@ def system_demo(
     # FINAL MESSAGE
     # ============================================================
 
-    print("\n=== SYSTEM MODULE DEMO COMPLETE ===")
+    print("\n=== TIME MODULE DEMO COMPLETE ===")
     print("If all outputs behaved as described, the System module works as expected.")
 
 
 if __name__ == "__main__":
-    system_demo()
+    time_demo()

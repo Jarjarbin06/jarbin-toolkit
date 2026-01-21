@@ -1,3 +1,0 @@
-#!/bin/bash
-
-pip show jarbin_toolkit_config || true

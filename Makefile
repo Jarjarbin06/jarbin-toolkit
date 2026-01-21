@@ -72,38 +72,54 @@ reinstall:
 	@make -s uninstall install
 	@echo -e "$(GREEN) [REINSTALL] Package reinstalled$(NC)"
 
-install-all: install
+install-all:
+	@# independent #
 	@make -sC lib/action install || true
 	@make -sC lib/config install || true
-	@make -sC lib/console install || true
 	@make -sC lib/error install || true
 	@make -sC lib/log install || true
 	@make -sC lib/time install || true
+	@# dependent #
+	@make -sC lib/console install || true
 
-uninstall-all: uninstall
+uninstall-all:
+	@# independent #
+	@make -sC lib/console uninstall || true
 	@make -sC lib/action uninstall || true
 	@make -sC lib/config uninstall || true
-	@make -sC lib/console uninstall || true
 	@make -sC lib/error uninstall || true
 	@make -sC lib/log uninstall || true
+	@# dependent #
 	@make -sC lib/time uninstall || true
 
-reinstall-all: reinstall
+reinstall-all:
+	@# independent #
 	@make -sC lib/action reinstall || true
 	@make -sC lib/config reinstall || true
-	@make -sC lib/console reinstall || true
 	@make -sC lib/error reinstall || true
 	@make -sC lib/log reinstall || true
 	@make -sC lib/time reinstall || true
+	@# dependent #
+	@make -sC lib/console reinstall || true
 
 # ------------------------------------------------------------
 # TESTS & CHECKS
 # ------------------------------------------------------------
 
-test:
+test: reinstall
 	@echo -e "$(YELLOW) [TEST] Running tests$(NC)"
 	@./$(SCRIPT_DIR)/test-package
 	@echo -e "$(GREEN) [TEST] Tests ran$(NC)"
+
+test-all:
+	@# independent #
+	@make -sC lib/action test || true
+	@make -sC lib/config test || true
+	@make -sC lib/error test || true
+	@make -sC lib/log test || true
+	@make -sC lib/time test || true
+	@# dependent #
+	@make -sC lib/console test || true
 
 check:
 	@echo -e "$(YELLOW) [CHECK] Checking package$(NC)"
@@ -136,13 +152,15 @@ clean:
 	@rm -frd *.egg-info *.xml trace htmlcov .pytest_cache jarbin_toolkit_console/log/*
 	@echo -e "$(GREEN) [CLEAN] Done$(NC)"
 
-clean-all: clean
+clean-all:
+	@# independent #
 	@make -sC lib/action clean || true
 	@make -sC lib/config clean || true
-	@make -sC lib/console clean || true
 	@make -sC lib/error clean || true
 	@make -sC lib/log clean || true
 	@make -sC lib/time clean || true
+	@# dependent #
+	@make -sC lib/console clean || true
 
 # ------------------------------------------------------------
 # SAFETY

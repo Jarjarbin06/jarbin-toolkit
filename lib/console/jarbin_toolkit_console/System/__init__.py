@@ -12,7 +12,7 @@
 from jarbin_toolkit_action import Action, Actions
 from jarbin_toolkit_time import Time, StopWatch
 from jarbin_toolkit_log import Log
-from jarbin_toolkit_config import Config
+from jarbin_toolkit_config_file import Config
 import jarbin_toolkit_error as Error
 
 
