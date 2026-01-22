@@ -3,9 +3,9 @@ requires = ["setuptools>=65.0", "wheel", "setuptools_scm[toml]>=6.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "jarbin-toolkit-config"
+name = "jarbin-toolkit-log"
 version = "0.1.0.0"
-description = "Config tools (Manage config files)"
+description = "Logging tools (Manage log files)"
 authors = [
     { name = "Nathan Jarjarbin", email = "nathan.amaraggi@epitech.eu" }
 ]
@@ -39,5 +39,5 @@ local_scheme = "dirty-tag"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["jarbin_toolkit_config*"]
+include = ["jarbin_toolkit_log*"]
 
