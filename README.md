@@ -3,7 +3,7 @@
 **README** = *2026-01-21 09:20 UTC+1(Paris)*</small>\
 \
 <img src="NONE" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
-<img src="NONE" alt="error loading Jarbin-ToolKit:Error Logo" width="49%" style="display:inline-block;">
+<img src="NONE" alt="error loading Jarbin-ToolKit Logo" width="49%" style="display:inline-block;">
 
 # **jarbin-toolkit** v0.1
 <details>
