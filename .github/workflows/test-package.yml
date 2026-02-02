@@ -41,12 +41,8 @@ jobs:
     - name: Install jarbin-toolkit
       run: |
         ls
-        make -sC lib/action reinstall
-        make -sC lib/config reinstall
-        make -sC lib/error reinstall
-        make -sC lib/log reinstall
-        make -sC lib/time reinstall
-        make -sC lib/console reinstall
+        make reinstall-all
+        make reinstall
     - name: Test with pytest (xml)
       run: |
         pytest --cov=jarbin-toolkit --cov-report=xml --cov-report=term-missing
