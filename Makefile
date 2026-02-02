@@ -131,8 +131,16 @@ check:
 # ------------------------------------------------------------
 
 demo:
-	@echo -e "$(YELLOW) [DEMO] Running full demo$(NC)"
-	@./$(SCRIPT_DIR)/full_demo && echo -e "$(GREEN) [DEMO] Full demo ran$(NC)" || echo -e "$(RED) [DEMO] Full demo ran with error$(NC)"
+	@echo -e "$(YELLOW) [DEMO] Running Demo$(NC)"
+	@# independent #
+	@make -sC lib/action reinstall || true
+	@make -sC lib/config reinstall || true
+	@make -sC lib/error reinstall || true
+	@make -sC lib/log reinstall || true
+	@make -sC lib/time reinstall || true
+	@# dependent #
+	@make -sC lib/console reinstall || true
+	@echo -e "$(GREEN) [DEMO] Demo ran$(NC)"
 
 # ------------------------------------------------------------
 # INFORMATION
