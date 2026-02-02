@@ -47,7 +47,7 @@ jobs:
         mkdir tests
     - name: Test with pytest (xml)
       run: |
-        pytest --cov=jarbin-toolkit --cov-report=xml --cov-report=term-missing
+        pytest --cov=. --cov-report=xml --cov-report=term-missing
     - name: Rename coverage file
       run: |
         mv coverage.xml coverage_${{ matrix.python-version }}.xml
