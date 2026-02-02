@@ -68,6 +68,12 @@ class Config:
             if not data and self.file_name == "config.ini":
                 data = {}
 
+            try:
+                open(str(self.path) + str(self.file_name), 'x').close()
+
+            except FileExistsError:
+                pass
+
             with open(str(self.path) + str(self.file_name), 'w') as config_file:
                 for key in data:
                     self.config[key] = data[key]
