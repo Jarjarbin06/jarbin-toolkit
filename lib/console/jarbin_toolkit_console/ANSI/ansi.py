@@ -74,7 +74,7 @@ class ANSI(Format):
         from jarbin_toolkit_console.Animation.animation import Animation
         from jarbin_toolkit_console.Animation.progressbar import ProgressBar
         from jarbin_toolkit_console.Text.text import Text
-        from jarbin_toolkit_console.System.stopwatch import StopWatch
+        from jarbin_toolkit_console.System import StopWatch
 
         if type(other) in [ANSI]:
             return ANSI(f"{self.sequence}{other.sequence}")
@@ -131,6 +131,3 @@ class ANSI(Format):
         """
 
         return f"ANSI({repr(self.sequence)})"
-
-
-if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("INFO", "init", "ANSI.ANSI: created")

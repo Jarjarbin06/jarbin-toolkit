@@ -17,9 +17,6 @@ from jarbin_toolkit_console.System.setting import Setting
 Setting.update()
 
 
-if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("INFO", "init", "Animation.BasePack: imported")
-
-
 class BasePack:
     """
         BasePack class.
@@ -65,19 +62,6 @@ class BasePack:
             Parameters:
                 style (Style, optional): Style of the BasePack animations.
         """
-
-        from jarbin_toolkit_console.Animation.style import Style
-
-        if not type(style) in [Style]:
-
-            ## cannot be tested with pytest ##
-
-            from jarbin_toolkit_console.Error.error import ErrorType # pragma: no cover
-            from jarbin_toolkit_console import quit # pragma: no cover
-
-            if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("ERROR", "type", f"Animation.BasePack.update: style is of an unsupported type (supported: Style ; current: {type(style)})") # pragma: no cover
-            quit() # pragma: no cover
-            raise ErrorType() from None # pragma: no cover
 
         BasePack.P_SLIDE_R = [
             f"{style.border_left}{style.off}{style.off}{style.off}{style.off}{style.off}{style.off}{style.off}{style.off}{style.off}{style.off}{style.off}{style.off}{style.off}{style.off}{style.border_right}",
@@ -220,6 +204,3 @@ class BasePack:
         BasePack.P_EMPTY = [
             f"{style.border_left}{style.off}{style.off}{style.off}{style.off}{style.off}{style.off}{style.off}{style.off}{style.off}{style.off}{style.off}{style.off}{style.off}{style.off}{style.border_right}"
         ]
-
-
-if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("INFO", "init", "Animation.BasePack: created")

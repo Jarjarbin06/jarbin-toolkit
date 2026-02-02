@@ -19,9 +19,6 @@ from jarbin_toolkit_console.System.setting import Setting
 Setting.update()
 
 
-if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("INFO", "init", "Text.Format: imported")
-
-
 class Format:
     """
         Format class.
@@ -310,6 +307,7 @@ class Format:
 
         return Format.tree(
             {
+                "Console": "",
                 "Text": [
                     "Text",
                     "Format"
@@ -329,11 +327,7 @@ class Format:
                     "Line"
                 ],
                 "System": [
-                    "Console",
                     "Setting"
                 ]
             },
             "jarbin_toolkit_console")
-
-
-if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("INFO", "init", "Text.Format: created")

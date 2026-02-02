@@ -18,9 +18,6 @@ from jarbin_toolkit_console.System.setting import Setting
 Setting.update()
 
 
-if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("INFO", "init", "Animation.Animation: imported")
-
-
 class Animation(Format):
     """
         Animation class.
@@ -42,16 +39,6 @@ class Animation(Format):
             Parameters:
                 animation (list[str] | str, optional): list of step
         """
-
-        ## cannot be tested with pytest ##
-
-        if not isinstance(animation, (list, str)): # pragma: no cover
-            from jarbin_toolkit_console.Error.error import ErrorType # pragma: no cover
-            from jarbin_toolkit_console import quit # pragma: no cover
-
-            if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("ERROR", "type", f"Animation.Animation.__init__: animation is of an unsupported type (supported: list[Any], str ; current: {type(animation)})") # pragma: no cover
-            quit() # pragma: no cover
-            raise ErrorType(link=(f"{Setting.S_PACKAGE_PATH}Animation/animation", 36)) from None # pragma: no cover
 
         self.animation : list[str] = []
 
@@ -82,17 +69,7 @@ class Animation(Format):
 
         from jarbin_toolkit_console.Text.text import Text
         from jarbin_toolkit_console.ANSI.ansi import ANSI
-        from jarbin_toolkit_console.System.stopwatch import StopWatch
-
-        ## cannot be tested with pytest ##
-
-        if not isinstance(other, (Animation, ANSI, Text, StopWatch, str)): # pragma: no cover
-            from jarbin_toolkit_console.Error.error import ErrorType # pragma: no cover
-            from jarbin_toolkit_console import quit # pragma: no cover
-
-            if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("ERROR", "type", f"Animation.Animation.__add__: other is of an unsupported type (supported: Animation, ANSI, Text, StopWatch, str ; current: {type(other)})") # pragma: no cover
-            quit() # pragma: no cover
-            raise ErrorType() from None # pragma: no cover
+        from jarbin_toolkit_console.System import StopWatch
 
         if type(other) in [Animation]:
             return Animation(self.animation + other.animation)
@@ -117,16 +94,6 @@ class Animation(Format):
                 str: Animation string
         """
 
-        ## cannot be tested with pytest ##
-
-        if not isinstance(item, int): # pragma: no cover
-            from jarbin_toolkit_console.Error.error import ErrorType # pragma: no cover
-            from jarbin_toolkit_console import quit # pragma: no cover
-
-            if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("ERROR", "type", f"Animation.Animation.__getitem__: item is of an unsupported type (supported: int ; current: {type(item)})") # pragma: no cover
-            quit() # pragma: no cover
-            raise ErrorType() from None # pragma: no cover
-
         if self.is_last():
             return str(self.animation[self.length - 1])
 
@@ -148,13 +115,7 @@ class Animation(Format):
                 str: Animation string
         """
 
-        from jarbin_toolkit_console.ANSI.ansi import ANSI
         from jarbin_toolkit_console.ANSI.color import Color
-
-        ## cannot be tested with pytest ##
-
-        if not isinstance(color, ANSI): # pragma: no cover
-            if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("WARN", "type", f"Animation.Animation.__str__: color is of an unsupported type (supported: ANSI ; current: {type(color)})") # pragma: no cover
 
         return f"{color}{str(self[self.step])}{Color(Color.C_RESET)}"
 
@@ -194,11 +155,6 @@ class Animation(Format):
                 auto_reset (bool, optional): Automatically reset the animation. Defaults to False.
         """
 
-        ## cannot be tested with pytest ##
-
-        if not isinstance(auto_reset, bool): # pragma: no cover
-            if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("WARN", "type", f"Animation.Animation.update: auto_reset is of an unsupported type (supported: bool ; current: {type(auto_reset)})") # pragma: no cover
-
         self.step += 1
 
         if self.is_last() and auto_reset:
@@ -222,17 +178,8 @@ class Animation(Format):
                 str: Animation string
         """
 
-        from jarbin_toolkit_console.ANSI.ansi import ANSI
         from jarbin_toolkit_console.ANSI.cursor import Cursor
         from jarbin_toolkit_console.ANSI.color import Color
-
-        ## cannot be tested with pytest ##
-
-        if not isinstance(color, (ANSI, int)): # pragma: no cover
-            if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("WARN", "type", f"Animation.Animation.render: color is of an unsupported type (supported: ANSI, int ; current: {type(color)})") # pragma: no cover
-
-        if not isinstance(delete, bool): # pragma: no cover
-            if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("WARN", "type", f"Animation.Animation.render: delete is of an unsupported type (supported: bool ; current: {type(delete)})") # pragma: no cover
 
         if type(color) == int:
             color = Color(color)
@@ -282,5 +229,3 @@ class Animation(Format):
 
         return f"Animation({repr(self.animation)})"
 
-
-if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("INFO", "init", "Animation.Animation: created")

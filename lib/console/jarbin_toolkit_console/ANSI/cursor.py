@@ -17,9 +17,6 @@ from jarbin_toolkit_console.System.setting import Setting
 Setting.update()
 
 
-if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("INFO", "init", "ANSI.Cursor: imported")
-
-
 class Cursor:
     """
         Cursor class.
@@ -257,6 +254,3 @@ class Cursor:
         from jarbin_toolkit_console.ANSI.ansi import ANSI
 
         return ANSI(f"{ANSI.ESC}?25l")
-
-
-if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("INFO", "init", "ANSI.Cursor: created")

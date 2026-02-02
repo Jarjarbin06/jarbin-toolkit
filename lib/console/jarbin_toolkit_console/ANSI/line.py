@@ -17,9 +17,6 @@ from jarbin_toolkit_console.System.setting import Setting
 Setting.update()
 
 
-if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("INFO", "init", "ANSI.Line: imported")
-
-
 class Line:
     """
         Line class.
@@ -122,6 +119,3 @@ class Line:
         from jarbin_toolkit_console.ANSI.cursor import Cursor
 
         return Cursor.previous(n) + Line.clear_line()
-
-
-if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("INFO", "init", "ANSI.Line: created")

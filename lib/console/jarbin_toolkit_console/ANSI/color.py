@@ -17,9 +17,6 @@ from jarbin_toolkit_console.System.setting import Setting
 Setting.update()
 
 
-if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("INFO", "init", "ANSI.Color: imported")
-
-
 class Color:
     """
         Color class.
@@ -309,6 +306,3 @@ class Color:
         """
 
         return Color.rgb_bg(31, 72, 94)
-
-
-if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("INFO", "init", "ANSI.Color: created")

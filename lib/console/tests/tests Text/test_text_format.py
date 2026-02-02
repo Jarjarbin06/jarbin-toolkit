@@ -194,7 +194,9 @@ def test_format_module_tree():
     assert "jarbin_toolkit_console/" in output
     assert " Text/" in output
     assert " System/" in output
-    assert " Time" in output
+    assert " ANSI/" in output
+    assert " Animation/" in output
+    assert " Console" in output
 
 
 quit(delete_log=True)

@@ -40,7 +40,7 @@ def _fatal_error(
 ##########
 
 
-"""try:
+try:
     from jarbin_toolkit_console import (
         Animation,
         ANSI,
@@ -52,15 +52,8 @@ def _fatal_error(
 ## cannot be tested with pytest ##
 
 except Exception as error:  # pragma: no cover
-    _fatal_error(error)  # pragma: no cover"""
+    _fatal_error(error)  # pragma: no cover
 
-from jarbin_toolkit_console import (
-    Animation,
-    ANSI,
-    System,
-    Text
-)
-from jarbin_toolkit_console.console import Console
 
 #############
 # Functions #
@@ -87,7 +80,7 @@ def _banner(
     desc_t = Text.Text("   Text • Animation • ANSI • Error • System   ").italic()
     line_t = epitech + ("─" * banner_size) + reset
 
-    System.Console.print(line_t, offset_t + title_t + " " + version_t + offset_t, offset_t + desc_t + offset_t, line_t, separator="\n")
+    Console.print(line_t, offset_t + title_t + " " + version_t + offset_t, offset_t + desc_t + offset_t, line_t, separator="\n")
 
 
 def init(
@@ -142,7 +135,7 @@ def quit(
         System.Setting.S_CONFIG_FILE.set("SETTING", "opened-log", "null") # pragma: no cover
 
         if show: # pragma: no cover
-            System.Console.print(str(System.Setting.S_LOG_FILE)) # pragma: no cover
+            Console.print(str(System.Setting.S_LOG_FILE)) # pragma: no cover
 
         if delete_log: # pragma: no cover
             System.Setting.S_LOG_FILE.close(delete=True) # pragma: no cover
@@ -209,6 +202,7 @@ __all__ : list[str] = [
     'ANSI',
     'System',
     'Text',
+    'Console',
     'C_RESET',
     'C_BOLD',
     'C_ITALIC',

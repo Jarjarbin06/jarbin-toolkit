@@ -18,9 +18,6 @@ from jarbin_toolkit_console.System.setting import Setting
 Setting.update()
 
 
-if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("INFO", "init", "Animation.ProgressBar: imported")
-
-
 class ProgressBar(Format):
     """
         ProgressBar class.
@@ -249,6 +246,3 @@ class ProgressBar(Format):
         """
 
         return f"ProgressBar({repr(self.length)}, animation=[{repr(self.animation[0])}, ..., {repr(self.animation[-1])}], style={repr(self.style)}, percent_style={repr(self.percent_style)}, spinner={repr(self.spinner)}, spinner_position={repr(self.spinner_position)})"
-
-
-if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("INFO", "init", "Animation.ProgressBar: created")

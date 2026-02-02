@@ -17,9 +17,6 @@ from jarbin_toolkit_console.System.setting import Setting
 Setting.update()
 
 
-if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("INFO", "init", "ANSI.BasePack: imported")
-
-
 class BasePack:
     """
         BasePack class.
@@ -56,6 +53,3 @@ class BasePack:
         BasePack.P_WARNING = (Color(Color.C_BG_DARK_YELLOW), Color(Color.C_FG_DARK_YELLOW))
         BasePack.P_VALID = (Color(Color.C_BG_DARK_GREEN), Color(Color.C_FG_DARK_GREEN))
         BasePack.P_INFO = (Color(Color.C_BG), Color(Color.C_RESET))
-
-
-if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("INFO", "init", "ANSI.BasePack: created")

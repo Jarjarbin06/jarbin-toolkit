@@ -3,7 +3,7 @@ from sys import stderr
 from time import time
 
 
-from jarbin_toolkit_console.System import Console
+from jarbin_toolkit_console import Console
 from jarbin_toolkit_console import (init, quit)
 
 

@@ -17,9 +17,6 @@ from jarbin_toolkit_console.System.setting import Setting
 Setting.update()
 
 
-if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("INFO", "init", "Animation.Style: imported")
-
-
 class Style:
     """
         Style class.
@@ -85,6 +82,3 @@ class Style:
         """
 
         return f"Style({repr(self.on)}, {repr(self.off)}, {repr(self.arrow_left)}, {repr(self.arrow_right)}, {repr(self.border_left)}, {repr(self.border_right)})"
-
-
-if Setting.S_SETTING_LOG_MODE: Setting.S_LOG_FILE.log("INFO", "init", "Animation.Style: created")
