@@ -9,7 +9,7 @@
 #############################
 
 
-from jarbin_toolkit_config import Config
+from jarbin_toolkit_config.config import Config
 
 
 __all__ : list[str] = [

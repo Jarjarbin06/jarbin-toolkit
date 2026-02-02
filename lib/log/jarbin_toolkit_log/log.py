@@ -186,6 +186,7 @@ class Log:
         """
 
         from os import get_terminal_size
+        from sys import stdin
 
         log_str = self.read()
 
@@ -198,7 +199,7 @@ class Log:
         start : int = log_str.index("---START---\n") + len("---START---\n")
         end : int = log_str.index("----END----\n")
         logs : list = [lines.split(" | ") for lines in log_str[start:end].splitlines()]
-        t_size = get_terminal_size().columns
+        t_size = get_terminal_size().columns if stdin.isatty() else 100
         footer : str = f"\x1b[4m\x1b[7m|\x1b[0m\x1b[1m\x1b[4m"
         detail_size : int
         string : str = ""
