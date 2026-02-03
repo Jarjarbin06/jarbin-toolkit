@@ -1,18 +1,18 @@
 <small>last update : 
 **PACKAGE** = *2026-01-21 09:20 UTC+1(Paris)* ; 
-**README** = *2026-01-21 09:20 UTC+1(Paris)*</small>\
+**README** = *2026-02-03 17:59 UTC+1(Paris)*</small>\
 \
 <img src="NONE" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="NONE" alt="error loading Jarbin-ToolKit:Log Logo" width="49%" style="display:inline-block;">
 
-# **Jarbin-ToolKit:Log** v0.1.0.0
+# **Jarbin-ToolKit:Log** v0.1.1.0
 <details>
 <summary>Latest development version</summary>
-🟠 UNDER DEVELOPMENT 🟠 v0.1.0.0 🟠
+🟠 UNDER DEVELOPMENT 🟠 v0.1.1.0 🟠
 </details>
 <details>
 <summary>Latest release</summary>
-🟢 RELEASED 🟢 vNone 🟢
+🟢 RELEASED 🟢 v0.1.0.0 🟢
 </details>
 
 [![Python package](None)](None)
