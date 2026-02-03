@@ -133,13 +133,13 @@ check:
 demo:
 	@echo -e "$(YELLOW) [DEMO] Running Demo$(NC)"
 	@# independent #
-	@make -sC lib/action reinstall || true
-	@make -sC lib/config reinstall || true
-	@make -sC lib/error reinstall || true
-	@make -sC lib/log reinstall || true
-	@make -sC lib/time reinstall || true
+	@make -sC lib/action demo || true
+	@make -sC lib/config demo || true
+	@make -sC lib/error demo || true
+	@make -sC lib/log demo || true
+	@make -sC lib/time demo || true
 	@# dependent #
-	@make -sC lib/console reinstall || true
+	@make -sC lib/console demo || true
 	@echo -e "$(GREEN) [DEMO] Demo ran$(NC)"
 
 # ------------------------------------------------------------
