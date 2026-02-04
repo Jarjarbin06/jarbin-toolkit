@@ -1,0 +1,3 @@
+#!/bin/bash
+
+flake8 . --count --exit-zero --max-line-length=100 --statistic

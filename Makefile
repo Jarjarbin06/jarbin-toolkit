@@ -46,6 +46,7 @@ help:
 	@echo ""
 	@echo -e "\tmake test\t\Test the package (pytest)"
 	@echo -e "\tmake check\t\tShow package info (PyPI)"
+	@echo -e "\tmake check-style\t\tAnalyze package coding style (flake8)"
 	@echo ""
 	@echo -e "\tmake demo\t\tRun the demo"
 	@echo ""
@@ -125,6 +126,11 @@ check:
 	@echo -e "$(YELLOW) [CHECK] Checking package$(NC)"
 	@./$(SCRIPT_DIR)/check-package
 	@echo -e "$(GREEN) [CHECK] Package checked$(NC)"
+
+check-style:
+	@echo -e "$(YELLOW) [CHECK] Checking coding style$(NC)"
+	@./$(SCRIPT_DIR)/check-style
+	@echo -e "$(GREEN) [CHECK] Coding style checked$(NC)"
 
 # ------------------------------------------------------------
 # DEMOS
