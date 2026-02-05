@@ -23,12 +23,19 @@ def test_log_str(
     assert "this is a test" in s
     assert "this is a custom comment" in s
 
+def test_log_edit_after_closing(
+    ) -> None:
+    log = Log("tests", "log_test")
+    s = str(log)
+    log.comment("this is a custom comment")
+    assert str(log) == s
+
 
 def test_log_repr(
     ) -> None:
     log = Log("tests", "log_test")
     s = repr(log)
-    assert s == "Log(\'tests/\', \'log_test\')"
+    assert s == "Log(\'tests/\', \'log_test\', \'log\')"
 
 
 def test_log_delete(

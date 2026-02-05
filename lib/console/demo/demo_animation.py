@@ -26,15 +26,12 @@
 
 def animation_demo(
     ) -> None:
-    from jarbin_toolkit_console import Animation, System
+    from jarbin_toolkit_console import Animation, Console
     from jarbin_toolkit_console.Animation import (
         ProgressBar,
         Spinner,
         Style
     )
-
-
-    Console = System.Console
 
 
     # ============================================================

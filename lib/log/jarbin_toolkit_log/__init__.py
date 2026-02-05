@@ -11,6 +11,7 @@
 
 from jarbin_toolkit_log.log import Log
 
+
 __all__ : list[str] = [
     'Log'
 ]

@@ -23,9 +23,8 @@
 
 def ansi_demo(
     ) -> None:
-    from jarbin_toolkit_console import ANSI, System
+    from jarbin_toolkit_console import ANSI, Console, System
 
-    Console = System.Console
     Time = System.Time
 
 

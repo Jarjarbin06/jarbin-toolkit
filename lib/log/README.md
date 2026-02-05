@@ -5,10 +5,10 @@
 <img src="NONE" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="NONE" alt="error loading Jarbin-ToolKit:Log Logo" width="49%" style="display:inline-block;">
 
-# **Jarbin-ToolKit:Log** v0.1.1.0
+# **Jarbin-ToolKit:Log** v0.2.0.0
 <details>
 <summary>Latest development version</summary>
-🟠 UNDER DEVELOPMENT 🟠 v0.1.1.0 🟠
+🟠 UNDER DEVELOPMENT 🟠 v0.2.0.0 🟠
 </details>
 <details>
 <summary>Latest release</summary>
@@ -94,6 +94,10 @@ from jarbin_toolkit_log import Log
 
 
 ## Release-Notes
+* #### v0.2.0:
+    *   **[ADD]** modification not allowed after closing or after opening and existing file
+    *   **[UPDATE]** add option to choose between `.log` or `log.json` file\
+(`.log` for more human readability, `.json` for more computer readability)
 * #### v0.1.0:
     *   **[UPDATE]** `jarbin_toolkit_log` update (removed unlinked sub-modules)
     *   **[INIT]** add `epitech_console` to jarbin-toolkit (renamed `jarbin_toolkit_log`)

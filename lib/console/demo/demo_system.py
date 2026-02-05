@@ -22,7 +22,7 @@
 
 def system_demo(
     ) -> None:
-    from jarbin_toolkit_console import System
+    from jarbin_toolkit_console import System, Console
 
     Time = System.Time
     StopWatch = System.StopWatch
@@ -35,22 +35,22 @@ def system_demo(
     # TIME.WAIT
     # ============================================================
 
-    print("\n=== TIME.WAIT ===")
+    Console.print("\n=== TIME.WAIT ===")
 
-    print("Waiting 1 second...")
+    Console.print("Waiting 1 second...")
     Time.wait(1)
 
-    print("Waiting 0.3 second...")
+    Console.print("Waiting 0.3 second...")
     Time.wait(0.3)
 
-    print("Done waiting")
+    Console.print("Done waiting")
 
 
     # ============================================================
     # TIME.PAUSE
     # ============================================================
 
-    print("\n=== TIME.PAUSE ===")
+    Console.print("\n=== TIME.PAUSE ===")
 
     Time.pause("Press ENTER to continue after manual confirmation")
 
@@ -59,35 +59,35 @@ def system_demo(
     # STOPWATCH – BASIC
     # ============================================================
 
-    print("\n=== STOPWATCH BASIC ===")
+    Console.print("\n=== STOPWATCH BASIC ===")
 
     sw = StopWatch(start=True)
     Time.wait(1)
     sw.stop()
 
     elapsed = sw.elapsed()
-    print(f"Elapsed time (≈1s): {elapsed:.3f} seconds")
+    Console.print(f"Elapsed time (≈1s): {elapsed:.3f} seconds")
 
 
     # ============================================================
     # STOPWATCH – MANUAL START / STOP
     # ============================================================
 
-    print("\n=== STOPWATCH MANUAL START / STOP ===")
+    Console.print("\n=== STOPWATCH MANUAL START / STOP ===")
 
     sw = StopWatch()
     sw.start()
     Time.wait(0.5)
     sw.stop()
 
-    print(f"Elapsed time (≈0.5s): {sw.elapsed():.3f} seconds")
+    Console.print(f"Elapsed time (≈0.5s): {sw.elapsed():.3f} seconds")
 
 
     # ============================================================
     # STOPWATCH – UPDATE
     # ============================================================
 
-    print("\n=== STOPWATCH UPDATE ===")
+    Console.print("\n=== STOPWATCH UPDATE ===")
 
     sw = StopWatch(start=True)
     Time.wait(0.3)
@@ -96,24 +96,24 @@ def system_demo(
     sw.update()
     sw.stop()
 
-    print(f"Elapsed time after updates (≈0.6s): {sw.elapsed():.3f} seconds")
+    Console.print(f"Elapsed time after updates (≈0.6s): {sw.elapsed():.3f} seconds")
 
 
     # ============================================================
     # STOPWATCH – RESET
     # ============================================================
 
-    print("\n=== STOPWATCH RESET ===")
+    Console.print("\n=== STOPWATCH RESET ===")
 
     sw.reset()
-    print(f"Elapsed after reset (should be 0): {sw.elapsed():.3f} seconds")
+    Console.print(f"Elapsed after reset (should be 0): {sw.elapsed():.3f} seconds")
 
 
     # ============================================================
     # ACTION – BASIC
     # ============================================================
 
-    print("\n=== ACTION BASIC ===")
+    Console.print("\n=== ACTION BASIC ===")
 
     def say_hello(name):
         Console.print(f"Hello {name}")
@@ -122,14 +122,14 @@ def system_demo(
 
     action.function(*action.args, **action.kwargs)
 
-    print("\n(Action executed manually)")
+    Console.print("\n(Action executed manually)")
 
 
     # ============================================================
     # ACTION – WITH KEYWORDS
     # ============================================================
 
-    print("\n=== ACTION WITH KWARGS ===")
+    Console.print("\n=== ACTION WITH KWARGS ===")
 
     def show_data(a, b, c=0):
         Console.print(f"a={a}, b={b}, c={c}")
@@ -137,28 +137,28 @@ def system_demo(
     action = Action("data_action", show_data, 1, 2, c=3)
     action.function(*action.args, **action.kwargs)
 
-    print("\n(Action with kwargs executed)")
+    Console.print("\n(Action with kwargs executed)")
 
 
     # ============================================================
     # ACTIONS – SINGLE ACTION
     # ============================================================
 
-    print("\n=== ACTIONS SINGLE ===")
+    Console.print("\n=== ACTIONS SINGLE ===")
 
     actions = Actions(action)
 
     for act in actions.actions:
         act.function(*act.args, **act.kwargs)
 
-    print("\n(Actions container with one Action works)")
+    Console.print("\n(Actions container with one Action works)")
 
 
     # ============================================================
     # ACTIONS – MULTIPLE ACTIONS
     # ============================================================
 
-    print("\n=== ACTIONS MULTIPLE ===")
+    Console.print("\n=== ACTIONS MULTIPLE ===")
 
     a1 = Action("a1", Console.print, "First action")
     a2 = Action("a2", Console.print, "Second action")
@@ -169,48 +169,48 @@ def system_demo(
     for act in actions.actions:
         act.function(*act.args, **act.kwargs)
 
-    print("\n(All actions executed in order)")
+    Console.print("\n(All actions executed in order)")
 
 
     # ============================================================
     # CONFIG – EXIST (EXISTING)
     # ============================================================
 
-    print("\n=== CONFIG EXIST (EXISTING) ===")
+    Console.print("\n=== CONFIG EXIST (EXISTING) ===")
 
     config_path = "./demo/output"
 
     exists = Config.exist(config_path)
-    print(f"Config exists before deletion: {exists}")
+    Console.print(f"Config exists before deletion: {exists}")
 
 
     # ============================================================
     # CONFIG – DELETE
     # ============================================================
 
-    print("\n=== CONFIG DELETE ===")
+    Console.print("\n=== CONFIG DELETE ===")
 
     config = Config(config_path)
     config.delete(config_path)
     exists = Config.exist(config_path)
-    print(f"Config do not exist after deletion: {not exists}")
+    Console.print(f"Config do not exist after deletion: {not exists}")
 
 
     # ============================================================
     # CONFIG – EXIST WITH FILE NAME
     # ============================================================
 
-    print("\n=== CONFIG EXIST WITH FILE NAME ===")
+    Console.print("\n=== CONFIG EXIST WITH FILE NAME ===")
 
     exists = Config.exist(config_path, file_name="config.ini")
-    print(f"Config do not exists with explicit file name: {not exists}")
+    Console.print(f"Config do not exists with explicit file name: {not exists}")
 
 
     # ============================================================
     # CONFIG – CREATE
     # ============================================================
 
-    print("\n=== CONFIG CREATE ===")
+    Console.print("\n=== CONFIG CREATE ===")
 
     config = Config(config_path, {
         "GENERAL": {
@@ -224,29 +224,29 @@ def system_demo(
     })
 
     exists = Config.exist(config_path)
-    print(f"Config exists after creation: {exists}")
+    Console.print(f"Config exists after creation: {exists}")
 
 
     # ============================================================
     # CONFIG – READ
     # ============================================================
 
-    print("\n=== CONFIG READ ===")
+    Console.print("\n=== CONFIG READ ===")
 
     for section, values in config.config.items():
-        print(f"[{section}]")
+        Console.print(f"[{section}]")
         for k, v in values.items():
-            print(f"  {k} = {v}")
+            Console.print(f"  {k} = {v}")
 
-    print("\n(Config read successfully)")
+    Console.print("\n(Config read successfully)")
 
 
     # ============================================================
     # FINAL MESSAGE
     # ============================================================
 
-    print("\n=== SYSTEM MODULE DEMO COMPLETE ===")
-    print("If all outputs behaved as described, the System module works as expected.")
+    Console.print("\n=== SYSTEM MODULE DEMO COMPLETE ===")
+    Console.print("If all outputs behaved as described, the System module works as expected.")
 
 
 if __name__ == "__main__":

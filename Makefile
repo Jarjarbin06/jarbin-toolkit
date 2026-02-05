@@ -82,26 +82,24 @@ install-all:
 	@make -sC lib/time install || true
 	@# dependent #
 	@make -sC lib/console install || true
+	@# parent #
+	@make -s install
 
 uninstall-all:
-	@# independent #
+	@# parent #
+	@make -s uninstall
+	@# dependent #
 	@make -sC lib/console uninstall || true
+	@# independent #
 	@make -sC lib/action uninstall || true
 	@make -sC lib/config uninstall || true
 	@make -sC lib/error uninstall || true
 	@make -sC lib/log uninstall || true
-	@# dependent #
 	@make -sC lib/time uninstall || true
 
 reinstall-all:
-	@# independent #
-	@make -sC lib/action reinstall || true
-	@make -sC lib/config reinstall || true
-	@make -sC lib/error reinstall || true
-	@make -sC lib/log reinstall || true
-	@make -sC lib/time reinstall || true
-	@# dependent #
-	@make -sC lib/console reinstall || true
+	@make uninstall-all || true
+	@make install-all || true
 
 # ------------------------------------------------------------
 # TESTS & CHECKS

@@ -39,9 +39,8 @@
 
 def text_demo(
     ) -> None:
-    from jarbin_toolkit_console import Text, ANSI, System
+    from jarbin_toolkit_console import Text, ANSI, Console
 
-    Console = System.Console
     Format = Text.Format
 
 

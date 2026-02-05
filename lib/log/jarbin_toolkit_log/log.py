@@ -23,7 +23,8 @@ class Log:
     def __init__(
             self,
             path : str,
-            file_name : str | None = None
+            file_name : str | None = None,
+            json : bool = False
         ) -> None:
         """
             Log class constructor.
@@ -31,6 +32,7 @@ class Log:
             Parameters:
                 path (str): path to log file
                 file_name (str | None, optional): name of log file
+                json (bool, optional): switch from log file to JSON file
         """
 
         from datetime import datetime
@@ -38,13 +40,21 @@ class Log:
 
         self.log_path : str = (path if path[-1] in ["/", "\\"] else path + ("\\" if system() == "Windows" else "/"))
         self.log_file_name : str = str(datetime.now()).replace(":", "_") if not file_name else file_name
+        self.log_file_type : str = "json" if json else "log"
 
-        try :
-            open(f"{self.log_path}{self.log_file_name}.log", 'x').close()
+        try:
+            open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'x').close()
 
-            with open(f"{self.log_path}{self.log_file_name}.log", 'a') as log_file:
-                log_file.write("   date          time      | [TYPE]  title      | detail\n\n---START---")
+            with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'a') as log_file:
+                if self.log_file_type == "log" :
+                    log_file.write("   date          time      | [TYPE]  title      | detail\n\n---START---")
+                elif self.log_file_type == "json":
+                    log_file.write(
+                        "{\n    \"file_name\": \"" + f"{self.log_file_name}.{self.log_file_type}" +
+                        "\",\n    \"logs\":\n    [")
             log_file.close()
+
+            self.closed : bool = False
 
 
         ## cannot be tested with pytest ##
@@ -53,19 +63,25 @@ class Log:
             raise error # pragma: no cover
 
         except FileExistsError:
-            pass
+            self.closed : bool = True
 
-        try :
-            with open(f"{self.log_path}{self.log_file_name}.log", 'r') as log_file:
-                string = log_file.read()
-            log_file.close()
+        if not self.closed:
+            try:
+                with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'r') as log_file:
+                    string = log_file.read()
+                log_file.close()
 
-            assert "   date          time      | [TYPE]  title      | detail\n\n---START---" in string
+                if self.log_file_type == "log":
+                    assert "   date          time      | [TYPE]  title      | detail\n\n---START---" in string
 
-        ## cannot be tested with pytest ##
+                elif self.log_file_type == "json":
+                    assert ("{\n    \"file_name\": \"" + f"{self.log_file_name}.{self.log_file_type}" +
+                            "\",\n    \"logs\":\n    [" in string)
 
-        except FileNotFoundError or AssertionError as error: # pragma: no cover
-            raise error # pragma: no cover
+            ## cannot be tested with pytest ##
+
+            except FileNotFoundError or AssertionError as error: # pragma: no cover
+                raise error # pragma: no cover
 
 
     def log(
@@ -85,16 +101,28 @@ class Log:
 
         from datetime import datetime
 
-        status = f"[{status}]"
-        status += " " * (7 - len(status))
-        status = status[:7]
-        title += " " * (10 - len(title))
-        title = title[:10]
+        if not self.closed:
+            if self.log_file_type == "log":
+                status = f"[{status}]"
+                status += " " * (7 - len(status))
+                status = status[:7]
+                title += " " * (10 - len(title))
+                title = title[:10]
 
-        log_time : str = str(datetime.now())
-        log_str : str = f"{log_time} | {status} {title} | {description}"
+            log_time : str = str(datetime.now())
+            log_str: str = ""
 
-        self.save(log_str)
+            if self.log_file_type == "log":
+                log_str = f"{log_time} | {status} {title} | {description}"
+            elif self.log_file_type == "json":
+                log_str = (
+                        "\n        {\n            \"time\": \"" +log_time +
+                        "\",\n            \"level\": \"" + status +
+                        "\",\n            \"title\": \"" + title +
+                        "\",\n            \"msg\": \"" + description +
+                        "\"\n        },")
+
+            self.save(log_str)
 
 
     def comment(
@@ -104,11 +132,15 @@ class Log:
         """
             Save a comment in the log file.
 
+            (does not work with json files yet)
+
+
             Parameters:
                 comment (str): comment
         """
 
-        self.save(f">>> {comment}")
+        if not self.closed:
+            self.save(f">>> {comment}")
 
 
     def save(
@@ -122,9 +154,10 @@ class Log:
                 log_str (str): log string
         """
 
-        with open(f"{self.log_path}{self.log_file_name}.log", 'a') as log_file :
-            log_file.write(f"\n{log_str}")
-        log_file.close()
+        if not self.closed:
+            with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'a') as log_file :
+                log_file.write(f"\n{log_str}" if self.log_file_type == "log" else log_str)
+            log_file.close()
 
 
     def close(
@@ -139,12 +172,23 @@ class Log:
                 delete (bool, optional): delete the log file
         """
 
-        with open(f"{self.log_path}{self.log_file_name}.log", 'a') as log_file :
-            log_file.write(f"\n----END----\n")
-        log_file.close()
+        if not self.closed:
+            if self.log_file_type == "log":
+                with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'a') as log_file :
+                    log_file.write(f"\n----END----\n")
+                log_file.close()
 
-        if delete :
-            self.delete()
+            elif self.log_file_type == "json":
+                string : str = self.read()[:-1]
+
+                with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'w') as log_file:
+                    log_file.write(string + "\n    ]\n}")
+                log_file.close()
+
+            self.closed = True
+
+            if delete :
+                self.delete()
 
 
     def delete(
@@ -156,7 +200,7 @@ class Log:
 
         from os import remove
 
-        remove(f"{self.log_path}{self.log_file_name}.log")
+        remove(f"{self.log_path}{self.log_file_name}.{self.log_file_type}")
 
 
     def read(
@@ -171,7 +215,7 @@ class Log:
 
         log_str : str = ""
 
-        with open(f"{self.log_path}{self.log_file_name}.log", 'r') as log_file:
+        with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'r') as log_file:
             log_str = log_file.read()
         log_file.close()
 
@@ -183,6 +227,8 @@ class Log:
         ) -> str :
         """
             Returns a formated log file.
+
+            (does not work with json files yet)
         """
 
         from os import get_terminal_size
@@ -204,7 +250,10 @@ class Log:
         detail_size : int
         string : str = ""
 
-        string += f"\x1b[4m\x1b[7m|\x1b[0m\x1b[1m\x1b[4m    date          time      | \x1b[0m\x1b[4m\x1b[7m[TYPE] \x1b[0m\x1b[1m\x1b[4m title      | detail" + (" " * (t_size - 58)) + f"\x1b[0m\n"
+        string += (
+                f"\x1b[4m\x1b[7m|\x1b[0m\x1b[1m\x1b[4m    date          time      | \x1b[0m" +
+                "\x1b[4m\x1b[7m[TYPE] \x1b[0m\x1b[1m\x1b[4m title      | detail" +
+                (" " * (t_size - 58)) + f"\x1b[0m\n")
         string += f"\x1b[7m|\x1b[0m\x1b[1m" + (" " * (t_size - 1)) + f"\x1b[0m\n"
 
         for log_line in logs :
@@ -219,8 +268,9 @@ class Log:
                         f"{color[1]}{log_line[0]}\x1b[0m | " +
                         f"{color[0]}{log_line[1][0:7]}\x1b[0m " +
                         f"{color[1]}\x1b[1m{log_line[1][8:]}\x1b[0m | " +
-                        (f"{log_line[2][:(t_size - 1)]}..." if len(log_line[2]) > (t_size - 1) else f"{color[1]}{log_line[2]}") +
-                        f"\x1b[0m\n")
+                        (
+                            f"{log_line[2][:(t_size - 1)]}..." if len(log_line[2]) > (t_size - 1) else
+                            f"{color[1]}{log_line[2]}") + f"\x1b[0m\n")
 
                 ## cannot be tested with pytest ##
 
@@ -242,4 +292,4 @@ class Log:
                 str: Log string
         """
 
-        return f"Log({repr(self.log_path)}, {repr(self.log_file_name)})"
+        return f"Log({repr(self.log_path)}, {repr(self.log_file_name)}, {repr(self.log_file_type)})"
