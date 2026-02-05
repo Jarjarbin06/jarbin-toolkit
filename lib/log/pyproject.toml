@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "jarbin-toolkit-log"
 version = "0.2.0.0"
-description = "Logging tools (Manage log files)"
+description = "Log tool (Create / Log / Read / etc...)"
 authors = [
     { name = "Nathan Jarjarbin", email = "nathan.amaraggi@epitech.eu" }
 ]

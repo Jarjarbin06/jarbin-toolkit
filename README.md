@@ -1,11 +1,11 @@
 <small>last update : 
-**PACKAGE** = *2026-02-02 09:50 UTC+1(Paris)* ; 
-**README** = *2026-02-03 09:16 UTC+1(Paris)*</small>\
+**PACKAGE** = *2026/02/05* ; 
+**README** = *2026/02/05*</small>\
 \
 <img src="NONE" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="NONE" alt="error loading Jarbin-ToolKit Logo" width="49%" style="display:inline-block;">
 
-# **jarbin-toolkit** v0.1
+# **jarbin-toolkit** v0.2
 <details>
 <summary>Latest development version</summary>
 🟠 UNDER DEVELOPMENT 🟠 v0.2 🟠
@@ -21,34 +21,17 @@
 
 ## Description
 
-`jarbin-toolkit` is a Python library designed to help you create enhanced terminal interfaces. It's improving the appearance and readability of your command-line interface with lightweight animations, colorful text, and neat formatting. If you want to make your terminal programs more readable and visually structured, this library is for you!
+`jarbin-toolkit` is a Python library that contains multiple tools making every program development easier.
 
 ## Table of Contents
 
 1.  [Description](#Description)
-2.  [Features](#Features)
-3.  [Tech Stack](#Tech-Stack)
-4.  [Installation](#Installation)
-5.  [Usage](#Usage)
-6.  [Project Structure](#Project-Structure)
-7.  [API Reference](#API-Reference)
-8.  [Release Notes](#Release-Notes)
-9.  [License](#License)
-10. [Important Links](#Important-Links)
-11. [Footer](#Footer)
-
-## Features
-
-*   **Cool Text Effects**: Easily add colors, bold text, italics, underlines, and even strike through to your terminal text.
-*   **Animations**: Display simple animations. Useful for loading indicators or status displays.
-*   **Progress Bars**: Show the progress of long tasks with customizable progress bars. Provides clear and configurable visual feedback.
-*   **Timers**: Use the built-in stopwatch to measure how long parts of your code take to run.
-*   **Configuration**: Easily manage settings for your applications.
-*   **Error Handling**:  Provides structured and readable error messages.
-*   **Cursor Control**:  Provides methods to move, show, and hide the cursor.
-*   **Line Control**:  Features for clearing lines or the entire screen.
-*   **ANSI Escape Sequence Handling**: Provides classes for generating ANSI escape sequences to control text color, formatting, and cursor movement.
-*   **AND A LOT MORE**
+2.  [Tech Stack](#Tech-Stack)
+3.  [Installation](#Installation)
+4.  [Release Notes](#Release-Notes)
+5.  [License](#License)
+6.  [Important Links](#Important-Links)
+7.  [Footer](#Footer)
 
 ## Tech-Stack
 
@@ -80,9 +63,12 @@ git clone -b latest NONE
 make -C jarbin_toolkit install
 ```
 This downloads the code, then the `install` script handles the installation.
-These commands install the `jarbin-toolkit` package and its dependencies (datetime).
+These commands install the `jarbin-toolkit` package and its dependencies (all tools).
 
 ## Release-Notes
+* #### v0.2:
+    *   **[ADD]** `Jarbin-ToolKit:Config`, `Jarbin-ToolKit:Action` and `Jarbin-ToolKit:Log`
+
 * #### v0.1:
     *   **[ADD]** `Jarbin-ToolKit:Console`, `Jarbin-ToolKit:Error` and `Jarbin-ToolKit:Time`
     *   **[INIT]** add all future tools that comes from `epitech_console`

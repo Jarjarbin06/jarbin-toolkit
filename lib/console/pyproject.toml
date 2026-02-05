@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "jarbin-toolkit-console"
 version = "0.1.0.0"
-description = "Console tools (animation / colored printing / formating / etc...)"
+description = "Console tool (Animate / Print with color / Format / etc...)"
 authors = [
     { name = "Nathan Jarjarbin", email = "nathan.amaraggi@epitech.eu" }
 ]

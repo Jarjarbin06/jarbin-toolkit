@@ -66,21 +66,22 @@ def _banner(
         Show a simple banner.
     """
 
-    banner_size = 50
+    banner_size = 60
 
     epitech = ANSI.Color.epitech_fg()
     epitech_dark = ANSI.Color.epitech_dark_fg()
     reset = ANSI.Color(ANSI.Color.C_RESET)
 
-    offset_t = Text.Text("  ")
+    offset_title_t = Text.Text("  ")
+    offset_desc_t = Text.Text("       ")
     title_t = epitech + Text.Text(f'{System.Setting.S_PACKAGE_NAME}').bold().underline() + reset + "  " + Text.Text.url_link(
-        "https://github.com/Jarjarbin06/epitech_console", text="repository")
+        "https://github.com/Jarjarbin06/jarbin-toolkit", text="repository")
     version_t = Text.Text(" " * (10 - len(System.Setting.S_PACKAGE_VERSION))) + epitech_dark + Text.Text("version ").italic() + Text.Text(
         f'{System.Setting.S_PACKAGE_VERSION}').bold() + reset
     desc_t = Text.Text("   Text • Animation • ANSI • Error • System   ").italic()
     line_t = epitech + ("─" * banner_size) + reset
 
-    Console.print(line_t, offset_t + title_t + " " + version_t + offset_t, offset_t + desc_t + offset_t, line_t, separator="\n")
+    Console.print(line_t, offset_title_t + title_t + Text.Text("    ") + version_t + offset_title_t, offset_desc_t + desc_t + offset_desc_t, line_t, separator="\n")
 
 
 def init(

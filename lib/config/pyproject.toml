@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "jarbin-toolkit-config"
 version = "0.1.0.0"
-description = "Config tools (Manage config files)"
+description = "Config tool (Create / Set / Read / etc...)"
 authors = [
     { name = "Nathan Jarjarbin", email = "nathan.amaraggi@epitech.eu" }
 ]

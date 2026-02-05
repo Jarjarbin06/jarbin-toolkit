@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "jarbin-toolkit-error"
 version = "0.1.0.0"
-description = "Error tools (Formated error / better visual / etc...)"
+description = "Error tool (Formated error / Better visual / etc...)"
 authors = [
     { name = "Nathan Jarjarbin", email = "nathan.amaraggi@epitech.eu" }
 ]

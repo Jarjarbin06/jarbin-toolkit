@@ -125,6 +125,18 @@ check:
 	@./$(SCRIPT_DIR)/check-package
 	@echo -e "$(GREEN) [CHECK] Package checked$(NC)"
 
+check-all:
+	@# parent #
+	@make -s check || true
+	@# dependent #
+	@make -sC lib/console check || true
+	@# independent #
+	@make -sC lib/action check || true
+	@make -sC lib/config check || true
+	@make -sC lib/error check || true
+	@make -sC lib/log check || true
+	@make -sC lib/time check || true
+
 check-style:
 	@echo -e "$(YELLOW) [CHECK] Checking coding style$(NC)"
 	@./$(SCRIPT_DIR)/check-style
@@ -181,7 +193,7 @@ clean-all:
 .PHONY: \
 	help \
 	install uninstall reinstall \
-	test check \
+	test test-all check check-all check-style \
 	demo \
 	info \
 	clean
