@@ -5,14 +5,14 @@
 <img src="NONE" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="NONE" alt="error loading Jarbin-ToolKit:Log Logo" width="49%" style="display:inline-block;">
 
-# **Jarbin-ToolKit:Log** v0.2.0.0
+# **Jarbin-ToolKit:Log** v0.2.1.0
 <details>
 <summary>Latest development version</summary>
-🟠 UNDER DEVELOPMENT 🟠 v0.2.0.0 🟠
+🟠 UNDER DEVELOPMENT 🟠 v0.2.1.0 🟠
 </details>
 <details>
 <summary>Latest release</summary>
-🟢 RELEASED 🟢 v0.1.0.0 🟢
+🟢 RELEASED 🟢 v0.2.0.0 🟢
 </details>
 
 [![Python package](None)](None)

@@ -104,7 +104,7 @@ class Log:
         if not self.closed:
             if self.log_file_type == "jar-log":
                 status = f"[{status}]"
-                status += " " * (7 - len(status))
+                status += " " * 7
                 status = status[:7]
                 title += " " * (10 - len(title))
                 title = title[:10]
@@ -223,10 +223,42 @@ class Log:
 
 
     def __str__(
-            self
+            self,
+            filter : list[str] | str | None = None
         ) -> str :
         """
             Returns a formated log file.
+
+            Parameters:
+                filter (list[str] | str | None, optional): filter
+
+            Return:
+                str: formated log string
+        """
+
+        log_str = self.read()
+
+        if self.log_file_type == "jar-log":
+            return self._jar_log_str(filter)
+
+        elif self.log_file_type == "json":
+            return self._json_str(filter)
+
+        return log_str
+
+
+    def _jar_log_str(
+            self,
+            filter : list[str] | str | None = None
+        ) -> str:
+        """
+            Returns a formated jar-log file.
+
+            Parameters:
+                filter (list[str] | str | None, optional): filter
+
+            Return:
+                str: formated log string
         """
 
         from os import get_terminal_size
@@ -234,53 +266,106 @@ class Log:
 
         log_str = self.read()
 
-        if self.log_file_type == "json":
-            return log_str
-
         color_dict: dict[str, tuple[str, str]] = {
-            "[INFO] " : ("\x1b[7m", "\x1b[0m"),
-            "[VALID]" : ("\x1b[42m", "\x1b[32m"),
-            "[WARN] " : ("\x1b[43m", "\x1b[33m"),
-            "[ERROR]" : ("\x1b[41m", "\x1b[31m")
+            "[INFO] ": ("\x1b[7m", "\x1b[0m"),
+            "[VALID]": ("\x1b[42m", "\x1b[32m"),
+            "[WARN] ": ("\x1b[43m", "\x1b[33m"),
+            "[ERROR]": ("\x1b[41m", "\x1b[31m")
         }
-        start : int = log_str.index("---START---\n") + len("---START---\n")
-        end : int = log_str.index("----END----\n")
-        logs : list = [lines.split(" | ") for lines in log_str[start:end].splitlines()]
+        start: int = log_str.index("---START---\n") + len("---START---\n")
+        end: int = log_str.index("----END----\n")
+        logs: list = [lines.split(" | ") for lines in log_str[start:end].splitlines()]
         t_size = get_terminal_size().columns if stdin.isatty() else 100
-        footer : str = f"\x1b[4m\x1b[7m|\x1b[0m\x1b[1m\x1b[4m"
-        detail_size : int
-        string : str = ""
+        footer: str = f"\x1b[4m\x1b[7m|\x1b[0m\x1b[1m\x1b[4m"
+        detail_size: int
+        string: str = ""
 
+        string += f"JAR-LOG\n\n"
         string += (
                 f"\x1b[4m\x1b[7m|\x1b[0m\x1b[1m\x1b[4m    date          time      | \x1b[0m" +
                 "\x1b[4m\x1b[7m[TYPE] \x1b[0m\x1b[1m\x1b[4m title      | detail" +
                 (" " * (t_size - 58)) + f"\x1b[0m\n")
         string += f"\x1b[7m|\x1b[0m\x1b[1m" + (" " * (t_size - 1)) + f"\x1b[0m\n"
 
-        for log_line in logs :
-            if log_line[0][:3] == ">>>" :
-                string += f"\x1b[7m>>>\x1b[0m \x1b[0m{log_line[0][3:]}\x1b[0m\n"
+        for log_line in logs:
+            if not filter or log_line[0].replace(" ", "")[1:-1] in filter:
+                if log_line[0][:3] == ">>>":
+                    string += f"\x1b[7m>>>\x1b[0m \x1b[0m{log_line[0][3:]}\x1b[0m\n"
 
-            else :
-                if len(log_line) == 3 and log_line[1][:7].upper() in color_dict :
-                    color = color_dict[log_line[1][:7].upper()]
-                    string += (
-                        f"{color[0]}|\x1b[0m " +
-                        f"{color[1]}{log_line[0]}\x1b[0m | " +
-                        f"{color[0]}{log_line[1][0:7]}\x1b[0m " +
-                        f"{color[1]}\x1b[1m{log_line[1][8:]}\x1b[0m | " +
-                        (
-                            f"{log_line[2][:(t_size - 1)]}..." if len(log_line[2]) > (t_size - 1) else
-                            f"{color[1]}{log_line[2]}") + f"\x1b[0m\n")
+                else:
+                    if len(log_line) == 3 and log_line[1][:7].upper() in color_dict:
+                        color = color_dict[log_line[1][:7].upper()]
+                        string += (
+                                f"{color[0]}|\x1b[0m " +
+                                f"{color[1]}{log_line[0]}\x1b[0m | " +
+                                f"{color[0]}{log_line[1][0:7]}\x1b[0m " +
+                                f"{color[1]}\x1b[1m{log_line[1][8:]}\x1b[0m | " +
+                                (
+                                    f"{log_line[2][:(t_size - 1)]}..." if len(log_line[2]) > (t_size - 1) else
+                                    f"{color[1]}{log_line[2]}") + f"\x1b[0m\n")
 
-                ## cannot be tested with pytest ##
+                    ## cannot be tested with pytest ##
 
-                elif len(log_line) == 1: # pragma: no cover
-                    string += f"\x1b[44m|\x1b[0m " + f"\x1b[34mUNFORMATTED\n\"{log_line[0]}\"\x1b[0m\n" # pragma: no cover
+                    elif len(log_line) == 1:  # pragma: no cover
+                        string += f"\x1b[44m|\x1b[0m " + f"\x1b[34mUNFORMATTED\n\"{log_line[0]}\"\x1b[0m\n"  # pragma: no cover
 
-        string += footer + (" " * (t_size - 1)) + f"\x1b[0m\n"
+        string += footer + (" " * (t_size - 1)) + f"\x1b[0m"
 
         return string
+
+
+    def _json_str(
+            self,
+            filter : list[str] | str | None = None
+        ) -> str:
+        """
+            Returns a formated json file.
+
+            Parameters:
+                filter (list[str] | str | None, optional): filter
+
+            Return:
+                str: formated log string
+        """
+
+        import json
+
+        log_str = self.read()
+        parsed_json : list = json.loads(log_str)
+        string : str = ""
+
+        string += f"JSON => {parsed_json["file_name"]}"
+        string += f"\n{'=' * 50}\n"
+        for log_line in parsed_json["logs"]:
+            if not filter or log_line["level"] in filter:
+                string += f"{log_line["time"]} | {(log_line["level"] + (" " * 5))[:5]} {(log_line["title"] + (" " * 10))[:10]} | {log_line["msg"]}\n"
+        string += f"{'=' * 50}"
+
+        return string
+
+
+    def str_filtered(
+            self,
+            f : list[str] | str
+        ) -> str:
+        """
+            Returns a formated and filtered log file.
+
+            Parameters:
+                f (list[str] | str): filter
+
+            Return:
+                str: formated log string
+        """
+
+        if isinstance(f, list):
+            for index in range(len(f)):
+                f[index] = f[index].upper()
+
+        else:
+            f = f.upper()
+
+        return self.__str__(f)
 
 
     def __repr__(

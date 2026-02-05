@@ -6,8 +6,6 @@ from jarbin_toolkit_log import Log
 
 def test_log_log_reading(
     ) -> None:
-    from os import remove
-    remove("tests/log_test_log.jar-log")
     log = Log("tests", "log_test_log")
     log.log("INFO", "test", "this is a test")
     log.comment("this is a custom comment")
@@ -43,14 +41,14 @@ def test_log_log_repr(
 def test_log_log_delete(
     ) -> None:
     log = Log("tests", "log_test_log")
-    log.close(delete=True)
+    log.delete()
 
 def test_log_json_reading(
     ) -> None:
-    from os import remove
-    remove("tests/log_test_json.json")
     log = Log("tests", "log_test_json", json = True)
     log.log("INFO", "test", "this is a test")
+    log.log("INFO", "test", "this is a second test")
+    log.log("INFO", "test", "and a third")
     log.close()
     s = log.read()
     assert "{" in s and "}" in s
@@ -81,4 +79,4 @@ def test_log_json_repr(
 def test_log_json_delete(
     ) -> None:
     log = Log("tests", "log_test_json", json = True)
-    log.close(delete=True)
+    log.delete()
