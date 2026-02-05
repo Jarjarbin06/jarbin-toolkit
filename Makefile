@@ -17,7 +17,6 @@ PIP             ?= pip3
 SHELL           := /bin/bash
 SCRIPT_DIR      := script
 PACKAGE_NAME    := jarbin_toolkit
-VENV_DIR        := .venv
 
 # Colors (safe for most terminals)
 GREEN           := \033[0;32m
