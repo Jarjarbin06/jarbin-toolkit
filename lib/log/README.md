@@ -95,6 +95,7 @@ from jarbin_toolkit_log import Log
 
 ## Release-Notes
 * #### v0.2.0:
+    *   **[UPDATE]** change log file extension to custom extension (`jar-log`)
     *   **[ADD]** modification not allowed after closing or after opening and existing file
     *   **[UPDATE]** add option to choose between `.log` or `log.json` file\
 (`.log` for more human readability, `.json` for more computer readability)
