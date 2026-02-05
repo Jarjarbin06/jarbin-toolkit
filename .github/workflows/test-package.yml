@@ -41,7 +41,6 @@ jobs:
     - name: Install jarbin-toolkit
       run: |
         make reinstall-all
-        make reinstall
     - name: Create tests folder
       run: |
         mkdir tests
