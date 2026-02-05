@@ -41,6 +41,10 @@ jobs:
     - name: Install jarbin-toolkit
       run: |
         make reinstall-all
+    - name: Create files
+      run: |
+        touch tests/log_test_log.jar-log
+        touch tests/log_test_json.json
     - name: Test with pytest (xml)
       run: |
         pytest --cov=. --cov-report=xml --cov-report=term-missing
