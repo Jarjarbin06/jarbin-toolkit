@@ -60,7 +60,7 @@ pip install jarbin_toolkit
 If you want the latest version directly from the source, you can install it using `git`:
 ```bash
 git clone -b latest NONE
-make -C jarbin_toolkit install
+make -C jarbin_toolkit install-all
 ```
 This downloads the code, then the `install` script handles the installation.
 These commands install the `jarbin-toolkit` package and its dependencies (all tools).
