@@ -334,11 +334,11 @@ class Log:
         parsed_json : list = json.loads(log_str)
         string : str = ""
 
-        string += f"JSON => {parsed_json["file_name"]}"
+        string += f"JSON => {parsed_json['file_name']}"
         string += f"\n{'=' * 50}\n"
         for log_line in parsed_json["logs"]:
             if not filter or log_line["level"] in filter:
-                string += f"{log_line["time"]} | {(log_line["level"] + (" " * 5))[:5]} {(log_line["title"] + (" " * 10))[:10]} | {log_line["msg"]}\n"
+                string += f"{log_line['time']} | {(log_line['level'] + (' ' * 5))[:5]} {(log_line['title'] + (' ' * 10))[:10]} | {log_line['msg']}\n"
         string += f"{'=' * 50}"
 
         return string
