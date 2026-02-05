@@ -4,9 +4,11 @@ import pytest
 from jarbin_toolkit_log import Log
 
 
-def test_log_reading(
+def test_log_log_reading(
     ) -> None:
-    log = Log("tests", "log_test")
+    from os import remove
+    remove("tests/log_test_log.jar-log")
+    log = Log("tests", "log_test_log")
     log.log("INFO", "test", "this is a test")
     log.comment("this is a custom comment")
     log.close()
@@ -15,30 +17,68 @@ def test_log_reading(
     assert " | [INFO]  test       | this is a test\n>>> this is a custom comment\n----END----\n" in s
 
 
-def test_log_str(
+def test_log_log_str(
     ) -> None:
-    log = Log("tests", "log_test")
+    log = Log("tests", "log_test_log")
     s = str(log)
     assert "[INFO]" in s
     assert "this is a test" in s
     assert "this is a custom comment" in s
 
-def test_log_edit_after_closing(
+def test_log_log_edit_after_closing(
     ) -> None:
-    log = Log("tests", "log_test")
+    log = Log("tests", "log_test_log")
     s = str(log)
     log.comment("this is a custom comment")
     assert str(log) == s
 
 
-def test_log_repr(
+def test_log_log_repr(
     ) -> None:
-    log = Log("tests", "log_test")
+    log = Log("tests", "log_test_log")
     s = repr(log)
-    assert s == "Log(\'tests/\', \'log_test\', \'log\')"
+    assert s == "Log(\'tests/\', \'log_test_log\', False)"
 
 
-def test_log_delete(
+def test_log_log_delete(
     ) -> None:
-    log = Log("tests", "log_test")
+    log = Log("tests", "log_test_log")
+    log.close(delete=True)
+
+def test_log_json_reading(
+    ) -> None:
+    from os import remove
+    remove("tests/log_test_json.json")
+    log = Log("tests", "log_test_json", json = True)
+    log.log("INFO", "test", "this is a test")
+    log.close()
+    s = log.read()
+    assert "{" in s and "}" in s
+
+
+def test_log_json_str(
+    ) -> None:
+    log = Log("tests", "log_test_json", json = True)
+    s = str(log)
+    assert "INFO" in s
+    assert "this is a test" in s
+
+def test_log_json_edit_after_closing(
+    ) -> None:
+    log = Log("tests", "log_test_json", json = True)
+    s = str(log)
+    log.comment("this is a custom comment")
+    assert str(log) == s
+
+
+def test_log_json_repr(
+    ) -> None:
+    log = Log("tests", "log_test_json", json = True)
+    s = repr(log)
+    assert s == "Log(\'tests/\', \'log_test_json\', True)"
+
+
+def test_log_json_delete(
+    ) -> None:
+    log = Log("tests", "log_test_json", json = True)
     log.close(delete=True)

@@ -40,13 +40,13 @@ class Log:
 
         self.log_path : str = (path if path[-1] in ["/", "\\"] else path + ("\\" if system() == "Windows" else "/"))
         self.log_file_name : str = str(datetime.now()).replace(":", "_") if not file_name else file_name
-        self.log_file_type : str = "json" if json else "log"
+        self.log_file_type : str = "json" if json else "jar-log"
 
         try:
             open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'x').close()
 
             with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'a') as log_file:
-                if self.log_file_type == "log" :
+                if self.log_file_type == "jar-log" :
                     log_file.write("   date          time      | [TYPE]  title      | detail\n\n---START---")
                 elif self.log_file_type == "json":
                     log_file.write(
@@ -71,7 +71,7 @@ class Log:
                     string = log_file.read()
                 log_file.close()
 
-                if self.log_file_type == "log":
+                if self.log_file_type == "jar-log":
                     assert "   date          time      | [TYPE]  title      | detail\n\n---START---" in string
 
                 elif self.log_file_type == "json":
@@ -102,7 +102,7 @@ class Log:
         from datetime import datetime
 
         if not self.closed:
-            if self.log_file_type == "log":
+            if self.log_file_type == "jar-log":
                 status = f"[{status}]"
                 status += " " * (7 - len(status))
                 status = status[:7]
@@ -112,7 +112,7 @@ class Log:
             log_time : str = str(datetime.now())
             log_str: str = ""
 
-            if self.log_file_type == "log":
+            if self.log_file_type == "jar-log":
                 log_str = f"{log_time} | {status} {title} | {description}"
             elif self.log_file_type == "json":
                 log_str = (
@@ -156,7 +156,7 @@ class Log:
 
         if not self.closed:
             with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'a') as log_file :
-                log_file.write(f"\n{log_str}" if self.log_file_type == "log" else log_str)
+                log_file.write(f"\n{log_str}" if self.log_file_type == "jar-log" else log_str)
             log_file.close()
 
 
@@ -173,7 +173,7 @@ class Log:
         """
 
         if not self.closed:
-            if self.log_file_type == "log":
+            if self.log_file_type == "jar-log":
                 with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'a') as log_file :
                     log_file.write(f"\n----END----\n")
                 log_file.close()
@@ -227,14 +227,15 @@ class Log:
         ) -> str :
         """
             Returns a formated log file.
-
-            (does not work with json files yet)
         """
 
         from os import get_terminal_size
         from sys import stdin
 
         log_str = self.read()
+
+        if self.log_file_type == "json":
+            return log_str
 
         color_dict: dict[str, tuple[str, str]] = {
             "[INFO] " : ("\x1b[7m", "\x1b[0m"),
@@ -292,4 +293,4 @@ class Log:
                 str: Log string
         """
 
-        return f"Log({repr(self.log_path)}, {repr(self.log_file_name)}, {repr(self.log_file_type)})"
+        return f"Log({repr(self.log_path)}, {repr(self.log_file_name)}, {repr(True if self.log_file_type == "json" else False)})"
