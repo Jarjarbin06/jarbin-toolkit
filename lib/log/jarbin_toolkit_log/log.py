@@ -293,4 +293,4 @@ class Log:
                 str: Log string
         """
 
-        return f"Log({repr(self.log_path)}, {repr(self.log_file_name)}, {repr(True if self.log_file_type == "json" else False)})"
+        return f"Log({repr(self.log_path)}, {repr(self.log_file_name)}, {repr(True if self.log_file_type == 'json' else False)})"
