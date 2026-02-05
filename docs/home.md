@@ -18,12 +18,12 @@
 3. [Tech Stack](#tech-stack)
 4. [Installation](#installation)
 5. [Library Components](#library-components)
-    - [Action (Stable)](#action)
-    - [Config (Stable)](#config)
-    - [Error (Stable)](#error)
-    - [Log (Stable)](#log)
-    - [Time (Stable)](#time)
-    - [Console (Evolving)](#console)
+    - [Action](#action)
+    - [Config](#config)
+    - [Error](#error)
+    - [Log](#log)
+    - [Time](#time)
+    - [Console](#console)
 6. [Release Notes](#release-notes)
 7. [Useful Links](#useful-links)
 
@@ -79,7 +79,7 @@ pip install --upgrade --force-reinstall jarbin-toolkit
 
 ## Library Components
 
-### Action
+### Action (Stable)
 
 Provides tools for **deferring execution** and **grouping callable actions**.
 
@@ -120,7 +120,7 @@ Provides tools for **deferring execution** and **grouping callable actions**.
 
 ---
 
-### Config
+### Config (Stable)
 
 **`Config`** manages INI-style configuration files with cross-platform support.
 
@@ -142,7 +142,7 @@ cfg.delete()
 
 ---
 
-### Error
+### Error (Stable)
 
 Structured error system with formatted output and optional file/line linking.
 
@@ -173,7 +173,7 @@ except ErrorConfig as e:
 
 ---
 
-### Log
+### Log (Stable)
 
 **`Log`** manages formatted logs in `.jar-log` or `JSON` files.
 
@@ -197,7 +197,7 @@ log.close(delete=True)
 
 ---
 
-### Time
+### Time (Stable)
 
 Precision timing utilities.
 
@@ -223,7 +223,7 @@ Time.pause("Press enter to continue...")
 
 ---
 
-### Console
+### Console (Evolving)
 
 Inspired by `epitech_console`, provides **advanced terminal rendering**:
 
@@ -251,8 +251,8 @@ for i in range(11):
 
 ## v0.1 - 2026-02-05
 - Initial release of Jarbin-ToolKit
-- ALPHA modules: Action, Config, Error, Log, Time
-- BETA modules: Console
+- Stable modules: Action, Config, Error, Log, Time
+- Evolving module: Console
 - Added StopWatch and Time utilities
 - Added structured error handling
 - Added formatted logging system
