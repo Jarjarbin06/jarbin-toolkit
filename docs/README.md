@@ -249,7 +249,10 @@ for i in range(11):
 
 ## Release Notes
 
-## v0.1 - 2026-02-05
+## v0.2 - 2026-02-05
+- New Log release
+
+## v0.1 - 2026-01-22
 - Initial release of Jarbin-ToolKit
 - Stable modules: Action, Config, Error, Log, Time
 - Evolving module: Console
