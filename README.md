@@ -66,12 +66,23 @@ This downloads the code, then the `install` script handles the installation.
 These commands install the `jarbin-toolkit` package and its dependencies (all tools).
 
 ## Release-Notes
-* #### v0.2:
-    *   **[ADD]** `Jarbin-ToolKit:Config`, `Jarbin-ToolKit:Action` and `Jarbin-ToolKit:Log`
 
-* #### v0.1:
-    *   **[ADD]** `Jarbin-ToolKit:Console`, `Jarbin-ToolKit:Error` and `Jarbin-ToolKit:Time`
-    *   **[INIT]** add all future tools that comes from `epitech_console`
+## v0.2 - 2026-02-05
+- New Log release
+- Fixed every module in the library
+> JSON format handler for Log
+
+> Working library
+
+## v0.1 - 2026-01-22
+- Initial release of Jarbin-ToolKit
+- Stable modules: Action, Config, Error, Log, Time
+- Evolving module: Console
+- Added StopWatch and Time utilities
+- Added structured error handling
+- Added formatted logging system
+- Added Action orchestration system
+> ⚠️ Library not working (only PyPI module initialization)
 
 ## License
 
