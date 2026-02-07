@@ -251,6 +251,10 @@ for i in range(11):
 
 ## v0.2 - 2026-02-05
 - New Log release
+- Fixed every module in the library
+> JSON format handler for Log
+
+> Working library
 
 ## v0.1 - 2026-01-22
 - Initial release of Jarbin-ToolKit
@@ -260,6 +264,7 @@ for i in range(11):
 - Added structured error handling
 - Added formatted logging system
 - Added Action orchestration system
+> Library not working (only PyPI initialization)
 
 ---
 
