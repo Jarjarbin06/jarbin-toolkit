@@ -11,7 +11,7 @@
 
 ## Pages
 
-1. [API REFERENCE](api_ref.md)
+1. [API REFERENCE](API_REFERENCE.md)
 
 ---
 
@@ -240,8 +240,6 @@ for i in range(11):
 - [GitHub Repository](https://github.com/Jarjarbin06/jarbin-toolkit)  
 - [Issue Tracker](https://github.com/Jarjarbin06/jarbin-toolkit/issues)  
 - [ANSI Escape Codes Reference](https://en.wikipedia.org/wiki/ANSI_escape_code)
-
----
 
 ---
 
