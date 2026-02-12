@@ -1,18 +1,14 @@
-<small>last update : 
-**PACKAGE** = *2026/01/21* ; 
-**README** = *2026/02/03*</small>\
-\
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Epitech_logo.png" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Jarbin-Toolkit_logo.jpg" alt="error loading Jarbin-ToolKit Logo" width="49%" style="display:inline-block;">
 
 # **Jarbin-ToolKit:Console** v0.1.1.0
 <details>
 <summary>Latest development version</summary>
-🟠 UNDER DEVELOPMENT 🟠 v0.1.1.0 🟠
+🟠 UNDER DEVELOPMENT 🟠 None 🟠
 </details>
 <details>
 <summary>Latest release</summary>
-🟢 RELEASED 🟢 v0.1.0.0 🟢
+🟢 RELEASED 🟢 v0.1.1.0 🟢
 </details>
 
 [![CodeQL Advanced](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/codeql.yml/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/codeql.yml)
@@ -85,260 +81,330 @@ Here are some examples demonstrating how to use `jarbin-toolkit:console`:
 ### Basic Text Formatting
 
 ```python
-from jarbin_toolkit_console.Text import Text
-from jarbin_toolkit_console.ANSI import Color
-from jarbin_toolkit_console import init, quit
-
-init()
-
-epitech_color = Color.epitech_fg() + Color.rgb_bg(0, 0 ,0)
-reset = Color(Color.C_RESET)
-my_text = epitech_color + Text("hi").bold() + reset
-
-print(my_text)
-
-quit(delete_log=True)
-```
-
-### Creating an Animation
-
-```python
-from jarbin_toolkit_console.Animation import Animation, BasePack
-from jarbin_toolkit_console.System import Console
-from jarbin_toolkit_console import init, quit
-
-init()
-
-my_animation = Animation(BasePack.P_FILL_R)
-for i in range(5):
-    Console.print(my_animation.render(delete=True), sleep=0.5)
-    my_animation.update()
-
-quit(delete_log=True)
-```
-
-### Creating a custom Animation
-
-```python
-from jarbin_toolkit_console.Animation import Animation
-from jarbin_toolkit_console.System import Console
-from jarbin_toolkit_console import init, quit
-
-init()
-
-my_animation = Animation(['Frame 1', 'Frame 2', 'Frame 3'])
-for i in range(5):
-    Console.print(my_animation.render(delete=True), sleep=0.5)
-    my_animation.update()
-
-quit(delete_log=True)
-```
-
-### Using simple Progress Bar 
-
-```python
-from jarbin_toolkit_console.Animation import ProgressBar, Spinner
-from jarbin_toolkit_console.System import Console
-from jarbin_toolkit_console import init, quit
-
-init()
-
-my_spinner = Spinner.stick()
-my_progress_bar = ProgressBar(length=20, percent_style="mix", spinner=my_spinner)
-for i in range(101):
-    my_progress_bar.update(percent=i, update_spinner=(i % 5 == 0))
-    Console.print(my_progress_bar.render(delete=True), sleep=0.05)
-
-quit(delete_log=True)
-```
-
-### Using advanced Progress Bar with variable size
-
-```python
-from jarbin_toolkit_console.Animation import ProgressBar, Style
-from jarbin_toolkit_console.ANSI import Line
-from jarbin_toolkit_console.System import Console
-from jarbin_toolkit_console import init, quit
-
-init()
-
-style : Style = Style(on="=", off=" ", border_left="[", border_right="]")
-bar : ProgressBar
-
-for i in range(1001):
-	bar = ProgressBar(len(Console) - 15, percent_style="mix", style=style)
-	bar.update(i/10)
-	Console.print(bar.render(delete=True), sleep=0.01, cut=True)
-
-quit(delete_log=True)
+from jarbin_toolkit_console import *
 ```
 
 ## API-Reference
-`.` = *function* ; `+` = *class constructor* ; `_` = *class method* ; `@` = *static method* ; `#` = *class variable*
 
-*   `.init()`: Initializes the module, BasePacks and Setting classes and the log file (if activated in the config file).
-*   `.quit(show: bool = False, delete_log: bool = False)`: Uninitializes the module and the log file (if activated in the config file).
+### Animation
 
-### Animation Module
+*   **Animation**: Step-based console animation handler.
+    *   `Animation(animation: list[Any] | str = "")`
+        Create an animation from a list of steps or a `"\\"`-separated string.
+    *   `update(auto_reset: bool = True) -> None`
+        Advance to next animation step.
+        - `auto_reset`: reset automatically at last step
+    *   `render(color: ANSI | int = RESET, delete: bool = False) -> str`
+        Render current step.
+        - `color`: ANSI color or color code
+        - `delete`: move cursor up after rendering
+    *   `is_last() -> bool`
+        Return `True` if animation reached final step.
+    *   `reset() -> None`
+        Reset animation to first step.
+    *   `__call__() -> None`
+        Shortcut for `update()`.
+    *   `__len__() -> int`
+        Return number of steps.
+    *   `__getitem__(index: int) -> str`
+        Return step at given index.
+    *   `__str__(color: ANSI = RESET) -> str`
+        Return colored current frame.
+    *   `__add__(other) -> Animation`
+        Merge with another Animation or compatible object.
+    *   `__repr__() -> str`
+        Constructor-style representation.
 
-*   **Animation**: Class for creating animations.
-    *   `+Animation(animation: list[Any] | str = "")`: Constructor to create an animation.
-    *   `_update(auto_reset: bool = True)`: Advances the animation by one step.
-    *   `_render(delete: bool = False)`: Renders the current frame of the animation.
-    *   `_is_last()`: Returns whether the current step is the last one.
-    *   `_reset()`: Resets the current step to `0`.
 
-*   **BasePack**: Predefined animation packs.
-	*   `@update(style: Style = Style("#", "-", "<", ">", "|", "|"))`: Update the BasePack animations to fit with the given Style (or the default one if no Style given).
-	*   `#P_SLIDE_R`: Character sliding to the right.
-	*   `#P_SLIDE_L`: Character sliding to the left.
-	*   `#P_SLIDER_R`: Slider going right.
-	*   `#P_SLIDER_L`: Slider going left.
-	*   `#P_FILL_R`: Filling to the right.
-	*   `#P_FILL_R`: Filling to the left.
-	*   `#P_EMPTY_R`: Emptying to the right.
-	*   `#P_EMPTY_L`: Emptying to the left.
-	*   `#P_FULL`: Full.
-	*   `#P_EMPTY`: Empty.
+*   **BasePack**: Predefined animation packs for bars and sliders.
+    *   Class attributes (after `update()`):
+        - `P_SLIDE_R`, `P_SLIDE_L`
+        - `P_SLIDER_R`, `P_SLIDER_L`
+        - `P_FILL_R`, `P_FILL_L`
+        - `P_EMPTY_R`, `P_EMPTY_L`
+        - `P_FULL`, `P_EMPTY`
+    *   `update(style: Style) -> None` (staticmethod)
+        Initialize all predefined animation sequences using given style.
 
-*   **ProgressBar**: Class for creating progress bars.
-    *   `+ProgressBar(length: int, animation: Animation | None = None, style: Style = Style("#", "-", "<", ">", "|", "|"), percent_style: str = "bar", spinner: Animation | None = None, spinner_position: str = "a")`: Constructor to create a progress bar.
-    *   `_update(percent: int = 0, update_spinner: bool = True, auto_reset: bool = True)`: Updates the progress bar to a specified percentage.
-    *   `_render(color: ANSI | tuple[ANSI, ANSI, ANSI] = Color.color(Color.C_RESET), hide_spinner_at_end: bool = True, delete: bool = False)`: Renders the progress bar.
 
-*   **Spinner**: Class with pre-built spinner animations.
-    *   `@stick(style: Style = Style("#", " ", "#", "#", "", ""))`: Creates a stick spinner.
-    *   `@plus(style: Style = Style("#", " ", "#", "#", "", ""))`: Creates a plus spinner.
-    *   `@cross(style: Style = Style("#", " ", "#", "#", "", ""))`: Creates a cross spinner.
+*   **ProgressBar**: Animated and customizable console progress bar.
+    *   `ProgressBar(length: int, *, animation: Animation | None = None, style: Style = default, percent_style: str = "bar", spinner: Animation | None = None, spinner_position: str = "a")`
+        Create a progress bar.
+        - `length`: bar length
+        - `animation`: custom Animation
+        - `style`: Style object
+        - `percent_style`: `"bar" | "num" | "mix"`
+        - `spinner`: optional spinner animation
+        - `spinner_position`: `"a"` (after) or `"b"` (before)
+    *   `update(percent: int = 0, update_spinner: bool = True, auto_reset: bool = True) -> None`
+        Update bar percentage and optionally spinner.
+    *   `render(color: ANSI | tuple = RESET, hide_spinner_at_end: bool = True, delete: bool = False) -> Text`
+        Render progress bar.
+        - `color`: single ANSI or tuple (bar, spinner, percent)
+        - `hide_spinner_at_end`: hide spinner at 100%
+        - `delete`: clear previous line
+    *   `__call__() -> None`
+        Increment percentage by 1.
+    *   `__getitem__(index: int) -> str`
+        Get animation frame.
+    *   `__str__(color: tuple = RESET, hide_spinner: bool = False) -> str`
+        String representation.
+    *   `__repr__() -> str`
+        Constructor-style representation.
 
-*   **Style**: Class for styling progress bars.
-    *   `+Style(on: str = "#", off: str = "-", arrow_left: str = "<", arrow_right: str = ">", border_left: str = "|", border_right: str = "|")`: Constructor to create a style.
+
+*   **Spinner**: Predefined spinner animations.
+    *   `stick(style: Style = default) -> Animation` (staticmethod)
+        Rotating stick spinner (`- \ | /`).
+    *   `plus(style: Style = default) -> Animation` (staticmethod)
+        Plus-style spinner (`- |`).
+    *   `cross(style: Style = default) -> Animation` (staticmethod)
+        Cross-style spinner (`/ \`).
+
+
+*   **Style**: Visual configuration for animations and progress bars.
+    *   `Style(on: str = "#", off: str = "-", arrow_left: str = "<", arrow_right: str = ">", border_left: str = "|", border_right: str = "|")`
+        Create a style configuration.
+
+        - `on`: filled character
+        - `off`: empty character
+        - `arrow_left`: left arrow
+        - `arrow_right`: right arrow
+        - `border_left`: left border
+        - `border_right`: right border
+    *   `__str__() -> str`
+        Return formatted style description.
+    *   `__repr__() -> str`
+        Constructor-style representation.
 
 ### ANSI Module
 
-*   **ANSI**: Class for creating ANSI escape sequences.
-    *   `+ANSI(sequence: list[Any | str] | Any | str = "")`: Constructor to create an ANSI sequence.
-    *   `#ESC`: ANSI escape character.
+*   **ANSI**: Tool for handling ANSI sequences (inherits `Format`).
+    *   `ESC: str` – ANSI escape sequence starter (`\x1b[`).
+    *   `__init__(sequence: list[Any|str] | Any | str = "")`
+        Initialize an ANSI sequence.
+    *   `__add__(other: Any) -> ANSI`
+        Concatenate with another `ANSI`/`Text`/`Animation`/`ProgressBar`/`StopWatch`/`str` object.
+    *   `__mul__(other: int) -> ANSI`
+        Repeat ANSI sequence `other` times.
+    *   `__str__() -> str`
+        Convert to string.
+    *   `__len__() -> int`
+        Length of sequence.
+    *   `__repr__() -> str`
+        Representation as `ANSI(...)`.
 
-*   **BasePack**: Ready-to-use ANSI escape sequences.
-	*   `@update()`: Update the BasePack escape sequences (currently reserved for future extensions).
-    *   `#P_ERROR`: Colors for error title and body.
-    *   `#P_WARNING`: Colors for warning title and body.
-    *   `#P_VALID`: Colors for valid title and body.
-    *   `#P_INFO`: Colors for information title and body.
 
-*   **Color**: Class for ANSI color codes.
-	*   `@color(color: int)`: Returns ANSI sequence for pre-made color codes.
-    *   `@color_fg(color: int)`: Returns ANSI sequence for a foreground color.
-    *   `@color_bg(color: int)`: Returns ANSI sequence for a background color.
-    *   `@rgb_fg(r: int, g: int, b: int)`: Returns ANSI sequence for a foreground RGB color.
-    *   `@rgb_bg(r: int, g: int, b: int)`: Returns ANSI sequence for a background RGB color.
-    *   `@epitech_fg()`: Returns ANSI sequence for a foreground colored as Epitech (light).
-    *   `@epitech_bg()`: Returns ANSI sequence for a background colored as Epitech (light).
-    *   `@epitech_dark_fg()`: Returns ANSI sequence for a foreground colored as Epitech (dark).
-    *   `@epitech_dark_bg()`: Returns ANSI sequence for a background colored as Epitech (dark).
-    *   `#C_RESET`: Reset color code.
-    *   `#C_BOLD`: Bold color code.
-    *   `#C_ITALIC`: Italic color code.
-    *   `#C_UNDERLINE`: Underline color code.
-    *   `#C_FLASH_SLOW`: Slow flashing color code.
-    *   `#C_FLASH_FAST`: Fast flashing color code.
-    *   `#C_HIDDEN`: Hidden color code.
-    *   `#C_STRIKETHROUGH`: Strikethrough color code.
-    *   `#C_FG_...`: Foreground colors.
-    *   `#C_BG_...`: Background colors.
+*   **BasePack**: Ready-to-use ANSI animation/color pack.
+    *   `P_ERROR: tuple[ANSI|str, ANSI|str]`
+    *   `P_WARNING: tuple[ANSI|str, ANSI|str]`
+    *   `P_VALID: tuple[ANSI|str, ANSI|str]`
+    *   `P_INFO: tuple[ANSI|str, ANSI|str]`
+    *   `update() -> None`
+        Initialize colors using `Color` class.
 
-*   **Cursor**: Class for cursor manipulation.
-    *   `@up(n: int = 1)`: Moves the cursor up `n` lines.
-    *   `@down(n: int = 1)`: Moves the cursor down `n` lines.
-    *   `@left(n: int = 1)`: Moves the cursor left `n` columns.
-    *   `@right(n: int = 1)`: Moves the cursor right `n` columns.
-    *   `@top()`: Moves the cursor to the top left corner.
-    *   `@previous(n: int = 1)`: Moves the cursor to the beginning of `n` lines before.
-    *   `@next(n: int = 1)`: Moves the cursor to the beginning of `n` lines after.
-    *   `@move(x: int = 0, y: int = 0)`: Moves the cursor at position (`x`, `y`).
-    *   `@move_column(x: int = 0)`: Moves the cursor at position `x` on the same line.
-    *   `@set()`: Save the position of the cursor.
-    *   `@reset()`: Load the saved position of the cursor.
-    *   `@show()`: Shows the cursor.
-    *   `@hide()`: Hides the cursor.
 
-*   **Line**: Class for line manipulation.
-    *   `@clear_line()`: Clears the current line.
-    *   `@clear_start_line()`: Clears the current line from the beginning to the cursor.
-    *   `@clear_end_line()`: Clears the current line from the cursor to the end.
-    *   `@clear_screen()`: Clears the entire screen.
-    *   `@clear()`: Clears the entire screen and move the cursor to the top-left corner.
-    *   `@clear_previous_line(n: int = 1)`: Go to the previous `n` lines, clear it and bring the cursor to the beginning of the previous line.
+*   **Color**: ANSI coloring system.
+    *   Standard attributes: `C_RESET, C_BOLD, C_ITALIC, C_UNDERLINE, C_FLASH_SLOW, C_FLASH_FAST, C_HIDDEN, C_STRIKETHROUGH`
+    *   Foreground colors: `C_FG_DARK, C_FG_DARK_GREY, ..., C_FG_WHITE`
+    *   Background colors: `C_BG, C_BG_DARK_GREY, ..., C_BG_WHITE`
+    *   `__new__(*args) -> ANSI` – calls `Color.color()`.
+    *   `color(color: Any|str|int) -> ANSI` – get ANSI sequence for a color.
+    *   `color_fg(color: int) -> ANSI` – foreground 0–255.
+    *   `color_bg(color: int) -> ANSI` – background 0–255.
+    *   `rgb_fg(r: int, g: int, b: int) -> ANSI` – RGB foreground.
+    *   `rgb_bg(r: int, g: int, b: int) -> ANSI` – RGB background.
+    *   `epitech_fg() -> ANSI`, `epitech_bg() -> ANSI` – Epitech theme colors.
+    *   `epitech_dark_fg() -> ANSI`, `epitech_dark_bg() -> ANSI` – Epitech dark theme colors.
 
-### System Module
 
-*   **Console**: Class for console output.
-    *   `@print(*args, separator: str = " ", start: str = "", end: str = "\n", file: Any = stdout, auto_reset: bool = True, sleep: int | float | None = None, cut: bool = False)`: Print any objects in the terminal (or in any other `file`), starting with `start` and ending with `end`, if multiple value are to be printed, they will be separated by `separator`, if `cut` then the text will be cut to fit in the terminal, optional waiting after printing of `sleep` seconds.
-    *   `@input(msg: str = "Input", separator: str = " >>> ", wanted_type: type = str)`: Returns a user text input changed to `wanted_type`.
-    *   `@flush(stream: Any = stdout)`: Flush any content in `stream`.
+*   **Cursor**: Control console cursor position.
+    *   `up(n: int = 1) -> ANSI` – move cursor up.
+    *   `down(n: int = 1) -> ANSI` – move cursor down.
+    *   `left(n: int = 1) -> ANSI` – move cursor left.
+    *   `right(n: int = 1) -> ANSI` – move cursor right.
+    *   `top() -> ANSI` – move to top-left corner.
+    *   `previous(n: int = 1) -> ANSI` – beginning of previous line.
+    *   `next(n: int = 1) -> ANSI` – beginning of next line.
+    *   `move(y: int = 0, x: int = 0) -> ANSI` – move to column x, row y.
+    *   `move_column(x: int = 0) -> ANSI` – move to column x.
+    *   `set() -> ANSI` – save cursor position.
+    *   `reset() -> ANSI` – return to saved position.
+    *   `show() -> ANSI` – show cursor.
+    *   `hide() -> ANSI` – hide cursor.
 
-*   **Setting**: Class for module's settings.
-	*   `@update()`: Update the Settings.
-    *   `#S_PACKAGE_NAME`: Package's name.
-    *   `#S_PACKAGE_VERSION`: Package's version.
-    *   `#S_PACKAGE_DESCRIPTION`: Package's description.
-    *   `#S_PACKAGE_REPOSITORY`: Package's repository URL.
-    *   `#S_SETTING_SHOW_BANNER`: Package's show-banner setting.
-    *   `#S_SETTING_AUTO_COLOR`: Package's auto-color setting.
-    *   `#S_SETTING_SAFE_MODE`: Package's safe-mode setting.
-    *   `#S_SETTING_MINIMAL_MODE`: Package's minimal-mode setting.
-    *   `#S_SETTING_DEBUG`: Package's debug setting.
-    *   `#S_SETTING_LOG`: Package's log setting.
-    *   `#S_LOG_FILE`: Package's log_file.
 
-### Text Module
+*   **Line**: Manage console lines and screen.
+    *   `clear_line() -> ANSI` – clear current line.
+    *   `clear_start_line() -> ANSI` – clear from start to cursor.
+    *   `clear_end_line() -> ANSI` – clear from cursor to end.
+    *   `clear_screen() -> ANSI` – clear entire screen.
+    *   `clear() -> ANSI` – clear screen and move cursor to top-left.
+    *   `clear_previous_line(n: int = 1) -> ANSI` – clear previous line(s).
 
-*   **Format**: Class for handling text's format.
-    *   `_reset()`: Clear the format of a text.
-    *   `_bold()`: Make a text bold.
-    *   `_italic()`: Make a text italic.
-    *   `_underline()`: Make a text underlined.
-    *   `_hide()`: Make a text hidden.
-    *   `_strikthrough()`: Make a text strikethrough.
-    *   `_error(title: bool = False)`: Make a text styled as an ERROR (background is colored if title, foreground otherwise).
-    *   `_warning(title: bool = False)`: Make a text styled as a WARNING (background is colored if title, foreground otherwise).
-    *   `_ok(title: bool = False)`: Make a text styled as an OK (background is colored if title, foreground otherwise).
-    *   `_info(title: bool = False)`: Make a text styled as an INFO (background is colored if title, foreground otherwise).
-    *   `@apply(obj: Any, sequence: Any | None = None)`: Apply anything to an object (Text, ANSI, Animation, ProgressBar or str).
-    *   `@tree(d: dict | str | list, title: str | None = None, indent: int = 0`: Get a formated version of a dictionary as bash "tree" command does).
-    *   `@module_tree()`: Get module's file tree.
+### Setting
 
-*   **Text**: Class for handling text.
-    *   `+Text(text: Any | str = "")`: Constructor to create a text object.
-    *   `@url_link(url: str, text: str | None = None)`: Creates a link to a url.
-    *   `@file_link(path: str, line: int | None = None)`: Creates a link to a file and line number.
+*   **Setting**: Module-wide configuration and environment handler.
+    *   `Setting`
+        Holds all module settings, package information, and system references.
+    *   `S_OS: str | None`
+        Operating system name (`"Windows"`, `"Linux"`, etc.).
+    *   `S_CONFIG_FILE: Config | None`
+        Configuration file object.
+    *   `S_LOG_FILE: Log | None`
+        Log file object.
+    *   `S_PACKAGE_PATH: str`
+        Path to the package.
+    *   `S_PACKAGE_NAME: str`
+        Package name.
+    *   `S_PACKAGE_VERSION: str`
+        Package version.
+    *   `S_PACKAGE_DESCRIPTION: str`
+        Package description.
+    *   `S_PACKAGE_REPOSITORY: str`
+        Package repository URL.
+    *   `S_SETTING_SHOW_BANNER: bool`
+        Show module banner.
+    *   `S_SETTING_AUTO_COLOR: bool`
+        Enable automatic color detection.
+    *   `S_SETTING_SAFE_MODE: bool`
+        Enable safe mode.
+    *   `S_SETTING_MINIMAL_MODE: bool`
+        Enable minimal mode.
+    *   `S_SETTING_DEBUG_MODE: bool`
+        Enable debug mode.
+    *   `S_SETTING_LOG_MODE: bool`
+        Enable logging.
+    *   `S_SETTING_OPENED_LOG: str`
+        Name of currently opened log file.
+    *   `update() -> None`
+        Initialize system settings and load configuration.
+        - Detects OS and sets `S_PACKAGE_PATH`.
+        - Loads configuration from `S_CONFIG_FILE`.
+        - Updates package metadata.
+        - Initializes logging if `S_SETTING_LOG_MODE` is enabled.
+
+### Text
+
+*   **Format**: Text and console formatting utility.
+    *   `Format`
+        Base class for applying ANSI-based formatting to `Text`, `Animation`, `ProgressBar`, `ANSI` objects, or strings.
+    *   `reset() -> Any`
+        Apply reset format.
+    *   `bold() -> Any`
+        Apply bold format.
+    *   `italic() -> Any`
+        Apply italic format.
+    *   `underline() -> Any`
+        Apply underline format.
+    *   `hide() -> Any`
+        Apply hidden format.
+    *   `strikethrough() -> Any`
+        Apply strikethrough format.
+    *   `error(title: bool = False) -> Any`
+        Apply error format; optionally for a title.
+    *   `warning(title: bool = False) -> Any`
+        Apply warning format; optionally for a title.
+    *   `valid(title: bool = False) -> Any`
+        Apply success/valid format; optionally for a title.
+    *   `info(title: bool = False) -> Any`
+        Apply info format; optionally for a title.
+    *   `apply(obj: Any, sequence: Any | None = None) -> Any` (staticmethod)
+        Apply a given ANSI sequence to an object (`Text`, `Animation`, `ProgressBar`, `ANSI`, or `str`).
+    *   `tree(d: dict | str | list, title: str | None = None, indent: int = 0) -> str` (staticmethod)
+        Convert a dictionary, list, or string into a bash-style tree string.
+    *   `module_tree() -> str` (staticmethod)
+        Returns the full module tree formatted as a string.
+
+
+*   **Text**: Enhanced string handling with formatting support.
+    *   `Text(text: list[Any | str] | Any | str = "")`
+        Create a `Text` object.
+        - Accepts string, list of strings, or `ANSI` object.
+    *   `__add__(other: Any | str) -> Text`
+        Concatenate `Text` with another `Text`, `ANSI`, or string.
+    *   `__mul__(other: int) -> Text`
+        Repeat the `Text` sequence.
+    *   `__str__() -> str`
+        Convert `Text` object to string.
+    *   `__len__() -> int`
+        Return the length of the `Text` string.
+    *   `__repr__() -> str`
+        Constructor-style representation.
+    *   `url_link(url: str, text: str | None = None) -> Text` (staticmethod)
+        Format a clickable URL link (may not work in all consoles).
+    *   `file_link(path: str, line: int | None = None) -> Text` (staticmethod)
+        Format a clickable file link (supports JetBrains IDEs like CLion).
+
+### Console
+
+*   **ConsoleMeta**: Metaclass for `Console`.
+    *   `__len__() -> int`
+        Return the width of the current terminal in columns (default 100 if unavailable).
+
+
+*   **Console**: Console input/output utility.
+    *   `execute() -> None`
+        Placeholder for executing code in the console (not implemented).
+    *   `print(*args, separator: str = " ", start: str = "", end: str = "\n", file: Any = stdout, auto_reset: bool = True, cut: bool = False, sleep: int | float | None = None) -> Text`
+        Print formatted text to the console.
+        - `*args`: values to print
+        - `separator`: string between values
+        - `start`: prepended string
+        - `end`: appended string
+        - `file`: file-like object
+        - `auto_reset`: reset ANSI sequences automatically
+        - `cut`: truncate output to terminal width
+        - `sleep`: delay after printing
+        - Returns: `Text` object of printed content
+    *   `input(msg: str = "Input", separator: str = " >>> ", wanted_type: type = str) -> Any`
+        Prompt user input from console.
+        - `msg`: message to display
+        - `separator`: string between message and input
+        - `wanted_type`: type to convert input
+        - Returns: user input of specified type
+    *   `get_key_press() -> str`
+        Wait for a key press and return it.
+        - Handles single key and escape sequences.
+    *   `get_cursor_position() -> tuple[int, int]`
+        Get current cursor position in the console as `(row, col)`.
+    *   `get_size() -> tuple[int, int]`
+        Get current terminal size as `(width, height)`.
+    *   `flush(stream: Any = stdout) -> None`
+        Flush output of the given stream.
 
 ## Release-Notes
+* #### v0.1.1:
+    *   **[/]** 1rst real release
 * #### v0.1.0:
     *   **[UPDATE]** `jarbin_toolkit_console` update (removed unlinked sub-modules)
     *   **[INIT]** add `epitech_console` to jarbin-toolkit (renamed `jarbin_toolkit_console`)
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0 - see the [NONE](NONE) file for details.
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/console/LICENSE) file for details.
 
 ## Important-Links
 
 #### Files
-*   **Repository**: [NONE](NONE)
-*   **PyPI**: [NONE](NONE)
+*   **Repository**: [https://github.com/Jarjarbin06/jarbin-toolkit](https://github.com/Jarjarbin06/jarbin-toolkit)
+*   **PyPI**: [https://pypi.org/project/jarbin-toolkit-console/](https://pypi.org/project/jarbin-toolkit-console/)
 
 #### Wiki
-*   **Wiki** (*take a look*): [NONE](NONE)
-*   **README**: [NONE](NONE)
-*   **GitHub**: [NONE](NONE)
+*   **Wiki** (*take a look*): [https://github.com/Jarjarbin06/jarbin-toolkit/wiki](https://github.com/Jarjarbin06/jarbin-toolkit/wiki)
+*   **README** (*updated*):  [https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/console/README.md](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/console/README.md)
+*   **GitHub**: [https://jarjarbin06.github.io/jarbin-toolkit/](https://jarjarbin06.github.io/jarbin-toolkit/)
 
 ## Footer
 
-*   Repository: [NONE](NONE)
+*   Repository: [https://github.com/Jarjarbin06/jarbin-toolkit](https://github.com/Jarjarbin06/jarbin-toolkit)
 *   Author: Nathan Jarjarbin
 *   Contact: nathan.amaraggi@epitech.eu
 
 ⭐️ Like the project? Give it a star!
 🐛 Found a bug? Report it in the issues!
+\
+\
+<small>last update : 
+**PACKAGE** = *2026/02/12* ; 
+**README** = *2026/02/12*</small>

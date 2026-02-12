@@ -1,7 +1,3 @@
-<small>last update : 
-**PACKAGE** = *2026/02/05* ; 
-**README** = *2026/02/05*</small>\
-\
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Epitech_logo.png" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Jarbin-Toolkit_logo.jpg" alt="error loading Jarbin-ToolKit Logo" width="49%" style="display:inline-block;">
 
@@ -66,6 +62,9 @@ This downloads the code, then the `install` script handles the installation.
 These commands install the `jarbin-toolkit` package and its dependencies (all tools).
 
 ## Release-Notes
+## v1.0 - 2026-02-12
+- Update ALL modules
+> 1rst real release
 
 ## v0.2 - 2026-02-05
 - New Log release
@@ -86,24 +85,29 @@ These commands install the `jarbin-toolkit` package and its dependencies (all to
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0 - see the [NONE](NONE) file for details.
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/LICENSE) file for details.
 
 ## Important-Links
 
 #### Files
-*   **Repository**: [NONE](NONE)
-*   **PyPI**: [NONE](NONE)
+*   **Repository**: [https://github.com/Jarjarbin06/jarbin-toolkit](https://github.com/Jarjarbin06/jarbin-toolkit)
+*   **PyPI**: [https://pypi.org/project/jarbin-toolkit/](https://pypi.org/project/jarbin-toolkit/)
 
 #### Wiki
-*   **Wiki** (*take a look*): [NONE](NONE)
-*   **README**: [NONE](NONE)
-*   **GitHub**: [NONE](NONE)
+*   **Wiki** (*take a look*): [https://github.com/Jarjarbin06/jarbin-toolkit/wiki](https://github.com/Jarjarbin06/jarbin-toolkit/wiki)
+*   **README** (*updated*):  [https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/README.md](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/README.md)
+*   **GitHub**: [https://jarjarbin06.github.io/jarbin-toolkit/](https://jarjarbin06.github.io/jarbin-toolkit/)
 
 ## Footer
 
-*   Repository: [NONE](NONE)
+*   Repository: [https://github.com/Jarjarbin06/jarbin-toolkit](https://github.com/Jarjarbin06/jarbin-toolkit)
 *   Author: Nathan Jarjarbin
 *   Contact: nathan.amaraggi@epitech.eu
 
 ⭐️ Like the project? Give it a star!
 🐛 Found a bug? Report it in the issues!
+\
+\
+<small>last update : 
+**PACKAGE** = *2026/02/05* ; 
+**README** = *2026/02/12*</small>

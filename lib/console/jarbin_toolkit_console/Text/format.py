@@ -42,7 +42,6 @@ class Format:
         return Format.apply(self, Color(Color.C_RESET))
 
 
-
     def bold(
             self
         ) -> Any:
@@ -266,6 +265,7 @@ class Format:
         ) -> str:
         """
             Format a dict into a tree (bash) formatted string.
+            (may not work properly)
 
             Parameters:
                 d (dict | str | list): dictionary to be formatted
@@ -294,6 +294,7 @@ class Format:
                 string += Format.tree(d[key], None, indent + 1) + "\n"
 
         return string[:-1]
+
 
     @staticmethod
     def module_tree(

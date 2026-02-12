@@ -1,7 +1,3 @@
-<small>last update :
-**PACKAGE** = *2026/02/05* ; 
-**README** = *2026/02/05*</small>\
-\
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Epitech_logo.png" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Jarbin-Toolkit_logo.jpg" alt="error loading Jarbin-ToolKit Logo" width="49%" style="display:inline-block;">
 
@@ -276,4 +272,8 @@ for i in range(11):
 
 ---
 
-> Jarbin-ToolKit *GNU GPL* 2026 **JARJARBIN's STUDIO**
+> Jarbin-ToolKit [*GNU GPL*](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/LICENSE) 2026 [**JARJARBIN's STUDIO**](https://github.com/Jarjarbin06)
+
+\
+\
+<small>last update : **README** = *2026/02/12*</small>

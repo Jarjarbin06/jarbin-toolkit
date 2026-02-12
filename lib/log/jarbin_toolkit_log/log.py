@@ -161,15 +161,10 @@ class Log:
 
 
     def close(
-            self,
-            *,
-            delete : bool = False
+            self
         ) -> None :
         """
             Close the log file.
-
-            Parameters:
-                delete (bool, optional): delete the log file
         """
 
         if not self.closed:

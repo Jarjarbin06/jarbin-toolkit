@@ -1,18 +1,14 @@
-<small>last update : 
-**PACKAGE** = *2026/01/21* ; 
-**README** = *2026/02/03*</small>\
-\
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Epitech_logo.png" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Jarbin-Toolkit_logo.jpg" alt="error loading Jarbin-ToolKit Logo" width="49%" style="display:inline-block;">
 
 # **Jarbin-ToolKit:Time** v0.1.1.0
 <details>
 <summary>Latest development version</summary>
-🟠 UNDER DEVELOPMENT 🟠 v0.1.1.0 🟠
+🟠 UNDER DEVELOPMENT 🟠 None 🟠
 </details>
 <details>
 <summary>Latest release</summary>
-🟢 RELEASED 🟢 v0.1.0.0 🟢
+🟢 RELEASED 🟢 v0.1.1.0 🟢
 </details>
 
 [![CodeQL Advanced](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/codeql.yml/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/codeql.yml)
@@ -84,40 +80,94 @@ from jarbin_toolkit_time import Time, StopWatch
 ```
 
 ## API-Reference
-`.` = *function* ; `+` = *class constructor* ; `_` = *class method* ; `@` = *static method* ; `#` = *class variable*
+
+*   **Time**: Static time utility helpers (waiting, pausing, precise elapsed measurement).
+    *   `wait(sleep: int | float) -> float` (staticmethod)
+        Wait for a given number of seconds.
+        - `sleep`: duration in seconds
+        - Uses internal `StopWatch`
+        - Returns the exact measured elapsed time
+
+    *   `pause(msg: str = "Press enter to continue...") -> float` (staticmethod)
+        Pause program execution until user presses Enter.
+        - `msg`: message displayed to the user
+        - Returns the exact elapsed pause time
 
 
-### Error Module
+*   **StopWatch**: Lightweight elapsed time tracker.
+    *   `StopWatch(start: bool = False)`
+        Create a stopwatch.
+        - `start`: if `True`, automatically start at initialization
 
-*   **Error**: Class for custom error handling.
-    *   `+Error(message: str = "an error occurred", error: str = "Error", link: tuple[str, int] | None = None)`: Constructor to create an error object.
+    *   `start() -> None`
+        Reset and start the stopwatch.
 
+    *   `stop() -> None`
+        Stop the stopwatch (freezes elapsed value).
+
+    *   `update() -> None`
+        Update internal elapsed time (if running).
+
+    *   `elapsed(auto_update: bool = True) -> float`
+        Return elapsed time in seconds.
+        - `auto_update`: automatically refresh before returning value
+
+    *   `reset() -> None`
+        Reset elapsed time and stop the stopwatch.
+
+    *   `__str__() -> str`
+        Return string representation of elapsed time.
+
+    *   `__repr__() -> str`
+        Return constructor-style representation of the StopWatch object.
+
+    *   `__eq__(other: float) -> bool`
+        Compare elapsed time with float (`==`).
+
+    *   `__gt__(other: float) -> bool`
+        Compare elapsed time with float (`>`).
+
+    *   `__ge__(other: float) -> bool`
+        Compare elapsed time with float (`>=`).
+
+    *   `__lt__(other: float) -> bool`
+        Compare elapsed time with float (`<`).
+
+    *   `__le__(other: float) -> bool`
+        Compare elapsed time with float (`<=`).
 
 ## Release-Notes
+* #### v0.1.1:
+    *   **[/]** 1rst real release
 * #### v0.1.0:
     *   **[UPDATE]** `jarbin_toolkit_time` update (removed unlinked sub-modules)
     *   **[INIT]** add `epitech_console` to jarbin-toolkit (renamed `jarbin_toolkit_time`)
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0 - see the [NONE](NONE) file for details.
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/time/LICENSE) file for details.
 
 ## Important-Links
 
 #### Files
-*   **Repository**: [NONE](NONE)
-*   **PyPI**: [NONE](NONE)
+*   **Repository**: [https://github.com/Jarjarbin06/jarbin-toolkit](https://github.com/Jarjarbin06/jarbin-toolkit)
+*   **PyPI**: [https://pypi.org/project/jarbin-toolkit-time/](https://pypi.org/project/jarbin-toolkit-time/)
 
 #### Wiki
-*   **Wiki** (*take a look*): [NONE](NONE)
-*   **README**: [NONE](NONE)
-*   **GitHub**: [NONE](NONE)
+*   **Wiki** (*take a look*): [https://github.com/Jarjarbin06/jarbin-toolkit/wiki](https://github.com/Jarjarbin06/jarbin-toolkit/wiki)
+*   **README** (*updated*):  [https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/time/README.md](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/time/README.md)
+*   **GitHub**: [https://jarjarbin06.github.io/jarbin-toolkit/](https://jarjarbin06.github.io/jarbin-toolkit/)
 
 ## Footer
 
-*   Repository: [NONE](NONE)
+*   Repository: [https://github.com/Jarjarbin06/jarbin-toolkit](https://github.com/Jarjarbin06/jarbin-toolkit)
 *   Author: Nathan Jarjarbin
 *   Contact: nathan.amaraggi@epitech.eu
 
 ⭐️ Like the project? Give it a star!
 🐛 Found a bug? Report it in the issues!
+\
+\
+<small>last update : 
+**PACKAGE** = *2026/01/21* ; 
+**README** = *2026/02/12*</small>

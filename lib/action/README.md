@@ -1,18 +1,14 @@
-<small>last update : 
-**PACKAGE** = *2026/01/21* ; 
-**README** = *2026/02/03*</small>\
-\
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Epitech_logo.png" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Jarbin-Toolkit_logo.jpg" alt="error loading Jarbin-ToolKit Logo" width="49%" style="display:inline-block;">
 
 # **Jarbin-ToolKit:Action** v0.1.1.0
 <details>
 <summary>Latest development version</summary>
-🟠 UNDER DEVELOPMENT 🟠 v0.1.1.0 🟠
+🟠 UNDER DEVELOPMENT 🟠 None 🟠
 </details>
 <details>
 <summary>Latest release</summary>
-🟢 RELEASED 🟢 v0.1.0.0 🟢
+🟢 RELEASED 🟢 v0.1.1.0 🟢
 </details>
 
 [![CodeQL Advanced](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/codeql.yml/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/codeql.yml)
@@ -84,40 +80,80 @@ from jarbin_toolkit_action import Action, Actions
 ```
 
 ## API-Reference
-`.` = *function* ; `+` = *class constructor* ; `_` = *class method* ; `@` = *static method* ; `#` = *class variable*
+
+*   **Action**: Callable object storing a function and its arguments for deferred execution.
+    *   `Action(name: str, function: Callable, *args: Any, **kwargs: Any)`
+        Save a function and its arguments.
+        - `name`: logical name of the action
+        - `function`: callable to execute
+        - `*args`: positional arguments for the function
+        - `**kwargs`: keyword arguments for the function
+    *   `__call__() -> Any`
+        Execute the stored function with its saved arguments.
+        Returns the function’s return value.
+    *   `__add__(other: Action) -> Actions`
+        Combine two `Action` objects into an `Actions` collection.
+    *   `__str__() -> str`
+        Return readable string representation:
+        `'name' : function(*args = [...], **kwargs = {...})`
+    *   `__repr__() -> str`
+        Return constructor-style representation of the Action object.
 
 
-### Error Module
-
-*   **Error**: Class for custom error handling.
-    *   `+Error(message: str = "an error occurred", error: str = "Error", link: tuple[str, int] | None = None)`: Constructor to create an error object.
-
+*   **Actions**: Collection of multiple `Action` objects.
+    *   `Actions(actions: list[Action] | Action | None = None)`
+        Create a collection of actions.
+        - `actions`: optional single `Action` or list of `Action`
+    *   `__call__() -> dict[str, Any]`
+        Execute all stored actions sequentially.
+        Returns a dictionary:
+        `{ action_name: return_value }`
+    *   `__add__(other: Actions | Action) -> Actions`
+        Merge:
+        - `Actions + Actions`
+        - `Actions + Action`
+    *   `__len__() -> int`
+        Return number of stored actions.
+    *   `__getitem__(item: int) -> Action`
+        Return the `Action` at given index.
+    *   `__str__() -> str`
+        Return formatted multi-line representation of all stored actions.
+    *   `__repr__() -> str`
+        Return constructor-style representation of the Actions object.
 
 ## Release-Notes
+* #### v0.1.1:
+    *   **[/]** 1rst real release 
+
 * #### v0.1.0:
     *   **[UPDATE]** `jarbin_toolkit_action` update (removed unlinked sub-modules)
     *   **[INIT]** add `epitech_console` to jarbin-toolkit (renamed `jarbin_toolkit_action`)
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0 - see the [NONE](NONE) file for details.
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/action/LICENSE) file for details.
 
 ## Important-Links
 
 #### Files
-*   **Repository**: [NONE](NONE)
-*   **PyPI**: [NONE](NONE)
+*   **Repository**: [https://github.com/Jarjarbin06/jarbin-toolkit](https://github.com/Jarjarbin06/jarbin-toolkit)
+*   **PyPI**: [https://pypi.org/project/jarbin-toolkit-action/](https://pypi.org/project/jarbin-toolkit-action/)
 
 #### Wiki
-*   **Wiki** (*take a look*): [NONE](NONE)
-*   **README**: [NONE](NONE)
-*   **GitHub**: [NONE](NONE)
+*   **Wiki** (*take a look*): [https://github.com/Jarjarbin06/jarbin-toolkit/wiki](https://github.com/Jarjarbin06/jarbin-toolkit/wiki)
+*   **README** (*updated*):  [https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/action/README.md](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/action/README.md)
+*   **GitHub**: [https://jarjarbin06.github.io/jarbin-toolkit/](https://jarjarbin06.github.io/jarbin-toolkit/)
 
 ## Footer
 
-*   Repository: [NONE](NONE)
+*   Repository: [https://github.com/Jarjarbin06/jarbin-toolkit](https://github.com/Jarjarbin06/jarbin-toolkit)
 *   Author: Nathan Jarjarbin
 *   Contact: nathan.amaraggi@epitech.eu
 
 ⭐️ Like the project? Give it a star!
 🐛 Found a bug? Report it in the issues!
+\
+\
+<small>last update : 
+**PACKAGE** = *2026/01/21* ; 
+**README** = *2026/02/12*</small>
