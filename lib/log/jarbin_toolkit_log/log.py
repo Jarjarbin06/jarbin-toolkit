@@ -187,9 +187,6 @@ class Log:
 
             self.closed = True
 
-            if delete :
-                self.delete()
-
 
     def delete(
             self
@@ -225,7 +222,7 @@ class Log:
     def __str__(
             self,
             filter : list[str] | str | None = None
-        ) -> str :
+        ) -> str | None :
         """
             Returns a formated log file.
 
@@ -244,7 +241,9 @@ class Log:
         elif self.log_file_type == "json":
             return self._json_str(filter)
 
-        return log_str
+        ## cannot be tested with pytest ##
+
+        return log_str  # pragma: no cover
 
 
     def _jar_log_str(
@@ -288,7 +287,7 @@ class Log:
         string += f"\x1b[7m|\x1b[0m\x1b[1m" + (" " * (t_size - 1)) + f"\x1b[0m\n"
 
         for log_line in logs:
-            if not filter or log_line[0].replace(" ", "")[1:-1] in filter:
+            if not filter or (len(log_line) == 3 and log_line[1][log_line[1].index("[") + 1:log_line[1].index("]")] in filter):
                 if log_line[0][:3] == ">>>":
                     string += f"\x1b[7m>>>\x1b[0m \x1b[0m{log_line[0][3:]}\x1b[0m\n"
 
@@ -336,9 +335,11 @@ class Log:
 
         string += f"JSON => {parsed_json['file_name']}"
         string += f"\n{'=' * 50}\n"
+
         for log_line in parsed_json["logs"]:
             if not filter or log_line["level"] in filter:
                 string += f"{log_line['time']} | {(log_line['level'] + (' ' * 5))[:5]} {(log_line['title'] + (' ' * 10))[:10]} | {log_line['msg']}\n"
+
         string += f"{'=' * 50}"
 
         return string
