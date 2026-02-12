@@ -3,11 +3,9 @@
 
 # **jarbin-toolkit** v1.0
 <details>
-<summary>Latest development version</summary>
+<summary>Latest versions</summary>
 🟠 UNDER DEVELOPMENT 🟠 None 🟠
-</details>
-<details>
-<summary>Latest release</summary>
+
 🟢 RELEASED 🟢 v1.0 🟢
 </details>
 
@@ -15,9 +13,17 @@
 [![Python package tester](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/test-package.yml/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/test-package.yml)
 [![pages-build-deployment](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/pages/pages-build-deployment)
 
+---
+
+---
+
 ## Description
 
 `jarbin-toolkit` is a Python library that contains multiple tools making every program development easier.
+
+---
+
+---
 
 ## Table of Contents
 
@@ -29,10 +35,18 @@
 6.  [Important Links](#Important-Links)
 7.  [Footer](#Footer)
 
+---
+
+---
+
 ## Tech-Stack
 
 *   **Language**: Python - Chosen for its readability and versatility.
 *   **Frameworks**: Python -  Entirely implemented in Python.
+
+---
+
+---
 
 ## Installation
 
@@ -43,13 +57,17 @@ To begin , install `jarbin-toolkit`:
 Make sure you have Python `3.11` or newer installed on your computer.
 You can check your Python version by opening a terminal and typing `python --version`.
 
+---
+
 #### **Install from PyPI** (*recommended*):
 	
 Open your terminal and run this command:
 ```bash
 pip install jarbin_toolkit
 ```
-   This will automatically download and install the library from PyPI.
+This will automatically download and install the library from PyPI.
+
+---
 
 #### **Install from GitHub**:
 
@@ -61,7 +79,11 @@ make -C jarbin_toolkit install-all
 This downloads the code, then the `install` script handles the installation.
 These commands install the `jarbin-toolkit` package and its dependencies (all tools).
 
-## Release-Notes
+---
+
+---
+
+# Release-Notes
 ## v1.0 - 2026-02-12
 - Update ALL modules
 > 1rst real release
@@ -83,9 +105,17 @@ These commands install the `jarbin-toolkit` package and its dependencies (all to
 - Added Action orchestration system
 > ⚠️ Library not working (only PyPI module initialization)
 
+---
+
+---
+
 ## License
 
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/LICENSE) file for details.
+
+---
+
+---
 
 ## Important-Links
 
@@ -93,10 +123,16 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 *   **Repository**: [https://github.com/Jarjarbin06/jarbin-toolkit](https://github.com/Jarjarbin06/jarbin-toolkit)
 *   **PyPI**: [https://pypi.org/project/jarbin-toolkit/](https://pypi.org/project/jarbin-toolkit/)
 
+---
+
 #### Wiki
 *   **Wiki** (*take a look*): [https://github.com/Jarjarbin06/jarbin-toolkit/wiki](https://github.com/Jarjarbin06/jarbin-toolkit/wiki)
 *   **README** (*updated*):  [https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/README.md](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/README.md)
 *   **GitHub**: [https://jarjarbin06.github.io/jarbin-toolkit/](https://jarjarbin06.github.io/jarbin-toolkit/)
+
+---
+
+---
 
 ## Footer
 
@@ -104,10 +140,13 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 *   Author: Nathan Jarjarbin
 *   Contact: nathan.amaraggi@epitech.eu
 
+---
+
 ⭐️ Like the project? Give it a star!
 🐛 Found a bug? Report it in the issues!
-\
-\
+
+---
+
 <small>
 Last update : 
 **PACKAGE** — *2026/02/05* ; 

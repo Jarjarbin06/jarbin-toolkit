@@ -15,9 +15,17 @@
 [![Python package tester](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/test-package.yml/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/test-package.yml)
 [![pages-build-deployment](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/pages/pages-build-deployment)
 
+---
+
+---
+
 ## Description
 
 `jarbin-toolkit:log` is a Python library designed to help you create enhanced terminal interfaces. It's improving the appearance and readability of your command-line interface with lightweight animations, colorful text, and neat formatting. If you want to make your terminal programs more readable and visually structured, this library is for you!
+
+---
+
+---
 
 ## Table of Contents
 
@@ -33,14 +41,26 @@
 10. [Important Links](#Important-Links)
 11. [Footer](#Footer)
 
+---
+
+---
+
 ## Features
 
 *   **Timers**: Use the built-in stopwatch to measure how long parts of your code take to run.
+
+---
+
+---
 
 ## Tech-Stack
 
 *   **Language**: Python - Chosen for its readability and versatility.
 *   **Frameworks**: Python -  Entirely implemented in Python.
+
+---
+
+---
 
 ## Installation
 
@@ -51,6 +71,8 @@ To begin , install `jarbin-toolkit:log`:
 Make sure you have Python `3.11` or newer installed on your computer.
 You can check your Python version by opening a terminal and typing `python --version`.
 
+---
+
 #### **Install from PyPI** (*recommended*):
 	
 Open your terminal and run this command:
@@ -58,6 +80,8 @@ Open your terminal and run this command:
 pip install jarbin_toolkit_log
 ```
    This will automatically download and install the library from PyPI.
+
+---
 
 #### **Install from GitHub**:
 
@@ -69,15 +93,27 @@ make -C lib/jarbin_toolkit_log install
 This downloads the code, then the `install` script handles the installation.
 These commands install the `jarbin-toolkit:log` package and its dependencies (datetime).
 
+---
+
+---
+
 ## Usage
 
 Here are some examples demonstrating how to use `jarbin-toolkit:log`:
+
+---
+
+---
 
 ### Basic Log
 
 ```python
 from jarbin_toolkit_log import Log
 ```
+
+---
+
+---
 
 ## API-Reference
 
@@ -114,6 +150,10 @@ from jarbin_toolkit_log import Log
     *   `__repr__() -> str`
         Return constructor-style representation of the Log object.
 
+---
+
+---
+
 ## Release-Notes
 * #### v0.2.1:
     *   **[/]** 1rst real release 
@@ -126,9 +166,17 @@ from jarbin_toolkit_log import Log
     *   **[UPDATE]** `jarbin_toolkit_log` update (removed unlinked sub-modules)
     *   **[INIT]** add `epitech_console` to jarbin-toolkit (renamed `jarbin_toolkit_log`)
 
+---
+
+---
+
 ## License
 
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/log/LICENSE) file for details.
+
+---
+
+---
 
 ## Important-Links
 
@@ -136,10 +184,16 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 *   **Repository**: [https://github.com/Jarjarbin06/jarbin-toolkit](https://github.com/Jarjarbin06/jarbin-toolkit)
 *   **PyPI**: [https://pypi.org/project/jarbin-toolkit-log/](https://pypi.org/project/jarbin-toolkit-log/)
 
+---
+
 #### Wiki
 *   **Wiki** (*take a look*): [https://github.com/Jarjarbin06/jarbin-toolkit/wiki](https://github.com/Jarjarbin06/jarbin-toolkit/wiki)
 *   **README** (*updated*):  [https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/log/README.md](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/log/README.md)
 *   **GitHub**: [https://jarjarbin06.github.io/jarbin-toolkit/](https://jarjarbin06.github.io/jarbin-toolkit/)
+
+---
+
+---
 
 ## Footer
 
@@ -147,10 +201,13 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 *   Author: Nathan Jarjarbin
 *   Contact: nathan.amaraggi@epitech.eu
 
+---
+
 ⭐️ Like the project? Give it a star!
 🐛 Found a bug? Report it in the issues!
-\
-\
+
+---
+
 <small>
 Last update : 
 **PACKAGE** — *2026/02/12* ; 

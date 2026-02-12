@@ -7,9 +7,13 @@
 
 ---
 
+---
+
 ## Pages
 
 1. [API REFERENCE](api_ref.md)
+
+---
 
 ---
 
@@ -31,6 +35,8 @@
 
 ---
 
+---
+
 ## Library Overview
 
 Jarbin-ToolKit provides modular tools to improve the development of CLI utilities:
@@ -44,6 +50,8 @@ Jarbin-ToolKit provides modular tools to improve the development of CLI utilitie
 
 ---
 
+---
+
 ## Main Features
 
 - **Cross-platform support**: Linux & Windows
@@ -53,6 +61,8 @@ Jarbin-ToolKit provides modular tools to improve the development of CLI utilitie
 - **Animation support**: spinners, sliders, and filling animations
 - **Precision timing**: `StopWatch` and `Time.wait` / `Time.pause`
 - **Extensible Action system**: group and execute multiple callable tasks
+
+---
 
 ---
 
@@ -70,6 +80,8 @@ Jarbin-ToolKit provides modular tools to improve the development of CLI utilitie
 
 ---
 
+---
+
 ## Installation
 
 ```
@@ -81,6 +93,8 @@ Or to force reinstall the latest version:
 ```
 pip install --upgrade --force-reinstall jarbin-toolkit
 ```
+
+---
 
 ---
 
@@ -196,6 +210,8 @@ for i in range(11):
 
 ---
 
+---
+
 ## Release Notes
 
 ### v1.0 - 2026-02-05
@@ -217,6 +233,8 @@ for i in range(11):
 
 ---
 
+---
+
 ## Useful Links
 
 - [GitHub Repository](https://github.com/Jarjarbin06/jarbin-toolkit)  
@@ -225,7 +243,11 @@ for i in range(11):
 
 ---
 
+---
+
 > Jarbin-ToolKit [*GNU GPL*](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/LICENSE) 2026 [**JARJARBIN's STUDIO**](https://github.com/Jarjarbin06)
+
+---
 
 <small>
 Last update:

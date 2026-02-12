@@ -15,9 +15,17 @@
 [![Python package tester](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/test-package.yml/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/test-package.yml)
 [![pages-build-deployment](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/pages/pages-build-deployment)
 
+---
+
+---
+
 ## Description
 
 `jarbin-toolkit:console` is a Python library designed to help you create enhanced terminal interfaces. It's improving the appearance and readability of your command-line interface with lightweight animations, colorful text, and neat formatting. If you want to make your terminal programs more readable and visually structured, this library is for you!
+
+---
+
+---
 
 ## Table of Contents
 
@@ -33,6 +41,10 @@
 10. [Important Links](#Important-Links)
 11. [Footer](#Footer)
 
+---
+
+---
+
 ## Features
 
 *   **Cool Text Effects**: Easily add colors, bold text, italics, underlines, and even strike through to your terminal text.
@@ -42,10 +54,18 @@
 *   **Line Control**:  Features for clearing lines or the entire screen.
 *   **ANSI Escape Sequence Handling**: Provides classes for generating ANSI escape sequences to control text color, formatting, and cursor movement.
 
+---
+
+---
+
 ## Tech-Stack
 
 *   **Language**: Python - Chosen for its readability and versatility.
 *   **Frameworks**: Python -  Entirely implemented in Python.
+
+---
+
+---
 
 ## Installation
 
@@ -56,13 +76,17 @@ To begin , install `jarbin-toolkit:console`:
 Make sure you have Python `3.11` or newer installed on your computer.
 You can check your Python version by opening a terminal and typing `python --version`.
 
+---
+
 #### **Install from PyPI** (*recommended*):
 	
 Open your terminal and run this command:
 ```bash
 pip install jarbin_toolkit_console
 ```
-   This will automatically download and install the library from PyPI.
+This will automatically download and install the library from PyPI.
+
+---
 
 #### **Install from GitHub**:
 
@@ -74,15 +98,27 @@ make -C lib/jarbin_toolkit_console install
 This downloads the code, then the `install` script handles the installation.
 These commands install the `jarbin-toolkit:console` package and its dependencies (datetime).
 
+---
+
+---
+
 ## Usage
 
 Here are some examples demonstrating how to use `jarbin-toolkit:console`:
+
+---
+
+---
 
 ### Basic Text Formatting
 
 ```python
 from jarbin_toolkit_console import *
 ```
+
+---
+
+---
 
 ## API-Reference
 
@@ -177,6 +213,8 @@ from jarbin_toolkit_console import *
     *   `__repr__() -> str`
         Constructor-style representation.
 
+---
+
 ### ANSI Module
 
 *   **ANSI**: Tool for handling ANSI sequences (inherits `Format`).
@@ -242,6 +280,8 @@ from jarbin_toolkit_console import *
     *   `clear() -> ANSI` – clear screen and move cursor to top-left.
     *   `clear_previous_line(n: int = 1) -> ANSI` – clear previous line(s).
 
+---
+
 ### Setting
 
 *   **Setting**: Module-wide configuration and environment handler.
@@ -283,6 +323,8 @@ from jarbin_toolkit_console import *
         - Loads configuration from `S_CONFIG_FILE`.
         - Updates package metadata.
         - Initializes logging if `S_SETTING_LOG_MODE` is enabled.
+
+---
 
 ### Text
 
@@ -336,6 +378,8 @@ from jarbin_toolkit_console import *
     *   `file_link(path: str, line: int | None = None) -> Text` (staticmethod)
         Format a clickable file link (supports JetBrains IDEs like CLion).
 
+---
+
 ### Console
 
 *   **ConsoleMeta**: Metaclass for `Console`.
@@ -373,6 +417,10 @@ from jarbin_toolkit_console import *
     *   `flush(stream: Any = stdout) -> None`
         Flush output of the given stream.
 
+---
+
+---
+
 ## Release-Notes
 * #### v0.1.1:
     *   **[/]** 1rst real release
@@ -380,9 +428,17 @@ from jarbin_toolkit_console import *
     *   **[UPDATE]** `jarbin_toolkit_console` update (removed unlinked sub-modules)
     *   **[INIT]** add `epitech_console` to jarbin-toolkit (renamed `jarbin_toolkit_console`)
 
+---
+
+---
+
 ## License
 
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/console/LICENSE) file for details.
+
+---
+
+---
 
 ## Important-Links
 
@@ -390,10 +446,16 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 *   **Repository**: [https://github.com/Jarjarbin06/jarbin-toolkit](https://github.com/Jarjarbin06/jarbin-toolkit)
 *   **PyPI**: [https://pypi.org/project/jarbin-toolkit-console/](https://pypi.org/project/jarbin-toolkit-console/)
 
+---
+
 #### Wiki
 *   **Wiki** (*take a look*): [https://github.com/Jarjarbin06/jarbin-toolkit/wiki](https://github.com/Jarjarbin06/jarbin-toolkit/wiki)
 *   **README** (*updated*):  [https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/console/README.md](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/console/README.md)
 *   **GitHub**: [https://jarjarbin06.github.io/jarbin-toolkit/](https://jarjarbin06.github.io/jarbin-toolkit/)
+
+---
+
+---
 
 ## Footer
 
@@ -401,10 +463,13 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 *   Author: Nathan Jarjarbin
 *   Contact: nathan.amaraggi@epitech.eu
 
+---
+
 ⭐️ Like the project? Give it a star!
 🐛 Found a bug? Report it in the issues!
-\
-\
+
+---
+
 <small>
 Last update : 
 **PACKAGE** — *2026/02/12* ; 
