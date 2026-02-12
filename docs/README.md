@@ -53,9 +53,21 @@ Jarbin-ToolKit provides a modular set of tools to improve the development of CLI
 ## Tech Stack
 
 - Python 3.11+
-- Standard Library dependencies only:
-  - `time`, `os`, `platform`, `configparser`, `datetime`, `sys`, `typing`
-- No external dependencies required
+- Standard Library dependencies:
+  - `time`
+  - `os`
+  - `platform`
+  - `configparser`
+  - `datetime`
+  - `sys`
+  - `typing`
+- External Library dependencies:
+  - `jarbin-toolkit-action`
+  - `jarbin-toolkit-config`
+  - `jarbin-toolkit-error`
+  - `jarbin-toolkit-log`
+  - `jarbin-toolkit-time`
+  - `jarbin-toolkit-console`
 
 ---
 

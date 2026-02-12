@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jarbin-toolkit"
-version = "0.2"
+version = "0.4"
 description = "Tools by Jarjarbin06 (Action / Config / Console / Error / Log / Time)"
 authors = [
     { name = "Nathan Jarjarbin", email = "nathan.amaraggi@epitech.eu" }
@@ -45,6 +45,8 @@ local_scheme = "dirty-tag"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["jarbin_toolkit*"]
+exclude = ["lib*", "lib/*"]
+
 
 [tool.setuptools.package-data]
 "jarbin_toolkit" = ["config.ini"]
