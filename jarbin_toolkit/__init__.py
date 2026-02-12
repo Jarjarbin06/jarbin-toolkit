@@ -16,6 +16,15 @@ import jarbin_toolkit_log as Log
 import jarbin_toolkit_time as Time
 
 
+Config = Config.Config
+
+Console = Console.Console
+
+Error = Error.Error
+
+Log = Log.Log
+
+
 __all__ : list[str] = [
     'Action',
     'Config',

@@ -3,7 +3,13 @@
 
 # Jarbin-ToolKit
 
-**Jarbin-ToolKit** is a lightweight Python utility library providing a set of modular tools for building robust CLI applications, managing configuration, logging, timed execution, console manipulation, and structured actions. Inspired by `epitech_console`, this library emphasizes readability, flexibility, and cross-platform compatibility.
+**Jarbin-ToolKit** is a lightweight Python utility library providing a modular set of tools for building robust CLI applications, managing configuration, logging, timed execution, console manipulation, and structured actions. Inspired by `epitech_console`, it emphasizes readability, flexibility, and cross-platform compatibility.
+
+---
+
+## Pages
+
+1. [API REFERENCE](api_ref.md)
 
 ---
 
@@ -14,12 +20,12 @@
 3. [Tech Stack](#tech-stack)
 4. [Installation](#installation)
 5. [Library Components](#library-components)
-    - [Action](#action)
-    - [Config](#config)
-    - [Error](#error)
-    - [Log](#log)
-    - [Time](#time)
-    - [Console](#console)
+    - [Action](#action-stable)
+    - [Config](#config-stable)
+    - [Error](#error-stable)
+    - [Log](#log-stable)
+    - [Time](#time-stable)
+    - [Console](#console-stable)
 6. [Release Notes](#release-notes)
 7. [Useful Links](#useful-links)
 
@@ -27,46 +33,39 @@
 
 ## Library Overview
 
-Jarbin-ToolKit provides a modular set of tools to improve the development of CLI utilities:
+Jarbin-ToolKit provides modular tools to improve the development of CLI utilities:
 
-- **Console rendering**: animations, progress bars, spinners, and ANSI manipulation.
-- **Configuration management**: easy-to-use INI files with typed getters and setters.
-- **Action orchestration**: group actions and execute them in flexible ways.
-- **Logging**: formatted log files with `.jar-log` or `JSON`.
-- **Timing utilities**: precise stopwatch and delay tools.
-- **Error handling**: structured errors with optional file/line links and terminal formatting.
+- **Console rendering**: animations, progress bars, spinners, ANSI manipulation
+- **Configuration management**: easy-to-use INI files with typed getters/setters
+- **Action orchestration**: group and execute actions flexibly
+- **Logging**: formatted logs with `.jar-log` or `JSON` support
+- **Timing utilities**: precise stopwatch and delay tools
+- **Error handling**: structured errors with optional file/line links and terminal formatting
 
 ---
 
 ## Main Features
 
-- **Cross-platform support**: Linux & Windows compatibility.
-- **Typed config management**: `.ini` style files with `get_int`, `get_float`, `get_bool`.
-- **Structured logging**: JSON and custom `.jar-log` with formatted output.
-- **Advanced console control**: cursor manipulation, ANSI styles, line clearing, and progress bars.
-- **Animation support**: pre-built spinners, sliders, and filling animations.
-- **Precision timing**: `StopWatch` and `Time.wait` / `Time.pause`.
-- **Extensible Action system**: group and execute multiple callable tasks easily.
+- **Cross-platform support**: Linux & Windows
+- **Typed config management**: `.ini` style files with `get_int`, `get_float`, `get_bool`
+- **Structured logging**: JSON and custom `.jar-log` with formatted output
+- **Advanced console control**: cursor manipulation, ANSI styles, line clearing, progress bars
+- **Animation support**: spinners, sliders, and filling animations
+- **Precision timing**: `StopWatch` and `Time.wait` / `Time.pause`
+- **Extensible Action system**: group and execute multiple callable tasks
 
 ---
 
 ## Tech Stack
 
-- Python 3.11+
-- Standard Library dependencies:
-  - `time`
-  - `os`
-  - `platform`
-  - `configparser`
-  - `datetime`
-  - `sys`
-  - `typing`
-- External Library dependencies:
-  - `jarbin-toolkit-action`
-  - `jarbin-toolkit-config`
-  - `jarbin-toolkit-error`
-  - `jarbin-toolkit-log`
-  - `jarbin-toolkit-time`
+- **Python**: 3.11+
+- **Standard Library Dependencies**: `time`, `os`, `platform`, `configparser`, `datetime`, `sys`, `typing`
+- **External Dependencies**:
+  - `jarbin-toolkit-action`,
+  - `jarbin-toolkit-config`,
+  - `jarbin-toolkit-error`,
+  - `jarbin-toolkit-log`,
+  - `jarbin-toolkit-time`,
   - `jarbin-toolkit-console`
 
 ---
@@ -77,7 +76,7 @@ Jarbin-ToolKit provides a modular set of tools to improve the development of CLI
 pip install jarbin-toolkit
 ```
 
-Or, to force reinstall the latest version:
+Or to force reinstall the latest version:
 
 ```
 pip install --upgrade --force-reinstall jarbin-toolkit
@@ -93,52 +92,37 @@ Provides tools for **deferring execution** and **grouping callable actions**.
 
 #### Classes
 
-- **`Action`**  
-  Represents a single callable action.
+- **`Action`** — Represents a single callable action
 
-  **Usage:**
-  ```
-  from jarbin_toolkit.action import Action
+```
+from jarbin_toolkit.action import Action
 
-  def greet():
-      print("Hello World!")
+def greet():
+    print("Hello World!")
 
-  a = Action(greet)
-  a()  # Executes the function
-  ```
+a = Action(greet)
+a()  # Executes the function
+```
 
-- **`Actions`**  
-  Represents a collection of `Action` objects. Supports:
-  - Adding actions: `+`
-  - Access by index
-  - Execution of all actions
-  - Checking length
+- **`Actions`** — Represents a collection of `Action` objects
 
-  **Usage:**
-  ```
-  from jarbin_toolkit.action import Actions, Action
+```
+from jarbin_toolkit.action import Actions, Action
 
-  actions = Actions()
-  actions + Action(lambda: print("Action 1"))
-  actions + Action(lambda: print("Action 2"))
+actions = Actions()
+actions + Action(lambda: print("Action 1"))
+actions + Action(lambda: print("Action 2"))
 
-  actions()  # Executes all actions
-  print(len(actions))  # Number of actions
-  ```
+actions()  # Executes all actions
+print(len(actions))  # Number of actions
+```
 
 ---
 
 ### Config (Stable)
 
-**`Config`** manages INI-style configuration files with cross-platform support.
+Manages INI-style configuration files with typed getters and cross-platform support.
 
-**Features:**
-- Create or read configuration files
-- Typed getters: `get_int`, `get_float`, `get_bool`
-- Cross-platform path normalization (Windows / Linux)
-- Delete config or keep it cached
-
-**Usage:**
 ```
 from jarbin_toolkit.config import Config
 
@@ -152,24 +136,8 @@ cfg.delete()
 
 ### Error (Stable)
 
-Structured error system with formatted output and optional file/line linking.
+Structured error system with terminal formatting and optional file/line linking.
 
-**Classes:**
-- `Error` (base)
-- `ErrorLaunch`
-- `ErrorImport`
-- `ErrorLog`
-- `ErrorConfig`
-- `ErrorSetting`
-- `ErrorType`
-- `ErrorValue`
-
-**Features:**
-- Terminal colored messages
-- Optional file and line number linking
-- Logging hooks (some intentionally no-op)
-
-**Usage:**
 ```
 from jarbin_toolkit.error import ErrorConfig
 
@@ -183,16 +151,8 @@ except ErrorConfig as e:
 
 ### Log (Stable)
 
-**`Log`** manages formatted logs in `.jar-log` or `JSON` files.
+Manages formatted logs in `.jar-log` or JSON format.
 
-**Features:**
-- File creation and lifecycle management
-- Log and comment writing
-- Terminal-aware rendering with color
-- Filtered reading of log types
-- Delete and close management
-
-**Usage:**
 ```
 from jarbin_toolkit.log import Log
 
@@ -209,16 +169,6 @@ log.close(delete=True)
 
 Precision timing utilities.
 
-**StopWatch Class:**
-- Start, stop, reset
-- Elapsed time measurement
-- Comparison operators (`==`, `<`, `>`, `<=`, `>=`)
-
-**Time Utilities:**
-- `Time.wait(sleep: float)`: waits for exact time, returns elapsed
-- `Time.pause(msg: str)`: pauses execution, returns elapsed
-
-**Usage:**
 ```
 from jarbin_toolkit.time import StopWatch, Time
 
@@ -231,19 +181,10 @@ Time.pause("Press enter to continue...")
 
 ---
 
-### Console (Evolving)
+### Console (Stable)
 
-Inspired by `epitech_console`, provides **advanced terminal rendering**:
+Provides **advanced terminal rendering** inspired by `epitech_console`.
 
-**Submodules:**
-- **Animation**: Progress bars, spinners, custom animations
-- **ANSI**: ANSI escape sequences, colors, styling
-- **Cursor**: Move, hide, show cursor
-- **Line**: Clear lines, screen, previous lines
-- **Text**: Apply formatting to strings
-- **Setting**: Module settings and environment management
-
-**Usage:**
 ```
 from jarbin_toolkit.console import Console, Animation, ProgressBar
 
@@ -257,35 +198,36 @@ for i in range(11):
 
 ## Release Notes
 
-## v0.2 - 2026-02-05
-- New Log release
-- Fixed every module in the library
-> JSON format handler for Log
+### v1.0 - 2026-02-05
+- All modules updated and released  
+> First official release
 
+### v0.2 - 2026-02-05
+- New Log release
+- Fixed all modules
+- JSON format support for logs  
 > Working library
 
-## v0.1 - 2026-01-22
-- Initial release of Jarbin-ToolKit
+### v0.1 - 2026-01-22
+- Initial release
 - Stable modules: Action, Config, Error, Log, Time
 - Evolving module: Console
-- Added StopWatch and Time utilities
-- Added structured error handling
-- Added formatted logging system
-- Added Action orchestration system
-> Library not working (only PyPI initialization)
+- Added StopWatch, Time, structured error handling, logging, and Action orchestration  
+> Library not functional yet
 
 ---
 
 ## Useful Links
 
-- [GitHub Repository](https://github.com/Jarjarbin06/jarbin-toolkit)
-- [Issue Tracker](https://github.com/Jarjarbin06/jarbin-toolkit/issues)
+- [GitHub Repository](https://github.com/Jarjarbin06/jarbin-toolkit)  
+- [Issue Tracker](https://github.com/Jarjarbin06/jarbin-toolkit/issues)  
 - [ANSI Escape Codes Reference](https://en.wikipedia.org/wiki/ANSI_escape_code)
 
 ---
 
 > Jarbin-ToolKit [*GNU GPL*](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/LICENSE) 2026 [**JARJARBIN's STUDIO**](https://github.com/Jarjarbin06)
 
-\
-\
-<small>last update : **README** = *2026/02/12*</small>
+<small>
+Last update:
+**README** — *2026/02/12**
+</small>

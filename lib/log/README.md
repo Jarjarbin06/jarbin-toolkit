@@ -151,6 +151,8 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 🐛 Found a bug? Report it in the issues!
 \
 \
-<small>last update : 
-**PACKAGE** = *2026/02/12* ; 
-**README** = *2026/02/12*</small>
+<small>
+Last update : 
+**PACKAGE** — *2026/02/12* ; 
+**README** — *2026/02/12*
+</small>
