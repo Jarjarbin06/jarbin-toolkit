@@ -11,7 +11,6 @@ This document provides a complete technical reference for all public modules, cl
 ## Table of Contents
 1. [Jarbin-ToolKit](#jarbin-toolkit)
 2. [Sub-Modules](#sub-modules)
-3. 
    1. [Action Module](#action-module)
    2. [Config Module](#config-module)
    3. [Error Module](#error-module)
