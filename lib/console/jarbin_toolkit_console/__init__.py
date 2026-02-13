@@ -193,11 +193,6 @@ C_BG_CYAN : int = 106
 C_BG_WHITE : int = 107
 
 
-__version__ : str = 'v0.2.0'
-__author__ : str = 'Nathan Jarjarbin'
-__email__ : str = 'nathan.amaraggi@epitech.eu'
-
-
 __all__ : list[str] = [
     'Animation',
     'ANSI',
@@ -247,17 +242,11 @@ __all__ : list[str] = [
     'C_BG_CYAN',
     'C_BG_WHITE',
     'init',
-    'quit',
-    '__version__',
-    '__author__',
-    '__email__'
+    'quit'
 ]
 
 
-##################
-# Initialization #
-##################
-
-
-init(banner=False)
-quit(delete_log=True)
+__author__ : str = 'Nathan Jarjarbin'
+__email__ : str = 'nathan.amaraggi@epitech.eu'
+__version__ : str = "0.1.2.1"
+__license__ : str = "GPL"

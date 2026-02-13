@@ -134,7 +134,7 @@ class Color:
             color: Any | str | int
         ) -> ANSI:
         """
-            Get ANSI sequence from the 'color' (color must be one of the preset C_?)
+            Get ANSI sequence from the 'color' (color must be one of the preset C_*)
 
             Arguments:
                 color (ANSI | str | int): color code

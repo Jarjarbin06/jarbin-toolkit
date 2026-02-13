@@ -113,7 +113,6 @@ from jarbin_toolkit_time import Time, StopWatch
         - `sleep`: duration in seconds
         - Uses internal `StopWatch`
         - Returns the exact measured elapsed time
-
     *   `pause(msg: str = "Press enter to continue...") -> float` (staticmethod)
         Pause program execution until user presses Enter.
         - `msg`: message displayed to the user
@@ -124,41 +123,29 @@ from jarbin_toolkit_time import Time, StopWatch
     *   `StopWatch(start: bool = False)`
         Create a stopwatch.
         - `start`: if `True`, automatically start at initialization
-
     *   `start() -> None`
         Reset and start the stopwatch.
-
     *   `stop() -> None`
         Stop the stopwatch (freezes elapsed value).
-
     *   `update() -> None`
         Update internal elapsed time (if running).
-
     *   `elapsed(auto_update: bool = True) -> float`
         Return elapsed time in seconds.
         - `auto_update`: automatically refresh before returning value
-
     *   `reset() -> None`
         Reset elapsed time and stop the stopwatch.
-
     *   `__str__() -> str`
         Return string representation of elapsed time.
-
     *   `__repr__() -> str`
         Return constructor-style representation of the StopWatch object.
-
     *   `__eq__(other: float) -> bool`
         Compare elapsed time with float (`==`).
-
     *   `__gt__(other: float) -> bool`
         Compare elapsed time with float (`>`).
-
     *   `__ge__(other: float) -> bool`
         Compare elapsed time with float (`>=`).
-
     *   `__lt__(other: float) -> bool`
         Compare elapsed time with float (`<`).
-
     *   `__le__(other: float) -> bool`
         Compare elapsed time with float (`<=`).
 

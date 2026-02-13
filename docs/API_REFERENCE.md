@@ -10,6 +10,10 @@ This document provides a complete technical reference for all public modules, cl
 
 ## Table of Contents
 1. [Jarbin-ToolKit](#jarbin-toolkit)
+   1. [Metadata & Environment](#metadata--environment)
+   2. [Public Functions](#public-functions)
+   3. [API Shortcuts](#api-shortcuts)
+
 2. [Sub-Modules](#sub-modules)
    1. [Action Module](#action-module)
    2. [Config Module](#config-module)
@@ -17,7 +21,9 @@ This document provides a complete technical reference for all public modules, cl
    4. [Log Module](#log-module)
    5. [Time Module](#time-module)
    6. [Console Module](#console-module)
+
 3. [Version Compatibility](#version-compatibility)
+
 4. [LICENSE](#license)
 
 ---
@@ -25,7 +31,134 @@ This document provides a complete technical reference for all public modules, cl
 ---
 
 # Jarbin-ToolKit
-### None
+
+Root package exposing all core modules and high-level API shortcuts.
+
+---
+
+## Metadata & Environment
+
+### Constants
+
+- `IS_TTY: bool`  
+  Indicates if `stdout` is attached to a TTY.
+
+- `OS: str`  
+  Operating system name (from `platform.system()`).
+
+- `TERM: str`  
+  Terminal type (from environment variable).
+
+
+## Public Functions
+
+### `get_info() -> dict[str, str]`
+
+Returns toolkit metadata.
+
+#### Example
+
+```python
+from jarbin_toolkit import get_info
+
+info = get_info()
+print(info["version"])
+```
+
+
+### `benchmark(function: Callable, *args, **kwargs) -> tuple[Any, float]`
+
+Benchmarks a function call.
+
+- Executes the function
+- Returns `(result, elapsed_time_seconds)`
+
+#### Example
+
+```python
+from jarbin_toolkit import benchmark
+
+def slow():
+    return sum(range(1000000))
+
+result, elapsed = benchmark(slow)
+print(result, elapsed)
+```
+
+
+### `fail(message: str = "an error occurred") -> None`
+
+Raises a `jarbin_toolkit.Error.Error`.
+
+#### Example
+
+```python
+from jarbin_toolkit import fail
+
+fail("Critical failure")
+```
+
+
+### `text(*args) -> Console.Text.Text`
+
+Creates a `Text` object from given arguments.
+
+#### Example
+
+```python
+from jarbin_toolkit import text
+
+t = text("Hello", "World")
+print(t.bold())
+```
+
+---
+
+## API Shortcuts
+
+High-level direct bindings for faster access.
+
+### Time
+
+- `sleep` → `Time.Time.wait`
+- `pause` → `Time.Time.pause`
+
+
+### Console Core
+
+- `print`
+- `input`
+- `flush`
+- `stdin`
+- `stdout`
+- `stderr`
+
+
+### Text Formatting
+
+- `critic`
+- `error`
+- `warning`
+- `valid`
+- `debug`
+- `info`
+- `bold`
+- `underline`
+- `color`
+
+
+### Cursor Control
+
+- `up`
+- `down`
+- `left`
+- `right`
+
+
+### Line Control
+
+- `clear`
+- `clear_line`
 
 ---
 

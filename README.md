@@ -1,12 +1,12 @@
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Epitech_logo.png" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Jarbin-Toolkit_logo.jpg" alt="error loading Jarbin-ToolKit Logo" width="49%" style="display:inline-block;">
 
-# **jarbin-toolkit** v1.0
+# **jarbin-toolkit** v1.1
 <details>
 <summary>Latest versions</summary>
 🟠 UNDER DEVELOPMENT 🟠 None 🟠
 
-🟢 RELEASED 🟢 v1.0 🟢
+🟢 RELEASED 🟢 v1.1 🟢
 </details>
 
 [![CodeQL Advanced](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/codeql.yml/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/codeql.yml)

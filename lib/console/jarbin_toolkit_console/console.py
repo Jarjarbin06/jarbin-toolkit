@@ -54,7 +54,9 @@ class Console(metaclass=ConsoleMeta):
     """
 
 
+    from sys import stdin
     from sys import stdout
+    from sys import stderr
 
 
     @staticmethod
