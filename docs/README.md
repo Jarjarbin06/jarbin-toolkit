@@ -109,26 +109,26 @@ Provides tools for **deferring execution** and **grouping callable actions**.
 - **`Action`** — Represents a single callable action
 
 ```
-from jarbin_toolkit.action import Action
+from jarbin_toolkit_action import Action                                                                                                                                                                      ─╯
 
 def greet():
     print("Hello World!")
 
-a = Action(greet)
-a()  # Executes the function
+a = Action("do greeting", greet)
+a()    # Executes the function
 ```
 
 - **`Actions`** — Represents a collection of `Action` objects
 
 ```
-from jarbin_toolkit.action import Actions, Action
+from jarbin_toolkit_action import Actions, Action                                                                                                                                                             ─╯
 
 actions = Actions()
-actions + Action(lambda: print("Action 1"))
-actions + Action(lambda: print("Action 2"))
+actions += Action("act1", lambda: print("Action 1"))
+actions += Action("act2", lambda: print("Action 2"))
 
-actions()  # Executes all actions
-print(len(actions))  # Number of actions
+actions()    # Executes all actions
+print(len(actions))    # Number of actions
 ```
 
 ---
@@ -138,12 +138,13 @@ print(len(actions))  # Number of actions
 Manages INI-style configuration files with typed getters and cross-platform support.
 
 ```
-from jarbin_toolkit.config import Config
+from jarbin_toolkit_config import Config                                                                                                                                                                      ─╯
 
-cfg = Config(path="./", data={"Section": {"key": "value"}})
-cfg.set("Section", "key2", 42)
-val = cfg.get_int("Section", "key2")
-cfg.delete()
+cfg = Config(path="./", data={"Section": {"key": "null"}})
+cfg.set("Section", "key2", 42)    # Set "key2" in "Section" to 42
+val = cfg.get_int("Section", "key2")    # Get value of "key2" in "Section"
+print(val) 
+cfg.delete()    # Delete the config file
 ```
 
 ---
@@ -153,12 +154,12 @@ cfg.delete()
 Structured error system with terminal formatting and optional file/line linking.
 
 ```
-from jarbin_toolkit.error import ErrorConfig
+from jarbin_toolkit_error import ErrorConfig                                                                                                                                                                  ─╯
 
 try:
     raise ErrorConfig("Invalid configuration detected", link=("config.ini", 10))
 except ErrorConfig as e:
-    print(e)
+    print(e)    # Print the Error
 ```
 
 ---
@@ -168,13 +169,14 @@ except ErrorConfig as e:
 Manages formatted logs in `.jar-log` or JSON format.
 
 ```
-from jarbin_toolkit.log import Log
+from jarbin_toolkit_log import Log                                                                                                                                                                            ─╯
 
 log = Log(path="./", file_name="mylog")
-log.log("INFO", "Initialization", "Log started")
-log.comment("This is a comment")
-print(log.str_filtered(["INFO"]))
-log.close(delete=True)
+log.log("INFO", "Init", "Log started")    # Add a log
+log.comment("This is a comment")    # Add a comment
+log.close()    # End the formating
+print(log.str_filtered("INFO"))    # Print the log file formated and filtered
+log.delete()
 ```
 
 ---
@@ -184,13 +186,13 @@ log.close(delete=True)
 Precision timing utilities.
 
 ```
-from jarbin_toolkit.time import StopWatch, Time
+from jarbin_toolkit_time import StopWatch, Time                                                                                                                                                               ─╯
 
 watch = StopWatch(True)
 Time.wait(1.5)
-print(watch.elapsed())
+print(watch.elapsed())    # Print elapsed time after 1.5 seconds waiting
 
-Time.pause("Press enter to continue...")
+Time.pause('Press enter to continue...')    # Pause program until user press 'enter'
 ```
 
 ---
@@ -200,12 +202,13 @@ Time.pause("Press enter to continue...")
 Provides **advanced terminal rendering** inspired by `epitech_console`.
 
 ```
-from jarbin_toolkit.console import Console, Animation, ProgressBar
+from jarbin_toolkit_console import Console, Animation, ANSI
 
-pb = ProgressBar(10)
-for i in range(11):
-    pb.update(i*10)
-    Console.print(pb.render(), end="")
+pb = Animation.ProgressBar(20)
+for i in range(21):
+    pb.update(i*5)
+    Console.print(pb.render() + ANSI.Cursor.previous(), sleep=0.05)
+Console.print()
 ```
 
 ---
@@ -213,6 +216,11 @@ for i in range(11):
 ---
 
 ## Release Notes
+
+### v1.1 - /
+- Doc Update (modules usage)
+- New Log release
+> ⚠️ In Development
 
 ### v1.0 - 2026-02-05
 - All modules updated and released  
@@ -229,7 +237,7 @@ for i in range(11):
 - Stable modules: Action, Config, Error, Log, Time
 - Evolving module: Console
 - Added StopWatch, Time, structured error handling, logging, and Action orchestration  
-> Library not functional yet
+> ⚠️ Library not functional yet
 
 ---
 
