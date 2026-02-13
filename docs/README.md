@@ -84,13 +84,13 @@ Jarbin-ToolKit provides modular tools to improve the development of CLI utilitie
 
 ## Installation
 
-```
+```bash
 pip install jarbin-toolkit
 ```
 
 Or to force reinstall the latest version:
 
-```
+```bash
 pip install --upgrade --force-reinstall jarbin-toolkit
 ```
 
@@ -108,8 +108,8 @@ Provides tools for **deferring execution** and **grouping callable actions**.
 
 - **`Action`** — Represents a single callable action
 
-```
-from jarbin_toolkit_action import Action                                                                                                                                                                      ─╯
+```python
+from jarbin_toolkit_action import Action
 
 def greet():
     print("Hello World!")
@@ -120,8 +120,8 @@ a()    # Executes the function
 
 - **`Actions`** — Represents a collection of `Action` objects
 
-```
-from jarbin_toolkit_action import Actions, Action                                                                                                                                                             ─╯
+```python
+from jarbin_toolkit_action import Actions, Action
 
 actions = Actions()
 actions += Action("act1", lambda: print("Action 1"))
@@ -137,8 +137,8 @@ print(len(actions))    # Number of actions
 
 Manages INI-style configuration files with typed getters and cross-platform support.
 
-```
-from jarbin_toolkit_config import Config                                                                                                                                                                      ─╯
+```python
+from jarbin_toolkit_config import Config
 
 cfg = Config(path="./", data={"Section": {"key": "null"}})
 cfg.set("Section", "key2", 42)    # Set "key2" in "Section" to 42
@@ -153,8 +153,8 @@ cfg.delete()    # Delete the config file
 
 Structured error system with terminal formatting and optional file/line linking.
 
-```
-from jarbin_toolkit_error import ErrorConfig                                                                                                                                                                  ─╯
+```python
+from jarbin_toolkit_error import ErrorConfig
 
 try:
     raise ErrorConfig("Invalid configuration detected", link=("config.ini", 10))
@@ -168,8 +168,8 @@ except ErrorConfig as e:
 
 Manages formatted logs in `.jar-log` or JSON format.
 
-```
-from jarbin_toolkit_log import Log                                                                                                                                                                            ─╯
+```python
+from jarbin_toolkit_log import Log
 
 log = Log(path="./", file_name="mylog")
 log.log("INFO", "Init", "Log started")    # Add a log
@@ -185,8 +185,8 @@ log.delete()
 
 Precision timing utilities.
 
-```
-from jarbin_toolkit_time import StopWatch, Time                                                                                                                                                               ─╯
+```python
+from jarbin_toolkit_time import StopWatch, Time
 
 watch = StopWatch(True)
 Time.wait(1.5)
@@ -201,7 +201,7 @@ Time.pause('Press enter to continue...')    # Pause program until user press 'en
 
 Provides **advanced terminal rendering** inspired by `epitech_console`.
 
-```
+```python
 from jarbin_toolkit_console import Console, Animation, ANSI
 
 pb = Animation.ProgressBar(20)

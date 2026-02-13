@@ -28,7 +28,7 @@ class Format:
 
 
     def reset(
-            self
+            self : Any
         ) -> Any:
         """
             Apply the 'reset' format to an object of type Text, ANSI, Animation, ProgressBar or str.
@@ -43,7 +43,7 @@ class Format:
 
 
     def bold(
-            self
+            self : Any
         ) -> Any:
         """
             Apply the 'bold' format to an object of type Text, ANSI, Animation, ProgressBar or str.
@@ -58,7 +58,7 @@ class Format:
 
 
     def italic(
-            self
+            self : Any
         ) -> Any:
         """
             Apply the 'italic' format to an object of type Text, ANSI, Animation, ProgressBar or str.
@@ -72,7 +72,7 @@ class Format:
 
 
     def underline(
-            self
+            self : Any
         ) -> Any:
         """
             Apply the 'underline' format to an object of type Text, ANSI, Animation, ProgressBar or str.
@@ -87,7 +87,7 @@ class Format:
 
 
     def hide(
-            self
+            self : Any
         ) -> Any:
         """
             Apply the 'hide' format to an object of type Text, ANSI, Animation, ProgressBar or str.
@@ -102,7 +102,7 @@ class Format:
 
 
     def strikethrough(
-            self
+            self : Any
         ) -> Any:
         """
             Apply the 'strikethrough' format to an object of type Text, ANSI, Animation, ProgressBar or str.
@@ -116,8 +116,31 @@ class Format:
         return Format.apply(self, Color(Color.C_STRIKETHROUGH))
 
 
+    def critic(
+            self : Any,
+            *,
+            title : bool = False
+        ) -> Any:
+        """
+            Apply the 'critic' format to an object of type Text, ANSI, Animation, ProgressBar or str.
+
+            Parameters:
+                title (bool, optional): whether it is a title or not
+
+            Returns:
+                Any: formatted object.
+        """
+
+        from jarbin_toolkit_console.ANSI.color import Color
+        from jarbin_toolkit_console.ANSI.basepack import BasePack
+
+        if title:
+            return Format.apply(self, Color(BasePack.P_CRITIC[0]))
+        return Format.apply(self, Color(BasePack.P_CRITIC[1]))
+
+
     def error(
-            self,
+            self : Any,
             *,
             title : bool = False
         ) -> Any:
@@ -140,7 +163,7 @@ class Format:
 
 
     def warning(
-            self,
+            self : Any,
             *,
             title : bool = False
         ) -> Any:
@@ -163,7 +186,30 @@ class Format:
 
 
     def valid(
-            self,
+            self : Any,
+            *,
+            title : bool = False
+        ) -> Any:
+        """
+            Apply the 'valid' format to an object of type Text, ANSI, Animation, ProgressBar or str.
+
+            Parameters:
+                title (bool, optional): whether it is a title or not
+
+            Returns:
+                Any: formatted object.
+        """
+
+        from jarbin_toolkit_console.ANSI.color import Color
+        from jarbin_toolkit_console.ANSI.basepack import BasePack
+
+        if title:
+            return Format.apply(self, Color(BasePack.P_VALID[0]))
+        return Format.apply(self, Color(BasePack.P_VALID[1]))
+
+
+    def debug(
+            self : Any,
             *,
             title : bool = False
         ) -> Any:
@@ -181,12 +227,12 @@ class Format:
         from jarbin_toolkit_console.ANSI.basepack import BasePack
 
         if title:
-            return Format.apply(self, Color(BasePack.P_VALID[0]))
-        return Format.apply(self, Color(BasePack.P_VALID[1]))
+            return Format.apply(self, Color(BasePack.P_DEBUG[0]))
+        return Format.apply(self, Color(BasePack.P_DEBUG[1]))
 
 
     def info(
-            self,
+            self : Any,
             *,
             title : bool = False
         ) -> Any:

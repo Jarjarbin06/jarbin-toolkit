@@ -47,7 +47,7 @@ Wraps a callable function and allows deferred execution.
 
 #### Constructor
 
-```
+```text
 Action(callable_obj: Callable, *args, **kwargs)
 ```
 
@@ -63,8 +63,10 @@ Action(callable_obj: Callable, *args, **kwargs)
 
 Executes the wrapped callable.
 
-```
-action = Action(print, "Hello")
+```python
+from jarbin_toolkit import Action
+
+action = Action.Action("show hello", print, "Hello")
 action()
 ```
 
@@ -80,7 +82,7 @@ Container for multiple `Action` objects.
 
 #### Constructor
 
-```
+```text
 Actions()
 ```
 
@@ -90,9 +92,12 @@ Actions()
 
 Adds an `Action` to the collection.
 
-```
-actions = Actions()
-actions + Action(print, "A")
+```python
+from jarbin_toolkit import Action
+actions = Action.Actions()
+actions += Action.Action("show A", print, "A")
+
+actions()
 ```
 
 ##### `__call__()`
@@ -121,7 +126,7 @@ INI configuration management with typed accessors.
 
 #### Constructor
 
-```
+```text
 Config(path: str, data: dict | None = None, file_name: str = "config.ini")
 ```
 
@@ -163,10 +168,13 @@ Deletes configuration file from disk.
 
 #### Example
 
-```
-cfg = Config("./")
+```python
+from jarbin_toolkit import Config
+
+cfg = Config("./", data={"App" : {"debug" : False}})
 cfg.set("App", "debug", True)
 debug = cfg.get_bool("App", "debug")
+print(debug, type(debug))
 ```
 
 ---
@@ -183,7 +191,7 @@ Structured error system with optional file/line linking.
 
 #### Constructor
 
-```
+```text
 Error(message: str, link: tuple[str, int] | None = None)
 ```
 
@@ -210,8 +218,10 @@ All inherit from `Error`.
 
 #### Example
 
-```
-raise ErrorConfig("Invalid section", link=("config.ini", 42))
+```python
+from jarbin_toolkit import Error
+
+raise Error.ErrorConfig("Invalid section", link=("config.ini", 42))
 ```
 
 ---
@@ -228,7 +238,7 @@ Structured logging system supporting `.jar-log` and JSON formats.
 
 #### Constructor
 
-```
+```text
 Log(path: str, file_name: str = "log", format: str = "jar-log")
 ```
 
@@ -262,10 +272,13 @@ Closes file. Deletes if `delete=True`.
 
 #### Example
 
-```
+```python
+from jarbin_toolkit import Log
+
 log = Log("./", "app")
 log.log("INFO", "Start", "Application started")
 log.close()
+print(log)
 ```
 
 ---
@@ -282,7 +295,7 @@ Precise timing utilities.
 
 #### Constructor
 
-```
+```text
 StopWatch(auto_start: bool = False)
 ```
 
@@ -334,9 +347,11 @@ Pauses execution until input.
 
 #### Example
 
-```
-watch = StopWatch(True)
-Time.wait(2)
+```python
+from jarbin_toolkit import Time
+
+watch = Time.StopWatch(True)
+Time.Time.wait(2)
 print(watch.elapsed())
 ```
 
@@ -375,7 +390,7 @@ Provides spinners and progress bars.
 
 #### Class: `ProgressBar`
 
-```
+```text
 ProgressBar(total: int)
 ```
 
@@ -427,9 +442,13 @@ Text formatting utilities.
 
 Example:
 
-```
-from jarbin_toolkit.console import Text
+```python
+from jarbin_toolkit import Console
+
+Text = Console.Text.Text
 print(Text.bold("Hello"))
+my_text = Text("World")
+print(my_text.underline())
 ```
 
 ---
