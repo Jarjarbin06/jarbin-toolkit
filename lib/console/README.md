@@ -343,12 +343,16 @@ from jarbin_toolkit_console import *
         Apply hidden format.
     *   `strikethrough() -> Any`
         Apply strikethrough format.
+    *   `critic(title: bool = False) -> Any`
+        Apply critic format; optionally for a title.
     *   `error(title: bool = False) -> Any`
         Apply error format; optionally for a title.
     *   `warning(title: bool = False) -> Any`
         Apply warning format; optionally for a title.
     *   `valid(title: bool = False) -> Any`
         Apply success/valid format; optionally for a title.
+    *   `debug(title: bool = False) -> Any`
+        Apply debug format; optionally for a title.
     *   `info(title: bool = False) -> Any`
         Apply info format; optionally for a title.
     *   `apply(obj: Any, sequence: Any | None = None) -> Any` (staticmethod)
