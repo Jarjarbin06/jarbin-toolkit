@@ -52,6 +52,20 @@ def test_format_strikethrough():
     assert str(s) == "\x1b[9mhi"
 
 
+def test_format_critic():
+    text = Text("hi")
+    s = text.critic()
+    assert isinstance(s, Text)
+    assert str(s) == "\x1b[31m\x1b[48;2;0;0;0mhi"
+
+
+def test_format_critic_title():
+    text = ANSI("hi")
+    s = text.critic(title=True)
+    assert isinstance(s, ANSI)
+    assert str(s) == "\x1b[31m\x1b[48;2;0;0;0mhi"
+
+
 def test_format_error():
     text = Text("hi")
     s = text.error()
@@ -92,6 +106,20 @@ def test_format_valid_title():
     s = text.valid(title=True)
     assert isinstance(s, ANSI)
     assert str(s) == "\x1b[42mhi"
+
+
+def test_format_debug():
+    text = Text("hi")
+    s = text.debug()
+    assert isinstance(s, Text)
+    assert str(s) == "\x1b[34mhi"
+
+
+def test_format_valid_debug():
+    text = ANSI("hi")
+    s = text.debug(title=True)
+    assert isinstance(s, ANSI)
+    assert str(s) == "\x1b[44mhi"
 
 
 def test_format_info():
