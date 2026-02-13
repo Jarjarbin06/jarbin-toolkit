@@ -3,11 +3,9 @@
 
 # **Jarbin-ToolKit:Time** v0.1.2.0
 <details>
-<summary>Latest development version</summary>
+<summary>Latest versions</summary>
 🟠 UNDER DEVELOPMENT 🟠 None 🟠
-</details>
-<details>
-<summary>Latest release</summary>
+
 🟢 RELEASED 🟢 v0.1.2.0 🟢
 </details>
 
