@@ -275,7 +275,7 @@ class Log:
         footer: str = f"\x1b[4m\x1b[7m|\x1b[0m\x1b[1m\x1b[4m"
         string: str = ""
 
-        string += f"JSON => {self.log_file_name}.{self.log_file_type}\n\n"
+        string += f"JAR-LOG => {self.log_file_name}.{self.log_file_type}\n\n"
         string += (
                 f"\x1b[4m\x1b[7m|\x1b[0m\x1b[1m\x1b[4m    date          time      | \x1b[0m" +
                 "\x1b[4m\x1b[7m[TYPE] \x1b[0m\x1b[1m\x1b[4m title      | detail" +
