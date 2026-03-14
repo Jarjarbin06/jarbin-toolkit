@@ -133,8 +133,11 @@ class Error(Exception):
                 str: String representation of the error.
         """
 
-        string : str = "\n\x1b[101m \x1b[0m \x1b[91m"
-        string += (self.error if self.error else "ErrorUnknown")
+        string: str = ""
+        if self.error and self.error.startswith("\n"):
+            string += "\n"
+        string += "\x1b[101m \x1b[0m \x1b[91m"
+        string += (self.error if self.error else "ErrorUnknown").replace("\n", "")
         string += (":" if len(self.message) > 0 else "")
 
         if len(self.message) > 0:
@@ -142,9 +145,7 @@ class Error(Exception):
                 string += "\n\x1b[101m \x1b[0m     \x1b[91m"
                 string += line
 
-            string += "\n"
-
-        string += "\x1b[101m \x1b[0m \x1b[91m" + (f"\n\x1b[101m \x1b[0m\n\x1b[101m \x1b[0m  \x1b[91m" + self.link) if self.link else ""
+        string += ("\n\x1b[101m \x1b[0m \x1b[91m" + f"\n\x1b[101m \x1b[0m\n\x1b[101m \x1b[0m  \x1b[91m" + self.link) if self.link else ""
 
         return string
 

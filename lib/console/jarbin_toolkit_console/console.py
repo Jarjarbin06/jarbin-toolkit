@@ -61,19 +61,25 @@ class Console(metaclass=ConsoleMeta):
 
     @staticmethod
     def execute(
+            command: str
         ) -> None:
         """
             Execute code in the console.
+
+            Parameters:
+                command (str): Command to execute.
         """
+
+        from os import system
 
         ## cannot be tested with pytest ##
 
-        pass # pragma: no cover #yet to be implemented
+        system(command) # pragma: no cover
 
 
     @staticmethod
     def print(
-            *args,
+            *value,
             separator: str = " ",
             start: str = "",
             end: str = "\n",
@@ -89,7 +95,7 @@ class Console(metaclass=ConsoleMeta):
             WARNING : 'cut_to_terminal_size' does not work properly when changing terminal size
 
             Parameters:
-                *args: Any values to print.
+                *value: Any values to print.
                 separator (str, optional): Separator between values.
                 start (str, optional): String prepended before printing.
                 end (str, optional): String appended after printing.
@@ -110,19 +116,19 @@ class Console(metaclass=ConsoleMeta):
         string : str = ""
         final_string : Text = Text("")
 
-        for idx in range(len(args)):
-            if idx and idx < len(args):
+        for idx in range(len(value)):
+            if idx and idx < len(value):
                 string += separator
-            string += str(args[idx])
+            string += str(value[idx]) + str(Color(Color.C_RESET) if auto_reset else Text(""))
 
         string_list = string.split("\n")
 
         for idx in range(len(string_list)):
             if cut and (len(string_list[idx]) - (string_list[idx].count("\033[") * 2)) > (len(Console) + 6):
-                string_list[idx] = string_list[idx][:(len(Console) + 2 + string_list[idx].count("\033[") * 2)] + "..." + str(Color(Color.C_RESET))
+                string_list[idx] = string_list[idx][:(len(Console) + 2 + string_list[idx].count("\033[") * 2)] + "..." + str(Color(Color.C_RESET) if auto_reset else Text(""))
             final_string += Text(string_list[idx]) + (Text("\n") if len(string_list) > 1 else Text(""))
 
-        final_string = Text(start) + final_string + (Color(Color.C_RESET) if auto_reset else Text("")) + Text(end)
+        final_string = Text(start) + final_string + Text(end)
 
         print(final_string, end="", file=file)
 

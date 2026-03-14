@@ -9,7 +9,7 @@
 #############################
 
 
-from jarbin_toolkit_log.log import Log
+from jarbin_toolkit_log.log import *
 
 
 __all__ : list[str] = [

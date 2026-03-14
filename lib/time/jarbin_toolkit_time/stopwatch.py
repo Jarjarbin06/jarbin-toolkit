@@ -196,14 +196,21 @@ class StopWatch:
 
 
     def reset(
-            self
+            self,
+            restart = False
         ) -> None:
         """
             Reset the stopwatch.
+
+            Parameters:
+                restart (bool, optional): Restart the stopwatch. Defaults to False.
         """
 
         self._start = 0.0
         self._elapsed = 0.0
+
+        if restart:
+            self.start()
 
 
     def __repr__(

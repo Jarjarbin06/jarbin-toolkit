@@ -92,6 +92,7 @@ class Log:
         ) -> None:
         """
             Format a log message then save it.
+            Status : INFO, DEBUG, VALID, WARN, ERROR, CRIT
 
             Parameters:
                 status (str): log status
@@ -140,7 +141,8 @@ class Log:
         """
 
         if not self.closed:
-            self.save(f">>> {comment}")
+            for line in comment.split("\n"):
+                self.save(f">>> {repr(line)}")
 
 
     def save(
@@ -255,6 +257,12 @@ class Log:
                 str: formated log string
         """
 
+        def filter_in_str(sting : str):
+            for f in filter:
+                if f in sting:
+                    return True
+            return False
+
         from os import get_terminal_size
         from sys import stdin
 
@@ -283,7 +291,7 @@ class Log:
         string += f"\x1b[7m|\x1b[0m\x1b[1m" + (" " * (t_size - 1)) + f"\x1b[0m\n"
 
         for log_line in logs:
-            if not filter or (len(log_line) == 3 and log_line[1][log_line[1].index("[") + 1:log_line[1].index("]")] in filter):
+            if not filter or (len(log_line) == 3 and filter_in_str(log_line)):
                 if log_line[0][:3] == ">>>":
                     string += f"\x1b[7m>>>\x1b[0m \x1b[0m{log_line[0][3:]}\x1b[0m\n"
 
@@ -323,6 +331,13 @@ class Log:
                 str: formated log string
         """
 
+        def filter_in_str(log_line : dict):
+            for f in filter:
+                for element in log_line.values():
+                    if f in element:
+                        return True
+            return False
+
         import json
 
         log_str = self.read()
@@ -333,7 +348,7 @@ class Log:
         string += f"\n{'=' * 50}\n"
 
         for log_line in parsed_json["logs"]:
-            if not filter or log_line["level"] in filter:
+            if not filter or filter_in_str(log_line):
                 string += f"{log_line['time']} | {(log_line['level'] + (' ' * 5))[:5]} {(log_line['title'] + (' ' * 10))[:10]} | {log_line['msg']}\n"
 
         string += f"{'=' * 50}"
@@ -360,9 +375,121 @@ class Log:
                 f[index] = f[index].upper()
 
         else:
-            f = f.upper()
+            f = [f.upper()]
 
         return self.__str__(f)
+
+    def clean(self, output_file_name: str | None = None, compress_repeats: bool = True, compress_log: bool = False) -> str:
+        """
+            Returns a compacted version of the log, optionally summarizing repeated messages.
+
+            (does not work with json files yet)
+
+            Parameters:
+                output_file_name (str | None, optional): if given, saves the cleaned log to this file
+                compress_repeats (bool, optional): whether to collapse repeated messages with counts
+
+            Returns:
+                str: cleaned log string
+        """
+
+        if output_file_name is None:
+            output_file_name = self.log_file_name + "_cleaned"
+
+        log_lines = []
+
+        if self.log_file_type == "jar-log":
+            log_str = self.read()
+            start = log_str.index("---START---\n") + len("---START---\n")
+            end = log_str.index("----END----\n")
+            raw_logs = [line for line in log_str[start:end].split("\n")]
+
+            for line in raw_logs:
+                if compress_log and len(line.split(" | ")) == 3:
+                    datetime, st, message = line.split(" | ")
+                    status, title = st.replace("[", "").replace(" ", "").split("]")
+
+                    if status in ["DEBUG", "WARN"]:
+                        status = "• " + status
+
+                    if status in ["ERROR", "CRIT"]:
+                        status = "/!\\ " + status + " /!\\"
+
+                    log_lines.append(f"{status} <{title}> \"{message}\"")
+
+                else:
+                    log_lines.append(line)
+
+            if compress_repeats:
+                compressed_lines = []
+                previous = None
+                count = 1
+
+                for line in log_lines:
+                    parts = line.split(" | ")
+
+                    if len(parts) == 3:
+                        key = " | ".join(parts[1:]).strip()
+
+                    else:
+                        key = line.strip()
+
+                    if key == previous:
+                        count += 1
+
+                    else:
+                        if previous is not None:
+                            if count > 1:
+                                compressed_lines[-1] += f" [x{count}]"
+
+                        compressed_lines.append(line)
+                        previous = key
+                        count = 1
+
+                if count > 1:
+                    compressed_lines[-1] += f" [x{count}]"
+
+                log_lines = compressed_lines
+
+        cleaned_log = "\n".join(log_lines)
+
+        with open(f"{self.log_path}{output_file_name}.{self.log_file_type}", '') as log_file:
+            if not compress_log:
+                log_file.write("   date          time      | [TYPE]  title      | detail\n\n---START---\n")
+
+            log_file.write(cleaned_log)
+
+            if not compress_log:
+                log_file.write(f"----END----\n")
+
+        return cleaned_log
+
+
+    @staticmethod
+    def exist(
+            path : str
+        ) -> bool:
+        """
+            Check if a log file exist in a directory
+
+            Returns:
+                bool: return whether the file exist or not
+        """
+
+        from os import listdir
+
+        if path[-1] != "/":
+            path += "/"
+
+        paths = listdir(path)
+
+        for path in paths:
+            if ".jar-log" in path:
+                return True
+            if ".json" in path:
+                return True
+
+        return False
 
 
     def __repr__(

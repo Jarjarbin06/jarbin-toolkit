@@ -61,7 +61,7 @@ class Config:
             self.path = self.path.replace("\\", "/") # pragma: no cover
             self.file_name = self.file_name.replace("/", "\\") # pragma: no cover
 
-        if Config.exist(self.path):
+        if Config.exist(self.path, file_name=file_name):
             self.config.read(self.path + self.file_name)
 
         else:
@@ -225,9 +225,12 @@ class Config:
         """
             Check if a config file config.ini is empty or doesn't exist
 
+            Parameters:
+                path (str): path to config file
+                file_name (str, optional): name of config file
+
             Returns:
                 bool: False if empty or not existing, True otherwise
-                file_name (str, optional): name of config file
         """
 
         if path[-1] != "/":

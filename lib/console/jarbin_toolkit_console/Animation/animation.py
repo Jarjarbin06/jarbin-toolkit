@@ -94,7 +94,7 @@ class Animation(Format):
                 str: Animation string
         """
 
-        if self.is_last():
+        if item >= self.length:
             return str(self.animation[self.length - 1])
 
         return str(self.animation[item])
