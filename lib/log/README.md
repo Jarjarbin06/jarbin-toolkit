@@ -1,12 +1,12 @@
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Epitech_logo.png" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Jarbin-Toolkit_logo.jpg" alt="error loading Jarbin-ToolKit Logo" width="49%" style="display:inline-block;">
 
-# **Jarbin-ToolKit:Log** v0.2.1.3
+# **Jarbin-ToolKit:Log** v0.2.1.4
 <details>
 <summary>Latest versions</summary>
 🟠 UNDER DEVELOPMENT 🟠 None 🟠
 
-🟢 RELEASED 🟢 v0.2.1.3 🟢
+🟢 RELEASED 🟢 v0.2.1.4 🟢
 </details>
 
 [![CodeQL Advanced](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/codeql.yml/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/codeql.yml)
@@ -159,6 +159,7 @@ from jarbin_toolkit_log import Log
         *   ***v0.2.1.2*** **[FIX]** random fixes on the log reading system
         *   ***v0.2.1.3*** **[ADD]** add log cleaning system for better readability or identical log lines compression\
 ("\<log\> [x \<times\>]")
+        *   ***v0.2.1.4*** **[FIX]** filtered log string fix
 * #### v0.2.0:
     *   **[UPDATE]** change log file extension to custom extension (`jar-log`)
     *   **[ADD]** modification not allowed after closing or after opening and existing file

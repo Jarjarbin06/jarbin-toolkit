@@ -1,12 +1,12 @@
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Epitech_logo.png" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Jarbin-Toolkit_logo.jpg" alt="error loading Jarbin-ToolKit Logo" width="49%" style="display:inline-block;">
 
-# **Jarbin-ToolKit:Console** v0.1.2.1
+# **Jarbin-ToolKit:Console** v0.1.2.2
 <details>
 <summary>Latest versions</summary>
 🟠 UNDER DEVELOPMENT 🟠 None 🟠
 
-🟢 RELEASED 🟢 v0.1.2.1 🟢
+🟢 RELEASED 🟢 v0.1.2.2 🟢
 </details>
 
 [![CodeQL Advanced](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/codeql.yml/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/codeql.yml)
@@ -424,6 +424,8 @@ from jarbin_toolkit_console import *
 ---
 
 ## Release-Notes
+* #### v0.1.2:
+    *   ***v0.1.2.2*** **[FIX]** ProgressBar Formating fix (on spinners)
 * #### v0.1.1:
     *   **[/]** 1rst real release
 * #### v0.1.0:

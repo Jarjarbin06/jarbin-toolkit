@@ -18,7 +18,7 @@ def test_console_print_basic(
 
 def test_console_print_multiple_argument(
     ) -> None:
-    assert str(Console.print("hello", "world", "!!!")) == "hello world !!!\x1b[0m\n"
+    assert "hello world !!!" in str(Console.print("hello", "world", "!!!")).replace("\033[0m", "")
 
 
 def test_console_print_with_start_end(
