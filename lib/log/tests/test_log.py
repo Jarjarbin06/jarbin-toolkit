@@ -15,7 +15,7 @@ def test_log_log_reading(
     s = log.read()
     assert "\n---START---\n" in s
     assert "this is a test" in s
-    assert ">>> this is a custom comment" in s
+    assert ">>> 'this is a custom comment'" in s
     assert "\n----END----\n" in s
 
 

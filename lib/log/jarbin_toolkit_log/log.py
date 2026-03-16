@@ -257,10 +257,11 @@ class Log:
                 str: formated log string
         """
 
-        def filter_in_str(sting : str):
+        def filter_in_str(line : list[str]):
             for f in filter:
-                if f in sting:
-                    return True
+                for line_element in line:
+                    if f in line_element:
+                        return True
             return False
 
         from os import get_terminal_size
