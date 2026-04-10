@@ -24,7 +24,7 @@ class Config:
     def __init__(
             self,
             path : str,
-            data : dict | None = None,
+            data : dict[str : dict[str, Any]] | None = None,
             *,
             file_name : str = "config.ini"
         ) -> None:
@@ -33,7 +33,7 @@ class Config:
 
             Parameters:
                 path (str): path to folder which you want your config file to be in
-                data (dict | None, optional): data to put in the config file
+                data (dict[str : dict[str, Any]] | None, optional): data to put in the config file
                 file_name (str, optional): name of config file
         """
 
@@ -46,6 +46,12 @@ class Config:
         self.config : ConfigParser | None = ConfigParser()
         self.path : str | None = path
         self.file_name : str | None = file_name
+
+        if not data:
+            data = {}
+
+        for key in data:
+            self.config[key] = data[key]
 
         if system() == "Windows":
 
@@ -64,10 +70,12 @@ class Config:
         if Config.exist(self.path, file_name=file_name):
             self.config.read(self.path + self.file_name)
 
-        else:
-            if not data and self.file_name == "config.ini":
-                data = {}
+            with open(str(self.path) + str(self.file_name), 'w') as config_file:
+                self.config.write(config_file)
 
+            config_file.close()
+
+        else:
             try:
                 open(str(self.path) + str(self.file_name), 'x').close()
 
@@ -75,9 +83,6 @@ class Config:
                 pass
 
             with open(str(self.path) + str(self.file_name), 'w') as config_file:
-                for key in data:
-                    self.config[key] = data[key]
-
                 self.config.write(config_file)
 
             config_file.close()

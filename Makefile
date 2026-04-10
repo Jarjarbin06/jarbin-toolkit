@@ -81,6 +81,7 @@ install-all:
 	@make -sC lib/time install || true
 	@# dependent #
 	@make -sC lib/console install || true
+	@make -sC lib/jartest install || true
 	@# parent #
 	@make -s install
 
@@ -88,6 +89,7 @@ uninstall-all:
 	@# parent #
 	@make -s uninstall
 	@# dependent #
+	@make -sC lib/jartest uninstall || true
 	@make -sC lib/console uninstall || true
 	@# independent #
 	@make -sC lib/action uninstall || true
@@ -118,6 +120,9 @@ test-all:
 	@make -sC lib/time test || true
 	@# dependent #
 	@make -sC lib/console test || true
+	@make -sC lib/jartest install || true
+	@# parent #
+	@make -s test
 
 check:
 	@echo -e "$(YELLOW) [CHECK] Checking package$(NC)"
@@ -128,6 +133,7 @@ check-all:
 	@# parent #
 	@make -s check || true
 	@# dependent #
+	@make -sC lib/jartest check || true
 	@make -sC lib/console check || true
 	@# independent #
 	@make -sC lib/action check || true
@@ -155,6 +161,7 @@ demo:
 	@make -sC lib/time demo || true
 	@# dependent #
 	@make -sC lib/console demo || true
+	@make -sC lib/jartest demo || true
 	@echo -e "$(GREEN) [DEMO] Demo ran$(NC)"
 
 # ------------------------------------------------------------
@@ -184,6 +191,7 @@ clean-all:
 	@make -sC lib/time clean || true
 	@# dependent #
 	@make -sC lib/console clean || true
+	@make -sC lib/jartest clean || true
 
 # ------------------------------------------------------------
 # SAFETY

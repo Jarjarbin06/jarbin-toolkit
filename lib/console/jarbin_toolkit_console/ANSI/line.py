@@ -107,7 +107,7 @@ class Line:
             n : int = 1
     ) -> ANSI:
         """
-            Clear the previous line.
+            Clear the previous lines.
 
             Parameters:
                 n (int): line up
@@ -118,4 +118,9 @@ class Line:
 
         from jarbin_toolkit_console.ANSI.cursor import Cursor
 
-        return Cursor.previous(n) + Line.clear_line()
+        ret = Line.clear_line()
+
+        for _ in range(n):
+            ret += Cursor.previous() + Line.clear_line()
+
+        return ret

@@ -1,6 +1,6 @@
 #############################
 ###                       ###
-###    Epitech Console    ###
+###     Jarbin-ToolKit    ###
 ###     ----log.py----    ###
 ###                       ###
 ###=======================###
@@ -271,10 +271,10 @@ class Log:
 
         color_dict: dict[str, tuple[str, str]] = {
             "[INFO] ": ("\x1b[7m", "\x1b[0m"),
-            "[DEBUG]": ("\x1b[44m", "\x1b[34m"),
-            "[VALID]": ("\x1b[42m", "\x1b[32m"),
-            "[WARN] ": ("\x1b[43m", "\x1b[33m"),
-            "[ERROR]": ("\x1b[41m", "\x1b[31m"),
+            "[DEBUG]": ("\x1b[104m", "\x1b[94m"),
+            "[VALID]": ("\x1b[102m", "\x1b[92m"),
+            "[WARN] ": ("\x1b[103m", "\x1b[93m"),
+            "[ERROR]": ("\x1b[101m", "\x1b[91m"),
             "[CRIT] ": ("\x1b[1m\x1b[48;2;0;0;0m\x1b[38;2;255;0;0m", "\x1b[1m\x1b[48;2;0;0;0m\x1b[38;2;255;0;0m")
         }
         start: int = log_str.index("---START---\n") + len("---START---\n")
@@ -454,7 +454,7 @@ class Log:
 
         cleaned_log = "\n".join(log_lines)
 
-        with open(f"{self.log_path}{output_file_name}.{self.log_file_type}", '') as log_file:
+        with open(f"{self.log_path}{output_file_name}.{self.log_file_type}", 'w') as log_file:
             if not compress_log:
                 log_file.write("   date          time      | [TYPE]  title      | detail\n\n---START---\n")
 

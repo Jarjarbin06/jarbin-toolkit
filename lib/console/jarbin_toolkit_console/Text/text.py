@@ -106,6 +106,17 @@ class Text(Format):
         return len(self.text)
 
 
+    @property
+    def s(
+            self
+        ) -> str:
+        """
+            Convert Text object to string.
+        """
+
+        return str(self.text)
+
+
     def __repr__(
             self
         ) -> str:

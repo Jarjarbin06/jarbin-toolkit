@@ -15,7 +15,7 @@ import jarbin_toolkit_error as Error
 import jarbin_toolkit_log as Log_parent
 import jarbin_toolkit_time as Time
 from collections.abc import Callable
-from typing import Any
+from typing import Any, TextIO, Optional
 import sys
 import os
 import platform
@@ -45,18 +45,18 @@ def __getattr__(
 
 
 def get_info(
-    ) -> dict[str, str]:
+    ) -> dict[str, Any]:
     """
         Get info about the Jarbin toolkit
 
         Returns:
-            dict[str, str | dict[str, str]]: info
+            dict[str, str | dict[str, Any]]: info
     """
 
     return {
         "name": "Jarbin-ToolKit",
         "version": __version__,
-        "subversions": __version__,
+        "subversions": __subversions__,
         "author": __author__,
         "email": __email__,
         "license": __license__
@@ -67,7 +67,7 @@ def benchmark(
         function: Callable,
         *args: Any,
         **kwargs: Any
-    ) -> tuple[Any, float]:
+    ) -> tuple[Optional[Any], float, Optional[Exception]]:
     """
     Benchmark the function
 
@@ -77,11 +77,16 @@ def benchmark(
         **kwargs (dict[str, Any]): keyword arguments
 
     Returns:
-        tuple[Any, float]: benchmark result and elapsed time
+        tuple[Optional[Any], float, Optional[Exception]]: benchmark result, elapsed time and exception
     """
+    result = None
+    exception = None
     sw = Time.StopWatch(True)
-    result = function(*args, **kwargs)
-    return result, sw.elapsed()
+    try:
+        result = function(*args, **kwargs)
+    except Exception as err:
+        exception = err
+    return result, sw.elapsed(), exception
 
 
 def fail(
@@ -113,27 +118,27 @@ sleep : Callable = Time.Time.wait
 pause : Callable = Time.Time.pause
 
 # Console #
-print : Callable = Console.Console.print
-input : Callable = Console.Console.input
-flush : Callable = Console.Console.flush
-stdin : Callable = Console.Console.stdin
-stdout : Callable = Console.Console.stdout
-stderr : Callable = Console.Console.stderr
-critic : Callable = Console.Text.Format.critic
-error : Callable = Console.Text.Format.error
-warning : Callable = Console.Text.Format.warning
-valid : Callable = Console.Text.Format.valid
-debug : Callable = Console.Text.Format.debug
-info : Callable = Console.Text.Format.info
-bold : Callable = Console.Text.Format.bold
-underline : Callable = Console.Text.Format.underline
-color : Callable = Console.ANSI.Color.color
-up : Callable = Console.ANSI.Cursor.up
-down : Callable = Console.ANSI.Cursor.down
-left : Callable = Console.ANSI.Cursor.left
-right : Callable = Console.ANSI.Cursor.right
-clear : Callable = Console.ANSI.Line.clear
-clear_line : Callable = Console.ANSI.Line.clear_line
+print : Callable[[Any, str, str, str, Any, bool, bool, int | float | None], Any] = Console.Console.print
+input : Callable[[str, str, type], Any] = Console.Console.input
+flush : Callable[[TextIO], None] = Console.Console.flush
+stdin : TextIO = Console.Console.stdin
+stdout : TextIO = Console.Console.stdout
+stderr : TextIO = Console.Console.stderr
+critic : Callable[[Any, bool], Any] = Console.Text.Format.critic
+error : Callable[[Any, bool], Any] = Console.Text.Format.error
+warning : Callable[[Any, bool], Any] = Console.Text.Format.warning
+valid : Callable[[Any, bool], Any] = Console.Text.Format.valid
+debug : Callable[[Any, bool], Any] = Console.Text.Format.debug
+info : Callable[[Any, bool], Any] = Console.Text.Format.info
+bold : Callable[[Any, bool], Any] = Console.Text.Format.bold
+underline : Callable[[Any, bool], Any] = Console.Text.Format.underline
+color : Callable[[str, int, Any], Console.ANSI.ANSI] = Console.ANSI.Color.color
+up : Callable[[int], Console.ANSI.ANSI] = Console.ANSI.Cursor.up
+down : Callable[[int], Console.ANSI.ANSI] = Console.ANSI.Cursor.down
+left : Callable[[int], Console.ANSI.ANSI] = Console.ANSI.Cursor.left
+right : Callable[[int], Console.ANSI.ANSI] = Console.ANSI.Cursor.right
+clear : Callable[[], Console.ANSI.ANSI] = Console.ANSI.Line.clear
+clear_line : Callable[[], Console.ANSI.ANSI] = Console.ANSI.Line.clear_line
 
 
 __all__ : list[str] = [

@@ -7,19 +7,36 @@
 ###=======================###
 ### by JARJARBIN's STUDIO ###
 #############################
-
-
+import sys
 from builtins import object, type
-from typing import Any
+from typing import Any, TextIO
 from jarbin_toolkit_console.System.setting import Setting
 
 
 Setting.update()
 
 
+class _classproperty:
+    """
+        Proprety class for Console class.
+    """
+
+
+    def __init__(self, func):
+        self.func = func
+
+
+    def __get__(self, instance, owner):
+        return self.func(owner)
+
+
+    def __set__(self, instance, value):
+        raise AttributeError("can't set class property")
+
+
 class ConsoleMeta(type):
     """
-        Metaclass for Console classe.
+        Metaclass for Console class.
     """
 
 
@@ -54,11 +71,6 @@ class Console(metaclass=ConsoleMeta):
     """
 
 
-    from sys import stdin
-    from sys import stdout
-    from sys import stderr
-
-
     @staticmethod
     def execute(
             command: str
@@ -83,7 +95,7 @@ class Console(metaclass=ConsoleMeta):
             separator: str = " ",
             start: str = "",
             end: str = "\n",
-            file: Any = stdout,
+            file: Any | None = None,
             auto_reset: bool = True,
             cut: bool = False,
             sleep: int | float | None = None
@@ -111,6 +123,9 @@ class Console(metaclass=ConsoleMeta):
         from jarbin_toolkit_console.System import Time
         from jarbin_toolkit_console.ANSI.color import Color
         from jarbin_toolkit_console.Text.text import Text
+
+        if file is None :
+            file = Console.stdout
 
         string_list : list[str]
         string : str = ""
@@ -273,7 +288,7 @@ class Console(metaclass=ConsoleMeta):
 
     @staticmethod
     def flush(
-            stream : Any = stdout,
+            stream : TextIO | None = None,
         ) -> None:
         """
             Flush console output.
@@ -284,4 +299,31 @@ class Console(metaclass=ConsoleMeta):
 
         ## cannot be tested with pytest ##
 
+        if stream is None :
+            stream = Console.stdout
+
         stream.flush() # pragma: no cover
+
+
+    @_classproperty
+    def stdin(cls):
+
+        import sys
+
+        return sys.stdin
+
+
+    @_classproperty
+    def stdout(cls):
+
+        import sys
+
+        return sys.stdout
+
+
+    @_classproperty
+    def stderr(cls):
+
+        import sys
+
+        return sys.stderr

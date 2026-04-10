@@ -205,7 +205,7 @@ class ProgressBar(Format):
             color : Any | tuple[Any, Any, Any] = Color(Color.C_RESET),
             hide_spinner_at_end: bool = True,
             delete : bool = False
-        ) -> Any:
+        ) -> "Text":
         """
             Convert ProgressBar object to string.
 

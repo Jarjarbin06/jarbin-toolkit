@@ -44,7 +44,6 @@ class Error(Exception):
         self.link : str | None = None
 
         self.create_link()
-        self.log()
 
 
     def log(
@@ -114,12 +113,12 @@ class Error(Exception):
         ## cannot be tested with pytest ##
 
         return (
-            f"\x1b[103m \x1b[0m \x1b[93mepitech_console launched with error\x1b[0m\n"
+            f"\x1b[103m \x1b[0m \x1b[93mjarbin_toolkit_console launched with error\x1b[0m\n"
             f"\x1b[103m \x1b[0m\n"
             f"\x1b[103m \x1b[0m \x1b[93mPlease reinstall with :\x1b[0m\n"
-            f"\x1b[103m \x1b[0m \x1b[93m    'pip install --upgrade --force-reinstall epitech_console'\x1b[0m\n"
+            f"\x1b[103m \x1b[0m \x1b[93m    'pip install --upgrade --force-reinstall jarbin_toolkit_console'\x1b[0m\n"
             f"\x1b[103m \x1b[0m\n"
-            f"\x1b[103m \x1b[0m \x1b[93mPlease report the issue here : https://github.com/Jarjarbin06/epitech_console/issues\x1b[0m\n"
+            f"\x1b[103m \x1b[0m \x1b[93mPlease report the issue here : https://github.com/Jarjarbin06/jarbin_toolkit/issues\x1b[0m\n"
         ) # pragma: no cover
 
 
@@ -186,13 +185,8 @@ class ErrorLaunch(Error):
                 link (tuple[str, int | None] | None, optional): The link to where the error comes from (file and line).
         """
 
-        self.message : str = message
-        self.error : str = "ErrorLaunch"
-        self.link_data : tuple[str, int] | None = link
-        self.link : str | None = None
-
-        self.create_link()
-        self.log()
+        super().__init__(message, link=link)
+        self.error += "(ErrorLaunch)"
 
 
 class ErrorImport(Error):
@@ -218,13 +212,8 @@ class ErrorImport(Error):
                 link (tuple[str, int | None] | None, optional): The link to where the error comes from (file and line).
         """
 
-        self.message : str = message
-        self.error : str = "ErrorImport"
-        self.link_data : tuple[str, int] | None = link
-        self.link : str | None = None
-
-        self.create_link()
-        self.log()
+        super().__init__(message, link=link)
+        self.error += "(ErrorImport)"
 
 
 class ErrorLog(Error):
@@ -250,23 +239,12 @@ class ErrorLog(Error):
                 link (tuple[str, int | None] | None, optional): The link to where the error comes from (file and line).
         """
 
-        self.message : str = message
-        self.error : str = "ErrorLog"
-        self.link_data : tuple[str, int] | None = link
-        self.link : str | None = None
+        super().__init__(message, link=link)
+        self.error += "(ErrorLog)"
 
-        self.create_link()
 
-    def log(
-            self
-        ) -> None:
-        """
-            Cannot log this error into a log file.
-        """
-
-        ## cannot be tested with pytest ##
-
-        pass # pragma: no cover
+    def log(self):
+        pass
 
 
 class ErrorConfig(Error):
@@ -292,13 +270,8 @@ class ErrorConfig(Error):
                 link (tuple[str, int | None] | None, optional): The link to where the error comes from (file and line).
         """
 
-        self.message : str = message
-        self.error : str = "ErrorConfig"
-        self.link_data : tuple[str, int] | None = link
-        self.link : str | None = None
-
-        self.create_link()
-        self.log()
+        super().__init__(message, link=link)
+        self.error += "(ErrorConfig)"
 
 
 class ErrorSetting(Error):
@@ -324,13 +297,8 @@ class ErrorSetting(Error):
                 link (tuple[str, int | None] | None, optional): The link to where the error comes from (file and line).
         """
 
-        self.message : str = message
-        self.error : str = "ErrorSetting"
-        self.link_data : tuple[str, int] | None = link
-        self.link : str | None = None
-
-        self.create_link()
-        self.log()
+        super().__init__(message, link=link)
+        self.error += "(ErrorSetting)"
 
 
 class ErrorType(Error):
@@ -356,13 +324,8 @@ class ErrorType(Error):
                 link (tuple[str, int | None] | None, optional): The link to where the error comes from (file and line).
         """
 
-        self.message : str = message
-        self.error : str = "ErrorType"
-        self.link_data : tuple[str, int] | None = link
-        self.link : str | None = None
-
-        self.create_link()
-        self.log()
+        super().__init__(message, link=link)
+        self.error += "(ErrorType)"
 
 
 class ErrorValue(Error):
@@ -388,10 +351,32 @@ class ErrorValue(Error):
                 link (tuple[str, int | None] | None, optional): The link to where the error comes from (file and line).
         """
 
-        self.message : str = message
-        self.error : str = "ErrorValue"
-        self.link_data : tuple[str, int] | None = link
-        self.link : str | None = None
+        super().__init__(message, link=link)
+        self.error += "(ErrorValue)"
 
-        self.create_link()
-        self.log()
+
+class ErrorAttribute(Error):
+    """
+        ErrorAttribute class.
+
+        Attribute Error.
+    """
+
+
+    def __init__(
+            self,
+            message : str = "an error occurred on an attribute",
+
+            *,
+            link : tuple[str , int | None] | None = None
+        ) -> None:
+        """
+            Create an Error.
+
+            Parameters:
+                message (str, optional): The error message.
+                link (tuple[str, int | None] | None, optional): The link to where the error comes from (file and line).
+        """
+
+        super().__init__(message, link=link)
+        self.error += "(ErrorAttribute)"

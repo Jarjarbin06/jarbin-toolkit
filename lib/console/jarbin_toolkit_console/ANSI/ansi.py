@@ -120,6 +120,17 @@ class ANSI(Format):
         return len(self.sequence)
 
 
+    @property
+    def s(
+            self
+        ) -> str:
+        """
+            Convert ANSI object to string.
+        """
+
+        return str(self.sequence)
+
+
     def __repr__(
             self
         ) -> str:

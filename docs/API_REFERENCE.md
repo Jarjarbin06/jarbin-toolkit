@@ -52,7 +52,7 @@ Root package exposing all core modules and high-level API shortcuts.
 
 ## Public Functions
 
-### `get_info() -> dict[str, str]`
+### `get_info() -> dict[str, Any]`
 
 Returns toolkit metadata.
 
@@ -66,7 +66,7 @@ print(info["version"])
 ```
 
 
-### `benchmark(function: Callable, *args, **kwargs) -> tuple[Any, float]`
+### `benchmark(function: Callable, *args, **kwargs) -> tuple[Optional[Any], float, Optional[Exception]]`
 
 Benchmarks a function call.
 
@@ -429,7 +429,7 @@ Precise timing utilities.
 #### Constructor
 
 ```text
-StopWatch(auto_start: bool = False)
+StopWatch(start: bool = False)
 ```
 
 #### Methods

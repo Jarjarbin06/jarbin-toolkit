@@ -17,7 +17,8 @@ from jarbin_toolkit_error.error import (
     ErrorLaunch,
     ErrorLog,
     ErrorSetting,
-    ErrorConfig
+    ErrorConfig,
+    ErrorAttribute
 )
 
 
@@ -29,7 +30,8 @@ __all__ : list[str] = [
     'ErrorLaunch',
     'ErrorLog',
     'ErrorSetting',
-    'ErrorConfig'
+    'ErrorConfig',
+    'ErrorAttribute'
 ]
 
 

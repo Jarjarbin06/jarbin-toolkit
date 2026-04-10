@@ -21,16 +21,28 @@ def _fatal_error(
         print an error message and exit (with code 84)
     """
 
+    import traceback  # pragma: no cover
+
     ## cannot be tested with pytest ##
 
-    print(f"\033[101m \033[0m \033[91m{err}\033[0m")  # pragma: no cover
+    tb = err.__traceback__  # pragma: no cover
+    filename = "<unknown>"  # pragma: no cover
+    lineno = 0  # pragma: no cover
+
+    if tb is not None:  # pragma: no cover
+        last = traceback.extract_tb(tb)[-1]  # pragma: no cover
+        filename = last.filename  # pragma: no cover
+        lineno = last.lineno  # pragma: no cover
+
+    print(f"\033[101m \033[0m \033[91m{repr(err)}\033[0m")  # pragma: no cover
+    print(f"\033[101m \033[0m \033[91m\tFile: {repr(filename)}:{repr(lineno)})\033[0m")  # pragma: no covers
     print(
-        f"\033[103m \033[0m \033[93mepitech_console launched with fatal error\033[0m\n"
+        f"\033[103m \033[0m \033[93mjarbin_toolkit_console launched with fatal error\033[0m\n"
         "\033[103m \033[0m\n"
         "\033[103m \033[0m \033[93mPlease reinstall with :\033[0m\n"
-        "\033[103m \033[0m \033[93m    'pip install --upgrade --force-reinstall epitech_console'\033[0m\n"
+        "\033[103m \033[0m \033[93m    'pip install --upgrade --force-reinstall jarbin_toolkit_console'\033[0m\n"
         "\033[103m \033[0m\n"
-        "\033[103m \033[0m \033[93mPlease report the issue here : https://github.com/Jarjarbin06/epitech_console/issues\033[0m\n"
+        "\033[103m \033[0m \033[93mPlease report the issue here : https://github.com/Jarjarbin06/jarbin-toolkit/issues\033[0m\n"
     )  # pragma: no cover
     exit(84)  # pragma: no cover
 
@@ -248,5 +260,5 @@ __all__ : list[str] = [
 
 __author__ : str = 'Nathan Jarjarbin'
 __email__ : str = 'nathan.amaraggi@epitech.eu'
-__version__ : str = "0.1.2.1"
+__version__ : str = "0.1.2.2"
 __license__ : str = "GPL"

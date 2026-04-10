@@ -84,6 +84,10 @@ These commands install the `jarbin-toolkit` package and its dependencies (all to
 ---
 
 # Release-Notes
+## v1.1 - 2026-03-8
+- Random fixes
+> Random fixes on all modules
+
 ## v1.0 - 2026-02-12
 - Update ALL modules
 > 1rst real release
