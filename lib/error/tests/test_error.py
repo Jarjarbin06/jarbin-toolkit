@@ -94,46 +94,46 @@ def test_error_error_launch(
     ) -> None:
     err = ErrorLaunch()
 
-    assert err.error == "ErrorLaunch"
+    assert err.error == "Error(ErrorLaunch)"
 
 
 def test_error_error_import(
     ) -> None:
     err = ErrorImport()
 
-    assert err.error == "ErrorImport"
+    assert err.error == "Error(ErrorImport)"
 
 
 def test_error_error_log(
     ) -> None:
     err = ErrorLog()
 
-    assert err.error == "ErrorLog"
+    assert err.error == "Error(ErrorLog)"
 
 
 def test_error_error_config(
     ) -> None:
     err = ErrorConfig()
 
-    assert err.error == "ErrorConfig"
+    assert err.error == "Error(ErrorConfig)"
 
 
 def test_error_error_setting(
     ) -> None:
     err = ErrorSetting()
 
-    assert err.error == "ErrorSetting"
+    assert err.error == "Error(ErrorSetting)"
 
 
 def test_error_error_type(
     ) -> None:
     err = ErrorType()
 
-    assert err.error == "ErrorType"
+    assert err.error == "Error(ErrorType)"
 
 
 def test_error_error_value(
     ) -> None:
     err = ErrorValue()
 
-    assert err.error == "ErrorValue"
+    assert err.error == "Error(ErrorValue)"

@@ -34,7 +34,7 @@ def test_clear(
 
 def test_clear_previous_line(
     ) -> None:
-    assert str(Line.clear_previous_line()) == "\x1b[1F\x1b[2K"
+    assert str(Line.clear_previous_line()) == "\x1b[2K\x1b[1F\x1b[2K"
 
 
 quit(delete_log=True)
