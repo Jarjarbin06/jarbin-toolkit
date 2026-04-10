@@ -1,0 +1,5 @@
+#!/bin/bash
+
+pytest --debug=trace --cov=jarbin_toolkit_jartest --cov-report=html
+xdg-open htmlcov/index.html
+rm -f .coverage
