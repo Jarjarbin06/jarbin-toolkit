@@ -179,15 +179,6 @@ class JarTest:
             Fetch all tests from JarTest object.
         """
 
-        def clean_dict(
-            ) -> None :
-
-            items_cpy = items.copy()
-
-            for item in items_cpy:
-                if item.startswith("__") or item.startswith("jarbin_toolkit") :
-                    items.pop(item)
-
         def check_name(
             ) -> bool :
 
@@ -226,8 +217,6 @@ class JarTest:
         items : dict[str, Any] = module.__dict__
         temp_dict : dict[str, Benchmark] = {}
         failed_append : list[tuple[str, str, inspect.Signature | None]] = []
-
-        clean_dict()
 
         for name in items :
             if check_name() :

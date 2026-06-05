@@ -12,6 +12,7 @@
 from builtins import object
 from typing import Any
 
+OPEN_CONFIG: bool = False
 
 class Setting:
     """
@@ -94,19 +95,19 @@ class Setting:
 
             Setting.S_PACKAGE_PATH = __file__.removesuffix("System/setting.py").removesuffix("System\\setting.py") # pragma: no cover
 
-        Setting.S_CONFIG_FILE = Config(Setting.S_PACKAGE_PATH)
+        Setting.S_CONFIG_FILE = Config(Setting.S_PACKAGE_PATH) if OPEN_CONFIG else None
 
-        Setting.S_PACKAGE_NAME = Setting.S_CONFIG_FILE.get("PACKAGE", "name")
-        Setting.S_PACKAGE_VERSION = Setting.S_CONFIG_FILE.get("PACKAGE", "version")
-        Setting.S_PACKAGE_DESCRIPTION = Setting.S_CONFIG_FILE.get("PACKAGE", "description")
-        Setting.S_PACKAGE_REPOSITORY = Setting.S_CONFIG_FILE.get("PACKAGE", "repository")
+        Setting.S_PACKAGE_NAME = Setting.S_CONFIG_FILE.get("PACKAGE", "name") if OPEN_CONFIG else "N/A"
+        Setting.S_PACKAGE_VERSION = Setting.S_CONFIG_FILE.get("PACKAGE", "version") if OPEN_CONFIG else "0.0.0.0"
+        Setting.S_PACKAGE_DESCRIPTION = Setting.S_CONFIG_FILE.get("PACKAGE", "description") if OPEN_CONFIG else "N/A"
+        Setting.S_PACKAGE_REPOSITORY = Setting.S_CONFIG_FILE.get("PACKAGE", "repository") if OPEN_CONFIG else "N/A"
 
-        Setting.S_SETTING_SHOW_BANNER = Setting.S_CONFIG_FILE.get_bool("SETTING", "show-banner")
-        Setting.S_SETTING_AUTO_COLOR = Setting.S_CONFIG_FILE.get_bool("SETTING", "auto-color")
-        Setting.S_SETTING_SAFE_MODE = Setting.S_CONFIG_FILE.get_bool("SETTING", "safe-mode")
-        Setting.S_SETTING_MINIMAL_MODE = Setting.S_CONFIG_FILE.get_bool("SETTING", "minimal-mode")
-        Setting.S_SETTING_DEBUG_MODE = Setting.S_CONFIG_FILE.get_bool("SETTING", "debug")
-        Setting.S_SETTING_LOG_MODE = Setting.S_CONFIG_FILE.get_bool("SETTING", "log")
+        Setting.S_SETTING_SHOW_BANNER = Setting.S_CONFIG_FILE.get_bool("SETTING", "show-banner") if OPEN_CONFIG else False
+        Setting.S_SETTING_AUTO_COLOR = Setting.S_CONFIG_FILE.get_bool("SETTING", "auto-color") if OPEN_CONFIG else False
+        Setting.S_SETTING_SAFE_MODE = Setting.S_CONFIG_FILE.get_bool("SETTING", "safe-mode") if OPEN_CONFIG else False
+        Setting.S_SETTING_MINIMAL_MODE = Setting.S_CONFIG_FILE.get_bool("SETTING", "minimal-mode") if OPEN_CONFIG else False
+        Setting.S_SETTING_DEBUG_MODE = Setting.S_CONFIG_FILE.get_bool("SETTING", "debug") if OPEN_CONFIG else False
+        Setting.S_SETTING_LOG_MODE = Setting.S_CONFIG_FILE.get_bool("SETTING", "log") if OPEN_CONFIG else False
 
         if Setting.S_SETTING_LOG_MODE:
 

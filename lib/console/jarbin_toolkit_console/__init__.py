@@ -154,105 +154,12 @@ def quit(
             System.Setting.S_LOG_FILE.close(delete=True) # pragma: no cover
 
 
-######################
-# Module's Variables #
-######################
-
-
-C_RESET : int = 0
-C_BOLD : int = 1
-C_ITALIC : int = 3
-C_UNDERLINE : int = 4
-C_FLASH_SLOW : int = 5
-C_FLASH_FAST : int = 6
-C_HIDDEN : int = 8
-C_STRIKETHROUGH : int = 9
-
-C_FG_DARK : int = 2
-C_FG_DARK_GREY : int = 30
-C_FG_DARK_RED : int = 31
-C_FG_DARK_GREEN : int = 32
-C_FG_DARK_YELLOW : int = 33
-C_FG_DARK_BLUE : int = 34
-C_FG_DARK_LAVANDA : int = 35
-C_FG_DARK_CYAN : int = 36
-C_FG_DARK_WHITE : int = 37
-C_FG_GREY : int = 90
-C_FG_RED : int = 91
-C_FG_GREEN : int = 92
-C_FG_YELLOW : int = 93
-C_FG_BLUE : int = 94
-C_FG_LAVANDA : int = 95
-C_FG_CYAN : int = 96
-C_FG_WHITE : int = 97
-
-C_BG : int = 7
-C_BG_DARK_GREY : int = 40
-C_BG_DARK_RED : int = 41
-C_BG_DARK_GREEN : int = 42
-C_BG_DARK_YELLOW : int = 43
-C_BG_DARK_BLUE : int = 44
-C_BG_DARK_LAVANDA : int = 45
-C_BG_DARK_CYAN : int = 46
-C_BG_DARK_WHITE : int = 47
-C_BG_GREY : int = 100
-C_BG_RED : int = 101
-C_BG_GREEN : int = 102
-C_BG_YELLOW : int = 103
-C_BG_BLUE : int = 104
-C_BG_LAVANDA : int = 105
-C_BG_CYAN : int = 106
-C_BG_WHITE : int = 107
-
-
 __all__ : list[str] = [
     'Animation',
     'ANSI',
     'System',
     'Text',
     'Console',
-    'C_RESET',
-    'C_BOLD',
-    'C_ITALIC',
-    'C_UNDERLINE',
-    'C_FLASH_SLOW',
-    'C_FLASH_FAST',
-    'C_HIDDEN',
-    'C_STRIKETHROUGH',
-    'C_FG_DARK',
-    'C_FG_DARK_GREY',
-    'C_FG_DARK_RED',
-    'C_FG_DARK_GREEN',
-    'C_FG_DARK_YELLOW',
-    'C_FG_DARK_BLUE',
-    'C_FG_DARK_LAVANDA',
-    'C_FG_DARK_CYAN',
-    'C_FG_DARK_WHITE',
-    'C_FG_GREY',
-    'C_FG_RED',
-    'C_FG_GREEN',
-    'C_FG_YELLOW',
-    'C_FG_BLUE',
-    'C_FG_LAVANDA',
-    'C_FG_CYAN',
-    'C_FG_WHITE',
-    'C_BG',
-    'C_BG_DARK_GREY',
-    'C_BG_DARK_RED',
-    'C_BG_DARK_GREEN',
-    'C_BG_DARK_YELLOW',
-    'C_BG_DARK_BLUE',
-    'C_BG_DARK_LAVANDA',
-    'C_BG_DARK_CYAN',
-    'C_BG_DARK_WHITE',
-    'C_BG_GREY',
-    'C_BG_RED',
-    'C_BG_GREEN',
-    'C_BG_YELLOW',
-    'C_BG_BLUE',
-    'C_BG_LAVANDA',
-    'C_BG_CYAN',
-    'C_BG_WHITE',
     'init',
     'quit'
 ]

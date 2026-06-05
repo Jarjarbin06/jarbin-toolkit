@@ -11,7 +11,6 @@
 
 from types import TracebackType
 from typing import Callable, Any, Optional
-from jarbin_toolkit_error import ErrorAttribute
 from jarbin_toolkit_jartest.assertion import AssertionResult
 
 
@@ -27,7 +26,7 @@ class Benchmark:
             test : Callable[[], None]
         ) -> None :
 
-        self._time : list[Optional[float]] = [None]
+        self._time : list[Optional[float | int]] = [None]
         self._assertion : list[Optional[list[AssertionResult]]] = [None]
         self._error : list[Exception | None] = [None]
         self._traceback : list[Optional[list[Optional[TracebackType]]]] = [None]
@@ -61,15 +60,6 @@ class Benchmark:
         return self._time[-1] / self._n
 
 
-    @time.setter
-    def time(
-            self,
-            new_value
-        ) -> None :
-
-        raise ErrorAttribute("time value is read-only")
-
-
     @property
     def error(
             self
@@ -79,15 +69,6 @@ class Benchmark:
         """
 
         return self._error[-1]
-
-
-    @error.setter
-    def error(
-            self,
-            new_value
-        ) -> None :
-
-        raise ErrorAttribute("error value is read-only")
 
 
     @property
@@ -101,15 +82,6 @@ class Benchmark:
         return self._assertion[-1]
 
 
-    @assertion.setter
-    def assertion(
-            self,
-            new_value
-        ) -> None :
-
-        raise ErrorAttribute("assertion value is read-only")
-
-
     @property
     def traceback(
             self
@@ -119,15 +91,6 @@ class Benchmark:
         """
 
         return self._traceback[-1]
-
-
-    @traceback.setter
-    def traceback(
-            self,
-            new_value
-        ) -> None :
-
-        raise ErrorAttribute("traceback value is read-only")
 
 
     @property
@@ -140,16 +103,6 @@ class Benchmark:
 
         return self._result[-1]
 
-
-    @result.setter
-    def result(
-            self,
-            new_value
-        ) -> None :
-
-        raise ErrorAttribute("result value is read-only")
-
-
     @property
     def test(
             self
@@ -159,15 +112,6 @@ class Benchmark:
         """
 
         return self._test
-
-
-    @test.setter
-    def test(
-            self,
-            new_value
-        ) -> None :
-
-        raise ErrorAttribute("test value is read-only")
 
 
     @property
@@ -181,26 +125,6 @@ class Benchmark:
         return self._test_name
 
 
-    @name.setter
-    def name(
-            self,
-            new_value
-        ) -> None :
-
-        raise ErrorAttribute("test_name value is read-only")
-
-
-    @property
-    def test_amount(
-            self
-        ) -> int :
-        """
-            Get number of times tested.
-        """
-
-        return self._n
-
-
     @property
     def tested(
             self
@@ -211,14 +135,6 @@ class Benchmark:
 
         return self._n != 0
 
-
-    @tested.setter
-    def tested(
-            self,
-            new_value
-        ) -> None :
-
-        raise ErrorAttribute("tested value is read-only")
 
     def __call__(
             self,
@@ -252,6 +168,14 @@ class Benchmark:
             self
         ) -> str:
 
+        if self._n == 0:
+            return (
+                f"Benchmark("
+                f"test={self._test_name!r}, "
+                f"tested={self._n!r}"
+                f")"
+            )
+
         assertions = [
             type(a).__name__ if a is not None else None
             for a in self._assertion
@@ -264,7 +188,7 @@ class Benchmark:
 
         return (
             f"Benchmark("
-            f"test={self._test_name}, "
+            f"test={self._test_name!r}, "
             f"time={self.time_to_str(self.time)}, "
             f"assertion={assertions}, "
             f"error={errors}, "
