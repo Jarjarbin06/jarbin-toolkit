@@ -46,7 +46,9 @@ class Time:
 
     @staticmethod
     def pause(
-            msg : str = "Press enter to continue..."
+            msg : str = "Press enter to continue...",
+            *,
+            force_enter : bool = True
         ) -> float:
         """
             Pause the program and print a message and return the exact elapsed time during the pause function.
@@ -63,6 +65,17 @@ class Time:
         from jarbin_toolkit_time.stopwatch import StopWatch # pragma: no cover
 
         watch = StopWatch(True) # pragma: no cover
-        input(msg) # pragma: no cover
+
+        print(msg) # pragma: no cover
+
+        if force_enter: # pragma: no cover
+            while (True): # pragma: no cover
+                try: # pragma: no cover
+                    input() # pragma: no cover
+                    break # pragma: no cover
+                except (EOFError, KeyboardInterrupt): # pragma: no cover
+                    continue # pragma: no cover
+        else: # pragma: no cover
+            input(msg) # pragma: no cover
 
         return watch.elapsed(True) # pragma: no cover

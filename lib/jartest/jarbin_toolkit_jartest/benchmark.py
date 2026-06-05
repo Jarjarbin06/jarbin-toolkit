@@ -10,8 +10,9 @@
 
 
 from types import TracebackType
-from typing import Callable, Any
+from typing import Callable, Any, Optional
 from jarbin_toolkit_error import ErrorAttribute
+from jarbin_toolkit_jartest.assertion import AssertionResult
 
 
 class Benchmark:
@@ -26,11 +27,11 @@ class Benchmark:
             test : Callable[[], None]
         ) -> None :
 
-        self._time : list[float | None] = [None]
-        self._assertion : list[AssertionError | None] = [None]
+        self._time : list[Optional[float]] = [None]
+        self._assertion : list[Optional[list[AssertionResult]]] = [None]
         self._error : list[Exception | None] = [None]
-        self._traceback : list[list[TracebackType | None]] = [None]
-        self._result : list[Any | None] = [None]
+        self._traceback : list[Optional[list[Optional[TracebackType]]]] = [None]
+        self._result : list[Optional[Any]] = [None]
         self._test : Callable[[], None] = test
         self._test_name : str = test.__name__
         self._n : int = 0
@@ -39,7 +40,7 @@ class Benchmark:
     @property
     def time_str(
             self
-        ) -> str :
+        ) -> Optional[str] :
         """
             Get latest time.
         """
@@ -50,7 +51,7 @@ class Benchmark:
     @property
     def time(
             self
-        ) -> float :
+        ) -> Optional[float] :
         """
             Get latest time.
         """
@@ -72,7 +73,7 @@ class Benchmark:
     @property
     def error(
             self
-        ) -> Exception | None :
+        ) -> Optional[Exception] :
         """
             Get latest error.
         """
@@ -92,7 +93,7 @@ class Benchmark:
     @property
     def assertion(
             self
-        ) -> AssertionError | None :
+        ) -> Optional[list[AssertionResult]] :
         """
             Get latest error.
         """
@@ -112,7 +113,7 @@ class Benchmark:
     @property
     def traceback(
             self
-        ) -> list[TracebackType | None] :
+        ) -> Optional[list[Optional[TracebackType]]] :
         """
             Get latest error.
         """
@@ -132,7 +133,7 @@ class Benchmark:
     @property
     def result(
             self
-        ) -> int | None :
+        ) -> Optional[int] :
         """
             Get latest result.
         """
@@ -219,27 +220,32 @@ class Benchmark:
 
         raise ErrorAttribute("tested value is read-only")
 
-
     def __call__(
             self,
-            n : int
-        ) -> None :
+            n: int
+        ) -> None:
 
         for _ in range(n):
+
             self._traceback.append([])
-            result, time, assertion, error = self.benchmark(self.test)
+
+            result, time, assertion, error, assertions = self.benchmark(self.test)
 
             self._result.append(result)
             self._n += 1
             self._time.append(time)
-            self._assertion.append(assertion)
+
+            # store list of AssertionResult
+            self._assertion.append(assertions)
+
             self._error.append(error)
 
-            if self._error[-1] is not None:
-                tb = self._error[-1].__traceback__
+            if error is not None:
+                tb = error.__traceback__
                 while tb is not None:
                     self._traceback[-1].append(tb)
                     tb = tb.tb_next
+                break
 
 
     def __repr__(
@@ -267,46 +273,49 @@ class Benchmark:
             f")"
         )
 
-
     @staticmethod
     def benchmark(
             function: Callable
-        ) -> tuple[Any | None, float, AssertionError | None, Exception | None]:
-        """
-        Benchmark the function
-
-        Parameters:
-            function (Callable): function to benchmark
-
-        Returns:
-            tuple[Any | None, float, AssertionError | None, Exception | None]: benchmark result, elapsed time, assertion and exception
-        """
+        ) -> tuple[Any | None, float, AssertionError | None, Exception | None, list[AssertionResult]]:
 
         from jarbin_toolkit_time import StopWatch
+        from jarbin_toolkit_jartest.assertion import AssertionContext, _current_assertions
 
         result = None
         assertion = None
         exception = None
+        assertions: list = []
+
         sw = StopWatch(True)
 
         try:
-            result = function()
+            with AssertionContext() as collected:
+                result = function()
+                assertions = collected
 
         except AssertionError as err:
             assertion = err
+            assertions = _current_assertions.get() or []
 
         except Exception as err:
             exception = err
+            assertions = _current_assertions.get() or []
 
-        return result, sw.elapsed(), assertion, exception
+        return result, sw.elapsed(), assertion, exception, assertions
 
 
     @staticmethod
-    def time_to_str(seconds: float) -> str:
+    def time_to_str(
+            seconds: Optional[float]
+        ) -> str:
         """
             Convert a time in seconds to a string.
             Auto unit.
         """
+
+        if seconds is None:
+            return "No tests done"
+
         if seconds < 1e-6:
             return f"{seconds * 1e9:.3f}ns"
 

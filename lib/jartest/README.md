@@ -1,208 +1,387 @@
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Epitech_logo.png" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Jarbin-Toolkit_logo.jpg" alt="error loading Jarbin-ToolKit Logo" width="49%" style="display:inline-block;">
 
-# **Jarbin-ToolKit:JarTest** v0.0.1.0
-<details>
-<summary>Latest versions</summary>
-🟠 UNDER DEVELOPMENT 🟠 None 🟠
+---
 
-🟢 RELEASED 🟢 v0.0.1.0 🟢
-</details>
+# 📦 JarTest
 
-[![CodeQL Advanced](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/codeql.yml/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/codeql.yml)
-[![Python package tester](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/test-package.yml/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/test-package.yml)
-[![pages-build-deployment](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/pages/pages-build-deployment)
+> Lightweight Python testing framework inspired by **pytest**, designed for structured, deterministic, and composable test execution.
 
 ---
 
----
+## 🔹 Short Description
 
-## Description
+**JarTest is a minimal Python testing framework designed to define, organize, and execute test functions in a structured and deterministic way.**
 
-`jarbin-toolkit:jartest` is a Python library designed to help you create enhanced terminal interfaces. It's improving the appearance and readability of your command-line interface with lightweight animations, colorful text, and neat formatting. If you want to make your terminal programs more readable and visually structured, this library is for you!
+It provides a lightweight alternative to traditional testing tools, focusing on simplicity, explicit execution flow, and composability of test suites.
 
----
-
----
-
-## Table of Contents
-
-1.  [Description](#Description)
-2.  [Features](#Features)
-3.  [Tech Stack](#Tech-Stack)
-4.  [Installation](#Installation)
-5.  [Usage](#Usage)
-6.  [Project Structure](#Project-Structure)
-7.  [API Reference](#API-Reference)
-8.  [Release Notes](#Release-Notes)
-9.  [License](#License)
-10. [Important Links](#Important-Links)
-11. [Footer](#Footer)
-
-## Features
-
-*   **Timers**: Use the built-in stopwatch to measure how long parts of your code take to run.
+* Python functions and modules
+* Libraries and APIs
+* CLI programs (optional use case, not a core constraint)
+* System behavior and integrations
 
 ---
 
----
+## 🔹 Authors
 
-## Tech-Stack
-
-*   **Language**: Python - Chosen for its readability and versatility.
-*   **Frameworks**: Python -  Entirely implemented in Python.
+* Nathan (Jarjarbin06)
+* EPITECH Project
 
 ---
 
----
+## 🔹 License
 
-## Installation
-
-To begin , install `jarbin-toolkit:jartest`:
-
-#### **Prerequisites**:
-
-Make sure you have Python `3.11` or newer installed on your computer.
-You can check your Python version by opening a terminal and typing `python --version`.
+GPL v3
 
 ---
 
-#### **Install from PyPI** (*recommended*):
-	
-Open your terminal and run this command:
+## 🔹 Target Audience
+
+This framework is designed for:
+
+* Python developers building test suites
+* Students learning software testing principles
+* Developers needing lightweight testing infrastructure
+* Projects requiring explicit and controllable test execution
+* CLI / library / system testing
+
+---
+
+## 🔹 Platform Support
+
+* Python 3.11+
+* Cross-platform (Linux, macOS, Windows)
+* No external dependencies (standard library only)
+
+---
+
+## 🔹 Purpose
+
+JarTest provides a structured way to:
+
+* Define test functions using plain Python
+* Register and collect tests automatically
+* Execute grouped test suites deterministically
+* Organize tests into modular components
+* Provide a lightweight alternative to pytest-like workflows
+* Support both unit testing and system/integration testing
+
+---
+
+## 🔹 Key Features
+
+* Automatic test collection (`fetch_tests()` / `fetch()`)
+* Test grouping via `JarTest` containers
+* Simple Python function-based tests
+* Deterministic execution order
+* Modular test suite architecture
+* Assertion utilities (`Assertion`)
+* Output and error redirection (`stdout` & `stderr`)
+* Optional system interaction support (CLI, subprocess, etc.)
+* Lightweight design (no dependencies other than `Jarbin-ToolKit`)
+* Multiple independent test suites support
+
+---
+
+## 🔹 Architecture Overview
+
+```
+            ┌────────────────────────┐
+            │    Test Functions      │
+            │   (JT_xxx methods)     │
+            └──────────┬─────────────┘
+                       │
+                       ▼
+            ┌────────────────────────┐
+            │       JarTest()        │
+            │   (Test Collector)     │
+            └──────────┬─────────────┘
+                       │
+             fetch_tests() / fetch()
+                       │
+                       ▼
+            ┌────────────────────────┐
+            │  Registered Test List  │
+            │    [callable tests]    │
+            └──────────┬─────────────┘
+                       │
+                       ▼
+            ┌────────────────────────┐
+            │  Sequential Execution  │
+            │   deterministic run    │
+            └──────────┬─────────────┘
+                       │
+                       ▼
+            ┌────────────────────────┐
+            │  Assertion Validation  │
+            │  pass / fail behavior  │
+            └────────────────────────┘
+```
+
+---
+
+## 🔹 Core Concept
+
+### Test Definition Model
+
+Each test is a **plain Python function**:
+
+```python
+def JT_example():
+    Assertion.eq(1, 1)
+```
+
+No decorators required. No magic runtime injection.
+
+---
+
+### Test Collection Model
+
+Tests are grouped using:
+
+```python
+JTT_example = JarTest()
+JTT_example.fetch()
+```
+
+This automatically registers functions following naming rules (typically `JT_` prefix convention).
+
+---
+
+### Master Test Collection
+
+JarTest can be grouped for single execution using:
+
+```python
+JTT_main = JarTest()
+JTT_main.fetch_tests()
+```
+
+This automatically registers JarTest objects inside the file or imported from another.
+
+---
+
+### Execution Model
+
+1. Define test functions
+2. Register them via `JarTest`
+3. Collect tests (`fetch()`)
+4. Execute suite
+5. Validate assertions
+
+---
+
+## 🔹 API Overview
+
+### 🧪 JarTest
+
+#### Constructor
+
+```python
+JarTest()
+```
+
+Creates a new independent test suite container.
+
+---
+
+#### Test Collection
+
+```python
+fetch()
+```
+
+* Scans and registers test functions
+* Adds them to execution queue
+
+```python
+fetch_tests()
+```
+
+* Scans and registers test collections
+
+---
+
+#### Execution
+
+```python
+run() -> None | dict
+```
+
+* Executes all registered tests
+* Runs sequentially
+* Uses assertion system for validation
+
+> [!NOTE]  
+> While run don't have clear args, there are actually some taken in count (`*kwargs`)
+> - `n`: int (default `1`) - How many times will each test run
+
+---
+
+## 🔹 Assertion System
+
+### Assertion
+
+```python
+Assertion.eq(a, b)
+Assertion.neq(a, b)
+Assertion.contain(a, b)
+Assertion.ncontain(a, b)
+```
+
+Provides simple deterministic validation helpers.
+
+Designed for:
+
+* readability
+* minimal boilerplate
+* explicit failure points
+* assertions arguments and results registering
+
+---
+
+## 🔹 Usage
+
+### Basic Example
+
+```python
+from jarbin_toolkit_jartest import JarTest, Assertion
+
+def JT_add():
+    Assertion.eq(2 + 2, 4)
+
+def JT_sub():
+    Assertion.eq(5 - 3, 2)
+
+JTT_my_tests = JarTest()
+JTT_my_tests.fetch()
+JTT_my_tests.run()
+```
+
+---
+
+### Example with external module testing
+
+```python
+from jarbin_toolkit_jartest import JarTest, Assertion
+import my_module
+
+def JT_function():
+    result = my_module.compute(2, 3)
+    Assertion.eq(result, 5)
+
+JTT_my_tests = JarTest()
+JTT_my_tests.fetch()
+JTT_my_tests.run()
+```
+
+---
+
+### Example (CLI usage is optional, not required)
+
+```python
+from jarbin_toolkit_jartest import JarTest, Assertion, Get
+def JT_cli():
+    out, err, code = Get.Redirect.cmd_all_std("my_program", "--help")
+
+    Assertion.eq(code, 0)
+    Assertion.contain("usage", out)
+
+JTT_my_tests = JarTest()
+JTT_my_tests.fetch()
+JTT_my_tests.run()
+```
+
+---
+
+## 🔹 Memory Model
+
+* Tests are plain Python functions
+* No hidden runtime state manipulation
+* Assertions raise controlled failures
+* Execution is sequential and deterministic
+
+---
+
+## 🔹 Installation
+
+### From PyPI (if available)
+
 ```bash
 pip install jarbin_toolkit_jartest
 ```
-   This will automatically download and install the library from PyPI.
 
 ---
 
-#### **Install from GitHub**:
+### From source
 
-If you want the latest version directly from the source, you can install it using `git`:
+Clone the GitHub repository
+
 ```bash
-git clone -b latest NONE
-make -C lib/jarbin_toolkit_action install
-```
-This downloads the code, then the `install` script handles the installation.
-These commands install the `jarbin-toolkit:action` package and its dependencies (datetime).
-
----
-
----
-
-## Usage
-
-Here are some examples demonstrating how to use `jarbin-toolkit:action`:
-
-### Basic Error
-
-```python
-from jarbin_toolkit_action import Action, Actions
+make -C lib/jarbin_toolkit_jartest install
 ```
 
 ---
 
----
+## 🔹 Build System
 
-## API-Reference
-
-*   **Action**: Callable object storing a function and its arguments for deferred execution.
-    *   `Action(name: str, function: Callable, *args: Any, **kwargs: Any)`
-        Save a function and its arguments.
-        - `name`: logical name of the action
-        - `function`: callable to execute
-        - `*args`: positional arguments for the function
-        - `**kwargs`: keyword arguments for the function
-    *   `__call__() -> Any`
-        Execute the stored function with its saved arguments.
-        Returns the function’s return value.
-    *   `__add__(other: Action) -> Actions`
-        Combine two `Action` objects into an `Actions` collection.
-    *   `__str__() -> str`
-        Return readable string representation:
-        `'name' : function(*args = [...], **kwargs = {...})`
-    *   `__repr__() -> str`
-        Return constructor-style representation of the Action object.
-
-
-*   **Actions**: Collection of multiple `Action` objects.
-    *   `Actions(actions: list[Action] | Action | None = None)`
-        Create a collection of actions.
-        - `actions`: optional single `Action` or list of `Action`
-    *   `__call__() -> dict[str, Any]`
-        Execute all stored actions sequentially.
-        Returns a dictionary:
-        `{ action_name: return_value }`
-    *   `__add__(other: Actions | Action) -> Actions`
-        Merge:
-        - `Actions + Actions`
-        - `Actions + Action`
-    *   `__len__() -> int`
-        Return number of stored actions.
-    *   `__getitem__(item: int) -> Action`
-        Return the `Action` at given index.
-    *   `__str__() -> str`
-        Return formatted multi-line representation of all stored actions.
-    *   `__repr__() -> str`
-        Return constructor-style representation of the Actions object.
+```bash
+make install
+make uninstall
+make reinstall
+```
 
 ---
 
----
+## 🔹 Design Philosophy
 
-## Release-Notes
-* #### v0.1.1:
-    *   **[/]** 1rst real release 
-
-* #### v0.1.0:
-    *   **[UPDATE]** `jarbin_toolkit_action` update (removed unlinked sub-modules)
-    *   **[INIT]** add `epitech_console` to jarbin-toolkit (renamed `jarbin_toolkit_action`)
-
----
+* Minimal and explicit testing model
+* No decorator-heavy syntax
+* Deterministic execution order
+* Easy debugging of test flows
+* Lightweight alternative to pytest
+* Flexible usage (unit, integration, system tests)
 
 ---
 
-## License
+## 🔹 Current State
 
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/action/LICENSE) file for details.
+⚠️ The framework is **stable and functional but minimal**
 
----
+Status:
 
----
+* Test collection system implemented
+* Assertion system implemented
+* Multi-suite support possible
+* Sequential execution model
 
-## Important-Links
+Known limitations:
 
-#### Files
-*   **Repository**: [https://github.com/Jarjarbin06/jarbin-toolkit](https://github.com/Jarjarbin06/jarbin-toolkit)
-*   **PyPI**: [https://pypi.org/project/jarbin-toolkit-action/](https://pypi.org/project/jarbin-toolkit-action/)
-
----
-
-#### Wiki
-*   **Wiki** (*take a look*): [https://github.com/Jarjarbin06/jarbin-toolkit/wiki](https://github.com/Jarjarbin06/jarbin-toolkit/wiki)
-*   **README** (*updated*):  [https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/action/README.md](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/action/README.md)
-*   **GitHub**: [https://jarjarbin06.github.io/jarbin-toolkit/](https://jarjarbin06.github.io/jarbin-toolkit/)
+* No parallel execution
+* No test discovery UI
+* No built-in reporting dashboard
+* No fixtures system (yet)
+* No mocking framework included
 
 ---
 
----
+## 🔹 File Structure
 
-## Footer
-
-*   Repository: [https://github.com/Jarjarbin06/jarbin-toolkit](https://github.com/Jarjarbin06/jarbin-toolkit)
-*   Author: Nathan Jarjarbin
-*   Contact: nathan.amaraggi@epitech.eu
-
----
-
-⭐️ Like the project? Give it a star!
-🐛 Found a bug? Report it in the issues!
+```
+jarbin_toolkit_jartest/
+├── jar_test.py
+├── assertion.py
+├── collector.py
+└── __init__.py
+```
 
 ---
 
-<small>
-Last update : 
-**PACKAGE** — *2026/01/21* ; 
-**README** — *2026/02/12*
-</small>
+## 🔹 Notes
+
+* Inspired by pytest-style workflows
+* Designed for clarity over complexity
+* Works well for student and project-level testing systems
+* Can scale into more advanced frameworks if extended
+
+---

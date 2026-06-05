@@ -280,7 +280,10 @@ class Log:
         start: int = log_str.index("---START---\n") + len("---START---\n")
         end: int = log_str.index("----END----\n")
         logs: list = [lines.split(" | ") for lines in log_str[start:end].splitlines()]
-        t_size = get_terminal_size().columns if stdin.isatty() else 100
+        try:
+            t_size = get_terminal_size().columns
+        except OSError:
+            t_size = 100
         footer: str = f"\x1b[4m\x1b[7m|\x1b[0m\x1b[1m\x1b[4m"
         string: str = ""
 

@@ -7,8 +7,9 @@
 ###=======================###
 ### by JARJARBIN's STUDIO ###
 #############################
-import sys
-from builtins import object, type
+
+
+from builtins import type
 from typing import Any, TextIO
 from jarbin_toolkit_console.System.setting import Setting
 
@@ -288,7 +289,7 @@ class Console(metaclass=ConsoleMeta):
 
     @staticmethod
     def flush(
-            stream : TextIO | None = None,
+            stream : TextIO | Any | None = None,
         ) -> None:
         """
             Flush console output.
@@ -303,6 +304,42 @@ class Console(metaclass=ConsoleMeta):
             stream = Console.stdout
 
         stream.flush() # pragma: no cover
+
+    @staticmethod
+    def enter_alternate_screen(
+            hide_cursor : bool = False
+        ) -> None:
+        """
+            Enter a new alternate screen.
+
+            Parameters:
+                hide_cursor (bool, optional) : Hide the cursor when entering the alternate screen.
+        """
+
+        from jarbin_toolkit_console.ANSI.cursor import Cursor
+
+        Console.stdout.write("\033[?1049h")
+        Console.flush(Console.stdout)
+        if hide_cursor:
+            print(Cursor.hide(), end="")
+
+    @staticmethod
+    def exit_alternate_screen(
+            show_cursor : bool = False
+        ) -> None:
+        """
+            Exit an alternate screen.
+
+            Parameters:
+                show_cursor (bool, optional) : Show the cursor when entering the alternate screen.
+        """
+
+        from jarbin_toolkit_console.ANSI.cursor import Cursor
+
+        if show_cursor:
+            print(Cursor.show(), end="")
+        Console.stdout.write("\033[?1049l")
+        Console.flush(Console.stdout)
 
 
     @_classproperty

@@ -42,6 +42,21 @@ class Format:
         return Format.apply(self, Color(Color.C_RESET))
 
 
+    def dim(
+            self : Any
+        ) -> Any:
+        """
+            Apply the 'bold' format to an object of type Text, ANSI, Animation, ProgressBar or str.
+
+            Returns:
+                Any: formatted object.
+        """
+
+        from jarbin_toolkit_console.ANSI.color import Color
+
+        return Format.apply(self, Color(Color.C_FG_DARK))
+
+
     def bold(
             self : Any
         ) -> Any:

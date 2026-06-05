@@ -38,6 +38,7 @@ class ProgressBar(Format):
             animation : Animation | None = None,
             style : Any = Style("#", "-", "<", ">", "|", "|"),
             percent_style : str = "bar",
+            percent_position : str = "a",
             spinner : Animation | None = None,
             spinner_position : str = "a"
         ) -> None:
@@ -50,6 +51,7 @@ class ProgressBar(Format):
                 animation (Animation | None, optional): Animation object.
                 style (Style | None, optional): Progress bar style.
                 percent_style (str, optional): Progress bar percent style (num/bar/mix).
+                percent_position (str, optional): Progress bar percent position (b/a).
                 spinner (Animation | None, optional): Progress bar spinner.
                 spinner_position (str, optional): Progress bar spinner position (b/a).
         """
@@ -89,7 +91,7 @@ class ProgressBar(Format):
 
             return new_animation
 
-        if not animation :
+        if animation is None :
             animation = Animation(create_progress_bar(length + 1, style))
 
         self.length = length
@@ -97,6 +99,7 @@ class ProgressBar(Format):
         self.style : Style = style
         self.percent : int | float = 0
         self.percent_style : str = percent_style
+        self.percent_position : str = percent_position
         self.spinner : Animation | None = spinner
         self.spinner_position : str = spinner_position
 
@@ -140,9 +143,11 @@ class ProgressBar(Format):
                 str: ProgressBar string
         """
 
-        from jarbin_toolkit_console.ANSI.color import Color
-
         string : str = ""
+
+        if self.percent_position == "b" :
+            if self.percent_style in ["num", "mix"] :
+                string += f"{color[2]}{str(self.percent)}% "
 
         if self.spinner and self.spinner_position == "b" and not hide_spinner :
             string += self.spinner.__str__(color=color[1])
@@ -158,8 +163,9 @@ class ProgressBar(Format):
         if self.spinner and self.spinner_position == "a" and not hide_spinner :
             string += self.spinner.__str__(color=color[1])
 
-        if self.percent_style in ["num", "mix"] :
-            string += f" {color[2]}{str(self.percent)}%{Color(Color.C_RESET)}"
+        if self.percent_position == "a" :
+            if self.percent_style in ["num", "mix"] :
+                string += f" {color[2]}{str(self.percent)}%"
 
         return string
 
@@ -171,7 +177,7 @@ class ProgressBar(Format):
             Do a step of the animations.
         """
 
-        self.update(self.percent + 1)
+        self.update(int(round(self.percent + 1, 0)))
 
 
     def update(

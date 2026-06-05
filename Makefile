@@ -162,6 +162,8 @@ demo:
 	@# dependent #
 	@make -sC lib/console demo || true
 	@make -sC lib/jartest demo || true
+	@# parent #
+	@make -s demo || true
 	@echo -e "$(GREEN) [DEMO] Demo ran$(NC)"
 
 # ------------------------------------------------------------
@@ -192,6 +194,8 @@ clean-all:
 	@# dependent #
 	@make -sC lib/console clean || true
 	@make -sC lib/jartest clean || true
+	@# parent #
+	@make -s clean || true
 
 # ------------------------------------------------------------
 # SAFETY
@@ -199,8 +203,8 @@ clean-all:
 
 .PHONY: \
 	help \
-	install uninstall reinstall \
+	install uninstall reinstall install-all uninstall-all reinstall-all \
 	test test-all check check-all check-style \
 	demo \
 	info \
-	clean
+	clean clean-all

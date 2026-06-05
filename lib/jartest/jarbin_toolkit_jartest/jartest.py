@@ -12,8 +12,11 @@
 from __future__ import annotations
 
 import inspect
-from typing import Callable, Any
+
+from typing import Any
+from jarbin_toolkit_jartest.assertion import AssertionResult
 from jarbin_toolkit_jartest.benchmark import Benchmark
+from jarbin_toolkit_error import Error
 
 
 class JarTest:
@@ -27,9 +30,6 @@ class JarTest:
     def __init__(
             self
         ) -> None :
-        """
-            Log class constructor.
-        """
 
         self.tests : dict[str, Benchmark] = {}
 
@@ -38,48 +38,68 @@ class JarTest:
             self,
             **kwargs
         ) -> None :
-        """
-            Run and show results of JarTests.
-
-            Parameters:
-
-            n (int): amount of tests per function.
-        """
 
         from jarbin_toolkit_jartest.benchmark import Benchmark
-        from jarbin_toolkit_console import Console, ANSI
+        from jarbin_toolkit_console import Console, ANSI, Text
 
-        def show_tests(test_name: str):
+        def get_last_assertions(test: Benchmark) -> list[AssertionResult]:
+            if test.assertion is None:
+                return []
+            return test.assertion
 
-            test = self.tests[test_name]
+        def has_failed_assertions(test: Benchmark):
+            return any(not a.passed for a in get_last_assertions(test))
+
+        def format_assertions(test: Benchmark):
+            asserts = get_last_assertions(test)
+
+            if not asserts:
+                return "-".center(19)
+
+            failed = [a for a in asserts if not a.passed]
+
+            if not failed:
+                return "-".center(19)
+
+            a: AssertionResult = failed[0]
+
+            msg = (f"{a.message}: " if a.message else "") + f"{a.actual!r} {a.meta.get("operator", "?")} {a.expected!r} (failed)"
+
+            if len(msg) > (len(Console) - 10) - 100:
+                msg = (f"{a.message}: " if a.message else "") + f"A {a.meta.get("operator", "?")} B (failed)"
+
+            return f"{msg}"
+
+        def get_status(test: Benchmark):
+
+            if test.error is not None:
+                return "CRITIC"
+            elif has_failed_assertions(test):
+                return "FAIL"
+            else:
+                return "SUCCESS"
+
+        def show_tests(key: str):
+
+            test = self.tests[key]
 
             test(kw_n)
 
-            if test.error is not None:
-                status = "CRITIC"
-            elif test.assertion is not None:
-                status = "FAIL"
-            else:
-                status = "SUCCESS"
+            status = get_status(test)
 
-            Console.print(f"{app_c["DIM"]}{list(self.tests.keys()).index(test.name):03d}{app_c["RESET"]} " + f"{app_c[status]}{test.name.removeprefix("JT_")}", f"{app_c["DIM"]}({test_name}){app_c["RESET"]}")
+            Console.print(f"{app_c["DIM"]}{list(self.tests.keys()).index(key):03d}{app_c["RESET"]} " + f"{app_c[status]}{key.removeprefix("JT_")}", f"{app_c["DIM"]}({key}){app_c["RESET"]}")
 
-        def show_results(test: Benchmark):
+        def show_results(key: str, test: Benchmark):
 
-            if test.error is not None:
-                status = "CRITIC"
-            elif test.assertion is not None:
-                status = "FAIL"
-            else:
-                status = "SUCCESS"
+            status = get_status(test)
 
             Console.print(
-                (("╠═" if status == "CRITIC" else "├ ") if status != "SUCCESS" else "│ ") + app_c["DIM"] + f"{list(self.tests.keys()).index(test.name):03d}",
+                (("╠═" if status == "CRITIC" else "├ ") if status != "SUCCESS" else "│ ") + app_c["DIM"] + f"{list(self.tests.keys()).index(key):03d}",
                 (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + (f" {app_c[status]}{app_i[status]}{app_c["RESET"]} "),
                 (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + app_c[status] + f"{app_c["BOLD"] if status == "CRITIC" else ""}{f" {(test.name if len(test.name) < 50 else (test.name[:50] + "...")).removeprefix("JT_")} ".center(50, ("═" if status == "CRITIC" else ("─" if status == "FAIL" else " "))):40}",
                 (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + app_c["TIME"] + f"{(f" {("0.000s" if status == "CRITIC" or test.time == 0 else test.time_str)} ").center(15, ("═" if status == "CRITIC" else ("─" if status == "FAIL" else " "))):}",
                 (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + app_c["RUN"] + f"{test.test_amount:03}",
-                (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + app_c["ERROR"] + f"{(f" {app_c["BOLD"]}{test.error!r}" if status == "CRITIC" else (f"Assertion failed: \"{test.assertion if len(str(test.assertion)) > 0 else "No message"}\"" if status == "FAIL" else "-".center(19)))}",
+                (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + app_c["ERROR"] + f"{(f" {app_c["BOLD"]}{f"{test.error.error}: {test.error.message}" if isinstance(test.error, Error) else test.error}" if status == "CRITIC" else format_assertions(test))}",
                 (" │" if status == "SUCCESS" else ""),
                 separator=""
             )
@@ -108,7 +128,7 @@ class JarTest:
             Console.print(f"├{"─" * 5}┼{"─" * 5}┼{"─" * 52}┼{"─" * 17}┼{"─" * 5}┼{"─" * 21}┤")
 
             for name in self.tests:
-                show_results(self.tests[name])
+                show_results(name, self.tests[name])
 
             Console.print(f"└{"─" * 5}┴{"─" * 5}┴{"─" * 52}┴{"─" * 17}┴{"─" * 5}┴{"─" * 21}┘")
 
@@ -128,14 +148,24 @@ class JarTest:
         app_i : dict[str, str] = {
             "SUCCESS": "✔",
             "FAIL": "✘",
-            "CRITIC": "⛔",
+            "CRITIC": "☢"
         }
         term_width, term_height = Console.get_size()
         line = app_c["TITLE"] + ("-" * term_width)
         to_run = list(kwargs.get("test", self.tests.keys()))
         kw_n = int(kwargs.get("n", 1))
 
-        run_once()
+        try:
+            run_once()
+
+        except KeyboardInterrupt:
+            Console.print(ANSI.Line.clear_line() + Text.Format.apply(f"\n-- interrupt (^C) -- {app_i["CRITIC"]}", app_c["CRITIC"]))
+
+        except SystemExit:
+            Console.print(ANSI.Line.clear_line() + Text.Format.apply(f"\n-- exit (sys-exit) -- {app_i["FAIL"]}", app_c["FAIL"]))
+
+        else:
+            Console.print(ANSI.Line.clear_line() + Text.Format.apply(f"\n-- end -- {app_i["SUCCESS"]}", app_c["WHITE"]))
 
 
     def fetch(
@@ -144,13 +174,10 @@ class JarTest:
             prefix : str = "JT_",
             module : Any = None,
             name_prefix : str = ""
-        ) -> list[tuple[str, Callable[[], None]]] :
+        ) -> list[tuple[str, str, inspect.Signature | None]] :
         """
             Fetch all tests from JarTest object.
         """
-
-        from sys import modules
-        from inspect import Signature, signature
 
         def clean_dict(
             ) -> None :
@@ -167,7 +194,7 @@ class JarTest:
             try :
                 assert name.startswith(prefix)
                 assert callable(items[name])
-                assert len(signature(items[name]).parameters) == 0
+                assert len(inspect.signature(items[name]).parameters) == 0
 
             except AssertionError :
                 return False
@@ -178,7 +205,7 @@ class JarTest:
         def get_fail(
             ) -> None :
                 try :
-                    sign = signature(items[name])
+                    sign = inspect.signature(items[name])
 
                 except TypeError :
                     sign = None
@@ -198,7 +225,7 @@ class JarTest:
 
         items : dict[str, Any] = module.__dict__
         temp_dict : dict[str, Benchmark] = {}
-        failed_append : list[tuple[str, str, Signature | None]] = []
+        failed_append : list[tuple[str, str, inspect.Signature | None]] = []
 
         clean_dict()
 
@@ -224,7 +251,6 @@ class JarTest:
             _visited: set = None
     ) -> list[str]:
 
-        from sys import modules
         from types import ModuleType
 
         if _visited is None:

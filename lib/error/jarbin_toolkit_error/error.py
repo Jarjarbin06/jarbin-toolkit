@@ -159,7 +159,7 @@ class Error(Exception):
                 str: Error string
         """
 
-        return f"Error({repr(self.message)}, error={repr(self.error)}, link=({repr(self.link_data[0])}, {repr(self.link_data[1])}))"
+        return f"Error({repr(self.message)}, error={repr(self.error)}{f", link=({repr(self.link_data[0])}, {repr(self.link_data[1])})" if self.link else ""})"
 
 
 class ErrorLaunch(Error):
