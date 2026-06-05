@@ -25,13 +25,10 @@ class Get:
                 *args,
                 **kwargs
             ) -> tuple[str, str, Any]:
-
             out_buffer = io.StringIO()
             err_buffer = io.StringIO()
-
             with _redirect_stdout(out_buffer), _redirect_stderr(err_buffer):
                 ret = func(*args, **kwargs)
-
             return out_buffer.getvalue(), err_buffer.getvalue(), ret
 
         @staticmethod
@@ -65,7 +62,6 @@ class Get:
         def _run_cmd(
                 args: list[str]
             ) -> tuple[str, str, int]:
-
             proc = subprocess.run(
                 args,
                 capture_output=True,
@@ -77,7 +73,6 @@ class Get:
         def cmd_all_std(
                 *args: str
             ) -> tuple[str, str, int]:
-
             out, err, code = Get.Redirect._run_cmd(list(args))
             return out, err, code
 
@@ -85,7 +80,6 @@ class Get:
         def cmd_stdout(
                 *args: str
             ) -> tuple[str, int]:
-
             out, _, code = Get.Redirect._run_cmd(list(args))
             return out, code
 
@@ -93,6 +87,5 @@ class Get:
         def cmd_stderr(
                 *args: str
             ) -> tuple[str, int]:
-
             _, err, code = Get.Redirect._run_cmd(list(args))
             return err, code

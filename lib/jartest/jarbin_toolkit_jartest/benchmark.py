@@ -26,11 +26,11 @@ class Benchmark:
             test : Callable[[], None]
         ) -> None :
 
-        self._time : list[Optional[float | int]] = [None]
-        self._assertion : list[Optional[list[AssertionResult]]] = [None]
-        self._error : list[Exception | None] = [None]
-        self._traceback : list[Optional[list[Optional[TracebackType]]]] = [None]
-        self._result : list[Optional[Any]] = [None]
+        self._time : list[Optional[float | int]] = []
+        self._assertion : list[Optional[list[AssertionResult]]] = []
+        self._error : list[Exception | None] = []
+        self._traceback : list[Optional[list[Optional[TracebackType]]]] = []
+        self._result : list[Optional[Any]] = []
         self._test : Callable[[], None] = test
         self._test_name : str = test.__name__
         self._n : int = 0
@@ -44,20 +44,21 @@ class Benchmark:
             Get latest time.
         """
 
-        return self.time_to_str(self._time[-1])
+        return self.time_to_str(self.time)
 
 
     @property
     def time(
             self
-        ) -> Optional[float] :
+        ) -> Optional[float | int] :
         """
             Get latest time.
         """
 
-        if self._time is None or self._time == 0.0:
-            return None
-        return self._time[-1] / self._n
+        tmp_sum = 0.0
+        for n in range(self.test_amount):
+            tmp_sum += self._time[n]
+        return tmp_sum / self._n
 
 
     @property
@@ -68,7 +69,10 @@ class Benchmark:
             Get latest error.
         """
 
-        return self._error[-1]
+        for n in range(self.test_amount):
+            if self._error[n]:
+                return self._error[n]
+        return None
 
 
     @property
@@ -79,7 +83,10 @@ class Benchmark:
             Get latest error.
         """
 
-        return self._assertion[-1]
+        for n in range(self.test_amount):
+            if self._assertion[n]:
+                return self._assertion[n]
+        return None
 
 
     @property
@@ -90,18 +97,24 @@ class Benchmark:
             Get latest error.
         """
 
-        return self._traceback[-1]
+        for n in range(self.test_amount):
+            if self._traceback[n]:
+                return self._traceback[n]
+        return None
 
 
     @property
     def result(
             self
-        ) -> Optional[int] :
+        ) -> Optional[Any] :
         """
             Get latest result.
         """
 
-        return self._result[-1]
+        for n in range(self.test_amount):
+            if self._result[n]:
+                return self._result[n]
+        return None
 
     @property
     def test(
@@ -122,7 +135,17 @@ class Benchmark:
             Get test function.
         """
 
-        return self._test_name
+        return self._test_name.split("/")[-1]
+
+    @property
+    def test_amount(
+            self
+        ) -> int :
+        """
+            Get number of times tested.
+        """
+
+        return self._n
 
 
     @property
@@ -130,10 +153,10 @@ class Benchmark:
             self
         ) -> bool :
         """
-            Get number of times tested.
+            Get tested.
         """
 
-        return self._n != 0
+        return self.test_amount != 0
 
 
     def __call__(
@@ -171,8 +194,8 @@ class Benchmark:
         if self._n == 0:
             return (
                 f"Benchmark("
-                f"test={self._test_name!r}, "
-                f"tested={self._n!r}"
+                f"test={self.name!r}, "
+                f"tested={self.test_amount!r}"
                 f")"
             )
 
@@ -188,12 +211,12 @@ class Benchmark:
 
         return (
             f"Benchmark("
-            f"test={self._test_name!r}, "
-            f"time={self.time_to_str(self.time)}, "
+            f"test={self.name!r}, "
+            f"time={self.time_str}, "
             f"assertion={assertions}, "
             f"error={errors}, "
-            f"result={self._result!r}, "
-            f"tested={self._n!r}"
+            f"result={self.result!r}, "
+            f"tested={self.test_amount!r}"
             f")"
         )
 

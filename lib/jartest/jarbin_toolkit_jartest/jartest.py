@@ -79,15 +79,15 @@ class JarTest:
             else:
                 return "SUCCESS"
 
-        def show_tests(key: str):
+        def run_test(test_name: str):
 
-            test = self.tests[key]
+            test = self.tests[test_name]
 
             test(kw_n)
 
             status = get_status(test)
 
-            Console.print(f"{app_c["DIM"]}{list(self.tests.keys()).index(key):03d}{app_c["RESET"]} " + f"{app_c[status]}{key.removeprefix("JT_")}", f"{app_c["DIM"]}({key}){app_c["RESET"]}")
+            Console.print(f"{app_c["DIM"]}{list(self.tests.keys()).index(test_name):03d}{app_c["RESET"]} " + f"{app_c[status]}{self.tests[test_name].name.removeprefix("JT_")}", ANSI.Cursor.move_column(59).s, f"{app_c["DIM"]}({test_name}){app_c["RESET"]}")
 
         def show_results(key: str, test: Benchmark):
 
@@ -104,15 +104,15 @@ class JarTest:
                 separator=""
             )
 
-        def run_once():
+        def run_tests():
 
             Console.print(line)
             Console.print(app_c["TITLE"] + "─── JarTest ───".center(term_width))
             Console.print(line)
             Console.print(app_c["TITLE"] + "─── TESTS ───".center(112, "="))
 
-            for test_name in to_run:
-                show_tests(test_name)
+            for name in self.tests:
+                run_test(name)
 
             Console.print(app_c["TITLE"] + "─── RESULTS ───".center(112, "="))
 
@@ -152,11 +152,10 @@ class JarTest:
         }
         term_width, term_height = Console.get_size()
         line = app_c["TITLE"] + ("-" * term_width)
-        to_run = list(kwargs.get("test", self.tests.keys()))
         kw_n = int(kwargs.get("n", 1))
 
         try:
-            run_once()
+            run_tests()
 
         except KeyboardInterrupt:
             Console.print(ANSI.Line.clear_line() + Text.Format.apply(f"\n-- interrupt (^C) -- {app_i["CRITIC"]}", app_c["CRITIC"]))
