@@ -5,7 +5,6 @@
 #   make help
 #   make install
 #   make test
-#   make demo
 # ============================================================
 
 # ------------------------------------------------------------
@@ -46,8 +45,6 @@ help:
 	@echo -e "\tmake test\t\Test the package (pytest)"
 	@echo -e "\tmake check\t\tShow package info (PyPI)"
 	@echo ""
-	@echo -e "\tmake demo\t\tRun the demo"
-	@echo ""
 	@echo -e "\tmake clean\t\tClean cache and build files"
 	@echo -e "\tmake info\t\tShow package info"
 	@echo ""
@@ -86,14 +83,6 @@ check:
 	@echo -e "$(GREEN) [CHECK] Package checked$(NC)"
 
 # ------------------------------------------------------------
-# DEMOS
-# ------------------------------------------------------------
-
-demo:
-	@echo -e "$(YELLOW) [DEMO] Running full demo$(NC)"
-	@./$(SCRIPT_DIR)/full_demo && echo -e "$(GREEN) [DEMO] Full demo ran$(NC)" || echo -e "$(RED) [DEMO] Full demo ran with error$(NC)"
-
-# ------------------------------------------------------------
 # INFORMATION
 # ------------------------------------------------------------
 
@@ -119,6 +108,5 @@ clean:
 	help \
 	install uninstall reinstall \
 	test check \
-	demo \
 	info \
 	clean

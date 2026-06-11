@@ -1,261 +1,309 @@
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Epitech_logo.png" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Jarbin-Toolkit_logo.jpg" alt="error loading Jarbin-ToolKit Logo" width="49%" style="display:inline-block;">
 
-# Jarbin-ToolKit
+# 📦 Jarbin-ToolKit v1.1
 
-**Jarbin-ToolKit** is a lightweight Python utility library providing a modular set of tools for building robust CLI applications, managing configuration, logging, timed execution, console manipulation, and structured actions. Inspired by `epitech_console`, it emphasizes readability, flexibility, and cross-platform compatibility.
-
----
+> Modular deterministic Python toolkit aggregating structured utilities for execution, testing, timing, console rendering, and system interaction
 
 ---
 
-## Pages
+## 🔹 Short Description
 
-1. [API REFERENCE](API_REFERENCE.md)
+**Jarbin-ToolKit is a modular Python toolkit that aggregates multiple deterministic utility libraries into a unified structured environment, providing execution systems, testing frameworks, timing tools, console rendering, and system interaction modules.**
 
----
+It provides:
 
----
+* execution abstraction (`Action`)
+* structured testing (`JarTest`)
+* time measurement (`Time`)
+* console rendering utilities (`Console`)
+* error handling systems (`Error`)
+* system interaction tools (`Log`, `Config`)
 
-## Table of Contents
-
-1. [Library Overview](#library-overview)
-2. [Main Features](#main-features)
-3. [Tech Stack](#tech-stack)
-4. [Installation](#installation)
-5. [Library Components](#library-components)
-    - [Action](#action-stable)
-    - [Config](#config-stable)
-    - [Error](#error-stable)
-    - [Log](#log-stable)
-    - [Time](#time-stable)
-    - [Console](#console-stable)
-6. [Release Notes](#release-notes)
-7. [Useful Links](#useful-links)
+It is **not a monolithic framework**, but a **modular aggregation of independent deterministic libraries**.
 
 ---
 
----
+## 🔹 Authors
 
-## Library Overview
-
-Jarbin-ToolKit provides modular tools to improve the development of CLI utilities:
-
-- **Console rendering**: animations, progress bars, spinners, ANSI manipulation
-- **Configuration management**: easy-to-use INI files with typed getters/setters
-- **Action orchestration**: group and execute actions flexibly
-- **Logging**: formatted logs with `.jar-log` or `JSON` support
-- **Timing utilities**: precise stopwatch and delay tools
-- **Error handling**: structured errors with optional file/line links and terminal formatting
+* Nathan (Jarjarbin06)
+* Jarbin Studio
 
 ---
 
----
+## 🔹 License
 
-## Main Features
-
-- **Cross-platform support**: Linux & Windows
-- **Typed config management**: `.ini` style files with `get_int`, `get_float`, `get_bool`
-- **Structured logging**: JSON and custom `.jar-log` with formatted output
-- **Advanced console control**: cursor manipulation, ANSI styles, line clearing, progress bars
-- **Animation support**: spinners, sliders, and filling animations
-- **Precision timing**: `StopWatch` and `Time.wait` / `Time.pause`
-- **Extensible Action system**: group and execute multiple callable tasks
+GPL v3
 
 ---
 
----
+## 🔹 Target Audience
 
-## Tech Stack
+This toolkit is intended for:
 
-- **Python**: 3.11+
-- **Standard Library Dependencies**: `time`, `os`, `platform`, `configparser`, `datetime`, `sys`, `typing`
-- **External Dependencies**:
-  - `jarbin-toolkit-action`,
-  - `jarbin-toolkit-config`,
-  - `jarbin-toolkit-error`,
-  - `jarbin-toolkit-log`,
-  - `jarbin-toolkit-time`,
-  - `jarbin-toolkit-console`
+* Python developers building modular systems
+* developers designing deterministic execution pipelines
+* engineers creating internal tooling frameworks
+* projects requiring structured testing and benchmarking
+* developers needing unified low-level utilities
 
 ---
 
+## 🔹 Platform Support
+
+* Python ≥ 3.10
+* Standard library (core modules)
+* Internal modules:
+
+  * `jarbin_toolkit_action`
+  * `jarbin_toolkit_config`
+  * `jarbin_toolkit_console`
+  * `jarbin_toolkit_error`
+  * `jarbin_toolkit_jartest`
+  * `jarbin_toolkit_log`
+  * `jarbin_toolkit_time`
+
+* Linux / Windows / macOS compatible
+
 ---
 
-## Installation
+## 🔹 Purpose
+
+Jarbin-ToolKit aims to:
+
+* unify multiple independent utility libraries
+* provide a consistent deterministic API across modules
+* enable structured execution, testing, and debugging workflows
+* reduce boilerplate in tool-oriented Python projects
+
+It is **not a framework enforcing architecture**, but a **modular toolbox of composable systems**.
+
+---
+
+## 🔹 Key Features
+
+* Modular architecture (independent sub-libraries)
+* Deterministic execution systems
+* Integrated testing and benchmarking framework
+* High-resolution timing utilities
+* Console rendering and formatting system
+* Structured error handling
+* Output and subprocess capture utilities
+* Zero hidden state between modules
+
+---
+
+## 🔹 Architecture Overview
+
+```
+                 Jarbin-ToolKit
+                        │
+    ┌───────────────────┼───────────────────┐
+    ▼                   ▼                   ▼
+Action              Config              Console
+(execution)         (config manager)    (render/output control)
+
+    │                   │                   │
+    ▼                   ▼                   ▼
+Error               JarTest             Log
+(error)             (testing system)    (log manager)
+
+    │
+    ▼
+Time
+(time util)
+```
+
+---
+
+## 🔹 Core Concept
+
+Jarbin-ToolKit is based on **modular independence + deterministic composition**.
+
+Each module:
+
+* is **self-contained**
+* exposes a **clear API**
+* has **no hidden coupling**
+* can be used independently or combined
+
+---
+
+## 🔹 Project Structure
+
+```
+jarbin_toolkit/
+└── __init__.py
+```
+
+---
+
+## 🔹 Usage Section
+
+### 🔹 Combined Example
+
+```python
+from jarbin_toolkit import JarTest
+
+def JT_add():
+    result = 2 + 2
+    JarTest.Assertion.eq(result, 4)
+
+JTT_example = JarTest.JarTest()
+JTT_example()
+```
+
+---
+
+### 🔹 Execution + Timing
+
+```python
+from jarbin_toolkit import Action
+from jarbin_toolkit import Time
+
+def compute():
+    return sum(range(100000))
+
+a = Action.Action("compute", compute)
+
+sw = Time.StopWatch(True)
+result = a()
+print(sw.elapsed())
+```
+
+---
+
+### 🔹 Output Capture
+
+```python
+from jarbin_toolkit import JarTest
+
+def hello():
+    print("Hello")
+
+out, ret = JarTest.Get.Redirect.stdout(hello)
+print(out)
+```
+
+---
+
+## 🔹 Build / Installation
+
+### Installation
 
 ```bash
 pip install jarbin-toolkit
 ```
 
-Or to force reinstall the latest version:
+---
 
-```bash
-pip install --upgrade --force-reinstall jarbin-toolkit
-```
+## 🔹 Execution Behavior
+
+* All modules operate **independently**
+
+* No global orchestration layer
+
+* Execution is always:
+
+  * explicit
+  * deterministic
+  * user-controlled
+
+* No automatic background processes
 
 ---
 
----
+## 🔹 Memory Model
 
-## Library Components
+* Each module manages its own state:
 
-### Action (Stable)
+  * `Action` → callable + args
+  * `JarTest` → dictionary of benchmarks
+  * ...
 
-Provides tools for **deferring execution** and **grouping callable actions**.
-
-#### Classes
-
-- **`Action`** — Represents a single callable action
-
-```python
-from jarbin_toolkit_action import Action
-
-def greet():
-    print("Hello World!")
-
-a = Action("do greeting", greet)
-a()    # Executes the function
-```
-
-- **`Actions`** — Represents a collection of `Action` objects
-
-```python
-from jarbin_toolkit_action import Actions, Action
-
-actions = Actions()
-actions += Action("act1", lambda: print("Action 1"))
-actions += Action("act2", lambda: print("Action 2"))
-
-actions()    # Executes all actions
-print(len(actions))    # Number of actions
-```
+* No shared mutable global state between modules
 
 ---
 
-### Config (Stable)
+## 🔹 Design Philosophy
 
-Manages INI-style configuration files with typed getters and cross-platform support.
-
-```python
-from jarbin_toolkit_config import Config
-
-cfg = Config(path="./", data={"Section": {"key": "null"}})
-cfg.set("Section", "key2", 42)    # Set "key2" in "Section" to 42
-val = cfg.get_int("Section", "key2")    # Get value of "key2" in "Section"
-print(val) 
-cfg.delete()    # Delete the config file
-```
+* deterministic behavior over implicit logic
+* modular architecture over monolithic design
+* explicit execution over automation
+* composability over coupling
+* minimal abstraction overhead
 
 ---
 
-### Error (Stable)
+## 🔹 Current State
 
-Structured error system with terminal formatting and optional file/line linking.
+⚠️ Core modules are functional and integrated
 
-```python
-from jarbin_toolkit_error import ErrorConfig
+Status:
 
-try:
-    raise ErrorConfig("Invalid configuration detected", link=("config.ini", 10))
-except ErrorConfig as e:
-    print(e)    # Print the Error
-```
+* execution system implemented
+* testing framework implemented
+* timing utilities implemented
+* console system integrated
+* IO utilities implemented
 
----
+Limitations:
 
-### Log (Stable)
-
-Manages formatted logs in `.jar-log` or JSON format.
-
-```python
-from jarbin_toolkit_log import Log
-
-log = Log(path="./", file_name="mylog")
-log.log("INFO", "Init", "Log started")    # Add a log
-log.comment("This is a comment")    # Add a comment
-log.close()    # End the formating
-print(log.str_filtered("INFO"))    # Print the log file formated and filtered
-log.delete()
-```
+* no unified high-level orchestration API
+* no plugin system
+* no dependency injection system
 
 ---
 
-### Time (Stable)
+## 🔹 Limitations
 
-Precision timing utilities.
-
-```python
-from jarbin_toolkit_time import StopWatch, Time
-
-watch = StopWatch(True)
-Time.wait(1.5)
-print(watch.elapsed())    # Print elapsed time after 1.5 seconds waiting
-
-Time.pause('Press enter to continue...')    # Pause program until user press 'enter'
-```
+* modules are loosely coupled (no enforced integration)
+* no async ecosystem support
+* no configuration system
+* no global lifecycle manager
+* some modules depend on others implicitly (e.g. `JarTest` → `Time`)
 
 ---
 
-### Console (Stable)
+## 🔹 Extension / Contribution
 
-Provides **advanced terminal rendering** inspired by `epitech_console`.
+Possible extensions:
 
-```python
-from jarbin_toolkit_console import Console, Animation, ANSI
-
-pb = Animation.ProgressBar(20)
-for i in range(21):
-    pb.update(i*5)
-    Console.print(pb.render() + ANSI.Cursor.previous(), sleep=0.05)
-Console.print()
-```
+* unified module registry
+* plugin architecture
+* async-compatible modules
+* dependency graph execution system
+* configuration layer
 
 ---
 
----
+## 🔹 Notes
 
-## Release Notes
+Jarbin-ToolKit is designed as a **foundation toolkit**, not an end-user framework.
 
-### v1.1 - /
-- Doc Update (modules usage)
-- New Log release
-> ⚠️ In Development
+It is intended to:
 
-### v1.0 - 2026-02-05
-- All modules updated and released  
-> First official release
+* accelerate development of internal tools
+* provide reusable deterministic components
+* standardize utility patterns across projects
 
-### v0.2 - 2026-02-05
-- New Log release
-- Fixed all modules
-- JSON format support for logs  
-> Working library
-
-### v0.1 - 2026-01-22
-- Initial release
-- Stable modules: Action, Config, Error, Log, Time
-- Evolving module: Console
-- Added StopWatch, Time, structured error handling, logging, and Action orchestration  
-> ⚠️ Library not functional yet
+Each module can evolve independently while maintaining a consistent philosophy.
 
 ---
 
----
+## 🔹 Identity Summary
 
-## Useful Links
+Jarbin-ToolKit is:
 
-- [GitHub Repository](https://github.com/Jarjarbin06/jarbin-toolkit)  
-- [Issue Tracker](https://github.com/Jarjarbin06/jarbin-toolkit/issues)  
-- [ANSI Escape Codes Reference](https://en.wikipedia.org/wiki/ANSI_escape_code)
-
----
-
-> Jarbin-ToolKit [*GNU GPL*](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/LICENSE) 2026 [**JARJARBIN's STUDIO**](https://github.com/Jarjarbin06)
+* a modular Python utility ecosystem
+* a deterministic execution and testing toolkit
+* a structured collection of independent systems
+* a foundation layer for advanced tooling
 
 ---
 
-<small>
-Last update:
-**README** — *2026/02/12**
-</small>
+## 🔹 Final Rule
+
+> If a module interaction is not explicitly defined, it does not exist.
+
+---

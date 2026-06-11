@@ -1,223 +1,354 @@
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Epitech_logo.png" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Jarbin-Toolkit_logo.jpg" alt="error loading Jarbin-ToolKit Logo" width="49%" style="display:inline-block;">
 
-# **Jarbin-ToolKit:Error** v0.1.2.0
-<details>
-<summary>Latest versions</summary>
-🟠 UNDER DEVELOPMENT 🟠 None 🟠
+# 📦 Jarbin-ToolKit:Error v0.1.2.1
 
-🟢 RELEASED 🟢 v0.1.2.0 🟢
-</details>
-
-[![CodeQL Advanced](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/codeql.yml/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/codeql.yml)
-[![Python package tester](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/test-package.yml/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/test-package.yml)
-[![pages-build-deployment](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/pages/pages-build-deployment)
+> Structured exception hierarchy system providing deterministic error modeling, contextual linking, and extensible error classification.
 
 ---
 
----
+## 🔹 Short Description
 
-## Description
+**Jarbin-ToolKit Error is a structured exception framework that extends Python’s base exception system with contextual linking, categorized error types, and standardized formatting for deterministic error reporting.**
 
-`jarbin-toolkit:error` is a Python library designed to help you create enhanced terminal interfaces. It's improving the appearance and readability of your command-line interface with lightweight animations, colorful text, and neat formatting. If you want to make your terminal programs more readable and visually structured, this library is for you!
+It provides:
 
----
+* structured exception hierarchy
+* contextual file/line linking system
+* specialized error subclasses
+* standardized string formatting for logs and CLI output
 
----
-
-## Table of Contents
-
-1.  [Description](#Description)
-2.  [Features](#Features)
-3.  [Tech Stack](#Tech-Stack)
-4.  [Installation](#Installation)
-5.  [Usage](#Usage)
-6.  [Project Structure](#Project-Structure)
-7.  [API Reference](#API-Reference)
-8.  [Release Notes](#Release-Notes)
-9.  [License](#License)
-10. [Important Links](#Important-Links)
-11. [Footer](#Footer)
+It is **not a logging system**, but a **structured error abstraction layer over Python exceptions**.
 
 ---
 
----
+## 🔹 Authors
 
-## Features
-
-*   **Error Handling**:  Provides structured and readable error messages.
-
----
+* Nathan (Jarjarbin06)
+* Jarbin Studio
 
 ---
 
-## Tech-Stack
+## 🔹 License
 
-*   **Language**: Python - Chosen for its readability and versatility.
-*   **Frameworks**: Python -  Entirely implemented in Python.
-
----
+GPL v3
 
 ---
 
-## Installation
+## 🔹 Target Audience
 
-To begin , install `jarbin-toolkit:error`:
+This library is intended for:
 
-#### **Prerequisites**:
-
-Make sure you have Python `3.11` or newer installed on your computer.
-You can check your Python version by opening a terminal and typing `python --version`.
+* Python developers building structured frameworks
+* systems requiring standardized error reporting
+* CLI tools needing formatted exception output
+* modular applications with layered exception handling
 
 ---
 
-#### **Install from PyPI** (*recommended*):
-	
-Open your terminal and run this command:
-```bash
-pip install jarbin_toolkit_error
+## 🔹 Platform Support
+
+* Python ≥ 3.10
+* Standard library only (no external dependencies required)
+* Cross-platform (Linux / Windows / macOS)
+
+---
+
+## 🔹 Purpose
+
+Jarbin-ToolKit Error aims to:
+
+* provide structured and extensible exception types
+* standardize error representation across systems
+* attach contextual metadata (file / line references)
+* improve debugging clarity through formatted output
+
+It is **not a logging framework**, but a **deterministic exception modeling system built on Python exceptions**.
+
+---
+
+## 🔹 Key Features
+
+* Base `Error` exception class
+* Structured error subclasses (Type, Value, Import, Config, etc.)
+* Contextual linking via file and line metadata
+* ANSI-formatted terminal output
+* Standardized string and debug representations
+* Optional logging integration hook (disabled by default)
+
+---
+
+## 🔹 Architecture Overview
+
 ```
-   This will automatically download and install the library from PyPI.
-
----
-
-#### **Install from GitHub**:
-
-If you want the latest version directly from the source, you can install it using `git`:
-```bash
-git clone -b latest NONE
-make -C lib/jarbin_toolkit_error install
+Application Layer
+        │
+        ▼
+   Error(Exception)
+        │
+   ┌────┴────────────────────────────┐
+   ▼                                 ▼
+ErrorType                      ErrorValue
+ErrorImport                   ErrorConfig
+ErrorLog                     ErrorSetting
+ErrorAttribute              ErrorLaunch
+        │
+        ▼
+Context System (link_data)
+        │
+        ▼
+Formatted Output (ANSI CLI / logs)
 ```
-This downloads the code, then the `install` script handles the installation.
-These commands install the `jarbin-toolkit:error` package and its dependencies (datetime).
 
 ---
 
+## 🔹 Core Concept
+
+The system is built around a **single base exception class** extended by specialized error types.
+
+### Error
+
+Base exception class:
+
+```python
+Error(message, error, link)
+```
+
+Supports:
+
+* custom error message
+* error category label
+* optional file/line linkage
+* formatted terminal output
+
 ---
 
-## Usage
+### Error Subclasses
 
-Here are some examples demonstrating how to use `jarbin-toolkit:error`:
+Each subclass represents a semantic category:
+
+```python
+ErrorType
+ErrorValue
+ErrorImport
+ErrorConfig
+ErrorLog
+ErrorSetting
+ErrorAttribute
+ErrorLaunch
+```
+
+All inherit from `Error` and append a deterministic identifier.
 
 ---
 
+### Link System
+
+Optional contextual metadata:
+
+```python
+("file.py", 42)
+```
+
+Converted into:
+
+* `File "file.py"`
+* or `File "file.py", line 42`
+
+Used to improve debugging traceability.
+
 ---
 
-### Basic Error
+## 🔹 API / Function Documentation
+
+### 🔹 Error
+
+| Name          | Description                                       |
+|---------------|---------------------------------------------------|
+| `__init__`    | Initializes error with message, type, and link    |
+| `log`         | Optional logging hook (disabled in current state) |
+| `create_link` | Builds human-readable file/line reference         |
+| `__str__`     | ANSI-formatted runtime error output               |
+| `__repr__`    | Debug representation                              |
+
+---
+
+### 🔹 Error Subclasses
+
+| Class            | Description                  |
+|------------------|------------------------------|
+| `ErrorType`      | Type-related errors          |
+| `ErrorValue`     | Value-related errors         |
+| `ErrorImport`    | Import failures              |
+| `ErrorConfig`    | Configuration-related errors |
+| `ErrorLog`       | Logging system errors        |
+| `ErrorSetting`   | Runtime setting errors       |
+| `ErrorAttribute` | Attribute access errors      |
+| `ErrorLaunch`    | Initialization/boot errors   |
+
+---
+
+## 🔹 Project Structure
+
+```
+jarbin_toolkit_error/
+├── error.py
+└── __init__.py
+```
+
+---
+
+## 🔹 Usage Section
+
+### 🔹 Basic Error Raising
 
 ```python
 from jarbin_toolkit_error import Error
+
+raise Error("Something went wrong", error="RuntimeError")
 ```
 
 ---
 
----
+### 🔹 Structured Error Types
 
-## API-Reference
+```python
+from jarbin_toolkit_error import ErrorValue
 
-*   **Error**: Base exception class with formatted terminal output and optional file/line linking.
-    *   `Error(message: str = "an error occurred", *, error: str = "Error", link: tuple[str, int | None] | None = None)`
-        Create a custom error.
-        - `message`: detailed error message
-        - `error`: error type/title
-        - `link`: optional `(file, line)` reference to indicate origin
-
-        Automatically:
-        - Builds a formatted error link (if provided)
-        - Calls internal logging system (if enabled)
-    *   `create_link() -> None`
-        Build human-readable file/line reference string.
-    *   `log() -> None`
-        Log the error (implementation depends on global settings).
-    *   `lauch_error() -> str` (staticmethod)
-        Return formatted launch failure message (used when toolkit fails to initialize).
-    *   `__str__() -> str`
-        Return ANSI-formatted multi-line error message ready for terminal display.
-    *   `__repr__() -> str`
-        Return constructor-style representation of the Error object.
+raise ErrorValue("Invalid input provided")
+```
 
 ---
 
-### Specialized Error Types
-All subclasses inherit from `Error` and predefine their `error` type.
-*   **ErrorLaunch**
-    *   `ErrorLaunch(message: str = "an error occurred during the launch", *, link: tuple[str, int | None] | None = None)`
-        Raised when a launch/initialization error occurs.
-*   **ErrorImport**
-    *   `ErrorImport(message: str = "an error occurred during an import", *, link: tuple[str, int | None] | None = None)`
-        Raised when an import-related error occurs.
-*   **ErrorLog**
-    *   `ErrorLog(message: str = "an error occurred on/in a log file", *, link: tuple[str, int | None] | None = None)`
-        Raised for logging system failures.
-        Overrides `log()` to prevent recursive logging.
-*   **ErrorConfig**
-    *   `ErrorConfig(message: str = "an error occurred on/in a config file", *, link: tuple[str, int | None] | None = None)`
-        Raised for configuration file errors.
-*   **ErrorSetting**
-    *   `ErrorSetting(message: str = "an error occurred during setting's update", *, link: tuple[str, int | None] | None = None)`
-        Raised when settings update fails.
-*   **ErrorType**
-    *   `ErrorType(message: str = "an error occurred on a type", *, link: tuple[str, int | None] | None = None)`
-        Raised for type-related errors.
-*   **ErrorValue**
-    *   `ErrorValue(message: str = "an error occurred on a value", *, link: tuple[str, int | None] | None = None)`
-        Raised for invalid value errors.
+### 🔹 Contextual Linking
+
+```python
+raise ErrorType(
+    "Type mismatch detected",
+    link=("main.py", 42)
+)
+```
 
 ---
 
----
+### 🔹 Exception Display Output
 
-## Release-Notes
-* #### v0.1.1:
-    *   **[/]** 1rst real release
-* #### v0.1.0:
-    *   **[UPDATE]** `jarbin_toolkit_error` update (removed unlinked sub-modules)
-    *   **[INIT]** add `epitech_console` to jarbin-toolkit (renamed `jarbin_toolkit_error`)
+Errors are formatted with:
 
----
+* ANSI color coding
+* structured message blocks
+* optional file/line context
 
 ---
 
-## License
+## 🔹 Build / Installation
 
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/error/LICENSE) file for details.
+### Installation
 
----
-
----
-
-## Important-Links
-
-#### Files
-*   **Repository**: [https://github.com/Jarjarbin06/jarbin-toolkit](https://github.com/Jarjarbin06/jarbin-toolkit)
-*   **PyPI**: [https://pypi.org/project/jarbin-toolkit-error/](https://pypi.org/project/jarbin-toolkit-error/)
+```bash
+pip install jarbin-toolkit-error
+```
 
 ---
 
-#### Wiki
-*   **Wiki** (*take a look*): [https://github.com/Jarjarbin06/jarbin-toolkit/wiki](https://github.com/Jarjarbin06/jarbin-toolkit/wiki)
-*   **README** (*updated*):  [https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/error/README.md](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/error/README.md)
-*   **GitHub**: [https://jarjarbin06.github.io/jarbin-toolkit/](https://jarjarbin06.github.io/jarbin-toolkit/)
+## 🔹 Execution Behavior
+
+* Errors are **synchronous exceptions**
+* No automatic capture system
+* Logging is disabled by default (`log()` is a stub)
+* Context generation is optional and explicit
 
 ---
 
----
+## 🔹 Memory Model
 
-## Footer
+* Each `Error` stores:
 
-*   Repository: [https://github.com/Jarjarbin06/jarbin-toolkit](https://github.com/Jarjarbin06/jarbin-toolkit)
-*   Author: Nathan Jarjarbin
-*   Contact: nathan.amaraggi@epitech.eu
+  * message (str)
+  * error type label (str)
+  * link metadata (tuple or None)
+  * formatted link string
 
----
-
-⭐️ Like the project? Give it a star!
-🐛 Found a bug? Report it in the issues!
+No external state is required.
 
 ---
 
-<small>
-Last update : 
-**PACKAGE** — *2026/02/12* ; 
-**README** — *2026/02/12*
-</small>
+## 🔹 Design Philosophy
+
+* explicit error classification over generic exceptions
+* structured debugging context over raw messages
+* deterministic formatting for CLI consistency
+* extensible error taxonomy
+
+---
+
+## 🔹 Current State
+
+⚠️ Core error hierarchy is stable and functional
+
+Status:
+
+* base exception system implemented
+* structured subclasses implemented
+* link system implemented
+* formatted output implemented
+
+Limitations:
+
+* logging integration incomplete
+* no stack trace enhancement layer
+* ANSI formatting not configurable
+* no serialization support
+
+---
+
+## 🔹 Limitations
+
+* no integrated logging backend
+* no JSON export of errors
+* limited runtime introspection
+* ANSI formatting may not be portable in all environments
+* logging hooks currently disabled
+
+---
+
+## 🔹 Extension / Contribution
+
+Possible extensions:
+
+* structured logging integration
+* JSON / YAML error serialization
+* stack trace enrichment system
+* centralized error registry
+* log file integration layer
+
+---
+
+## 🔹 Notes
+
+This module is designed as a **deterministic error abstraction layer**, not a full logging or monitoring system.
+
+It prioritizes:
+
+* clarity
+* structured classification
+* debugging precision
+
+---
+
+## 🔹 Identity Summary
+
+Jarbin-ToolKit Error is:
+
+* a structured exception hierarchy
+* a deterministic error modeling system
+* a contextual debugging abstraction layer
+* a CLI-friendly formatted error framework
+
+---
+
+## 🔹 Final Rule
+
+> If an error is not classified or contextualized, it is not structured.
+
+---

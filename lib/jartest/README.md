@@ -1,31 +1,32 @@
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Epitech_logo.png" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Jarbin-Toolkit_logo.jpg" alt="error loading Jarbin-ToolKit Logo" width="49%" style="display:inline-block;">
 
----
+# 📦 Jarbin-ToolKit:JarTest v0.0.1.2
 
-# 📦 JarTest
-
-> Lightweight Python testing framework inspired by **pytest**, designed for structured, deterministic, and composable test execution.
+> Deterministic test execution framework based on structured assertions, benchmarking, and controlled test discovery
 
 ---
 
 ## 🔹 Short Description
 
-**JarTest is a minimal Python testing framework designed to define, organize, and execute test functions in a structured and deterministic way.**
+**Jarbin-ToolKit JarTest is a lightweight testing and benchmarking framework that executes Python test functions through structured `Benchmark` containers, records assertions, measures execution time, and aggregates results in a deterministic reporting system.**
 
-It provides a lightweight alternative to traditional testing tools, focusing on simplicity, explicit execution flow, and composability of test suites.
+It provides:
 
-* Python functions and modules
-* Libraries and APIs
-* CLI programs (optional use case, not a core constraint)
-* System behavior and integrations
+* automatic test discovery based on naming conventions
+* structured assertion tracking with contextual recording
+* execution benchmarking with precise timing
+* stdout/stderr capture utilities
+* hierarchical test execution and reporting
+
+It is **not a unit testing clone of pytest**, but a **deterministic execution and benchmarking harness with integrated assertion tracking**.
 
 ---
 
 ## 🔹 Authors
 
 * Nathan (Jarjarbin06)
-* EPITECH Project
+* Jarbin Studio
 
 ---
 
@@ -37,190 +38,105 @@ GPL v3
 
 ## 🔹 Target Audience
 
-This framework is designed for:
+This library is intended for:
 
-* Python developers building test suites
-* Students learning software testing principles
-* Developers needing lightweight testing infrastructure
-* Projects requiring explicit and controllable test execution
-* CLI / library / system testing
+* Python developers building custom test frameworks
+* developers requiring deterministic benchmarking pipelines
+* engineers designing structured validation systems
+* projects needing lightweight alternatives to full testing ecosystems
 
 ---
 
 ## 🔹 Platform Support
 
-* Python 3.11+
-* Cross-platform (Linux, macOS, Windows)
-* No external dependencies (standard library only)
+* Python ≥ 3.10
+* Standard library only (except internal Jarbin-ToolKit dependencies)
+* Linux / Windows / macOS compatible
 
 ---
 
 ## 🔹 Purpose
 
-JarTest provides a structured way to:
+Jarbin-ToolKit JarTest aims to:
 
-* Define test functions using plain Python
-* Register and collect tests automatically
-* Execute grouped test suites deterministically
-* Organize tests into modular components
-* Provide a lightweight alternative to pytest-like workflows
-* Support both unit testing and system/integration testing
+* execute test functions in isolated benchmarking environments
+* capture execution time with high-resolution measurement
+* collect structured assertion results during execution
+* aggregate errors, exceptions, and outputs in a unified model
+* provide deterministic reporting across multiple test runs
+
+It is **not a general-purpose testing framework**, but a **structured benchmarking and assertion orchestration layer over Python callables**.
 
 ---
 
 ## 🔹 Key Features
 
-* Automatic test collection (`fetch_tests()` / `fetch()`)
-* Test grouping via `JarTest` containers
-* Simple Python function-based tests
-* Deterministic execution order
-* Modular test suite architecture
-* Assertion utilities (`Assertion`)
-* Output and error redirection (`stdout` & `stderr`)
-* Optional system interaction support (CLI, subprocess, etc.)
-* Lightweight design (no dependencies other than `Jarbin-ToolKit`)
-* Multiple independent test suites support
+* automatic test discovery via `JT_` prefix
+* benchmark execution wrapper (`Benchmark`)
+* assertion system with contextual collection
+* execution timing with adaptive formatting (ns → s → min)
+* stdout/stderr capture via `Get.Redirect`
+* CLI-style test runner with formatted terminal output
+* recursive test collection across modules
 
 ---
 
 ## 🔹 Architecture Overview
 
 ```
-            ┌────────────────────────┐
-            │    Test Functions      │
-            │   (JT_xxx methods)     │
-            └──────────┬─────────────┘
-                       │
-                       ▼
-            ┌────────────────────────┐
-            │       JarTest()        │
-            │   (Test Collector)     │
-            └──────────┬─────────────┘
-                       │
-             fetch_tests() / fetch()
-                       │
-                       ▼
-            ┌────────────────────────┐
-            │  Registered Test List  │
-            │    [callable tests]    │
-            └──────────┬─────────────┘
-                       │
-                       ▼
-            ┌────────────────────────┐
-            │  Sequential Execution  │
-            │   deterministic run    │
-            └──────────┬─────────────┘
-                       │
-                       ▼
-            ┌────────────────────────┐
-            │  Assertion Validation  │
-            │  pass / fail behavior  │
-            └────────────────────────┘
+User Test Module
+      │
+      ▼
+JarTest.fetch()
+      │
+      ▼
+Benchmark(test_function)
+      │
+      ├───────────────┐
+      ▼               ▼
+StopWatch        AssertionContext
+      │               │
+      ▼               ▼
+Execution        AssertionResult list
+      │
+      ▼
+Result Aggregation
+      │
+      ▼
+JarTest.run()
+      │
+      ▼
+Console Reporting Layer
 ```
 
 ---
 
 ## 🔹 Core Concept
 
-### Test Definition Model
-
-Each test is a **plain Python function**:
-
-```python
-def JT_example():
-    Assertion.eq(1, 1)
-```
-
-No decorators required. No magic runtime injection.
+The system is based on four core entities:
 
 ---
 
-### Test Collection Model
+### Benchmark
 
-Tests are grouped using:
+Encapsulates a test execution unit:
 
 ```python
-JTT_example = JarTest()
-JTT_example.fetch()
+Benchmark(test_function)
 ```
 
-This automatically registers functions following naming rules (typically `JT_` prefix convention).
+Responsible for:
+
+* executing test functions
+* measuring execution time
+* capturing exceptions and assertion failures
+* storing returned values
 
 ---
 
-### Master Test Collection
+### Assertion System
 
-JarTest can be grouped for single execution using:
-
-```python
-JTT_main = JarTest()
-JTT_main.fetch_tests()
-```
-
-This automatically registers JarTest objects inside the file or imported from another.
-
----
-
-### Execution Model
-
-1. Define test functions
-2. Register them via `JarTest`
-3. Collect tests (`fetch()`)
-4. Execute suite
-5. Validate assertions
-
----
-
-## 🔹 API Overview
-
-### 🧪 JarTest
-
-#### Constructor
-
-```python
-JarTest()
-```
-
-Creates a new independent test suite container.
-
----
-
-#### Test Collection
-
-```python
-fetch()
-```
-
-* Scans and registers test functions
-* Adds them to execution queue
-
-```python
-fetch_tests()
-```
-
-* Scans and registers test collections
-
----
-
-#### Execution
-
-```python
-run() -> None | dict
-```
-
-* Executes all registered tests
-* Runs sequentially
-* Uses assertion system for validation
-
-> [!NOTE]  
-> While run don't have clear args, there are actually some taken in count (`*kwargs`)
-> - `n`: int (default `1`) - How many times will each test run
-
----
-
-## 🔹 Assertion System
-
-### Assertion
+Assertions are recorded during execution using a context variable:
 
 ```python
 Assertion.eq(a, b)
@@ -229,159 +145,285 @@ Assertion.contain(a, b)
 Assertion.ncontain(a, b)
 ```
 
-Provides simple deterministic validation helpers.
+Each assertion produces an `AssertionResult`:
 
-Designed for:
+| Field    | Description              |
+|----------|--------------------------|
+| name     | assertion type           |
+| passed   | boolean result           |
+| values   | input tuple              |
+| expected | expected value           |
+| actual   | observed value           |
+| meta     | operator + type metadata |
 
-* readability
-* minimal boilerplate
-* explicit failure points
-* assertions arguments and results registering
+Assertions are automatically collected via `AssertionContext`.
 
 ---
 
-## 🔹 Usage
+### JarTest
 
-### Basic Example
+Main orchestrator:
 
 ```python
-from jarbin_toolkit_jartest import JarTest, Assertion
-
-def JT_add():
-    Assertion.eq(2 + 2, 4)
-
-def JT_sub():
-    Assertion.eq(5 - 3, 2)
-
-JTT_my_tests = JarTest()
-JTT_my_tests.fetch()
-JTT_my_tests.run()
+JarTest.fetch()
+JarTest.run()
 ```
 
----
+Responsible for:
 
-### Example with external module testing
-
-```python
-from jarbin_toolkit_jartest import JarTest, Assertion
-import my_module
-
-def JT_function():
-    result = my_module.compute(2, 3)
-    Assertion.eq(result, 5)
-
-JTT_my_tests = JarTest()
-JTT_my_tests.fetch()
-JTT_my_tests.run()
-```
+* discovering test functions
+* wrapping them into benchmarks
+* executing batches of tests
+* generating structured CLI reports
 
 ---
 
-### Example (CLI usage is optional, not required)
+### Get Utility
 
-```python
-from jarbin_toolkit_jartest import JarTest, Assertion, Get
-def JT_cli():
-    out, err, code = Get.Redirect.cmd_all_std("my_program", "--help")
+Provides execution introspection:
 
-    Assertion.eq(code, 0)
-    Assertion.contain("usage", out)
-
-JTT_my_tests = JarTest()
-JTT_my_tests.fetch()
-JTT_my_tests.run()
-```
+* stdout/stderr capture
+* subprocess execution wrapper
+* controlled output redirection
 
 ---
 
-## 🔹 Memory Model
-
-* Tests are plain Python functions
-* No hidden runtime state manipulation
-* Assertions raise controlled failures
-* Execution is sequential and deterministic
+## 🔹 API / Function Documentation
 
 ---
 
-## 🔹 Installation
+### 🔹 Assertion
 
-### From PyPI (if available)
-
-```bash
-pip install jarbin_toolkit_jartest
-```
-
----
-
-### From source
-
-Clone the GitHub repository
-
-```bash
-make -C lib/jarbin_toolkit_jartest install
-```
+| Method     | Description                            |
+|------------|----------------------------------------|
+| `eq`       | equality check with type enforcement   |
+| `neq`      | inequality check with type enforcement |
+| `contain`  | membership check                       |
+| `ncontain` | non-membership check                   |
 
 ---
 
-## 🔹 Build System
+### 🔹 Benchmark
 
-```bash
-make install
-make uninstall
-make reinstall
-```
-
----
-
-## 🔹 Design Philosophy
-
-* Minimal and explicit testing model
-* No decorator-heavy syntax
-* Deterministic execution order
-* Easy debugging of test flows
-* Lightweight alternative to pytest
-* Flexible usage (unit, integration, system tests)
+| Method          | Description              |
+|-----------------|--------------------------|
+| `__call__(n)`   | executes test n times    |
+| `benchmark()`   | static execution wrapper |
+| `time_to_str()` | formats execution time   |
 
 ---
 
-## 🔹 Current State
+### 🔹 JarTest
 
-⚠️ The framework is **stable and functional but minimal**
-
-Status:
-
-* Test collection system implemented
-* Assertion system implemented
-* Multi-suite support possible
-* Sequential execution model
-
-Known limitations:
-
-* No parallel execution
-* No test discovery UI
-* No built-in reporting dashboard
-* No fixtures system (yet)
-* No mocking framework included
+| Method          | Description                            |
+|-----------------|----------------------------------------|
+| `fetch()`       | discovers test functions in module     |
+| `fetch_tests()` | recursive module test collection       |
+| `run()`         | executes all benchmarks with reporting |
+| `__call__()`    | fetch + run shortcut                   |
 
 ---
 
-## 🔹 File Structure
+### 🔹 Get
+
+#### Redirect: 
+
+| Method          | Description                                |
+|-----------------|--------------------------------------------|
+| `stdout()`      | capture stdout + return from function      |
+| `stderr()`      | capture stderr + return from function      |
+| `all_std()`     | capture stdout + stderr + return           |
+| `cmd_stdout()`  | run shell command (stdout + exit)          |
+| `cmd_stderr()`  | run shell command (stderr + exit)          |
+| `cmd_all_std()` | run shell command (stdout + stderr + exit) |
+
+---
+
+## 🔹 Project Structure
 
 ```
 jarbin_toolkit_jartest/
-├── jar_test.py
 ├── assertion.py
-├── collector.py
+├── benchmark.py
+├── get.py
+├── jartest.py
 └── __init__.py
 ```
 
 ---
 
+## 🔹 Usage Section
+
+---
+
+### 🔹 Defining a Test
+
+```python
+from jarbin_toolkit_jartest import Assertion
+
+def JT_example():
+    Assertion.eq(2 + 2, 4)
+    Assertion.contain("a", "abc")
+```
+
+---
+
+### 🔹 Running Tests
+
+> Auto test fetch & run
+
+```python
+from jarbin_toolkit_jartest import JarTest
+
+JTT_example = JarTest()
+JTT_example()
+```
+
+---
+
+### 🔹 Capturing Output
+
+```python
+from jarbin_toolkit_jartest import Get, Assertion
+
+def foo():
+    print("bar")
+
+def JT_example():
+    out, ret = Get.Redirect.stdout(foo)
+    Assertion.contain("bar", out, '"bar" not printed')
+```
+
+### 🔹 Full test
+
+> Manual test fetch & run
+
+```python
+from jarbin_toolkit_jartest import JarTest, Get, Assertion
+
+def foo(message: str):
+    print("msg = " + message)
+
+def JT_failing():
+    out, ret = Get.Redirect.stdout(foo)
+    Assertion.contain("...", out, 'missing argument')
+
+def JT_valid():
+    out, ret = Get.Redirect.stdout(foo, "hello world")
+    Assertion.contain("hello world", out)
+
+JTT_example = JarTest()
+JTT_example.fetch()
+JTT_example.run()
+```
+
+---
+
+## 🔹 Execution Behavior
+
+* Each test runs inside a `Benchmark` wrapper
+* Assertions are collected via `contextvars`
+* Execution timing is measured using `StopWatch`
+* Exceptions are captured but do not stop reporting unless fatal
+* Multiple test runs accumulate results
+
+---
+
+## 🔹 Memory Model
+
+* `AssertionResult` objects are stored per test execution
+* `Benchmark` maintains:
+
+  * time history
+  * error history
+  * assertion history
+  * traceback history
+* `JarTest` maintains a registry of benchmarks indexed by name
+
+No implicit global state outside controlled context variables.
+
+---
+
+## 🔹 Design Philosophy
+
+* deterministic execution over dynamic behavior
+* structured assertion tracking instead of boolean-only tests
+* explicit benchmarking integration
+* modular separation of execution, assertion, and reporting
+* reproducible test runs
+
+---
+
+## 🔹 Current State
+
+⚠️ Core test execution and benchmarking system is functional
+
+Status:
+
+* assertion system implemented
+* benchmark engine implemented
+* test discovery implemented
+* CLI reporting implemented
+* stdout/stderr capture implemented
+
+Limitations:
+
+* no parallel test execution
+* no test isolation sandboxing
+* limited assertion set
+* no fixtures system
+* no mocking framework
+
+---
+
+## 🔹 Limitations
+
+* synchronous execution only
+* no dependency injection system
+* no advanced test lifecycle hooks
+* no distributed execution
+* console output tightly coupled to terminal UI system
+
+---
+
+## 🔹 Extension / Contribution
+
+Possible extensions:
+
+* fixture system for reusable test contexts
+* parallel benchmark execution
+* richer assertion library
+* mocking utilities
+* JUnit/XML export support
+* test filtering and tagging system
+
+---
+
 ## 🔹 Notes
 
-* Inspired by pytest-style workflows
-* Designed for clarity over complexity
-* Works well for student and project-level testing systems
-* Can scale into more advanced frameworks if extended
+JarTest is designed as a **deterministic hybrid between testing and benchmarking**, not a strict replacement for pytest.
+
+It prioritizes:
+
+* execution traceability
+* performance measurement
+* structured assertion metadata
+
+---
+
+## 🔹 Identity Summary
+
+Jarbin-ToolKit JarTest is:
+
+* a deterministic test execution engine
+* a structured assertion tracking system
+* a benchmarking-oriented testing framework
+* a lightweight test orchestration layer
+
+---
+
+## 🔹 Final Rule
+
+> If a test behavior is not executed inside Benchmark, it is not part of the system.
 
 ---

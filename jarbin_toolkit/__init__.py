@@ -14,6 +14,7 @@ import jarbin_toolkit_console as Console
 import jarbin_toolkit_error as Error
 import jarbin_toolkit_log as Log_parent
 import jarbin_toolkit_time as Time
+import jarbin_toolkit_jartest as JarTest
 from collections.abc import Callable
 from typing import Any, TextIO, Optional
 import sys
@@ -124,15 +125,15 @@ flush : Callable[[TextIO], None] = Console.Console.flush
 stdin : TextIO = Console.Console.stdin
 stdout : TextIO = Console.Console.stdout
 stderr : TextIO = Console.Console.stderr
-critic : Callable[[Any, bool], Any] = Console.Text.Format.critic
-error : Callable[[Any, bool], Any] = Console.Text.Format.error
-warning : Callable[[Any, bool], Any] = Console.Text.Format.warning
-valid : Callable[[Any, bool], Any] = Console.Text.Format.valid
-debug : Callable[[Any, bool], Any] = Console.Text.Format.debug
-info : Callable[[Any, bool], Any] = Console.Text.Format.info
-bold : Callable[[Any, bool], Any] = Console.Text.Format.bold
-underline : Callable[[Any, bool], Any] = Console.Text.Format.underline
-color : Callable[[str, int, Any], Console.ANSI.ANSI] = Console.ANSI.Color.color
+critic : Callable[[Any], [bool], Any] = Console.Text.Format.critic
+error : Callable[[Any], [bool], Any] = Console.Text.Format.error
+warning : Callable[[Any], [bool], Any] = Console.Text.Format.warning
+valid : Callable[[Any], [bool], Any] = Console.Text.Format.valid
+debug : Callable[[Any], [bool], Any] = Console.Text.Format.debug
+info : Callable[[Any], [bool], Any] = Console.Text.Format.info
+bold : Callable[[Any], Any] = Console.Text.Format.bold
+underline : Callable[[Any], Any] = Console.Text.Format.underline
+color : Callable[[str | int | Any], Console.ANSI.ANSI] = Console.ANSI.Color.color
 up : Callable[[int], Console.ANSI.ANSI] = Console.ANSI.Cursor.up
 down : Callable[[int], Console.ANSI.ANSI] = Console.ANSI.Cursor.down
 left : Callable[[int], Console.ANSI.ANSI] = Console.ANSI.Cursor.left
@@ -146,6 +147,7 @@ __all__ : list[str] = [
     'Config',
     'Console',
     'Error',
+    'JarTest',
     'Log',
     'Time',
     'get_info',

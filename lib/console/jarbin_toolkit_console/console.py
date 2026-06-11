@@ -10,7 +10,7 @@
 
 
 from builtins import type
-from typing import Any, TextIO
+from typing import Any, TextIO, Self
 from jarbin_toolkit_console.System.setting import Setting
 
 
@@ -62,6 +62,23 @@ class ConsoleMeta(type):
             size = 100
 
         return size
+
+
+    def __enter__(
+            cls
+        ) -> Self:
+        Console.enter_alternate_screen(True)
+        return cls
+
+
+    def __exit__(
+            cls,
+            exc_type,
+            exc_val,
+            exc_tb
+        ) -> bool:
+        Console.exit_alternate_screen(True)
+        return False
 
 
 class Console(metaclass=ConsoleMeta):
@@ -292,7 +309,7 @@ class Console(metaclass=ConsoleMeta):
             stream : TextIO | Any | None = None,
         ) -> None:
         """
-            Flush console output.
+            Flush console output.\033[?1049l
 
             Parameters:
                 stream (Any, optional) : Stream object to be flushed (generally stdin, stdout and stderr).
@@ -304,6 +321,7 @@ class Console(metaclass=ConsoleMeta):
             stream = Console.stdout
 
         stream.flush() # pragma: no cover
+
 
     @staticmethod
     def enter_alternate_screen(
@@ -322,6 +340,7 @@ class Console(metaclass=ConsoleMeta):
         Console.flush(Console.stdout)
         if hide_cursor:
             print(Cursor.hide(), end="")
+
 
     @staticmethod
     def exit_alternate_screen(
@@ -359,7 +378,7 @@ class Console(metaclass=ConsoleMeta):
 
 
     @_classproperty
-    def stderr(cls):
+    def stderr():
 
         import sys
 

@@ -1,214 +1,345 @@
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Epitech_logo.png" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Jarbin-Toolkit_logo.jpg" alt="error loading Jarbin-ToolKit Logo" width="49%" style="display:inline-block;">
 
-# **Jarbin-ToolKit:Config** v0.1.2.1
-<details>
-<summary>Latest versions</summary>
-🟠 UNDER DEVELOPMENT 🟠 None 🟠
+# 📦 Jarbin-ToolKit:Config v0.1.2.2
 
-🟢 RELEASED 🟢 v0.1.2.1 🟢
-</details>
-
-[![CodeQL Advanced](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/codeql.yml/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/codeql.yml)
-[![Python package tester](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/test-package.yml/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/test-package.yml)
-[![pages-build-deployment](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/pages/pages-build-deployment)
+> Deterministic configuration management system based on structured INI file abstraction over Python ConfigParser
 
 ---
 
----
+## 🔹 Short Description
 
-## Description
+**Jarbin-ToolKit Config is a lightweight configuration management layer that provides deterministic read/write access to INI-based configuration files through a structured object-oriented interface.**
 
-`jarbin-toolkit:config` is a Python library designed to help you create enhanced terminal interfaces. It's improving the appearance and readability of your command-line interface with lightweight animations, colorful text, and neat formatting. If you want to make your terminal programs more readable and visually structured, this library is for you!
+It enables:
 
----
+* structured configuration creation and persistence
+* typed retrieval of configuration values
+* safe modification of configuration entries
+* filesystem-backed deterministic state management
 
----
-
-## Table of Contents
-
-1.  [Description](#Description)
-2.  [Features](#Features)
-3.  [Tech Stack](#Tech-Stack)
-4.  [Installation](#Installation)
-5.  [Usage](#Usage)
-6.  [Project Structure](#Project-Structure)
-7.  [API Reference](#API-Reference)
-8.  [Release Notes](#Release-Notes)
-9.  [License](#License)
-10. [Important Links](#Important-Links)
-11. [Footer](#Footer)
+It is **not a database system**, but a **lightweight deterministic file-based configuration abstraction layer**.
 
 ---
 
----
+## 🔹 Authors
 
-## Features
-
-*   **Timers**: Use the built-in stopwatch to measure how long parts of your code take to run.
-
----
+* Nathan (Jarjarbin06)
+* Jarbin Studio
 
 ---
 
-## Tech-Stack
+## 🔹 License
 
-*   **Language**: Python - Chosen for its readability and versatility.
-*   **Frameworks**: Python -  Entirely implemented in Python.
-
----
+GPL v3
 
 ---
 
-## Installation
+## 🔹 Target Audience
 
-To begin , install `jarbin-toolkit:config`:
+This library is intended for:
 
----
-
----
-
-#### **Prerequisites**:
-
-Make sure you have Python `3.11` or newer installed on your computer.
-You can check your Python version by opening a terminal and typing `python --version`.
+* Python developers requiring persistent configuration systems
+* system-level tool developers
+* CLI application designers
+* automation and workflow engineers
+* projects requiring deterministic file-based state storage
 
 ---
 
-#### **Install from PyPI** (*recommended*):
-	
-Open your terminal and run this command:
-```bash
-pip install jarbin_toolkit_config
+## 🔹 Platform Support
+
+* Python ≥ 3.10
+* Standard library only (`configparser`, `os`, `platform`)
+* Cross-platform support:
+
+  * Linux
+  * Windows
+  * macOS
+
+---
+
+## 🔹 Purpose
+
+Jarbin-ToolKit Config aims to:
+
+* provide structured access to INI configuration files
+* abstract Python’s `ConfigParser` into a deterministic interface
+* ensure persistent and reproducible configuration state
+* unify read/write/config lifecycle handling
+
+It is **not a database abstraction layer**, but a **file-based deterministic configuration system**.
+
+---
+
+## 🔹 Key Features
+
+* INI-based configuration management
+* automatic file creation and initialization
+* typed getters (`str`, `int`, `float`, `bool`)
+* persistent write-through updates
+* static existence validation
+* platform-aware path normalization
+
+---
+
+## 🔹 Architecture Overview
+
 ```
-   This will automatically download and install the library from PyPI.
-
----
-
-#### **Install from GitHub**:
-
-If you want the latest version directly from the source, you can install it using `git`:
-```bash
-git clone -b latest NONE
-make -C lib/jarbin_toolkit_config install
+User Code
+   │
+   ▼
+Config(path, file_name, data)
+   │
+   ▼
+ConfigParser Layer
+   │
+   ├───────────────┐
+   ▼               ▼
+Read Mode      Write Mode
+   │               │
+   ▼               ▼
+Memory State   File System (.ini)
+   │
+   ▼
+Typed Access API (get / set)
 ```
-This downloads the code, then the `install` script handles the installation.
-These commands install the `jarbin-toolkit:config` package and its dependencies (datetime).
 
 ---
 
+## 🔹 Core Concept
+
+The system is based on a **dual-state model**:
+
+### 1. In-Memory Configuration
+
+Stored using Python `ConfigParser`:
+
+```python
+self.config
+```
+
+### 2. Persistent File State
+
+Stored as an `.ini` file:
+
+```python
+path/file_name
+```
+
 ---
 
-## Usage
+## 🔹 Configuration Lifecycle
 
-Here are some examples demonstrating how to use `jarbin-toolkit:config`:
+### Creation
+
+If file does not exist:
+
+* file is created
+* empty or provided structure is written
+
+### Loading
+
+If file exists:
+
+* content is read into `ConfigParser`
+* memory state is synchronized
+
+### Persistence
+
+Every modification is immediately written to disk.
 
 ---
 
+## 🔹 API / Function Documentation
+
+### 🔹 Config
+
+| Name        | Description                                                          |
+|-------------|----------------------------------------------------------------------|
+| `__init__`  | Initializes configuration file and loads or creates persistent state |
+| `set`       | Updates a configuration value and persists it                        |
+| `get`       | Retrieves a value with optional type casting                         |
+| `get_bool`  | Retrieves a boolean value                                            |
+| `get_int`   | Retrieves an integer value                                           |
+| `get_float` | Retrieves a float value                                              |
+| `delete`    | Removes configuration file from filesystem                           |
+| `exist`     | Static check for configuration file existence and validity           |
+| `__repr__`  | Debug representation of configuration object                         |
+
 ---
 
-### Basic Config
+## 🔹 Project Structure
+
+```
+jarbin_toolkit_config/
+├── config.py
+└── __init__.py
+```
+
+---
+
+## 🔹 Usage Section
+
+### 🔹 Create Configuration
 
 ```python
 from jarbin_toolkit_config import Config
+
+cfg = Config(
+    path="./config",
+    data={
+        "database": {
+            "host": "localhost",
+            "port": "5432"
+        }
+    },
+    file_name="app.ini"
+)
 ```
 
 ---
 
----
+### 🔹 Set Value
 
-## API-Reference
-
-*   **Config**: INI configuration file manager built on `configparser`.
-    *   `Config(path: str, data: dict | None = None, *, file_name: str = "config.ini")`
-        Create a new config file if it does not exist, otherwise read it.
-        - `path`: directory where the config file is located
-        - `data`: optional dictionary used to initialize file content (section → key/value pairs)
-        - `file_name`: name of the configuration file (default: `config.ini`)
-        - Automatically adapts path separators depending on OS (Windows/Linux)
-    *   `set(section: str, option: str, data: Any) -> None`
-        Set or update a value in the config file.
-        - `section`: section name
-        - `option`: key name
-        - `data`: value to store (converted to string)
-        - Immediately writes changes to disk
-    *   `get(section: str, option: str, wanted_type: type = str) -> Any`
-        Retrieve a value from the config file.
-        - `section`: section name
-        - `option`: key name
-        - `wanted_type`: type conversion applied to the result (default: `str`)
-        - Returns the converted value
-    *   `get_bool(section: str, option: str) -> bool`
-        Retrieve a value as boolean.
-    *   `get_int(section: str, option: str) -> int`
-        Retrieve a value as integer.
-    *   `get_float(section: str, option: str) -> float`
-        Retrieve a value as float.
-    *   `delete(cached: bool = False) -> bool`
-        Delete the config file from disk.
-        - `cached`: if `True`, keeps config data in memory
-        - Returns `True` if successfully deleted, `False` otherwise
-    *   `exist(path: str, *, file_name: str = "config.ini") -> bool` (staticmethod)
-        Check whether a config file exists and is not empty.
-        - `path`: directory path
-        - `file_name`: name of config file
-        - Returns `True` if file exists and contains data, `False` otherwise
-    *   `__repr__() -> str`
-        Return constructor-style representation of the Config object.
+```python
+cfg.set("database", "user", "admin")
+```
 
 ---
 
----
+### 🔹 Get Value
 
-## Release-Notes
-* #### v0.1.1:
-    *   **[/]** 1rst real release
-* #### v0.1.0:
-    *   **[UPDATE]** `jarbin_toolkit_config` update (removed unlinked sub-modules)
-    *   **[INIT]** add `epitech_console` to jarbin-toolkit (renamed `jarbin_toolkit_config`)
+```python
+host = cfg.get("database", "host")
+port = cfg.get_int("database", "port")
+```
 
 ---
 
----
+### 🔹 Boolean / Float Access
 
-## License
-
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/config/LICENSE) file for details.
-
----
-
----
-
-## Important-Links
-
-#### Files
-*   **Repository**: [https://github.com/Jarjarbin06/jarbin-toolkit](https://github.com/Jarjarbin06/jarbin-toolkit)
-*   **PyPI**: [https://pypi.org/project/jarbin-toolkit-config/](https://pypi.org/project/jarbin-toolkit-config/)
+```python
+enabled = cfg.get_bool("feature", "enabled")
+ratio = cfg.get_float("config", "ratio")
+```
 
 ---
 
-#### Wiki
-*   **Wiki** (*take a look*): [https://github.com/Jarjarbin06/jarbin-toolkit/wiki](https://github.com/Jarjarbin06/jarbin-toolkit/wiki)
-*   **README** (*updated*):  [https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/config/README.md](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/config/README.md)
-*   **GitHub**: [https://jarjarbin06.github.io/jarbin-toolkit/](https://jarjarbin06.github.io/jarbin-toolkit/)
+### 🔹 Delete Configuration
+
+```python
+cfg.delete()
+```
 
 ---
 
----
+## 🔹 Build / Installation
 
-## Footer
+### Installation
 
-*   Repository: [https://github.com/Jarjarbin06/jarbin-toolkit](https://github.com/Jarjarbin06/jarbin-toolkit)
-*   Author: Nathan Jarjarbin
-*   Contact: nathan.amaraggi@epitech.eu
-
-⭐️ Like the project? Give it a star!
-🐛 Found a bug? Report it in the issues!
+```bash
+pip install jarbin-toolkit-config
+```
 
 ---
 
-<small>
-Last update : 
-**PACKAGE** — *2026/01/21* ; 
-**README** — *2026/02/12*
-</small>
+## 🔹 Execution Behavior
+
+* Configuration is loaded at initialization
+* Any `set()` operation triggers immediate file write
+* File system is the source of truth after initialization
+* No background synchronization exists
+
+---
+
+## 🔹 Memory Model
+
+* `ConfigParser` is the in-memory state container
+* file system is persistent storage layer
+* no caching layer beyond runtime object
+* optional in-memory retention after deletion (`cached=True`)
+
+---
+
+## 🔹 Design Philosophy
+
+* deterministic file-state synchronization
+* explicit read/write separation
+* minimal abstraction over standard library
+* cross-platform compatibility by design
+* immediate persistence over lazy writes
+
+---
+
+## 🔹 Current State
+
+⚠️ Core configuration system is functional but requires robustness improvements
+
+Status:
+
+* INI file creation implemented
+* typed getters implemented
+* write-through persistence implemented
+* file existence validation implemented
+
+Limitations:
+
+* no schema validation
+* no encryption support
+* no concurrent access protection
+* no transaction system
+* limited error handling robustness
+
+---
+
+## 🔹 Limitations
+
+* no atomic write mechanism
+* no multi-process locking
+* no configuration schema enforcement
+* no rollback system
+* platform path handling partially inconsistent in edge cases
+
+---
+
+## 🔹 Extension / Contribution
+
+Possible extensions:
+
+* schema-based configuration validation
+* transaction-based config updates
+* file locking system for concurrency safety
+* encrypted configuration storage layer
+* JSON/YAML backend support
+
+---
+
+## 🔹 Notes
+
+This system is designed as a **minimal deterministic abstraction over INI configuration files**, not a full configuration framework.
+
+It prioritizes:
+
+* simplicity
+* explicit behavior
+* direct filesystem mapping
+
+---
+
+## 🔹 Identity Summary
+
+Jarbin-ToolKit Config is:
+
+* a deterministic INI configuration manager
+* a structured persistence abstraction layer
+* a lightweight system-level configuration tool
+* a minimal interface over Python ConfigParser
+
+---
+
+## 🔹 Final Rule
+
+> If configuration state is not explicitly written, it does not exist.
+
+---

@@ -2,7 +2,7 @@
 ###                       ###
 ###     Jarbin-ToolKit    ###
 ###         time          ###
-###  ----wtopwatch.py---- ###
+###  ----stopwatch.py---- ###
 ###                       ###
 ###=======================###
 ### by JARJARBIN's STUDIO ###

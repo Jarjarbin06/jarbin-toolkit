@@ -3,15 +3,12 @@ coverage.xml
 *.jar-log
 *.json
 *.egg-info
-demo/output/*
 perso
 dist
 dist_done
 epitech_console.egg-info
 htmlcov
 __pycache__
-*/__pycache__
-*/*/__pycache__
 .idea
 .obsidian
 .coverage

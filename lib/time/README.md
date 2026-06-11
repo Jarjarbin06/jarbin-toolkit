@@ -1,207 +1,404 @@
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Epitech_logo.png" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Jarbin-Toolkit_logo.jpg" alt="error loading Jarbin-ToolKit Logo" width="49%" style="display:inline-block;">
 
-# **Jarbin-ToolKit:Time** v0.1.2.0
-<details>
-<summary>Latest versions</summary>
-🟠 UNDER DEVELOPMENT 🟠 None 🟠
+# 📦 Jarbin-ToolKit:Time v0.1.2.1
 
-🟢 RELEASED 🟢 v0.1.2.0 🟢
-</details>
-
-[![CodeQL Advanced](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/codeql.yml/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/codeql.yml)
-[![Python package tester](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/test-package.yml/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/test-package.yml)
-[![pages-build-deployment](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/pages/pages-build-deployment)
+> Deterministic time abstraction layer providing precise timing utilities, monotonic timestamps, and structured stopwatch-based measurement tools
 
 ---
 
----
+## 🔹 Short Description
 
-## Description
+**Jarbin-ToolKit Time is a lightweight timing utility library that provides deterministic time measurement primitives such as monotonic timestamps, stopwatches, and blocking timing utilities using a structured and predictable interface.**
 
-`jarbin-toolkit:time` is a Python library designed to help you create enhanced terminal interfaces. It's improving the appearance and readability of your command-line interface with lightweight animations, colorful text, and neat formatting. If you want to make your terminal programs more readable and visually structured, this library is for you!
+It provides:
 
----
+* monotonic timestamp retrieval
+* high-resolution stopwatch measurement
+* blocking wait utility based on active polling
+* pause utility for controlled execution flow
 
----
-
-## Table of Contents
-
-1.  [Description](#Description)
-2.  [Features](#Features)
-3.  [Tech Stack](#Tech-Stack)
-4.  [Installation](#Installation)
-5.  [Usage](#Usage)
-6.  [Project Structure](#Project-Structure)
-7.  [API Reference](#API-Reference)
-8.  [Release Notes](#Release-Notes)
-9.  [License](#License)
-10. [Important Links](#Important-Links)
-11. [Footer](#Footer)
-
-## Features
-
-*   **Timers**: Use the built-in stopwatch to measure how long parts of your code take to run.
+It is **not a scheduling system**, but a **deterministic time measurement and control abstraction layer**.
 
 ---
 
----
+## 🔹 Authors
 
-## Tech-Stack
-
-*   **Language**: Python - Chosen for its readability and versatility.
-*   **Frameworks**: Python -  Entirely implemented in Python.
+* Nathan (Jarjarbin06)
+* Jarbin Studio
 
 ---
 
----
+## 🔹 License
 
-## Installation
-
-To begin , install `jarbin-toolkit:time`:
-
-#### **Prerequisites**:
-
-Make sure you have Python `3.11` or newer installed on your computer.
-You can check your Python version by opening a terminal and typing `python --version`.
+GPL v3
 
 ---
 
-#### **Install from PyPI** (*recommended*):
-	
-Open your terminal and run this command:
-```bash
-pip install jarbin_toolkit_time
+## 🔹 Target Audience
+
+This library is intended for:
+
+* Python developers requiring precise timing measurements
+* developers building simulation or game-loop systems
+* engineers designing deterministic execution flows
+* systems requiring controlled blocking or pause behavior
+
+---
+
+## 🔹 Platform Support
+
+* Python ≥ 3.10
+* Standard library only (`time`, `typing`)
+* Cross-platform (Linux / Windows / macOS)
+
+---
+
+## 🔹 Purpose
+
+Jarbin-ToolKit Time aims to:
+
+* provide monotonic and reliable timestamp access
+* offer a lightweight stopwatch abstraction
+* enable deterministic blocking delays
+* support controlled execution pausing
+
+It is **not a scheduling framework**, but a **low-level deterministic timing abstraction layer over Python time primitives**.
+
+---
+
+## 🔹 Key Features
+
+* monotonic timestamp retrieval via `get_timestamp()`
+* high-precision stopwatch (`StopWatch`)
+* manual and automatic elapsed time tracking
+* blocking wait based on active polling
+* controlled pause with optional input blocking
+* comparison operators on elapsed time
+
+---
+
+## 🔹 Architecture Overview
+
 ```
-   This will automatically download and install the library from PyPI.
-
----
-
-#### **Install from GitHub**:
-
-If you want the latest version directly from the source, you can install it using `git`:
-```bash
-git clone -b latest NONE
-make -C lib/jarbin_toolkit_time install
+System Time (time.monotonic / time.time)
+            │
+            ▼
+   get_timestamp()
+            │
+            ▼
+   Time Utilities Layer
+            │
+   ┌────────┴────────┐
+   ▼                 ▼
+StopWatch        Time class
+   │                 │
+   ▼                 ▼
+Elapsed tracking   wait / pause
+   │
+   ▼
+Deterministic timing control
 ```
-This downloads the code, then the `install` script handles the installation.
-These commands install the `jarbin-toolkit:time` package and its dependencies (datetime).
 
 ---
 
+## 🔹 Core Concept
+
+The system is based on three core primitives:
+
 ---
 
-## Usage
+### get_timestamp
 
-Here are some examples demonstrating how to use `jarbin-toolkit:time`:
-
-### Basic Error
+Returns a monotonic timestamp:
 
 ```python
-from jarbin_toolkit_time import Time, StopWatch
+get_timestamp() -> float
+```
+
+Uses:
+
+* `time.monotonic()` for stability
+* avoids system clock drift issues
+
+---
+
+### StopWatch
+
+A stateful timing object used for measuring elapsed time.
+
+Creation:
+
+```python
+StopWatch(start: bool = False)
+```
+
+Key behavior:
+
+* starts optionally at initialization
+* tracks elapsed time manually or automatically
+* uses `time.time()` for measurement
+
+Core methods:
+
+| Method      | Description                      |
+|-------------|----------------------------------|
+| `start()`   | Starts stopwatch                 |
+| `stop()`    | Stops and finalizes elapsed time |
+| `update()`  | Updates elapsed time             |
+| `reset()`   | Resets stopwatch state           |
+| `elapsed()` | Returns current elapsed time     |
+
+Comparison operators:
+
+* `==`, `!=`
+* `>`, `<`
+* `>=`, `<=`
+
+allow direct comparison with floats.
+
+---
+
+### Time
+
+Static utility class providing blocking primitives:
+
+#### wait
+
+```python
+Time.wait(sleep: int | float) -> float
+```
+
+Performs active waiting using a `StopWatch` until target duration is reached.
+
+#### pause
+
+```python
+Time.pause(msg: str = "...", force_enter: bool = True) -> float
+```
+
+Blocks execution until user input is received, optionally enforcing enter confirmation loop.
+
+---
+
+## 🔹 API / Function Documentation
+
+### 🔹 get_timestamp
+
+| Name            | Description                       |
+|-----------------|-----------------------------------|
+| `get_timestamp` | Returns monotonic timestamp float |
+
+---
+
+### 🔹 StopWatch
+
+| Name       | Description                             |
+|------------|-----------------------------------------|
+| `__init__` | Initializes stopwatch                   |
+| `start`    | Starts timing                           |
+| `stop`     | Stops timing                            |
+| `update`   | Updates elapsed value                   |
+| `elapsed`  | Returns elapsed time                    |
+| `reset`    | Resets internal state                   |
+| `__str__`  | Returns elapsed time as string          |
+| `__repr__` | Debug representation                    |
+| comparison | Compares elapsed time with float values |
+
+---
+
+### 🔹 Time
+
+| Name    | Description                          |
+|---------|--------------------------------------|
+| `wait`  | Blocking active wait using stopwatch |
+| `pause` | Blocking user-controlled pause       |
+
+---
+
+## 🔹 Project Structure
+
+```
+jarbin_toolkit_time/
+├── time.py
+├── stopwatch.py
+└── __init__.py
 ```
 
 ---
 
----
+## 🔹 Usage Section
 
-## API-Reference
+### 🔹 Get Timestamp
 
-*   **Time**: Static time utility helpers (waiting, pausing, precise elapsed measurement).
-    *   `wait(sleep: int | float) -> float` (staticmethod)
-        Wait for a given number of seconds.
-        - `sleep`: duration in seconds
-        - Uses internal `StopWatch`
-        - Returns the exact measured elapsed time
-    *   `pause(msg: str = "Press enter to continue...") -> float` (staticmethod)
-        Pause program execution until user presses Enter.
-        - `msg`: message displayed to the user
-        - Returns the exact elapsed pause time
+```python
+from jarbin_toolkit_time import get_timestamp
 
-
-*   **StopWatch**: Lightweight elapsed time tracker.
-    *   `StopWatch(start: bool = False)`
-        Create a stopwatch.
-        - `start`: if `True`, automatically start at initialization
-    *   `start() -> None`
-        Reset and start the stopwatch.
-    *   `stop() -> None`
-        Stop the stopwatch (freezes elapsed value).
-    *   `update() -> None`
-        Update internal elapsed time (if running).
-    *   `elapsed(auto_update: bool = True) -> float`
-        Return elapsed time in seconds.
-        - `auto_update`: automatically refresh before returning value
-    *   `reset() -> None`
-        Reset elapsed time and stop the stopwatch.
-    *   `__str__() -> str`
-        Return string representation of elapsed time.
-    *   `__repr__() -> str`
-        Return constructor-style representation of the StopWatch object.
-    *   `__eq__(other: float) -> bool`
-        Compare elapsed time with float (`==`).
-    *   `__gt__(other: float) -> bool`
-        Compare elapsed time with float (`>`).
-    *   `__ge__(other: float) -> bool`
-        Compare elapsed time with float (`>=`).
-    *   `__lt__(other: float) -> bool`
-        Compare elapsed time with float (`<`).
-    *   `__le__(other: float) -> bool`
-        Compare elapsed time with float (`<=`).
+print(get_timestamp())
+```
 
 ---
 
----
+### 🔹 Stopwatch Usage
 
-## Release-Notes
-* #### v0.1.1:
-    *   **[/]** 1rst real release
-* #### v0.1.0:
-    *   **[UPDATE]** `jarbin_toolkit_time` update (removed unlinked sub-modules)
-    *   **[INIT]** add `epitech_console` to jarbin-toolkit (renamed `jarbin_toolkit_time`)
+```python
+from jarbin_toolkit_time import StopWatch
 
----
+sw = StopWatch(start=True)
 
----
-
-## License
-
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/time/LICENSE) file for details.
+# ... some processing
+print(sw.elapsed())
+```
 
 ---
 
----
+### 🔹 Comparison Usage
 
-## Important-Links
+```python
+sw = StopWatch(start=True)
 
-#### Files
-*   **Repository**: [https://github.com/Jarjarbin06/jarbin-toolkit](https://github.com/Jarjarbin06/jarbin-toolkit)
-*   **PyPI**: [https://pypi.org/project/jarbin-toolkit-time/](https://pypi.org/project/jarbin-toolkit-time/)
+# wait some time
 
-#### Wiki
-*   **Wiki** (*take a look*): [https://github.com/Jarjarbin06/jarbin-toolkit/wiki](https://github.com/Jarjarbin06/jarbin-toolkit/wiki)
-*   **README** (*updated*):  [https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/time/README.md](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/time/README.md)
-*   **GitHub**: [https://jarjarbin06.github.io/jarbin-toolkit/](https://jarjarbin06.github.io/jarbin-toolkit/)
+if sw > 1.0:
+    print("More than 1 second elapsed")
+```
 
 ---
 
----
+### 🔹 Blocking Wait
 
-## Footer
+```python
+from jarbin_toolkit_time import Time
 
-*   Repository: [https://github.com/Jarjarbin06/jarbin-toolkit](https://github.com/Jarjarbin06/jarbin-toolkit)
-*   Author: Nathan Jarjarbin
-*   Contact: nathan.amaraggi@epitech.eu
-
----
-
-⭐️ Like the project? Give it a star!
-🐛 Found a bug? Report it in the issues!
+elapsed = Time.wait(2.0)
+print(elapsed)
+```
 
 ---
 
-<small>
-last update : 
-**PACKAGE** — *2026/01/21* ;
-**README** — *2026/02/12*
-</small>
+### 🔹 Pause Execution
+
+```python
+from jarbin_toolkit_time import Time
+
+Time.pause("Press Enter to continue...")
+```
+
+---
+
+## 🔹 Build / Installation
+
+### Installation
+
+```bash
+pip install jarbin-toolkit-time
+```
+
+---
+
+## 🔹 Execution Behavior
+
+* Stopwatch uses active polling for elapsed updates
+* `Time.wait()` is a busy-wait loop based on `StopWatch.update()`
+* No threading or async mechanisms are used
+* Execution is deterministic but CPU-active during waits
+
+---
+
+## 🔹 Memory Model
+
+* `StopWatch` stores:
+
+  * `_start` timestamp (float)
+  * `_elapsed` accumulated time (float)
+
+* `Time` is stateless utility class
+
+* `get_timestamp` is a pure function wrapper over monotonic clock
+
+No external state or hidden caching mechanisms are used.
+
+---
+
+## 🔹 Design Philosophy
+
+* deterministic timing over system-dependent variability
+* explicit time control instead of implicit scheduling
+* minimal abstraction over Python time primitives
+* lightweight and dependency-free design
+* predictable blocking behavior
+
+---
+
+## 🔹 Current State
+
+⚠️ Core timing utilities are stable and functional
+
+Status:
+
+* StopWatch implemented
+* monotonic timestamp function implemented
+* blocking wait implemented
+* pause utility implemented
+
+Limitations:
+
+* no async timing support
+* no event scheduling system
+* wait uses busy-loop (CPU active)
+* no high-resolution sleep abstraction layer
+* no drift correction for long waits
+
+---
+
+## 🔹 Limitations
+
+* active polling in `Time.wait` consumes CPU
+* no integration with asyncio or threading timers
+* `pause` is blocking and interactive only
+* no precision guarantees beyond system clock resolution
+* no timer cancellation mechanism
+
+---
+
+## 🔹 Extension / Contribution
+
+Possible extensions:
+
+* async-aware StopWatch
+* sleep-based wait instead of busy loop
+* event scheduler built on StopWatch
+* timer callbacks system
+* CPU-efficient timing backend
+
+---
+
+## 🔹 Notes
+
+This module prioritizes **deterministic control flow over performance optimization**.
+
+It is designed for:
+
+* simulations
+* controlled execution flows
+* debugging environments
+* deterministic timing measurements
+
+---
+
+## 🔹 Identity Summary
+
+Jarbin-ToolKit Time is:
+
+* a deterministic timing abstraction layer
+* a stopwatch-based measurement system
+* a lightweight blocking time utility toolkit
+* a low-level wrapper over Python time primitives
+
+---
+
+## 🔹 Final Rule
+
+> If time behavior is not explicitly controlled, it is not part of the system.
+
+---

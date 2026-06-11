@@ -1,208 +1,351 @@
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Epitech_logo.png" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Jarbin-Toolkit_logo.jpg" alt="error loading Jarbin-ToolKit Logo" width="49%" style="display:inline-block;">
 
-# **Jarbin-ToolKit:Action** v0.1.2.0
-<details>
-<summary>Latest versions</summary>
-🟠 UNDER DEVELOPMENT 🟠 None 🟠
+# 📦 Jarbin-ToolKit:Action v0.1.2.2
 
-🟢 RELEASED 🟢 v0.1.2.0 🟢
-</details>
-
-[![CodeQL Advanced](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/codeql.yml/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/codeql.yml)
-[![Python package tester](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/test-package.yml/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/test-package.yml)
-[![pages-build-deployment](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/Jarjarbin06/jarbin-toolkit/actions/workflows/pages/pages-build-deployment)
+> Deterministic function execution system based on deferred callable actions and structured action composition
 
 ---
 
----
+## 🔹 Short Description
 
-## Description
+**Jarbin-ToolKit Action is a lightweight execution framework that encapsulates Python callables into structured Action objects, enabling deferred execution, composition, and batch processing through a deterministic interface.**
 
-`jarbin-toolkit:action` is a Python library designed to help you create enhanced terminal interfaces. It's improving the appearance and readability of your command-line interface with lightweight animations, colorful text, and neat formatting. If you want to make your terminal programs more readable and visually structured, this library is for you!
+It provides:
 
----
+* function encapsulation into executable objects
+* delayed execution model
+* composable action pipelines
+* structured batch execution system
 
----
-
-## Table of Contents
-
-1.  [Description](#Description)
-2.  [Features](#Features)
-3.  [Tech Stack](#Tech-Stack)
-4.  [Installation](#Installation)
-5.  [Usage](#Usage)
-6.  [Project Structure](#Project-Structure)
-7.  [API Reference](#API-Reference)
-8.  [Release Notes](#Release-Notes)
-9.  [License](#License)
-10. [Important Links](#Important-Links)
-11. [Footer](#Footer)
-
-## Features
-
-*   **Timers**: Use the built-in stopwatch to measure how long parts of your code take to run.
+It is **not a task scheduler**, but a **deterministic function execution abstraction layer**.
 
 ---
 
----
+## 🔹 Authors
 
-## Tech-Stack
-
-*   **Language**: Python - Chosen for its readability and versatility.
-*   **Frameworks**: Python -  Entirely implemented in Python.
+* Nathan (Jarjarbin06)
+* Jarbin Studio
 
 ---
 
----
+## 🔹 License
 
-## Installation
-
-To begin , install `jarbin-toolkit:action`:
-
-#### **Prerequisites**:
-
-Make sure you have Python `3.11` or newer installed on your computer.
-You can check your Python version by opening a terminal and typing `python --version`.
+GPL v3
 
 ---
 
-#### **Install from PyPI** (*recommended*):
-	
-Open your terminal and run this command:
-```bash
-pip install jarbin_toolkit_action
+## 🔹 Target Audience
+
+This library is intended for:
+
+* Python developers building execution pipelines
+* developers designing modular automation systems
+* projects requiring deferred execution models
+* engineers building structured workflow abstractions
+
+---
+
+## 🔹 Platform Support
+
+* Python ≥ 3.10
+* Standard library only (no external dependencies required)
+* Linux / Windows / macOS compatible
+
+---
+
+## 🔹 Purpose
+
+Jarbin-ToolKit Action aims to:
+
+* encapsulate functions into executable objects
+* enable deferred execution of logic
+* allow composition of multiple execution units
+* provide structured batch execution through `Actions`
+
+It is **not a concurrency framework**, but a **deterministic execution abstraction layer over Python callables**.
+
+---
+
+## 🔹 Key Features
+
+* Callable encapsulation via `Action`
+* Deferred execution using `__call__`
+* Batch execution with `Actions`
+* Action composition via operator overloading (`+`)
+* Ordered execution pipeline
+* Structured return aggregation
+
+---
+
+## 🔹 Architecture Overview
+
 ```
-   This will automatically download and install the library from PyPI.
-
----
-
-#### **Install from GitHub**:
-
-If you want the latest version directly from the source, you can install it using `git`:
-```bash
-git clone -b latest NONE
-make -C lib/jarbin_toolkit_action install
+User Code
+   │
+   ▼
+Action(name, function, args, kwargs)
+   │
+   ▼
+Deferred Execution Model
+   │
+   ├───────────────┐
+   ▼               ▼
+__call__       Actions(list)
+   │               │
+   ▼               ▼
+Function exec   Batch execution
+   │               │
+   └───────┬───────┘
+           ▼
+   Structured return dict
 ```
-This downloads the code, then the `install` script handles the installation.
-These commands install the `jarbin-toolkit:action` package and its dependencies (datetime).
 
 ---
 
+## 🔹 Core Concept
+
+The system is based on two core entities:
+
+### Action
+
+Encapsulates a callable:
+
+```python
+Action(name, function, *args, **kwargs)
+```
+
+Execution is delayed until explicitly called:
+
+```python
+action()
+```
+
 ---
 
-## Usage
+### Actions
 
-Here are some examples demonstrating how to use `jarbin-toolkit:action`:
+Container of multiple `Action` objects:
 
-### Basic Error
+```python
+Actions([action1, action2])
+```
+
+Supports:
+
+* sequential execution
+* aggregation of results
+* indexing access
+* composition via `+`
+
+---
+
+## 🔹 API / Function Documentation
+
+### 🔹 Action
+
+| Name       | Description                               |
+|------------|-------------------------------------------|
+| `__init__` | Stores callable and arguments             |
+| `__call__` | Executes stored function                  |
+| `__add__`  | Combines with another Action into Actions |
+| `__repr__` | Debug representation                      |
+| `__str__`  | Human-readable representation             |
+
+---
+
+### 🔹 Actions
+
+| Name          | Description                           |
+|---------------|---------------------------------------|
+| `__init__`    | Initializes action list               |
+| `__call__`    | Executes all actions and returns dict |
+| `__add__`     | Combines Actions or Action            |
+| `__getitem__` | Access action by index                |
+| `__len__`     | Returns number of actions             |
+| `__repr__`    | Debug representation                  |
+| `__str__`     | Structured print output               |
+
+---
+
+## 🔹 Project Structure
+
+```
+jarbin_toolkit_action/
+├── action.py
+└── __init__.py
+```
+
+---
+
+## 🔹 Usage Section
+
+### 🔹 Single Action Execution
+
+```python
+from jarbin_toolkit_action import Action
+
+def hello(name):
+    return f"Hello {name}"
+
+a = Action("greet", hello, "Nathan")
+print(a())  # Hello Nathan
+```
+
+---
+
+### 🔹 Batch Execution
 
 ```python
 from jarbin_toolkit_action import Action, Actions
+
+def add(a, b):
+    return a + b
+
+def mul(a, b):
+    return a * b
+
+a1 = Action("add", add, 2, 3)
+a2 = Action("mul", mul, 2, 3)
+
+batch = Actions([a1, a2])
+print(batch())
+```
+
+Output:
+
+```python
+{
+    "add": 5,
+    "mul": 6
+}
 ```
 
 ---
 
----
+### 🔹 Composition
 
-## API-Reference
-
-*   **Action**: Callable object storing a function and its arguments for deferred execution.
-    *   `Action(name: str, function: Callable, *args: Any, **kwargs: Any)`
-        Save a function and its arguments.
-        - `name`: logical name of the action
-        - `function`: callable to execute
-        - `*args`: positional arguments for the function
-        - `**kwargs`: keyword arguments for the function
-    *   `__call__() -> Any`
-        Execute the stored function with its saved arguments.
-        Returns the function’s return value.
-    *   `__add__(other: Action) -> Actions`
-        Combine two `Action` objects into an `Actions` collection.
-    *   `__str__() -> str`
-        Return readable string representation:
-        `'name' : function(*args = [...], **kwargs = {...})`
-    *   `__repr__() -> str`
-        Return constructor-style representation of the Action object.
-
-
-*   **Actions**: Collection of multiple `Action` objects.
-    *   `Actions(actions: list[Action] | Action | None = None)`
-        Create a collection of actions.
-        - `actions`: optional single `Action` or list of `Action`
-    *   `__call__() -> dict[str, Any]`
-        Execute all stored actions sequentially.
-        Returns a dictionary:
-        `{ action_name: return_value }`
-    *   `__add__(other: Actions | Action) -> Actions`
-        Merge:
-        - `Actions + Actions`
-        - `Actions + Action`
-    *   `__len__() -> int`
-        Return number of stored actions.
-    *   `__getitem__(item: int) -> Action`
-        Return the `Action` at given index.
-    *   `__str__() -> str`
-        Return formatted multi-line representation of all stored actions.
-    *   `__repr__() -> str`
-        Return constructor-style representation of the Actions object.
+```python
+combined = a1 + a2
+print(combined())
+```
 
 ---
 
----
+## 🔹 Build / Installation
 
-## Release-Notes
-* #### v0.1.1:
-    *   **[/]** 1rst real release 
+### Installation
 
-* #### v0.1.0:
-    *   **[UPDATE]** `jarbin_toolkit_action` update (removed unlinked sub-modules)
-    *   **[INIT]** add `epitech_console` to jarbin-toolkit (renamed `jarbin_toolkit_action`)
+```bash
+pip install jarbin-toolkit-action
+```
 
 ---
 
----
+## 🔹 Execution Behavior
 
-## License
+* Execution is strictly **manual and explicit**
+* No automatic scheduling
+* Functions are executed only via:
 
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/action/LICENSE) file for details.
-
----
-
----
-
-## Important-Links
-
-#### Files
-*   **Repository**: [https://github.com/Jarjarbin06/jarbin-toolkit](https://github.com/Jarjarbin06/jarbin-toolkit)
-*   **PyPI**: [https://pypi.org/project/jarbin-toolkit-action/](https://pypi.org/project/jarbin-toolkit-action/)
+  * `Action()`
+  * `Actions()`
+* Batch execution preserves insertion order
 
 ---
 
-#### Wiki
-*   **Wiki** (*take a look*): [https://github.com/Jarjarbin06/jarbin-toolkit/wiki](https://github.com/Jarjarbin06/jarbin-toolkit/wiki)
-*   **README** (*updated*):  [https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/action/README.md](https://github.com/Jarjarbin06/jarbin-toolkit/blob/main/lib/action/README.md)
-*   **GitHub**: [https://jarjarbin06.github.io/jarbin-toolkit/](https://jarjarbin06.github.io/jarbin-toolkit/)
+## 🔹 Memory Model
+
+* `Action` stores:
+
+  * function reference
+  * positional arguments (list)
+  * keyword arguments (dict)
+
+* `Actions` stores:
+
+  * ordered list of `Action`
+
+No hidden state or dynamic mutation outside explicit operations.
 
 ---
 
----
+## 🔹 Design Philosophy
 
-## Footer
-
-*   Repository: [https://github.com/Jarjarbin06/jarbin-toolkit](https://github.com/Jarjarbin06/jarbin-toolkit)
-*   Author: Nathan Jarjarbin
-*   Contact: nathan.amaraggi@epitech.eu
-
----
-
-⭐️ Like the project? Give it a star!
-🐛 Found a bug? Report it in the issues!
+* deterministic execution over implicit behavior
+* explicit function encapsulation
+* modular execution units
+* composition over duplication
+* predictable batch processing
 
 ---
 
-<small>
-Last update : 
-**PACKAGE** — *2026/01/21* ; 
-**README** — *2026/02/12*
-</small>
+## 🔹 Current State
+
+⚠️ Core execution model is stable and functional
+
+Status:
+
+* Action encapsulation implemented
+* Batch execution implemented
+* Composition operator implemented
+
+Limitations:
+
+* No async support
+* No cancellation mechanism
+* No dependency graph execution
+* No parallel execution engine
+
+---
+
+## 🔹 Limitations
+
+* synchronous execution only
+* no concurrency model
+* no runtime scheduling system
+* no error isolation between batch actions
+* minimal validation on inputs
+
+---
+
+## 🔹 Extension / Contribution
+
+Possible extensions:
+
+* async Action support
+* execution pipelines with dependencies
+* retry mechanisms
+* parallel execution backend
+* failure isolation per Action
+
+---
+
+## 🔹 Notes
+
+This system is designed as a **minimal deterministic execution abstraction layer**, not a full workflow engine.
+
+It prioritizes:
+
+* clarity
+* predictability
+* structural simplicity
+
+---
+
+## 🔹 Identity Summary
+
+Jarbin-ToolKit Action is:
+
+* a structured function encapsulation system
+* a deterministic execution model
+* a lightweight batch execution framework
+* a composable action abstraction layer
+
+---
+
+## 🔹 Final Rule
+
+> If execution behavior is not explicitly defined, it does not exist.
+
+---

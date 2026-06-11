@@ -199,8 +199,7 @@ class ProgressBar(Format):
         if self.spinner and update_spinner :
             self.spinner.update(auto_reset=auto_reset)
 
-        if percent > 100:
-            percent = 100
+        percent = max(0, min(percent, 100))
 
         self.percent = percent
 

@@ -5,7 +5,6 @@
 #   make help
 #   make install
 #   make test
-#   make demo
 # ============================================================
 
 # ------------------------------------------------------------
@@ -46,8 +45,6 @@ help:
 	@echo -e "\tmake test\t\Test the package (pytest)"
 	@echo -e "\tmake check\t\tShow package info (PyPI)"
 	@echo -e "\tmake check-style\t\tAnalyze package coding style (flake8)"
-	@echo ""
-	@echo -e "\tmake demo\t\tRun the demo"
 	@echo ""
 	@echo -e "\tmake clean\t\tClean cache and build files"
 	@echo -e "\tmake info\t\tShow package info"
@@ -148,25 +145,6 @@ check-style:
 	@echo -e "$(GREEN) [CHECK] Coding style checked$(NC)"
 
 # ------------------------------------------------------------
-# DEMOS
-# ------------------------------------------------------------
-
-demo:
-	@echo -e "$(YELLOW) [DEMO] Running Demo$(NC)"
-	@# independent #
-	@make -sC lib/action demo || true
-	@make -sC lib/config demo || true
-	@make -sC lib/error demo || true
-	@make -sC lib/log demo || true
-	@make -sC lib/time demo || true
-	@# dependent #
-	@make -sC lib/console demo || true
-	@make -sC lib/jartest demo || true
-	@# parent #
-	@make -s demo || true
-	@echo -e "$(GREEN) [DEMO] Demo ran$(NC)"
-
-# ------------------------------------------------------------
 # INFORMATION
 # ------------------------------------------------------------
 
@@ -205,6 +183,5 @@ clean-all:
 	help \
 	install uninstall reinstall install-all uninstall-all reinstall-all \
 	test test-all check check-all check-style \
-	demo \
 	info \
 	clean clean-all
