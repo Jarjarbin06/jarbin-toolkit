@@ -12,7 +12,9 @@
 from builtins import object
 from typing import Any
 
-OPEN_CONFIG: bool = False
+# manual overwrite
+# set to `False` if a bug occur on this file
+OPEN_CONFIG: bool = True
 
 class Setting:
     """

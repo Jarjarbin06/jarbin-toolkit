@@ -378,7 +378,7 @@ class Console(metaclass=ConsoleMeta):
 
 
     @_classproperty
-    def stderr():
+    def stderr(cls):
 
         import sys
 
