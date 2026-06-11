@@ -19,7 +19,8 @@ dependencies = [
     "jarbin-toolkit-error",
     "jarbin-toolkit-log",
     "jarbin-toolkit-time",
-    "jarbin-toolkit-console"
+    "jarbin-toolkit-console",
+    "jarbin-toolkit-jartest"
 ]
 
 classifiers = [
