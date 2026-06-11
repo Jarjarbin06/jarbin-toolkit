@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #############################
 ###                       ###
 ###     Jarbin-ToolKit    ###
@@ -116,21 +117,21 @@ class JarTest:
 
             Console.print(app_c["TITLE"] + "─── RESULTS ───".center(112, "="))
 
-            Console.print(f"┌{"─" * 5}┬{"─" * 5}┬{"─" * 52}┬{"─" * 17}┬{"─" * 5}┬{"─" * 21}┐")
+            Console.print(f"┌{'─' * 5}┬{'─' * 5}┬{'─' * 52}┬{'─' * 17}┬{'─' * 5}┬{'─' * 21}┐")
             Console.print(
-                f"│ {app_c["BOLD"] + app_c["WHITE"]}idx",
-                f"│ {app_c["BOLD"] + app_c["WHITE"]}stt",
-                f"│ {app_c["BOLD"] + app_c["WHITE"]}{"name".center(50):}",
-                f"│ {app_c["BOLD"] + app_c["WHITE"]}{app_c["TIME"]}{"time".center(15)}",
-                f"│ {app_c["BOLD"] + app_c["WHITE"]}{app_c["RUN"]}run",
-                f"│ {app_c["BOLD"] + app_c["WHITE"]}{app_c["ERROR"]}{"assertion/error".center(20)}{app_c["RESET"]}│"
+                f"│ {app_c['BOLD'] + app_c['WHITE']}idx",
+                f"│ {app_c['BOLD'] + app_c['WHITE']}stt",
+                f"│ {app_c['BOLD'] + app_c['WHITE']}{"name".center(50):}",
+                f"│ {app_c['BOLD'] + app_c['WHITE']}{app_c['TIME']}{'time'.center(15)}",
+                f"│ {app_c['BOLD'] + app_c['WHITE']}{app_c['RUN']}run",
+                f"│ {app_c['BOLD'] + app_c['WHITE']}{app_c['ERROR']}{'assertion/error'.center(20)}{app_c['RESET']}│"
             )
-            Console.print(f"├{"─" * 5}┼{"─" * 5}┼{"─" * 52}┼{"─" * 17}┼{"─" * 5}┼{"─" * 21}┤")
+            Console.print(f"├{'─' * 5}┼{'─' * 5}┼{'─' * 52}┼{'─' * 17}┼{'─' * 5}┼{'─' * 21}┤")
 
             for name in self.tests:
                 show_results(name, self.tests[name])
 
-            Console.print(f"└{"─" * 5}┴{"─" * 5}┴{"─" * 52}┴{"─" * 17}┴{"─" * 5}┴{"─" * 21}┘")
+            Console.print(f"└{'─' * 5}┴{'─' * 5}┴{'─' * 52}┴{'─' * 17}┴{'─' * 5}┴{'─' * 21}┘")
 
         app_c : dict[str, str] = {
             "TITLE" : ANSI.Color.rgb_fg(255, 160, 0).s,
