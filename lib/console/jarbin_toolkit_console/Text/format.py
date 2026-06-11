@@ -9,7 +9,6 @@
 #############################
 
 
-from builtins import object
 from typing import Any
 
 

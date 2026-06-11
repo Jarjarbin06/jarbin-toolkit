@@ -9,7 +9,6 @@
 #############################
 
 
-from builtins import object
 from typing import Any
 from jarbin_toolkit_console.Text.format import Format
 from jarbin_toolkit_console.System.setting import Setting

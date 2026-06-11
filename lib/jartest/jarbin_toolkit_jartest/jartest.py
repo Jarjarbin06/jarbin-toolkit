@@ -12,8 +12,8 @@
 from __future__ import annotations
 
 import inspect
-
 from typing import Any
+
 from jarbin_toolkit_jartest.assertion import AssertionResult
 from jarbin_toolkit_jartest.benchmark import Benchmark
 from jarbin_toolkit_error import Error
@@ -42,13 +42,13 @@ class JarTest:
         from jarbin_toolkit_jartest.benchmark import Benchmark
         from jarbin_toolkit_console import Console, ANSI, Text
 
-        def get_last_assertions(test: Benchmark) -> list[AssertionResult]:
+        def get_last_assertions(test: Benchmark) -> list[AssertionResult] | None:
             if test.assertion is None:
                 return []
             return test.assertion
 
         def has_failed_assertions(test: Benchmark):
-            return any(not a.passed for a in get_last_assertions(test))
+            return any(not a.passed for a in (get_last_assertions(test) or []))
 
         def format_assertions(test: Benchmark):
             asserts = get_last_assertions(test)
@@ -95,9 +95,9 @@ class JarTest:
 
             Console.print(
                 (("╠═" if status == "CRITIC" else "├ ") if status != "SUCCESS" else "│ ") + app_c["DIM"] + f"{list(self.tests.keys()).index(key):03d}",
-                (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + (f" {app_c[status]}{app_i[status]}{app_c["RESET"]} "),
+                (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + f" {app_c[status]}{app_i[status]}{app_c["RESET"]} ",
                 (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + app_c[status] + f"{app_c["BOLD"] if status == "CRITIC" else ""}{f" {(test.name if len(test.name) < 50 else (test.name[:50] + "...")).removeprefix("JT_")} ".center(50, ("═" if status == "CRITIC" else ("─" if status == "FAIL" else " "))):40}",
-                (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + app_c["TIME"] + f"{(f" {("0.000s" if status == "CRITIC" or test.time == 0 else test.time_str)} ").center(15, ("═" if status == "CRITIC" else ("─" if status == "FAIL" else " "))):}",
+                (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + app_c["TIME"] + f"{f" {("0.000s" if status == "CRITIC" or test.time == 0 else test.time_str)} ".center(15, ("═" if status == "CRITIC" else ("─" if status == "FAIL" else " "))):}",
                 (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + app_c["RUN"] + f"{test.test_amount:03}",
                 (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + app_c["ERROR"] + f"{(f" {app_c["BOLD"]}{f"{test.error.error}: {test.error.message}" if isinstance(test.error, Error) else test.error}" if status == "CRITIC" else format_assertions(test))}",
                 (" │" if status == "SUCCESS" else ""),
@@ -236,7 +236,7 @@ class JarTest:
             *,
             module: Any = None,
             name_prefix: str = "",
-            _visited: set = None
+            _visited: set | None = None
     ) -> list[str]:
 
         from types import ModuleType

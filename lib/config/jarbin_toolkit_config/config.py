@@ -9,7 +9,7 @@
 #############################
 
 
-from builtins import object, type
+from builtins import type
 from typing import Any
 
 
@@ -24,7 +24,7 @@ class Config:
     def __init__(
             self,
             path : str,
-            data : dict[str : dict[str, Any]] | None = None,
+            data : dict[str, dict[str, Any]] | None = None,
             *,
             file_name : str = "config.ini"
         ) -> None:
@@ -67,8 +67,8 @@ class Config:
             self.path = self.path.replace("\\", "/") # pragma: no cover
             self.file_name = self.file_name.replace("/", "\\") # pragma: no cover
 
-        if Config.exist(self.path, file_name=file_name):
-            self.config.read(self.path + self.file_name)
+        if Config.exist(str(self.path), file_name=file_name):
+            self.config.read(str(self.path) + str(self.file_name))
 
             with open(str(self.path) + str(self.file_name), 'w') as config_file:
                 self.config.write(config_file)
@@ -205,12 +205,12 @@ class Config:
 
         from os import remove
 
-        remove(self.path + self.file_name)
+        remove(str(self.path) + str(self.file_name))
 
         if not cached:
             self.config = None
 
-        if not Config.exist(self.path, file_name=self.file_name):
+        if not Config.exist(str(self.path), file_name=str(self.file_name)):
             self.path = None
             self.file_name = None
             return True

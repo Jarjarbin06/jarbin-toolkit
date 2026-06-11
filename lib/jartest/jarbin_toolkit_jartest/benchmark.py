@@ -11,7 +11,9 @@
 
 from types import TracebackType
 from typing import Callable, Any, Optional
+
 from jarbin_toolkit_jartest.assertion import AssertionResult
+from jarbin_toolkit_error import Error
 
 
 class Benchmark:
@@ -28,7 +30,7 @@ class Benchmark:
 
         self._time : list[Optional[float | int]] = []
         self._assertion : list[Optional[list[AssertionResult]]] = []
-        self._error : list[Exception | None] = []
+        self._error : list[Exception | Error | None] = []
         self._traceback : list[Optional[list[Optional[TracebackType]]]] = []
         self._result : list[Optional[Any]] = []
         self._test : Callable[[], None] = test

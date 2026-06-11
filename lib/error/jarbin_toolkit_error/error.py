@@ -9,10 +9,6 @@
 #############################
 
 
-from builtins import object
-from typing import Any
-
-
 class Error(Exception):
     """
     Error class.
@@ -144,7 +140,7 @@ class Error(Exception):
                 string += "\n\x1b[101m \x1b[0m     \x1b[91m"
                 string += line
 
-        string += ("\n\x1b[101m \x1b[0m \x1b[91m" + f"\n\x1b[101m \x1b[0m\n\x1b[101m \x1b[0m  \x1b[91m" + self.link) if self.link else ""
+        string += ("\n\x1b[101m \x1b[0m \x1b[91m" + f"\n\x1b[101m \x1b[0m\n\x1b[101m \x1b[0m  \x1b[91m" + str(self.link)) if self.link else ""
 
         return string
 
@@ -159,7 +155,7 @@ class Error(Exception):
                 str: Error string
         """
 
-        return f"Error({repr(self.message)}, error={repr(self.error)}{f", link=({repr(self.link_data[0])}, {repr(self.link_data[1])})" if self.link else ""})"
+        return f"Error({repr(self.message)}, error={repr(self.error)}{f', link=({repr(self.link_data[0])}, {repr(self.link_data[1])})' if self.link else ''})"
 
 
 class ErrorLaunch(Error):

@@ -9,10 +9,6 @@
 #############################
 
 
-from builtins import object
-from typing import Any
-
-
 class Time:
     """
         Time class.
@@ -55,6 +51,7 @@ class Time:
 
             Parameters:
                 msg (str, optional) : Message to be displayed
+                force_enter (bool, optional) : Force enter to continue with the prompt
 
             Returns:
                 float : Exact elapsed time
@@ -66,9 +63,9 @@ class Time:
 
         watch = StopWatch(True) # pragma: no cover
 
-        print(msg) # pragma: no cover
-
         if force_enter: # pragma: no cover
+            print(msg) # pragma: no cover
+
             while (True): # pragma: no cover
                 try: # pragma: no cover
                     input() # pragma: no cover
