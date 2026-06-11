@@ -10,6 +10,7 @@
 
 
 from typing import Any
+from jarbin_toolkit_console.Text.text import Text
 from jarbin_toolkit_console.Text.format import Format
 from jarbin_toolkit_console.System.setting import Setting
 

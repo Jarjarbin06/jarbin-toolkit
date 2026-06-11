@@ -342,7 +342,7 @@ class Format:
             return string
 
         elif type(d) == str:
-            string += ("│   " * indent) + "├── " + d + "\n"
+            string += ("│   " * indent) + "├── " + str(d) + "\n"
 
         elif type(d) == list:
             for line in d:
