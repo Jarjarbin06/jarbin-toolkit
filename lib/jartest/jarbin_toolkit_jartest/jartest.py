@@ -38,7 +38,7 @@ class JarTest:
     def run(
             self,
             **kwargs
-        ) -> None :
+        ) -> int :
 
         from jarbin_toolkit_jartest.benchmark import Benchmark
         from jarbin_toolkit_console import Console, ANSI, Text
@@ -154,18 +154,31 @@ class JarTest:
         term_width, term_height = Console.get_size()
         line = app_c["TITLE"] + ("-" * term_width)
         kw_n = int(kwargs.get("n", 1))
+        e_success, e_failure, e_critic = 0, 1, 84
 
         try:
             run_tests()
 
         except KeyboardInterrupt:
             Console.print(ANSI.Line.clear_line() + Text.Format.apply(f"\n-- interrupt (^C) -- {app_i["CRITIC"]}", app_c["CRITIC"]))
+            return e_critic
 
         except SystemExit:
             Console.print(ANSI.Line.clear_line() + Text.Format.apply(f"\n-- exit (sys-exit) -- {app_i["FAIL"]}", app_c["FAIL"]))
+            return e_failure
 
         else:
             Console.print(ANSI.Line.clear_line() + Text.Format.apply(f"\n-- end -- {app_i["SUCCESS"]}", app_c["WHITE"]))
+
+            for test_name, test in self.tests:
+                if get_status(test) == "FAIL":
+                    return e_failure
+                if get_status(test) == "CRITIC":
+                    return e_critic
+
+            return e_success
+
+
 
 
     def fetch(
