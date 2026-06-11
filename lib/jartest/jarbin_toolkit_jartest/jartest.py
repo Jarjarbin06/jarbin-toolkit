@@ -88,7 +88,7 @@ class JarTest:
 
             status = get_status(test)
 
-            Console.print(f"{app_c["DIM"]}{list(self.tests.keys()).index(test_name):03d}{app_c["RESET"]} " + f"{app_c[status]}{self.tests[test_name].name.removeprefix("JT_")}", ANSI.Cursor.move_column(59).s, f"{app_c["DIM"]}({test_name}){app_c["RESET"]}")
+            Console.print(f"{app_c['DIM']}{list(self.tests.keys()).index(test_name):03d}{app_c['RESET']} " + f"{app_c[status]}{self.tests[test_name].name.removeprefix('JT_')}", ANSI.Cursor.move_column(59).s, f"{app_c['DIM']}({test_name}){app_c['RESET']}")
 
         def show_results(key: str, test: Benchmark):
 
