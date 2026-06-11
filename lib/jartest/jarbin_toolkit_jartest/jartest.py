@@ -95,11 +95,11 @@ class JarTest:
 
             Console.print(
                 (("╠═" if status == "CRITIC" else "├ ") if status != "SUCCESS" else "│ ") + app_c["DIM"] + f"{list(self.tests.keys()).index(key):03d}",
-                (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + f" {app_c[status]}{app_i[status]}{app_c["RESET"]} ",
-                (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + app_c[status] + f"{app_c["BOLD"] if status == "CRITIC" else ""}{f" {(test.name if len(test.name) < 50 else (test.name[:50] + "...")).removeprefix("JT_")} ".center(50, ("═" if status == "CRITIC" else ("─" if status == "FAIL" else " "))):40}",
-                (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + app_c["TIME"] + f"{f" {("0.000s" if status == "CRITIC" or test.time == 0 else test.time_str)} ".center(15, ("═" if status == "CRITIC" else ("─" if status == "FAIL" else " "))):}",
+                (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + f" {app_c[status]}{app_i[status]}{app_c['RESET']} ",
+                (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + app_c[status] + f"{app_c['BOLD'] if status == 'CRITIC' else ''}{f" {(test.name if len(test.name) < 50 else (test.name[:50] + '...')).removeprefix('JT_')} ".center(50, ('=' if status == 'CRITIC' else ('─' if status == 'FAIL' else ' '))):40}",
+                (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + app_c["TIME"] + f"{f' {('0.000s' if status == 'CRITIC' or test.time == 0 else test.time_str)} '.center(15, ('═' if status == 'CRITIC' else ('─' if status == 'FAIL' else ' '))):}",
                 (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + app_c["RUN"] + f"{test.test_amount:03}",
-                (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + app_c["ERROR"] + f"{(f" {app_c["BOLD"]}{f"{test.error.error}: {test.error.message}" if isinstance(test.error, Error) else test.error}" if status == "CRITIC" else format_assertions(test))}",
+                (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + app_c["ERROR"] + f"{(f' {app_c['BOLD']}{f'{test.error.error}: {test.error.message}' if isinstance(test.error, Error) else test.error}' if status == 'CRITIC' else format_assertions(test))}",
                 (" │" if status == "SUCCESS" else ""),
                 separator=""
             )
