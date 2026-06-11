@@ -170,7 +170,7 @@ class JarTest:
         else:
             Console.print(ANSI.Line.clear_line() + Text.Format.apply(f"\n-- end -- {app_i["SUCCESS"]}", app_c["WHITE"]))
 
-            for test_name, test in self.tests:
+            for test in self.tests.values():
                 if get_status(test) == "FAIL":
                     return e_failure
                 if get_status(test) == "CRITIC":
