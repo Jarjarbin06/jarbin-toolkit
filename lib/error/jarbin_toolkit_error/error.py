@@ -2,173 +2,25 @@
 ###                       ###
 ###     Jarbin-ToolKit    ###
 ###         error         ###
-###    ----error.py----   ###
+###    ----old_error.py----   ###
 ###                       ###
 ###=======================###
 ### by JARJARBIN's STUDIO ###
 #############################
 
 
-class Error(Exception):
+from jarbin_toolkit_error.base_error import BaseError
+
+
+class _Error(BaseError):
     """
-    Error class.
-
-    Error for epitech_console.
-    """
-
-
-    def __init__(
-            self,
-            message : str = "an error occurred",
-
-            *,
-            error : str = "Error",
-            link : tuple[str , int | None] | None = None
-        ) -> None:
-        """
-            Create an Error.
-
-            Parameters:
-                message (str, optional): The error message.
-                error (str, optional): The error type (title).
-                link (tuple[str, int | None] | None, optional): The link to where the error comes from (file and line).
-        """
-
-        self.message : str = message
-        self.error : str = error
-        self.link_data : tuple[str, int | None] | None = link
-        self.link : str | None = None
-
-        self.create_link()
-
-
-    def log(
-            self
-        ) -> None:
-        """
-            Log the error.
-        """
-
-        pass
-
-        """from epitech_console.System.setting import Setting
-
-        Setting.update()
-
-        if Setting.S_SETTING_LOG_MODE:
-
-            ## cannot be tested with pytest ##
-
-            Setting.S_LOG_FILE.log("ERROR", "error", f"\"{self.error}\": {self.message}") # pragma: no cover
-
-            if self.link_data: # pragma: no cover
-                if self.link_data[1] is None: # pragma: no cover
-                    Setting.S_LOG_FILE.comment(f"A file as been linked to the previous error:") # pragma: no cover
-                    Setting.S_LOG_FILE.comment(f"\"{self.link_data[0]}\"") # pragma: no cover
-
-                else: # pragma: no cover
-                    Setting.S_LOG_FILE.comment(f"A file and line number as been linked to the previous error:") # pragma: no cover
-                    Setting.S_LOG_FILE.comment(f"\"{self.link_data[0]}\" line {self.link_data[1]}") # pragma: no cover"""
-
-
-    def create_link(
-            self
-        ) -> None:
-        """
-            Create an error link.
-            Create an error link.
-        """
-
-        #from epitech_console.Text.text import Text
-
-        if self.link_data:
-            if self.link_data[1] is None:
-                self.link = f"File \"{self.link_data[0]}\""
-
-            elif self.link_data[1] > 0:
-                self.link = f"File \"{self.link_data[0]}\", line {self.link_data[1]}"
-
-            #if self.link_data[1] is None:
-            #    self.link = str(Text.file_link(self.link_data[0]))
-
-            #else:
-            #    if self.link_data[1] > 0:
-            #        self.link = str(Text.file_link(self.link_data[0], self.link_data[1]))
-
-
-    @staticmethod
-    def lauch_error(
-        ) -> str:
-        """
-            Returns lauch error message.
-
-            Return:
-                str: Lauch error message.
-        """
-
-        ## cannot be tested with pytest ##
-
-        return (
-            f"\x1b[103m \x1b[0m \x1b[93mjarbin_toolkit_console launched with error\x1b[0m\n"
-            f"\x1b[103m \x1b[0m\n"
-            f"\x1b[103m \x1b[0m \x1b[93mPlease reinstall with :\x1b[0m\n"
-            f"\x1b[103m \x1b[0m \x1b[93m    'pip install --upgrade --force-reinstall jarbin_toolkit_console'\x1b[0m\n"
-            f"\x1b[103m \x1b[0m\n"
-            f"\x1b[103m \x1b[0m \x1b[93mPlease report the issue here : https://github.com/Jarjarbin06/jarbin_toolkit/issues\x1b[0m\n"
-        ) # pragma: no cover
-
-
-    def __str__(
-            self,
-        ) -> str:
-        """
-            Get string representation of the error.
-
-            Returns:
-                str: String representation of the error.
-        """
-
-        string: str = ""
-        if self.error and self.error.startswith("\n"):
-            string += "\n"
-        string += "\x1b[101m \x1b[0m \x1b[91m"
-        string += (self.error if self.error else "ErrorUnknown").replace("\n", "")
-        string += (":" if len(self.message) > 0 else "")
-
-        if len(self.message) > 0:
-            for line in self.message.splitlines():
-                string += "\n\x1b[101m \x1b[0m     \x1b[91m"
-                string += line
-
-        string += ("\n\x1b[101m \x1b[0m \x1b[91m" + f"\n\x1b[101m \x1b[0m\n\x1b[101m \x1b[0m  \x1b[91m" + str(self.link)) if self.link else ""
-
-        return string
-
-
-    def __repr__(
-            self
-        ) -> str:
-        """
-            Convert Error object to string.
-
-            Returns:
-                str: Error string
-        """
-
-        return f"Error({repr(self.message)}, error={repr(self.error)}{f', link=({repr(self.link_data[0])}, {repr(self.link_data[1])})' if self.link else ''})"
-
-
-class ErrorLaunch(Error):
-    """
-        ErrorLaunch class.
-
-        Launch Error.
+        _Error exception
     """
 
 
     def __init__(
             self,
-            message : str = "an error occurred during the launch",
+            message : str = "",
 
             *,
             link : tuple[str , int | None] | None = None
@@ -182,20 +34,17 @@ class ErrorLaunch(Error):
         """
 
         super().__init__(message, link=link)
-        self.error += "(ErrorLaunch)"
 
 
-class ErrorImport(Error):
+class ErrorImport(_Error):
     """
-        ErrorImport class.
-
-        Import Error.
+        ErrorImport exception
     """
 
 
     def __init__(
             self,
-            message : str = "an error occurred during an import",
+            message : str = "import error",
 
             *,
             link : tuple[str , int | None] | None = None
@@ -209,20 +58,18 @@ class ErrorImport(Error):
         """
 
         super().__init__(message, link=link)
-        self.error += "(ErrorImport)"
+        self.error += f"({type(self).__name__})"
 
 
-class ErrorLog(Error):
+class ErrorType(_Error):
     """
-        ErrorLog class.
-
-        Log Error.
+        ErrorType exception
     """
 
 
     def __init__(
             self,
-            message : str = "an error occurred on/in a log file",
+            message : str = "type error",
 
             *,
             link : tuple[str , int | None] | None = None
@@ -236,24 +83,18 @@ class ErrorLog(Error):
         """
 
         super().__init__(message, link=link)
-        self.error += "(ErrorLog)"
+        self.error += f"({type(self).__name__})"
 
 
-    def log(self):
-        pass
-
-
-class ErrorConfig(Error):
+class ErrorValue(_Error):
     """
-        ErrorConfig class.
-
-        Config Error.
+        ErrorValue exception
     """
 
 
     def __init__(
             self,
-            message : str = "an error occurred on/in a config file",
+            message : str = "value error",
 
             *,
             link : tuple[str , int | None] | None = None
@@ -267,20 +108,18 @@ class ErrorConfig(Error):
         """
 
         super().__init__(message, link=link)
-        self.error += "(ErrorConfig)"
+        self.error += f"({type(self).__name__})"
 
 
-class ErrorSetting(Error):
+class ErrorAttribute(_Error):
     """
-        ErrorSetting class.
-
-        Setting Error.
+        ErrorAttribute exception
     """
 
 
     def __init__(
             self,
-            message : str = "an error occurred during setting's update",
+            message : str = "attribute error",
 
             *,
             link : tuple[str , int | None] | None = None
@@ -294,20 +133,18 @@ class ErrorSetting(Error):
         """
 
         super().__init__(message, link=link)
-        self.error += "(ErrorSetting)"
+        self.error += f"({type(self).__name__})"
 
 
-class ErrorType(Error):
+class ErrorRuntime(_Error):
     """
-        ErrorType class.
-
-        Type Error.
+        ErrorRuntime exception
     """
 
 
     def __init__(
             self,
-            message : str = "an error occurred on a type",
+            message : str = "runtime error",
 
             *,
             link : tuple[str , int | None] | None = None
@@ -321,20 +158,18 @@ class ErrorType(Error):
         """
 
         super().__init__(message, link=link)
-        self.error += "(ErrorType)"
+        self.error += f"({type(self).__name__})"
 
 
-class ErrorValue(Error):
+class ErrorKey(_Error):
     """
-        ErrorValue class.
-
-        Value Error.
+        ErrorKey exception
     """
 
 
     def __init__(
             self,
-            message : str = "an error occurred on a value",
+            message : str = "key error",
 
             *,
             link : tuple[str , int | None] | None = None
@@ -348,20 +183,18 @@ class ErrorValue(Error):
         """
 
         super().__init__(message, link=link)
-        self.error += "(ErrorValue)"
+        self.error += f"({type(self).__name__})"
 
 
-class ErrorAttribute(Error):
+class ErrorIndex(_Error):
     """
-        ErrorAttribute class.
-
-        Attribute Error.
+        ErrorIndex exception
     """
 
 
     def __init__(
             self,
-            message : str = "an error occurred on an attribute",
+            message : str = "index error",
 
             *,
             link : tuple[str , int | None] | None = None
@@ -375,4 +208,29 @@ class ErrorAttribute(Error):
         """
 
         super().__init__(message, link=link)
-        self.error += "(ErrorAttribute)"
+        self.error += f"({type(self).__name__})"
+
+
+class ErrorFileNotFound(_Error):
+    """
+        ErrorFileNotFound exception
+    """
+
+
+    def __init__(
+            self,
+            message : str = "file not found error",
+
+            *,
+            link : tuple[str , int | None] | None = None
+        ) -> None:
+        """
+            Create an Error.
+
+            Parameters:
+                message (str, optional): The error message.
+                link (tuple[str, int | None] | None, optional): The link to where the error comes from (file and line).
+        """
+
+        super().__init__(message, link=link)
+        self.error += f"({type(self).__name__})"

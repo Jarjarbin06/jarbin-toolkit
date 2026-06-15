@@ -10,7 +10,7 @@
 
 import contextvars
 
-from jarbin_toolkit_error import ErrorType
+from jarbin_toolkit_error import Error
 
 _current_assertions = contextvars.ContextVar("current_assertions", default=None)
 
@@ -84,7 +84,7 @@ class Assertion:
     ) -> AssertionResult:
 
         if type(a) != type(b):
-            raise ErrorType("types mismatches (type(a) != type(b))")
+            raise Error.ErrorType("types mismatches (type(a) != type(b))")
 
         passed = (a == b)
 
@@ -112,7 +112,7 @@ class Assertion:
     ) -> AssertionResult:
 
         if type(a) != type(b):
-            raise ErrorType("types mismatches (type(a) != type(b))")
+            raise Error.ErrorType("types mismatches (type(a) != type(b))")
 
         passed = (a != b)
 
