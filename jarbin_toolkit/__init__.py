@@ -135,7 +135,7 @@ try:
             Parameters:
                 message (str, optional): message
         """
-        raise Error.Error(message)
+        raise Error.BaseError(message)
 
 
     def text(
