@@ -127,7 +127,7 @@ class BaseError(Exception):
         """
 
         string: str = ""
-        if self.error and self.error.startswith("\n"):
+        if self.error and self.error.startswith("\n") or self.message.startswith("\n"):
             string += "\n"
         string += "\x1b[101m \x1b[0m \x1b[91m"
         string += (self.error if self.error else "ErrorUnknown").replace("\n", "")
