@@ -126,15 +126,21 @@ class BaseError(Exception):
                 str: String representation of the error.
         """
 
-        string: str = ""
-        if self.error and self.error.startswith("\n") or self.message.startswith("\n"):
-            string += "\n"
-        string += "\x1b[101m \x1b[0m \x1b[91m"
-        string += (self.error if self.error else "ErrorUnknown").replace("\n", "")
-        string += (":" if len(self.message) > 0 else "")
+        error: str | None = self.error
+        message: str = self.message
 
-        if len(self.message) > 0:
-            for line in self.message.splitlines():
+        string: str = ""
+        if error and error.startswith("\n"):
+            string = "\n"
+        if message.startswith("\n"):
+            message = message[1:]
+            string = "\n"
+        string += "\x1b[101m \x1b[0m \x1b[91m"
+        string += (error or "ErrorUnknown").replace("\n", "")
+        string += (":" if len(message) > 0 else "")
+
+        if len(message) > 0:
+            for line in message.splitlines():
                 string += "\n\x1b[101m \x1b[0m     \x1b[91m"
                 string += line
 
