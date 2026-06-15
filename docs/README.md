@@ -1,7 +1,7 @@
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Epitech_logo.png" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Jarbin-Toolkit_logo.jpg" alt="error loading Jarbin-ToolKit Logo" width="49%" style="display:inline-block;">
 
-# 📦 Jarbin-ToolKit v1.1
+# 📦 Jarbin-ToolKit v1.3
 
 > Modular deterministic Python toolkit aggregating structured utilities for execution, testing, timing, console rendering, and system interaction
 
