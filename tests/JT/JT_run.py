@@ -94,11 +94,13 @@ def JT_config_set_get():
     assert cfg.get_int("App", "y") == 20, "invalid y"
 
 def JT_config_types():
-    cfg = Config(TEST_PATH, file_name=TEST_NAME, data={"T": {
-        "i": "1",
-        "f": "1.5",
-        "b": "true"
-    }})
+    cfg = Config(TEST_PATH, file_name=TEST_NAME, data={
+        "T": {
+            "i": "1",
+            "f": "1.5",
+            "b": "true"
+        }
+    })
 
     assert isinstance(cfg.get_int("T", "i"), int), "invalid i type"
     assert isinstance(cfg.get_float("T", "f"), float), "invalid f type"
@@ -111,7 +113,7 @@ def JT_config_delete():
     assert not os.path.exists(TEST_PATH + "/config.ini"), "config file not deleted"
 
 def JT_console_print():
-    output = Get.redirect_stdout(Console.Console.print, "Hello", auto_reset=False, end="")
+    output, _ = Get.Redirect.stdout(Console.Console.print, "Hello", auto_reset=False, end="")
     assert output == "Hello", "output is not valid"
 
 def JT_text_formatting():
@@ -145,15 +147,15 @@ def JT_line():
     assert True
 
 def JT_error_base():
-    e = Error.Error("msg")
+    e = Error.Error.ErrorRuntime("msg")
     assert "msg" in str(e), "message not an Exception"
 
 def JT_error_with_link():
-    e = Error.Error("msg", link=("file.py", 10))
+    e = Error.Error.ErrorRuntime("msg", link=("file.py", 10))
     assert "file.py" in str(e), "file not shown"
 
 def JT_error_types():
-    e = Error.ErrorConfig("config error")
+    e = Error.Special.ErrorSpecialConfig("config error")
     assert isinstance(e, Exception), "e not an Exception"
 
 TEST_PATH = "./tests/JT/"

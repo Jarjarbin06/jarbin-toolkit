@@ -37,7 +37,7 @@ class _NetworkError(BaseError):
         self.error += f" Network"
 
 
-class ErrorSysNetwork(_NetworkError):
+class ErrorNetwork(_NetworkError):
     """
         ErrorSysNetwork exception
     """
@@ -62,7 +62,7 @@ class ErrorSysNetwork(_NetworkError):
         self.error += f"({type(self).__name__})"
 
 
-class ErrorSysHTTP(_NetworkError):
+class ErrorNetworkHTTP(_NetworkError):
     """
         ErrorSysHTTP exception
     """

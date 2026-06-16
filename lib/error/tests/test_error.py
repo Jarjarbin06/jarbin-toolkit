@@ -1,21 +1,21 @@
 import pytest
 
 
-from jarbin_toolkit_error import *
+import jarbin_toolkit_error as Error
 
 
 def test_error_default_constructor(
     ) -> None:
-    err = Error()
+    err = Error.BaseError()
     assert err.message == "an error occurred"
     assert err.error == "Error"
     assert err.link is None
-    assert isinstance(err, Error)
+    assert isinstance(err, Error.BaseError)
 
 
 def test_error_full_constructor(
     ) -> None:
-    err = Error("Something broke", error="SystemError", link=("path/file.py", 42))
+    err = Error.BaseError("Something broke", error="SystemError", link=("path/file.py", 42))
     assert err.message == "Something broke"
     assert err.error == "SystemError"
     assert not err.link is None
@@ -26,7 +26,7 @@ def test_error_full_constructor(
 
 def test_error_str_without_link(
     ) -> None:
-    err = Error("Broken", error="RuntimeError")
+    err = Error.BaseError("Broken", error="RuntimeError")
     s = str(err)
 
     assert "RuntimeError" in s
@@ -37,7 +37,7 @@ def test_error_str_without_link(
 
 def test_error_str_with_link_no_line(
     ) -> None:
-    err = Error("Crash detected", error="FatalError", link=("engine.py", None))
+    err = Error.BaseError("Crash detected", error="FatalError", link=("engine.py", None))
     s = str(err)
 
     assert "FatalError" in s
@@ -48,14 +48,14 @@ def test_error_str_with_link_no_line(
 
 def test_error_repr(
     ) -> None:
-    err = Error("Crash detected", error="FatalError", link=("engine.py", None))
+    err = Error.BaseError("Crash detected", error="FatalError", link=("engine.py", None))
 
-    assert repr(err) == "Error(\'Crash detected\', error=\'FatalError\', link=(\'engine.py\', None))"
+    assert repr(err) == "BaseError(\'Crash detected\', error=\'FatalError\', link=(\'engine.py\', None))"
 
 
 def test_error_str_with_link_with_line(
     ) -> None:
-    err = Error("Crash detected", error="FatalError", link=("engine.py", 88))
+    err = Error.BaseError("Crash detected", error="FatalError", link=("engine.py", 88))
     s = str(err)
 
     assert "FatalError" in s
@@ -68,7 +68,7 @@ def test_error_str_with_link_with_line(
 
 def test_error_str_formatting_clean(
     ) -> None:
-    err = Error("X", error="Y", link=("a.py", 5))
+    err = Error.BaseError("X", error="Y", link=("a.py", 5))
     output = str(err).replace("\n", " ").strip()
 
     assert "Y" in output
@@ -77,63 +77,63 @@ def test_error_str_formatting_clean(
     assert "5" in output
 
 
-def test_link_negative_line_number_disallowed(
+def test_link_negative_line_number_not_allowed(
     ) -> None:
-    err = Error("msg", error="Err", link=("file.py", -1))
+    err = Error.BaseError("msg", error="Err", link=("file.py", -1))
     assert not err.link
 
 
 def test_empty_message_and_error_are_allowed(
     ) -> None:
-    err = Error("", error="")
+    err = Error.BaseError("", error="")
     assert err.message == ""
     assert err.error == ""
 
 
-def test_error_error_launch(
+def test_error_error(
     ) -> None:
-    err = ErrorLaunch()
-
-    assert err.error == "Error(ErrorLaunch)"
-
-
-def test_error_error_import(
-    ) -> None:
-    err = ErrorImport()
+    err = Error.Error.ErrorImport()
 
     assert err.error == "Error(ErrorImport)"
 
 
-def test_error_error_log(
+def test_error_error_file(
     ) -> None:
-    err = ErrorLog()
+    err = Error.File.ErrorFileParse()
 
-    assert err.error == "Error(ErrorLog)"
+    assert err.error == "Error File(ErrorFileParse)"
 
 
-def test_error_error_config(
+def test_error_error_logic(
     ) -> None:
-    err = ErrorConfig()
+    err = Error.Logic.ErrorLogicAssertion()
 
-    assert err.error == "Error(ErrorConfig)"
+    assert err.error == "Error Logic(ErrorLogicAssertion)"
 
 
-def test_error_error_setting(
+def test_error_error_network(
     ) -> None:
-    err = ErrorSetting()
+    err = Error.Network.ErrorNetworkHTTP()
 
-    assert err.error == "Error(ErrorSetting)"
+    assert err.error == "Error Network(ErrorNetworkHTTP)"
 
 
-def test_error_error_type(
+def test_error_special(
     ) -> None:
-    err = ErrorType()
+    err = Error.Special.ErrorSpecialLaunch()
 
-    assert err.error == "Error(ErrorType)"
+    assert err.error == "Error Special(ErrorSpecialLaunch)"
 
 
-def test_error_error_value(
+def test_error_state(
     ) -> None:
-    err = ErrorValue()
+    err = Error.State.ErrorStateNotInitialized()
 
-    assert err.error == "Error(ErrorValue)"
+    assert err.error == "Error State(ErrorStateNotInitialized)"
+
+
+def test_error_system(
+    ) -> None:
+    err = Error.System.ErrorSystemTimeout()
+
+    assert err.error == "Error System(ErrorSystemTimeout)"
