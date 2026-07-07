@@ -59,7 +59,7 @@ def test_text_length(
 def test_text_repr(
     ) -> None:
     t = Text("hello")
-    assert repr(t) == "Text(\'hello\')"
+    assert repr(t) == "Text(text='hello')"
 
 
 def test_text_url_link_no_text(

@@ -226,5 +226,7 @@ class Animation(Format):
                 str: Animation string
         """
 
-        return f"Animation({self.animation=!r})"
+        animation = self.animation
+
+        return f"Animation({animation=!r})"
 

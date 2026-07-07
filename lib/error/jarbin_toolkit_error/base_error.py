@@ -159,4 +159,9 @@ class BaseError(Exception):
                 str: Error string
         """
 
-        return f"{type(self).__name__}({self.message=!r}, {self.error=!r}{f', {self.link_data=!r}' if self.link else ''})"
+        name = type(self).__name__
+        message = self.message
+        error = self.error
+        link_data = self.link_data
+
+        return f"{name}({message=!r}, {error=!r}{f', {link_data=!r}' if self.link else ''})"

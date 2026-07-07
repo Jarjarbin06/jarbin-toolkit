@@ -94,7 +94,12 @@ class Action:
                 str: Action string
         """
 
-        return f"Action({self.name=!r}, {self.function=!r}, {self.args=!r}, {self.kwargs=!r})"
+        name = self.name
+        function = self.function.__name__
+        args = self.args
+        kwargs = self.kwargs
+
+        return f"Action({name=!r}, {function=!r}, {args=!r}, {kwargs=!r})"
 
 
 class Actions:
@@ -221,4 +226,4 @@ class Actions:
                 str: Actions string
         """
 
-        return f"Actions({self.actions=!r})"
+        return f"Actions({', '.join([repr(a) for a in self.actions])})"

@@ -126,7 +126,9 @@ class Text(Format):
                 str: Text string
         """
 
-        return f"Text({self.text=!r})"
+        text = self.text
+
+        return f"Text({text=!r})"
 
 
     @staticmethod

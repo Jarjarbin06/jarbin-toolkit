@@ -105,7 +105,7 @@ def test_animation_render_color_int(
 def test_animation_repr(
     ) -> None:
     anim = Animation(["A"])
-    assert repr(anim) == "Animation([\'A\'])"
+    assert repr(anim) == "Animation(animation=['A'])"
 
 
 def test_animation_length(

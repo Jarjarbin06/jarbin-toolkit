@@ -57,7 +57,7 @@ def test_log_log_repr(
     ) -> None:
     log = Log("tests", "log_test_log")
     s = repr(log)
-    assert s == "Log(\'tests/\', \'log_test_log\', False)"
+    assert s == "Log(path='tests/', name='log_test_log', type='jar-log')"
 
 
 def test_log_log_delete(
@@ -113,7 +113,7 @@ def test_log_json_repr(
     ) -> None:
     log = Log("tests", "log_test_json", json = True)
     s = repr(log)
-    assert s == "Log(\'tests/\', \'log_test_json\', True)"
+    assert s == "Log(path='tests/', name='log_test_json', type='json')"
 
 
 def test_log_json_delete(

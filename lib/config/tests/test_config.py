@@ -67,7 +67,7 @@ def test_config_repr(
     ) -> None:
     config = Config("tests")
 
-    assert repr(config) == "Config(\'tests/\', ?, \'config.ini\')"
+    assert repr(config) == "Config(path='tests/', ?, file_name='config.ini')"
 
 
 def test_config_delete_not_cached(

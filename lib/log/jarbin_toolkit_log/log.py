@@ -513,4 +513,8 @@ class Log:
                 str: Log string
         """
 
-        return f"Log({self.log_path=!r}, {self.log_file_name!r}, {True if self.log_file_type == 'json' else False=!r})"
+        path = self.log_path
+        name = self.log_file_name
+        type = self.log_file_type
+
+        return f"Log({path=!r}, {name=!r}, {type=!r})"

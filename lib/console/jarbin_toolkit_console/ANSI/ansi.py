@@ -140,4 +140,6 @@ class ANSI(Format):
                 str: ANSI string
         """
 
-        return f"ANSI({self.sequence=!r})"
+        sequence = self.sequence
+
+        return f"ANSI({sequence=!r})"

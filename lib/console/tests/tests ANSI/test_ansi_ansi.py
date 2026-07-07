@@ -74,7 +74,7 @@ def test_ansi_invalid_add(
 def test_ansi_repr(
     ) -> None:
     a = ANSI("\x1b[32m")
-    assert repr(a) == "ANSI(\'\\x1b[32m\')"
+    assert repr(a) == "ANSI(sequence='\\x1b[32m')"
 
 
 quit(delete_log=True)

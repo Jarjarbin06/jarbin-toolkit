@@ -26,7 +26,7 @@ def test_action_repr():
     def sample(x, y): return x + y
     act = Action("sum", sample, 3, 4)
 
-    assert repr(act) == "Action(\'sum\', function=sample, args=[3, 4], kwargs={})"
+    assert repr(act) == "Action(name='sum', function='sample', args=[3, 4], kwargs={})"
 
 
 def test_action_execution(
@@ -99,11 +99,11 @@ def test_actions_str():
 def test_actions_repr():
     def sample(x, y): return x + y
     a1 = Action("sum", sample, 3, 4)
-    a2 = Action("sum", sample, 3, 4)
+    a2 = Action("sum", sample, a1(), 4)
 
     actions = a1 + a2
 
-    assert repr(actions) == "Actions([Action(\'sum\', function=sample, args=[3, 4], kwargs={}), Action(\'sum\', function=sample, args=[3, 4], kwargs={})])"
+    assert repr(actions) == "Actions(Action(name='sum', function='sample', args=[3, 4], kwargs={}), Action(name='sum', function='sample', args=[7, 4], kwargs={}))"
 
 
 def test_actions_index_access():
