@@ -334,5 +334,5 @@ class JarTest:
     def __repr__(
             self
         ) -> str:
-        test_names = list(self.tests.keys())
-        return f"JarTest(tests={test_names})"
+        tests = list(self.tests.keys())
+        return f"JarTest({tests=!r})"

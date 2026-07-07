@@ -50,11 +50,7 @@ class AssertionResult:
 
     def __repr__(self) -> str:
         status = "PASS" if self.passed else "FAIL"
-        return (
-            f"AssertionResult({self.name}, {status}, "
-            f"expected={self.expected}, actual={self.actual}, "
-            f"values={self.values}, message={self.message})"
-        )
+        return f"AssertionResult({self.name=!r}, {status=!r}, {self.expected=!r}, {self.actual=!r}, {self.values=!r}, {self.message=!r})"
 
 
 class AssertionContext:

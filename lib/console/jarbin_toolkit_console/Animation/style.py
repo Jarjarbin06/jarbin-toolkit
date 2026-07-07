@@ -79,4 +79,4 @@ class Style:
                 str: Style string
         """
 
-        return f"Style({repr(self.on)}, {repr(self.off)}, {repr(self.arrow_left)}, {repr(self.arrow_right)}, {repr(self.border_left)}, {repr(self.border_right)})"
+        return f"Style({self.on=!r}, {self.off=!r}, {self.arrow_left=!r}, {self.arrow_right=!r}, {self.border_left=!r}, {self.border_right=!r})"

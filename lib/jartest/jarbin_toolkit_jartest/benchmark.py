@@ -194,12 +194,7 @@ class Benchmark:
         ) -> str:
 
         if self._n == 0:
-            return (
-                f"Benchmark("
-                f"test={self.name!r}, "
-                f"tested={self.test_amount!r}"
-                f")"
-            )
+            return f"Benchmark({self.name=!r}, {self.test_amount=!r})"
 
         assertions = [
             type(a).__name__ if a is not None else None
@@ -211,16 +206,7 @@ class Benchmark:
             for e in self._error
         ]
 
-        return (
-            f"Benchmark("
-            f"test={self.name!r}, "
-            f"time={self.time_str}, "
-            f"assertion={assertions}, "
-            f"error={errors}, "
-            f"result={self.result!r}, "
-            f"tested={self.test_amount!r}"
-            f")"
-        )
+        return f"Benchmark({self.name=!r}, {self.time_str=!r}, {assertions=!r}, {errors=!r}, {self.result=!r}, {self.test_amount=!r})"
 
     @staticmethod
     def benchmark(

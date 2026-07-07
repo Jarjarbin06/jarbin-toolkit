@@ -265,4 +265,4 @@ class Config:
                 str: Config string
         """
 
-        return f"Config({repr(self.path)}, ?, {repr(self.file_name)})"
+        return f"Config({self.path=!r}, ?, {self.file_name=!r})"

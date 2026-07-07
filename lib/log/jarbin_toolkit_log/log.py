@@ -8,6 +8,7 @@
 #############################
 
 
+import threading
 from builtins import object
 from typing import Any
 
@@ -28,6 +29,7 @@ class Log:
         ) -> None:
         """
             Log class constructor.
+            (Thread safe)
 
             Parameters:
                 path (str): path to log file
@@ -41,6 +43,7 @@ class Log:
         self.log_path : str = (path if path[-1] in ["/", "\\"] else path + ("\\" if system() == "Windows" else "/"))
         self.log_file_name : str = str(datetime.now()).replace(":", "_") if not file_name else file_name
         self.log_file_type : str = "json" if json else "jar-log"
+        self._lock = threading.Lock()
 
         try:
             open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'x').close()
@@ -157,9 +160,12 @@ class Log:
         """
 
         if not self.closed:
-            with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'a') as log_file :
-                log_file.write(f"\n{log_str}" if self.log_file_type == "jar-log" else log_str)
-            log_file.close()
+            with self._lock:
+                with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'a') as log_file:
+                    if self.log_file_type == "jar-log":
+                        log_file.write(f"\n{log_str}")
+                    else:
+                        log_file.write(log_str)
 
 
     def close(
@@ -170,19 +176,20 @@ class Log:
         """
 
         if not self.closed:
-            if self.log_file_type == "jar-log":
-                with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'a') as log_file :
-                    log_file.write(f"\n----END----\n")
-                log_file.close()
+            with self._lock:
+                if self.log_file_type == "jar-log":
+                    with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'a') as log_file :
+                        log_file.write(f"\n----END----\n")
+                    log_file.close()
 
-            elif self.log_file_type == "json":
-                string : str = self.read()[:-1]
+                elif self.log_file_type == "json":
+                    string : str = self.read()[:-1]
 
-                with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'w') as log_file:
-                    log_file.write(string + "\n    ]\n}")
-                log_file.close()
+                    with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'w') as log_file:
+                        log_file.write(string + "\n    ]\n}")
+                    log_file.close()
 
-            self.closed = True
+                self.closed = True
 
 
     def delete(
@@ -506,4 +513,4 @@ class Log:
                 str: Log string
         """
 
-        return f"Log({repr(self.log_path)}, {repr(self.log_file_name)}, {repr(True if self.log_file_type == 'json' else False)})"
+        return f"Log({self.log_path=!r}, {self.log_file_name!r}, {True if self.log_file_type == 'json' else False=!r})"

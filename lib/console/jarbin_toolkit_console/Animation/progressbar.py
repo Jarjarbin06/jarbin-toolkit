@@ -250,4 +250,4 @@ class ProgressBar(Format):
                 str: ProgressBar string
         """
 
-        return f"ProgressBar({repr(self.length)}, animation=[{repr(self.animation[0])}, ..., {repr(self.animation[-1])}], style={repr(self.style)}, percent_style={repr(self.percent_style)}, spinner={repr(self.spinner)}, spinner_position={repr(self.spinner_position)})"
+        return f"ProgressBar({self.length}, {self.animation=!r}, {self.style=!r}, {self.percent_style=!r}, {self.spinner=!r}, {self.spinner_position=!r})"

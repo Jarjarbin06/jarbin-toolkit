@@ -234,3 +234,28 @@ class ErrorFileNotFound(_Error):
 
         super().__init__(message, link=link)
         self.error += f"({type(self).__name__})"
+
+
+class ErrorNotImplemented(_Error):
+    """
+        ErrorNotImplemented exception
+    """
+
+
+    def __init__(
+            self,
+            message : str = "not implemented error",
+
+            *,
+            link : tuple[str , int | None] | None = None
+        ) -> None:
+        """
+            Create an Error.
+
+            Parameters:
+                message (str, optional): The error message.
+                link (tuple[str, int | None] | None, optional): The link to where the error comes from (file and line).
+        """
+
+        super().__init__(message, link=link)
+        self.error += f"({type(self).__name__})"
