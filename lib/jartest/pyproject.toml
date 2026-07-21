@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jarbin-toolkit-jartest"
-version = "0.1.4"
+version = "0.1.4.1"
 description = "Test tool (Benchmark / Test / Assertion / etc...)"
 authors = [
     { name = "Nathan Jarjarbin", email = "nathan.amaraggi@epitech.eu" }

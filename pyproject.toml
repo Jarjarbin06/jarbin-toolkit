@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jarbin-toolkit"
-version = "1.5"
+version = "1.6"
 description = "Tools by Jarjarbin06 (Action / Config / Console / Error /JarTest / Log / Time)"
 authors = [
     { name = "Nathan Jarjarbin", email = "nathan.amaraggi@epitech.eu" }
@@ -14,13 +14,13 @@ requires-python = ">=3.11"
 license = "GPL-3.0-or-later"
 
 dependencies = [
-    "jarbin-toolkit-action>=0.1.2.2",
-    "jarbin-toolkit-config>=0.1.2.2",
-    "jarbin-toolkit-error>=0.1.6",
-    "jarbin-toolkit-log>=0.2.1.5",
-    "jarbin-toolkit-time>=0.1.2.1",
-    "jarbin-toolkit-console>=0.1.2.4",
-    "jarbin-toolkit-jartest>=0.1.4"
+    "jarbin-toolkit-action>=0.1.2.3",
+    "jarbin-toolkit-config>=0.1.2.3",
+    "jarbin-toolkit-error>=0.1.6.1",
+    "jarbin-toolkit-log>=0.2.2.1",
+    "jarbin-toolkit-time>=0.1.2.2",
+    "jarbin-toolkit-console>=0.1.2.5",
+    "jarbin-toolkit-jartest>=0.1.4.1"
 ]
 
 classifiers = [

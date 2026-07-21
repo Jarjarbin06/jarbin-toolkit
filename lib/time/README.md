@@ -1,7 +1,7 @@
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Epitech_logo.png" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Jarbin-Toolkit_logo.jpg" alt="error loading Jarbin-ToolKit Logo" width="49%" style="display:inline-block;">
 
-# 📦 Jarbin-ToolKit:Time v0.1.2.1
+# 📦 Jarbin-ToolKit:Time v0.1.2.2
 
 > Deterministic time abstraction layer providing precise timing utilities, monotonic timestamps, and structured stopwatch-based measurement tools
 

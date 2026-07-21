@@ -1,7 +1,7 @@
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Epitech_logo.png" alt="error loading Epitech Logo" width="49%" style="display:inline-block; margin-right:1%;">
 <img src="https://raw.githubusercontent.com/Jarjarbin06/jarbin-toolkit/refs/heads/main/source/Jarbin-Toolkit_logo.jpg" alt="error loading Jarbin-ToolKit Logo" width="49%" style="display:inline-block;">
 
-# 📦 Jarbin-ToolKit:Config v0.1.2.2
+# 📦 Jarbin-ToolKit:Config v0.1.2.3
 
 > Deterministic configuration management system based on structured INI file abstraction over Python ConfigParser
 

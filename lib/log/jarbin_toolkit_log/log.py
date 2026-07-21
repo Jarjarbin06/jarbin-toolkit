@@ -10,7 +10,7 @@
 
 import threading
 from builtins import object
-from typing import Any
+from typing import Any, Callable
 
 
 class Log:
@@ -91,7 +91,8 @@ class Log:
             self,
             status : str,
             title : str,
-            description : str
+            description : str,
+            save_function : Callable[[str], None] | None = None
         ) -> None:
         """
             Format a log message then save it.
@@ -101,6 +102,7 @@ class Log:
                 status (str): log status
                 title (str): log title
                 description (str): log description
+                save_function (Callable[[str], None] | None): saving function
         """
 
         from datetime import datetime
@@ -126,7 +128,10 @@ class Log:
                         "\",\n            \"msg\": \"" + description +
                         "\"\n        },")
 
-            self.save(log_str)
+            if save_function is None:
+                self.save(log_str)
+            else:
+                save_function(log_str)
 
 
     def comment(
@@ -143,9 +148,10 @@ class Log:
                 comment (str): comment
         """
 
+        formated = [f">>> {repr(line)}" for line in comment.split("\n")]
+
         if not self.closed:
-            for line in comment.split("\n"):
-                self.save(f">>> {repr(line)}")
+            self.save_batch(formated)
 
 
     def save(
@@ -166,6 +172,27 @@ class Log:
                         log_file.write(f"\n{log_str}")
                     else:
                         log_file.write(log_str)
+
+
+    def save_batch(
+            self,
+            logs : list[str]
+        ) -> None:
+        """
+            Save new logs in the log file.
+
+            Parameters:
+                logs (list[str]): log strings
+        """
+
+        if not self.closed:
+            with self._lock:
+                with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'a') as log_file:
+                    for log in logs:
+                        if self.log_file_type == "jar-log":
+                            log_file.write(f"\n{logs}")
+                        else:
+                            log_file.write(logs)
 
 
     def close(

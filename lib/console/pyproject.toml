@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jarbin-toolkit-console"
-version = "0.1.2.4"
+version = "0.1.2.5"
 description = "Console tool (Animate / Print with color / Format / etc...)"
 authors = [
     { name = "Nathan Jarjarbin", email = "nathan.amaraggi@epitech.eu" }
@@ -14,7 +14,12 @@ requires-python = ">=3.11"
 license = "GPL-3.0-or-later"
 
 dependencies = [
-    "datetime"
+    "datetime",
+    "jarbin-toolkit-action>=0.1.2.3",
+    "jarbin-toolkit-time>=0.1.2.2",
+    "jarbin-toolkit-log>=0.2.2.1",
+    "jarbin-toolkit-config>=0.1.2.3",
+    "jarbin-toolkit-error>=0.1.6.1"
 ]
 
 classifiers = [
