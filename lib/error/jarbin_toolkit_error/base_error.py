@@ -144,7 +144,7 @@ class BaseError(Exception):
                 string += "\n\x1b[101m \x1b[0m     \x1b[91m"
                 string += line
 
-        string += ("\n\x1b[101m \x1b[0m \x1b[91m" + f"\n\x1b[101m \x1b[0m\n\x1b[101m \x1b[0m  \x1b[91m" + str(self.link)) if self.link else ""
+        string += ("\n\x1b[101m \x1b[0m \x1b[91m" + f"\n\x1b[101m \x1b[0m  \x1b[91m" + str(self.link)) if self.link else ""
 
         return string
 
