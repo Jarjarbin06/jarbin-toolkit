@@ -190,9 +190,9 @@ class Log:
                 with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'a') as log_file:
                     for log in logs:
                         if self.log_file_type == "jar-log":
-                            log_file.write(f"\n{logs}")
+                            log_file.write(f"\n{log}")
                         else:
-                            log_file.write(logs)
+                            log_file.write(log)
 
 
     def close(
