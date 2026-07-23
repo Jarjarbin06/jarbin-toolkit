@@ -136,7 +136,8 @@ class Log:
 
     def comment(
             self,
-            comment : str
+            comment : str,
+            save_function : Callable[[str], None] | None = None
         ) -> None:
         """
             Save a comment in the log file.
@@ -146,12 +147,17 @@ class Log:
 
             Parameters:
                 comment (str): comment
+                save_function (Callable[[str], None] | None): saving function
         """
 
         formated = [f">>> {repr(line)}" for line in comment.split("\n")]
 
         if not self.closed:
-            self.save_batch(formated)
+            if save_function is None:
+                self.save_batch(formated)
+            else:
+                for line in formated:
+                    save_function(line)
 
 
     def save(
