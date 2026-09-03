@@ -12,8 +12,8 @@
 import subprocess
 import io
 from contextlib import redirect_stdout as _redirect_stdout, redirect_stderr as _redirect_stderr
-from typing import Any
-from httpx import request, Response
+from typing import Any, Mapping
+from httpx import request as _request, Response
 
 
 class Get:
@@ -94,62 +94,89 @@ class Get:
     class HTTP:
 
         @staticmethod
-        def _request(
-            method: str,
-            url: str,
-            **kwargs
-        ) -> Response:
-            return request(
-                method,
-                url,
-                **kwargs
+        def request(
+                method: str,
+                url: str,
+                *,
+                params: Any = None,
+                content: Any = None,
+                data: Any = None,
+                files: Any = None,
+                json: Any = None,
+                headers: Any = None,
+                cookies: Any = None,
+                auth: Any = None,
+                proxy: Any = None,
+                timeout: float = 5.0,
+                follow_redirects: bool = False,
+                verify: bool = True,
+                cert: Any = None,
+                trust_env: bool = True
+            ) -> Response:
+            return _request(
+        method,
+            url,
+                params=params,
+                content=content,
+                data=data,
+                files=files,
+                json=json,
+                headers=headers,
+                cookies=cookies,
+                auth=auth,
+                proxy=proxy,
+                timeout=timeout,
+                follow_redirects=follow_redirects,
+                verify=verify,
+                cert=cert,
+                trust_env=trust_env
             )
 
         @staticmethod
         def get(
-            url: str,
-            **kwargs
-        ) -> Response:
-            return Get.HTTP._request("GET", url, **kwargs)
+                url: str,
+                **kwargs
+            ) -> Response:
+            return Get.HTTP.request("GET", url, **kwargs)
 
         @staticmethod
         def post(
-            url: str,
-            **kwargs
-        ) -> Response:
-            return Get.HTTP._request("POST", url, **kwargs)
+                url: str,
+                **kwargs
+            ) -> Response:
+            return Get.HTTP.request("POST", url, **kwargs)
 
         @staticmethod
         def put(
-            url: str,
-            **kwargs
-        ) -> Response:
-            return Get.HTTP._request("PUT", url, **kwargs)
+                url: str,
+                **kwargs
+            ) -> Response:
+            return Get.HTTP.request("PUT", url, **kwargs)
 
         @staticmethod
         def patch(
-            url: str,
-            **kwargs
-        ) -> Response:
-            return Get.HTTP._request("PATCH", url, **kwargs)
+                url: str,
+                **kwargs
+            ) -> Response:
+            return Get.HTTP.request("PATCH", url, **kwargs)
 
         @staticmethod
         def delete(
-            url: str,
-            **kwargs
-        ) -> Response:
-            return Get.HTTP._request("DELETE", url, **kwargs)
+                url: str,
+                **kwargs
+            ) -> Response:
+            return Get.HTTP.request("DELETE", url, **kwargs)
 
         @staticmethod
         def head(
-            url: str,
-            **kwargs
-        ) -> Response:
-            return Get.HTTP._request("HEAD", url, **kwargs)
+                url: str,
+                **kwargs
+            ) -> Response:
+            return Get.HTTP.request("HEAD", url, **kwargs)
 
         @staticmethod
         def options(
-            url: str,
-            **kwargs
-        ) -> Response:
-            return Get.HTTP._request("OPTIONS", url, **kwargs)
+                url: str,
+                **kwargs
+            ) -> Response:
+            return Get.HTTP.request("OPTIONS", url, **kwargs)
