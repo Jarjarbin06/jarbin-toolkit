@@ -16,6 +16,7 @@ from typing import Any
 
 from jarbin_toolkit_jartest.assertion import AssertionResult
 from jarbin_toolkit_jartest.benchmark import Benchmark
+from jarbin_toolkit_jartest.show import Show
 from jarbin_toolkit_error import BaseError
 
 
@@ -28,10 +29,17 @@ class JarTest:
 
 
     def __init__(
-            self
+            self,
+            *,
+            show_tests: bool = True,
+            show_results: bool = True,
+            show_output: bool = True,
         ) -> None :
 
         self.tests : dict[str, Benchmark] = {}
+        self._show_tests: bool = show_tests
+        self._show_results: bool = show_results
+        self._show_output: bool = show_output
 
 
     def run(
@@ -84,6 +92,8 @@ class JarTest:
             test = self.tests[test_name]
 
             test(kw_n)
+
+            Show._close()
 
             status = get_status(test)
 

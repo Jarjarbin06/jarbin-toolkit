@@ -13,6 +13,7 @@ import subprocess
 import io
 from contextlib import redirect_stdout as _redirect_stdout, redirect_stderr as _redirect_stderr
 from typing import Any
+from httpx import request, Response
 
 
 class Get:
@@ -89,3 +90,66 @@ class Get:
             ) -> tuple[str, int]:
             _, err, code = Get.Redirect._run_cmd(list(args))
             return err, code
+
+    class HTTP:
+
+        @staticmethod
+        def _request(
+            method: str,
+            url: str,
+            **kwargs
+        ) -> Response:
+            return request(
+                method,
+                url,
+                **kwargs
+            )
+
+        @staticmethod
+        def get(
+            url: str,
+            **kwargs
+        ) -> Response:
+            return Get.HTTP._request("GET", url, **kwargs)
+
+        @staticmethod
+        def post(
+            url: str,
+            **kwargs
+        ) -> Response:
+            return Get.HTTP._request("POST", url, **kwargs)
+
+        @staticmethod
+        def put(
+            url: str,
+            **kwargs
+        ) -> Response:
+            return Get.HTTP._request("PUT", url, **kwargs)
+
+        @staticmethod
+        def patch(
+            url: str,
+            **kwargs
+        ) -> Response:
+            return Get.HTTP._request("PATCH", url, **kwargs)
+
+        @staticmethod
+        def delete(
+            url: str,
+            **kwargs
+        ) -> Response:
+            return Get.HTTP._request("DELETE", url, **kwargs)
+
+        @staticmethod
+        def head(
+            url: str,
+            **kwargs
+        ) -> Response:
+            return Get.HTTP._request("HEAD", url, **kwargs)
+
+        @staticmethod
+        def options(
+            url: str,
+            **kwargs
+        ) -> Response:
+            return Get.HTTP._request("OPTIONS", url, **kwargs)

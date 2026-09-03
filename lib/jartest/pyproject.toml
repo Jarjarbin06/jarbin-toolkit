@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jarbin-toolkit-jartest"
-version = "0.1.4.1"
+version = "0.1.5.0"
 description = "Test tool (Benchmark / Test / Assertion / etc...)"
 authors = [
     { name = "Nathan Jarjarbin", email = "nathan.amaraggi@epitech.eu" }
@@ -14,7 +14,10 @@ requires-python = ">=3.11"
 license = "GPL-3.0-or-later"
 
 dependencies = [
-    "datetime"
+    "datetime",
+    "jarbin-toolkit-console",
+    "jarbin-toolkit-error",
+    "jarbin-toolkit-time"
 ]
 
 classifiers = [

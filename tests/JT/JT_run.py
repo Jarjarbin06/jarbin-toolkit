@@ -1,6 +1,6 @@
 import os
 
-from jarbin_toolkit_jartest import JarTest, Get
+from jarbin_toolkit_jartest import JarTest, Get, Show
 
 import jarbin_toolkit as JTK
 from jarbin_toolkit import Action
@@ -205,6 +205,7 @@ def JT_stopwatch_reset():
 def JT_wait():
     elapsed = Time.Time.wait(0.1)
     assert elapsed >= 0.1, "invalid elapsed time"
+
 
 JTT = JarTest()
 JTT.fetch()

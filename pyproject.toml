@@ -20,7 +20,7 @@ dependencies = [
     "jarbin-toolkit-log>=0.2.3.1",
     "jarbin-toolkit-time>=0.1.2.2",
     "jarbin-toolkit-console>=0.1.2.5",
-    "jarbin-toolkit-jartest>=0.1.4.1"
+    "jarbin-toolkit-jartest>=0.1.5.0"
 ]
 
 classifiers = [
