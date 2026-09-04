@@ -85,10 +85,6 @@ class Show:
         test_number = list(jar_test.tests.keys()).index(test_name)
 
         # ------------------------------------------------------------
-        # JarTest console colors
-        # ------------------------------------------------------------
-
-        # ------------------------------------------------------------
         # Open output section when entering a new test
         # ------------------------------------------------------------
 
@@ -245,9 +241,16 @@ class Show:
         lines = []
 
         for value in values:
-            lines.extend(
-                _format(value)
-            )
+            if isinstance(value, str):
+                for line in value.split("\n"):
+                    lines.extend(
+                        _format(line)
+                    )
+
+            else:
+                lines.extend(
+                    _format(value)
+                )
 
         Console.print(
             Show._C["DIM"] + "│ " + Show._C["RESET"]
