@@ -227,7 +227,7 @@ __all__ : list[str] = [
 
 __author__ : str = 'Nathan Jarjarbin'
 __email__ : str = 'nathan.amaraggi@epitech.eu'
-__version__ : str = "1.6"
+__version__ : str = "1.7"
 __subversions__ : dict[str, str] = {
     "Action" : Action.__version__,
     "Config" : Config_parent.__version__,
