@@ -11,6 +11,7 @@
 
 import inspect
 from jarbin_toolkit_console import Console, ANSI
+from jarbin_toolkit_error import BaseError
 
 
 class Show:
@@ -377,12 +378,13 @@ class Show:
             width = 108
 
             line = (
-                f"--- {title} "
+                f"--- {Show._C["RESET"] + Show._C["TITLE"] + title + Show._C["RESET"] + Show._C["DIM"]} "
                 .center(width, "-")
             )
 
             Show._print(
-                Show._C["TITLE"]
+                Show._C["RESET"]
+                + Show._C["DIM"]
                 + line
                 + Show._C["RESET"],
                 end="\n"
@@ -411,7 +413,7 @@ class Show:
                 Show._C["KEY"]
                 + "Method"
                 + Show._C["RESET"]
-                + " │ "
+                + "  │ "
                 + Show._C["VALUE"]
                 + method.upper()
                 + Show._C["RESET"],
@@ -422,7 +424,7 @@ class Show:
                 Show._C["KEY"]
                 + "URL"
                 + Show._C["RESET"]
-                + " │ "
+                + "     │ "
                 + Show._C["VALUE"]
                 + url
                 + Show._C["RESET"],
@@ -434,7 +436,7 @@ class Show:
                     Show._C["KEY"]
                     + "Params"
                     + Show._C["RESET"]
-                    + " │ ",
+                    + "  │ ",
                     params
                 )
 
@@ -452,9 +454,13 @@ class Show:
                     Show._C["KEY"]
                     + "Body"
                     + Show._C["RESET"]
-                    + " │ ",
+                    + "    │ ",
                     body
                 )
+
+            Show._print(
+                end="\n"
+            )
 
     class Response:
 
@@ -467,7 +473,7 @@ class Show:
             ) -> None:
 
             Show._print(
-                Show._C["KEY"]
+                Show._C["TYPE"]
                 + "RESPONSE"
                 + Show._C["RESET"],
                 end="\n"
@@ -502,7 +508,7 @@ class Show:
                 Show._C["KEY"]
                 + "Status"
                 + Show._C["RESET"]
-                + " │ "
+                + "  │ "
                 + status_color
                 + str(status_code)
                 + Show._C["RESET"],
@@ -514,7 +520,7 @@ class Show:
                     Show._C["KEY"]
                     + "URL"
                     + Show._C["RESET"]
-                    + " │ "
+                    + "     │ "
                     + Show._C["VALUE"]
                     + str(url)
                     + Show._C["RESET"],
@@ -563,7 +569,7 @@ class Show:
                     Show._C["KEY"]
                     + "Body"
                     + Show._C["RESET"]
-                    + " │ ",
+                    + "    │ ",
                     content
                 )
 
@@ -571,7 +577,7 @@ class Show:
 
         @staticmethod
         def show(
-                exception: BaseException
+                exception: BaseException | BaseError
             ) -> None:
 
             Show._print(
@@ -597,7 +603,7 @@ class Show:
                 + "Message"
                 + Show._C["RESET"]
                 + " │ "
-                + str(exception),
+                + exception.message if isinstance(exception, BaseError) else str(exception),
                 end="\n"
             )
 

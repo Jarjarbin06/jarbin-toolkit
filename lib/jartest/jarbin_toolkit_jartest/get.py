@@ -110,7 +110,6 @@ class Get:
                 timeout: float = 5.0,
                 follow_redirects: bool = False,
                 verify: bool = True,
-                cert: Any = None,
                 trust_env: bool = True
             ) -> Response:
             return _request(
@@ -128,7 +127,6 @@ class Get:
                 timeout=timeout,
                 follow_redirects=follow_redirects,
                 verify=verify,
-                cert=cert,
                 trust_env=trust_env
             )
 
