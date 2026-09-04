@@ -41,6 +41,8 @@ class JarTest:
         self._show_results: bool = show_results
         self._show_output: bool = show_output
 
+        Show._show_output = show_output
+
 
     def run(
             self,
@@ -71,7 +73,7 @@ class JarTest:
 
             a: AssertionResult = failed[0]
 
-            msg = (f"{a.message}: " if a.message else "") + f"{a.actual!r} {a.meta.get('operator', '?')} {a.expected!r} (failed)"
+            msg = (f"{a.message}" if a.message else "") + (": " if a.message and a.values else "") + (f"{a.actual!r} {a.meta.get('operator', '?')} {a.expected}" if a.values else "") + " (failed)"
 
             if len(msg) > (len(Console) - 10) - 100:
                 msg = (f"{a.message}: " if a.message else "") + f"A {a.meta.get('operator', '?')} B (failed)"
@@ -95,9 +97,9 @@ class JarTest:
 
             Show._close()
 
-            status = get_status(test)
-
-            Console.print(f"{app_c['DIM']}{list(self.tests.keys()).index(test_name):03d}{app_c['RESET']} " + f"{app_c[status]}{self.tests[test_name].name.removeprefix('JT_')}", ANSI.Cursor.move_column(59).s, f"{app_c['DIM']}({test_name}){app_c['RESET']}")
+            if self._show_tests:
+                status = get_status(test)
+                Console.print(f"{app_c['DIM']}{list(self.tests.keys()).index(test_name):03d}{app_c['RESET']} " + f"{app_c[status]}{self.tests[test_name].name.removeprefix('JT_')}", ANSI.Cursor.move_column(59).s, f"{app_c['DIM']}({test_name}){app_c['RESET']}")
 
         def show_results(key: str, test: Benchmark):
 
@@ -116,31 +118,33 @@ class JarTest:
 
         def run_tests():
 
-            Console.print(line)
-            Console.print(app_c["TITLE"] + "─── JarTest ───".center(term_width))
-            Console.print(line)
-            Console.print(app_c["TITLE"] + "─── TESTS ───".center(112, "="))
+            if self._show_tests:
+                Console.print(line)
+                Console.print(app_c["TITLE"] + "─── JarTest ───".center(term_width))
+                Console.print(line)
+                Console.print(app_c["TITLE"] + "─── TESTS ───".center(112, "="))
 
             for name in self.tests:
                 run_test(name)
 
-            Console.print(app_c["TITLE"] + "─── RESULTS ───".center(112, "="))
+            if self._show_results:
+                Console.print(app_c["TITLE"] + "─── RESULTS ───".center(112, "="))
 
-            Console.print(f"┌{'─' * 5}┬{'─' * 5}┬{'─' * 52}┬{'─' * 17}┬{'─' * 5}┬{'─' * 21}┐")
-            Console.print(
-                f"│ {app_c['BOLD'] + app_c['WHITE']}idx",
-                f"│ {app_c['BOLD'] + app_c['WHITE']}stt",
-                f"│ {app_c['BOLD'] + app_c['WHITE']}{"name".center(50):}",
-                f"│ {app_c['BOLD'] + app_c['WHITE']}{app_c['TIME']}{'time'.center(15)}",
-                f"│ {app_c['BOLD'] + app_c['WHITE']}{app_c['RUN']}run",
-                f"│ {app_c['BOLD'] + app_c['WHITE']}{app_c['ERROR']}{'assertion/error'.center(20)}{app_c['RESET']}│"
-            )
-            Console.print(f"├{'─' * 5}┼{'─' * 5}┼{'─' * 52}┼{'─' * 17}┼{'─' * 5}┼{'─' * 21}┤")
+                Console.print(f"┌{'─' * 5}┬{'─' * 5}┬{'─' * 52}┬{'─' * 17}┬{'─' * 5}┬{'─' * 21}┐")
+                Console.print(
+                    f"│ {app_c['BOLD'] + app_c['WHITE']}idx",
+                    f"│ {app_c['BOLD'] + app_c['WHITE']}stt",
+                    f"│ {app_c['BOLD'] + app_c['WHITE']}{"name".center(50):}",
+                    f"│ {app_c['BOLD'] + app_c['WHITE']}{app_c['TIME']}{'time'.center(15)}",
+                    f"│ {app_c['BOLD'] + app_c['WHITE']}{app_c['RUN']}run",
+                    f"│ {app_c['BOLD'] + app_c['WHITE']}{app_c['ERROR']}{'assertion/error'.center(20)}{app_c['RESET']}│"
+                )
+                Console.print(f"├{'─' * 5}┼{'─' * 5}┼{'─' * 52}┼{'─' * 17}┼{'─' * 5}┼{'─' * 21}┤")
 
-            for name in self.tests:
-                show_results(name, self.tests[name])
+                for name in self.tests:
+                    show_results(name, self.tests[name])
 
-            Console.print(f"└{'─' * 5}┴{'─' * 5}┴{'─' * 52}┴{'─' * 17}┴{'─' * 5}┴{'─' * 21}┘")
+                Console.print(f"└{'─' * 5}┴{'─' * 5}┴{'─' * 52}┴{'─' * 17}┴{'─' * 5}┴{'─' * 21}┘")
 
         app_c : dict[str, str] = {
             "TITLE" : ANSI.Color.rgb_fg(255, 160, 0).s,
@@ -177,7 +181,8 @@ class JarTest:
             return e_failure
 
         else:
-            Console.print(ANSI.Line.clear_line() + Text.Format.apply(f"\n-- end -- {app_i["SUCCESS"]}", app_c["WHITE"]))
+            if self._show_tests or self._show_results or self._show_output:
+                Console.print(ANSI.Line.clear_line() + Text.Format.apply(f"\n-- end -- {app_i["SUCCESS"]}", app_c["WHITE"]))
 
             for test in self.tests.values():
                 if get_status(test) == "FAIL":

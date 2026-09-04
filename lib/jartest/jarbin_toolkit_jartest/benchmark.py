@@ -13,7 +13,7 @@ from types import TracebackType
 from typing import Callable, Any, Optional
 
 from jarbin_toolkit_jartest.assertion import AssertionResult
-from jarbin_toolkit_error import Error
+from jarbin_toolkit_error import Error, BaseError
 
 
 class Benchmark:
@@ -177,7 +177,24 @@ class Benchmark:
             self._time.append(time)
 
             # store list of AssertionResult
-            self._assertion.append(assertions)
+            self._assertion.append(
+                assertions
+                + ([
+                    AssertionResult(
+                        name = "Python Assertion",
+                        passed = False,
+                        values = (),
+                        expected = True,
+                        actual = False,
+                        message = "Python assert" + (f" | {assertion}" if len(str(assertion)) else ""),
+                        exception = assertion,
+                        meta = {
+                            "operator": "?",
+                            "types": ()
+                        }
+                    )
+                ] if assertion else [])
+            )
 
             self._error.append(error)
 

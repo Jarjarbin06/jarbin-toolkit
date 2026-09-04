@@ -20,6 +20,7 @@ class Show:
     _current_test: str | None = None
     _current_test_number: int | None = None
     _printing: bool = False
+    _show_output: bool | None = None
 
 
     _C = {
@@ -41,6 +42,9 @@ class Show:
             *values: object,
             end: str | None = None
         ) -> None:
+
+        if not Show._show_output:
+            return
 
         if end is None:
             end = Show._C["DIM"] + "│ \n" + Show._C["RESET"]
@@ -280,9 +284,9 @@ class Show:
 
     @staticmethod
     def print(
-            *values
+            *values: str
         ) -> None:
-        Show._print(*values)
+        Show._print(*values, end="\n")
 
     class Log:
 

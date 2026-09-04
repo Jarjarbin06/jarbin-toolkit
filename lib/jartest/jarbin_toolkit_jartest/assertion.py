@@ -8,11 +8,15 @@
 ### by JARJARBIN's STUDIO ###
 #############################
 
+
 import contextvars
+from typing import Any
 
 from jarbin_toolkit_error import Error
 
+
 _current_assertions = contextvars.ContextVar("current_assertions", default=None)
+
 
 class AssertionResult:
     """
@@ -64,7 +68,34 @@ class AssertionContext:
         _current_assertions.reset(self._token)
 
 
-class Assertion:
+class SimpleAssertion(type):
+
+    def __call__(
+            cls,
+            condition: Any,
+            message: str | None = None
+        ) -> AssertionResult:
+
+        passed = bool(condition)
+
+        result = AssertionResult(
+            name="assertion",
+            passed=passed,
+            values=(condition,),
+            expected=None,
+            actual=condition,
+            message=message,
+            meta={
+                "operator": "?",
+                "types": (type(condition).__name__,)
+            }
+        )
+
+        Assertion._register(result)
+        return result
+
+
+class Assertion(metaclass=SimpleAssertion):
 
     @staticmethod
     def _register(result):
