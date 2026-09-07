@@ -12,305 +12,409 @@
 from __future__ import annotations
 
 import inspect
-from typing import Any
+from typing import Any, Optional
+
+from jarbin_toolkit_error import BaseError
+from jarbin_toolkit_console import Console, ANSI, Text
 
 from jarbin_toolkit_jartest.assertion import AssertionResult
 from jarbin_toolkit_jartest.benchmark import Benchmark
 from jarbin_toolkit_jartest.show import Show
-from jarbin_toolkit_error import BaseError
+from jarbin_toolkit_jartest import Context
 
 
 class JarTest:
     """
-        JarTest class.
-
-        JarTest object to test any program.
+        JarTest testing object.
     """
+
+
+    _C: dict[str, str] = {
+        "TITLE": ANSI.Color.rgb_fg(255, 160, 0).s,
+        "ERROR": ANSI.Color.rgb_fg(255, 0, 255).s,
+        "TIME": ANSI.Color.rgb_fg(0, 255, 255).s,
+        "RUN": ANSI.Color.rgb_fg(100, 100, 255).s,
+        "SUCCESS": ANSI.Color.rgb_fg(100, 255, 100).s,
+        "FAIL": ANSI.Color.rgb_fg(255, 100, 100).s,
+        "CRITIC": ANSI.Color.rgb_fg(255, 100, 100).s,
+        "WHITE": ANSI.Color.rgb_fg(255, 255, 255).s,
+        "DIM": ANSI.Color(ANSI.Color.C_FG_DARK).s,
+        "BOLD": ANSI.Color(ANSI.Color.C_BOLD).s,
+        "RESET": ANSI.Color(ANSI.Color.C_RESET).s
+    }
+
+    _I: dict[str, str] = {
+        "SUCCESS": "✔",
+        "FAIL": "✘",
+        "CRITIC": "☢"
+    }
 
 
     def __init__(
             self,
             *,
-            show_tests: bool = True,
-            show_results: bool = True,
-            show_output: bool = True,
+            context: Optional[Context] = None
         ) -> None :
+        """
+            Initialize JarTest object.
+            
+            Parameters:
+                context (Optional[Context]): JarTest context.
+        """
 
         self.tests : dict[str, Benchmark] = {}
-        self._show_tests: bool = show_tests
-        self._show_results: bool = show_results
-        self._show_output: bool = show_output
+        self.jartests : dict[str, JarTest] = {}
+        self.context: Context = context or Context()
+        self._name: str = "?"
 
-        Show._show_output = show_output
+        Show._show_output = self.context.get("output", "show_output", True)
 
+
+    def _get_last_assertions(
+            self,
+            test: Benchmark
+        ) -> list[AssertionResult] | None:
+        if test.assertion is None:
+            return []
+        return test.assertion
+
+
+    def _has_failed_assertions(
+            self,
+            test: Benchmark
+        ) -> bool:
+        return any(not a.passed for a in (self._get_last_assertions(test) or []))
+
+
+    def _format_assertions(
+            self,
+            test: Benchmark
+        ) -> str:
+        asserts = self._get_last_assertions(test)
+
+        if not asserts:
+            return "-".center(19)
+
+        failed = [a for a in asserts if not a.passed]
+
+        if not failed:
+            return "-".center(19)
+
+        a: AssertionResult = failed[0]
+
+        msg = (f"{a.message}" if a.message else "") + (": " if a.message and a.values else "") + (f"{a.actual!r} {a.meta.get('operator', '?')} {a.expected}" if a.values else "") + " (failed)"
+
+        if len(msg) > (len(Console) - 10) - 100:
+            msg = (f"{a.message}: " if a.message else "") + f"A {a.meta.get('operator', '?')} B (failed)"
+
+        return f"{msg}"
+
+    def _get_status(
+            self,
+            test: Benchmark
+        ) -> str:
+
+        if test.error is not None:
+            return "CRITIC"
+        elif self._has_failed_assertions(test):
+            return "FAIL"
+        else:
+            return "SUCCESS"
+
+    def _run_test(
+            self,
+            test_name: str,
+            kw_n: int,
+            idx: int,
+            path: str,
+        ) -> None:
+
+        test = self.tests[test_name]
+
+        Show._show_output = test.context.get("output", "show_output", True)
+
+        with test.context:
+            test(kw_n)
+
+            Show._close()
+
+            Show._show_output = self.context.get("output", "show_output", True)
+
+            if self.context.get("output", "show_test", True):
+                status = self._get_status(test)
+                Console.print(
+                    f"{JarTest._C['DIM']}{idx:03d}{JarTest._C['RESET']} "
+                    + f"{JarTest._C[status]}{self.tests[test_name].name.removeprefix('JT_')}",
+                    ANSI.Cursor.move_column(59).s,
+                    f"{JarTest._C['DIM']}({path} / {test_name}){JarTest._C['RESET']}"
+                )
+
+    def _show_results(
+            self,
+            test: Benchmark,
+            idx: int,
+        ) -> None:
+
+        status = self._get_status(test)
+
+        Console.print(
+            (("╠═" if status == "CRITIC" else "├ ") if status != "SUCCESS" else "│ ") + JarTest._C["DIM"] + f"{idx:03d}",
+            (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + f" {JarTest._C[status]}{JarTest._I[status]}{JarTest._C['RESET']} ",
+            (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + JarTest._C[
+                status] + f"{JarTest._C['BOLD'] if status == 'CRITIC' else ''}{f" {(test.name if len(test.name) < 50 else (test.name[:50] + '...')).removeprefix('JT_')} ".center(50, ('=' if status == 'CRITIC' else ('─' if status == 'FAIL' else ' '))):40}",
+            (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + JarTest._C[
+                "TIME"] + f"{f' {('0.000s' if status == 'CRITIC' or test.time == 0 else test.time_str)} '.center(15, ('═' if status == 'CRITIC' else ('─' if status == 'FAIL' else ' '))):}",
+            (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + JarTest._C["RUN"] + f"{test.test_amount:03}",
+            (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + JarTest._C[
+                "ERROR"] + f"{(f' {JarTest._C['BOLD']}{f'{test.error.error}: {test.error.message}' if isinstance(test.error, BaseError) else test.error}' if status == 'CRITIC' else self._format_assertions(test))}",
+            (" │" if status == "SUCCESS" else ""),
+            separator=""
+        )
+
+    def _run_tests(
+            self,
+            kw_n: int,
+            results: list[tuple[int, "JarTest", str, Benchmark]],
+            idx: int,
+            path: str,
+            is_main: bool = False,
+            _visited: set[int] | None = None
+        ) -> int:
+
+        if _visited is None:
+            _visited = set()
+
+        if id(self) in _visited:
+            return
+
+        _visited.add(id(self))
+
+        term_width, term_height = Console.get_size()
+        line = JarTest._C["TITLE"] + ("-" * term_width)
+
+        if is_main and self.context.get("output", "show_test", True):
+            Console.print(line)
+            Console.print(JarTest._C["TITLE"] + "─── JarTest ───".center(term_width))
+            Console.print(line)
+            Console.print(JarTest._C["TITLE"] + "─── TESTS ───".center(112, "="))
+
+        self.context.setup(jt_wide=True)
+
+        for name, test in self.tests.items():
+            self._run_test(name, kw_n, idx, path)
+
+            results.append(
+                (
+                    idx,
+                    self,
+                    name,
+                    test
+                )
+            )
+            idx += 1
+
+        for name, jartest in self.jartests.items():
+            idx = jartest._run_tests(
+                kw_n,
+                results,
+                idx,
+                f"{path} / {name}"
+            )
+
+        self.context.teardown(jt_wide=True)
+
+        return idx
 
     def run(
             self,
             **kwargs
         ) -> int :
 
-        from jarbin_toolkit_jartest.benchmark import Benchmark
-        from jarbin_toolkit_console import Console, ANSI, Text
-
-        def get_last_assertions(test: Benchmark) -> list[AssertionResult] | None:
-            if test.assertion is None:
-                return []
-            return test.assertion
-
-        def has_failed_assertions(test: Benchmark):
-            return any(not a.passed for a in (get_last_assertions(test) or []))
-
-        def format_assertions(test: Benchmark):
-            asserts = get_last_assertions(test)
-
-            if not asserts:
-                return "-".center(19)
-
-            failed = [a for a in asserts if not a.passed]
-
-            if not failed:
-                return "-".center(19)
-
-            a: AssertionResult = failed[0]
-
-            msg = (f"{a.message}" if a.message else "") + (": " if a.message and a.values else "") + (f"{a.actual!r} {a.meta.get('operator', '?')} {a.expected}" if a.values else "") + " (failed)"
-
-            if len(msg) > (len(Console) - 10) - 100:
-                msg = (f"{a.message}: " if a.message else "") + f"A {a.meta.get('operator', '?')} B (failed)"
-
-            return f"{msg}"
-
-        def get_status(test: Benchmark):
-
-            if test.error is not None:
-                return "CRITIC"
-            elif has_failed_assertions(test):
-                return "FAIL"
-            else:
-                return "SUCCESS"
-
-        def run_test(test_name: str):
-
-            test = self.tests[test_name]
-
-            test(kw_n)
-
-            Show._close()
-
-            if self._show_tests:
-                status = get_status(test)
-                Console.print(f"{app_c['DIM']}{list(self.tests.keys()).index(test_name):03d}{app_c['RESET']} " + f"{app_c[status]}{self.tests[test_name].name.removeprefix('JT_')}", ANSI.Cursor.move_column(59).s, f"{app_c['DIM']}({test_name}){app_c['RESET']}")
-
-        def show_results(key: str, test: Benchmark):
-
-            status = get_status(test)
-
-            Console.print(
-                (("╠═" if status == "CRITIC" else "├ ") if status != "SUCCESS" else "│ ") + app_c["DIM"] + f"{list(self.tests.keys()).index(key):03d}",
-                (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + f" {app_c[status]}{app_i[status]}{app_c['RESET']} ",
-                (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + app_c[status] + f"{app_c['BOLD'] if status == 'CRITIC' else ''}{f" {(test.name if len(test.name) < 50 else (test.name[:50] + '...')).removeprefix('JT_')} ".center(50, ('=' if status == 'CRITIC' else ('─' if status == 'FAIL' else ' '))):40}",
-                (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + app_c["TIME"] + f"{f' {('0.000s' if status == 'CRITIC' or test.time == 0 else test.time_str)} '.center(15, ('═' if status == 'CRITIC' else ('─' if status == 'FAIL' else ' '))):}",
-                (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + app_c["RUN"] + f"{test.test_amount:03}",
-                (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + app_c["ERROR"] + f"{(f' {app_c['BOLD']}{f'{test.error.error}: {test.error.message}' if isinstance(test.error, BaseError) else test.error}' if status == 'CRITIC' else format_assertions(test))}",
-                (" │" if status == "SUCCESS" else ""),
-                separator=""
-            )
-
-        def run_tests():
-
-            if self._show_tests:
-                Console.print(line)
-                Console.print(app_c["TITLE"] + "─── JarTest ───".center(term_width))
-                Console.print(line)
-                Console.print(app_c["TITLE"] + "─── TESTS ───".center(112, "="))
-
-            for name in self.tests:
-                run_test(name)
-
-            if self._show_results:
-                Console.print(app_c["TITLE"] + "─── RESULTS ───".center(112, "="))
-
-                Console.print(f"┌{'─' * 5}┬{'─' * 5}┬{'─' * 52}┬{'─' * 17}┬{'─' * 5}┬{'─' * 21}┐")
-                Console.print(
-                    f"│ {app_c['BOLD'] + app_c['WHITE']}idx",
-                    f"│ {app_c['BOLD'] + app_c['WHITE']}stt",
-                    f"│ {app_c['BOLD'] + app_c['WHITE']}{"name".center(50):}",
-                    f"│ {app_c['BOLD'] + app_c['WHITE']}{app_c['TIME']}{'time'.center(15)}",
-                    f"│ {app_c['BOLD'] + app_c['WHITE']}{app_c['RUN']}run",
-                    f"│ {app_c['BOLD'] + app_c['WHITE']}{app_c['ERROR']}{'assertion/error'.center(20)}{app_c['RESET']}│"
-                )
-                Console.print(f"├{'─' * 5}┼{'─' * 5}┼{'─' * 52}┼{'─' * 17}┼{'─' * 5}┼{'─' * 21}┤")
-
-                for name in self.tests:
-                    show_results(name, self.tests[name])
-
-                Console.print(f"└{'─' * 5}┴{'─' * 5}┴{'─' * 52}┴{'─' * 17}┴{'─' * 5}┴{'─' * 21}┘")
-
-        app_c : dict[str, str] = {
-            "TITLE" : ANSI.Color.rgb_fg(255, 160, 0).s,
-            "ERROR": ANSI.Color.rgb_fg(255, 0, 255).s,
-            "TIME": ANSI.Color.rgb_fg(0, 255, 255).s,
-            "RUN": ANSI.Color.rgb_fg(100, 100, 255).s,
-            "SUCCESS": ANSI.Color.rgb_fg(100, 255, 100).s,
-            "FAIL": ANSI.Color.rgb_fg(255, 100, 100).s,
-            "CRITIC": ANSI.Color.rgb_fg(255, 100, 100).s,
-            "WHITE": ANSI.Color.rgb_fg(255, 255, 255).s,
-            "DIM": ANSI.Color(ANSI.Color.C_FG_DARK).s,
-            "BOLD": ANSI.Color(ANSI.Color.C_BOLD).s,
-            "RESET": ANSI.Color(ANSI.Color.C_RESET).s
-        }
-        app_i : dict[str, str] = {
-            "SUCCESS": "✔",
-            "FAIL": "✘",
-            "CRITIC": "☢"
-        }
-        term_width, term_height = Console.get_size()
-        line = app_c["TITLE"] + ("-" * term_width)
         kw_n = int(kwargs.get("n", 1))
         e_success, e_failure, e_critic = 0, 1, 84
+        results: list[tuple[int, JarTest, str, Benchmark]] = []
 
         try:
-            run_tests()
+            self._run_tests(kw_n, results, 0, self._name, True)
 
         except KeyboardInterrupt:
-            Console.print(ANSI.Line.clear_line() + Text.Format.apply(f"\n-- interrupt (^C) -- {app_i["CRITIC"]}", app_c["CRITIC"]))
+            Console.print(ANSI.Line.clear_line() + Text.Format.apply(f"\n-- interrupt (^C) -- {JarTest._I["CRITIC"]}", JarTest._C["CRITIC"]))
             return e_critic
 
         except SystemExit:
-            Console.print(ANSI.Line.clear_line() + Text.Format.apply(f"\n-- exit (sys-exit) -- {app_i["FAIL"]}", app_c["FAIL"]))
+            Console.print(ANSI.Line.clear_line() + Text.Format.apply(f"\n-- exit (sys-exit) -- {JarTest._I["FAIL"]}", JarTest._C["FAIL"]))
             return e_failure
 
         else:
-            if self._show_tests or self._show_results or self._show_output:
-                Console.print(ANSI.Line.clear_line() + Text.Format.apply(f"\n-- end -- {app_i["SUCCESS"]}", app_c["WHITE"]))
+
+            if self.context.get("output", "show_result", True):
+                Console.print(JarTest._C["TITLE"] + "─── RESULTS ───".center(112, "="))
+
+                Console.print(f"┌{'─' * 5}┬{'─' * 5}┬{'─' * 52}┬{'─' * 17}┬{'─' * 5}┬{'─' * 21}┐")
+                Console.print(
+                    f"│ {JarTest._C['BOLD'] + JarTest._C['WHITE']}idx",
+                    f"│ {JarTest._C['BOLD'] + JarTest._C['WHITE']}stt",
+                    f"│ {JarTest._C['BOLD'] + JarTest._C['WHITE']}{"name".center(50)}",
+                    f"│ {JarTest._C['BOLD'] + JarTest._C['WHITE']}{JarTest._C['TIME']}{'time'.center(15)}",
+                    f"│ {JarTest._C['BOLD'] + JarTest._C['WHITE']}{JarTest._C['RUN']}run",
+                    f"│ {JarTest._C['BOLD'] + JarTest._C['WHITE']}{JarTest._C['ERROR']}{'assertion/error'.center(20)}{JarTest._C['RESET']}│"
+                )
+                Console.print(f"├{'─' * 5}┼{'─' * 5}┼{'─' * 52}┼{'─' * 17}┼{'─' * 5}┼{'─' * 21}┤")
+
+                for idx, jt, name, bm in results:
+                    if bm.context.get("output", "show_result", True):
+                        jt._show_results(bm, idx)
+
+                Console.print(f"└{'─' * 5}┴{'─' * 5}┴{'─' * 52}┴{'─' * 17}┴{'─' * 5}┴{'─' * 21}┘")
+
+            if self.context.get("output", "show_test", True) or self.context.get("output", "show_result", True) or self.context.get("output", "show_output", True):
+                Console.print(ANSI.Line.clear_line() + Text.Format.apply(f"\n-- end -- {JarTest._I["SUCCESS"]}", JarTest._C["WHITE"]))
 
             for test in self.tests.values():
-                if get_status(test) == "FAIL":
+                if self._get_status(test) == "FAIL":
                     return e_failure
-                if get_status(test) == "CRITIC":
+                if self._get_status(test) == "CRITIC":
                     return e_critic
 
             return e_success
 
 
-
-
     def fetch(
             self,
             *,
-            prefix : str = "JT_",
-            module : Any = None,
-            name_prefix : str = ""
-        ) -> list[tuple[str, str, inspect.Signature | None]] :
-        """
-            Fetch all tests from JarTest object.
-        """
-
-        def check_name(
-            ) -> bool :
-
-            try :
-                assert name.startswith(prefix)
-                assert callable(items[name])
-                assert len(inspect.signature(items[name]).parameters) == 0
-
-            except AssertionError :
-                return False
-
-            else :
-                return True
-
-        def get_fail(
-            ) -> None :
-                try :
-                    sign = inspect.signature(items[name])
-
-                except TypeError :
-                    sign = None
-
-                failed_append.append(
-                    (
-                        name,
-                        f"{repr(items[name]):.50s}",
-                        sign
-                    )
-                )
-
-        if module is None:
-
-            frame = inspect.stack()[1]
-            module = inspect.getmodule(frame[0])
-
-        items : dict[str, Any] = module.__dict__
-        temp_dict : dict[str, Benchmark] = {}
-        failed_append : list[tuple[str, str, inspect.Signature | None]] = []
-
-        for name in items :
-            if check_name() :
-                temp_dict[name] = Benchmark(items[name])
-            else :
-                get_fail()
-
-        for name in temp_dict :
-            if name in self.tests :
-                get_fail()
-            else :
-                self.tests[name_prefix + name] = temp_dict[name]
-
-        return failed_append
-
-    def fetch_tests(
-            self,
-            *,
+            prefix: str = "JT_",
             module: Any = None,
             name_prefix: str = "",
-            _visited: set | None = None
-    ) -> list[str]:
+            _visited: set[int] | None = None
+        ) -> list[tuple[str, str, inspect.Signature | None]]:
+        """
+            Fetch tests and sub-JarTests from a module.
+        """
 
         from types import ModuleType
 
         if _visited is None:
             _visited = set()
 
-        failed: list[str] = []
-
         if module is None:
             frame = inspect.stack()[1]
             module = inspect.getmodule(frame[0])
 
-        if id(module) in _visited:
-            return failed
+        if module is None or id(module) in _visited:
+            return []
 
         _visited.add(id(module))
 
         items = module.__dict__
+        failed: list[tuple[str, str, inspect.Signature | None]] = []
 
         for name, obj in items.items():
-
-            if name.startswith("__"):
+            if obj is self or name.startswith("__"):
+                self._name = name
                 continue
 
+            final_name = name_prefix + name
+
             if isinstance(obj, ModuleType):
-                failed += self.fetch_tests(
+                module_jartests = [
+                    child
+                    for child in obj.__dict__.values()
+                    if isinstance(child, JarTest)
+                ]
+
+                if module_jartests:
+                    for child in module_jartests:
+                        if child is self:
+                            continue
+
+                        child_name = next(
+                            (
+                                child_name
+                                for child_name, child_obj in obj.__dict__.items()
+                                if child_obj is child
+                            ),
+                            None
+                        )
+
+                        if child_name is None:
+                            continue
+
+                        if child_name in self.jartests:
+                            failed.append(
+                                (
+                                    final_name,
+                                    repr(child),
+                                    None
+                                )
+                            )
+                            continue
+
+                        self.jartests[child_name] = child
+
+                    continue
+
+                failed += self.fetch(
+                    prefix=prefix,
                     module=obj,
-                    name_prefix=name_prefix + name + "/",
+                    name_prefix=final_name + "/",
                     _visited=_visited
                 )
                 continue
 
             if isinstance(obj, JarTest):
+                if name in self.jartests:
+                    failed.append(
+                        (
+                            final_name,
+                            repr(obj),
+                            None
+                        )
+                    )
+                    continue
 
-                tests_cpy = obj.tests.copy()
+                self.jartests[name] = obj
+                continue
 
-                for test_name, test_obj in tests_cpy.items():
+            if not name.startswith(prefix):
+                continue
 
-                    final_name = name_prefix + name + "/" + test_name
+            if not callable(obj):
+                continue
 
-                    if final_name in self.tests or not final_name.startswith("JT_") :
-                        failed.append(final_name)
-                        continue
+            try:
+                signature = inspect.signature(obj)
 
-                    self.tests[final_name] = test_obj
+                if len(signature.parameters) != 0:
+                    failed.append(
+                        (
+                            final_name,
+                            f"{repr(obj):.50s}",
+                            signature
+                        )
+                    )
+                    continue
+
+            except TypeError:
+                failed.append(
+                    (
+                        final_name,
+                        f"{repr(obj):.50s}",
+                        None
+                    )
+                )
+                continue
+
+            if final_name in self.tests:
+                failed.append(
+                    (
+                        final_name,
+                        f"{repr(obj):.50s}",
+                        signature
+                    )
+                )
+                continue
+
+            self.tests[final_name] = Benchmark(obj)
 
         return failed
 

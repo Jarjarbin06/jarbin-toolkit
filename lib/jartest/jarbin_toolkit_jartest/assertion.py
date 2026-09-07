@@ -68,7 +68,7 @@ class AssertionContext:
         _current_assertions.reset(self._token)
 
 
-class SimpleAssertion(type):
+class MetaAssertion(type):
 
     def __call__(
             cls,
@@ -95,7 +95,7 @@ class SimpleAssertion(type):
         return result
 
 
-class Assertion(metaclass=SimpleAssertion):
+class Assertion(metaclass=MetaAssertion):
 
     @staticmethod
     def _register(result):

@@ -13,7 +13,9 @@ from types import TracebackType
 from typing import Callable, Any, Optional
 
 from jarbin_toolkit_jartest.assertion import AssertionResult
-from jarbin_toolkit_error import Error, BaseError
+from jarbin_toolkit_error import Error
+
+from jarbin_toolkit_jartest.context import Context
 
 
 class Benchmark:
@@ -27,7 +29,6 @@ class Benchmark:
             self,
             test : Callable[[], None]
         ) -> None :
-
         self._time : list[Optional[float | int]] = []
         self._assertion : list[Optional[list[AssertionResult]]] = []
         self._error : list[Exception | Error | None] = []
@@ -36,6 +37,7 @@ class Benchmark:
         self._test : Callable[[], None] = test
         self._test_name : str = test.__name__
         self._n : int = 0
+        self.context: Context = getattr(self._test, "_jartest_context", Context())
 
 
     @property
@@ -204,6 +206,7 @@ class Benchmark:
                     self._traceback[-1].append(tb)
                     tb = tb.tb_next
                 break
+
 
 
     def __repr__(

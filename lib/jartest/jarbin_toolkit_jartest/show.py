@@ -14,7 +14,362 @@ from jarbin_toolkit_console import Console, ANSI
 from jarbin_toolkit_error import BaseError
 
 
-class Show:
+class MetaShow(type):
+
+
+    def __call__(
+            cls,
+            *values: str
+        ) -> None:
+        Show._print(*values, end="\n")
+
+
+class MetaLog(type):
+
+    def __call__(
+            cls,
+            title: str,
+            msg: str
+        ) -> None:
+        Show.Log.info(title, msg)
+
+
+class MetaSection(type):
+
+
+    def __call__(
+            cls,
+            title: str
+        ) -> None:
+        width = 108
+
+        line = (
+            f"--- {Show._C["RESET"] + Show._C["TITLE"] + title + Show._C["RESET"] + Show._C["DIM"]} "
+            .center(width, "-")
+        )
+
+        Show._print(
+            Show._C["RESET"]
+            + Show._C["DIM"]
+            + line
+            + Show._C["RESET"],
+            end="\n"
+        )
+
+
+class MetaRequest(type):
+
+    def __call__(
+            cls,
+            method: str,
+            url: str,
+            *,
+            params: object | None = None,
+            headers: object | None = None,
+            body: object | None = None
+    ) -> None:
+
+        Show._print(
+            Show._C["TYPE"]
+            + "REQUEST"
+            + Show._C["RESET"],
+            end="\n"
+        )
+
+        Show._print(
+            Show._C["KEY"]
+            + "Method"
+            + Show._C["RESET"]
+            + "  │ "
+            + Show._C["VALUE"]
+            + method.upper()
+            + Show._C["RESET"],
+            end="\n"
+        )
+
+        Show._print(
+            Show._C["KEY"]
+            + "URL"
+            + Show._C["RESET"]
+            + "     │ "
+            + Show._C["VALUE"]
+            + url
+            + Show._C["RESET"],
+            end="\n"
+        )
+
+        if params is not None:
+            Show._print(
+                Show._C["KEY"]
+                + "Params"
+                + Show._C["RESET"]
+                + "  │ ",
+                params
+            )
+
+        if headers is not None:
+            Show._print(
+                Show._C["KEY"]
+                + "Headers"
+                + Show._C["RESET"]
+                + " │ ",
+                headers
+            )
+
+        if body is not None:
+            Show._print(
+                Show._C["KEY"]
+                + "Body"
+                + Show._C["RESET"]
+                + "    │ ",
+                body
+            )
+
+        Show._print(
+            end="\n"
+        )
+
+
+class MetaResponse(type):
+
+    def __call__(
+            cls,
+            response: object,
+            *,
+            body: bool = True,
+            headers: bool = False
+    ) -> None:
+
+        Show._print(
+            Show._C["TYPE"]
+            + "RESPONSE"
+            + Show._C["RESET"],
+            end="\n"
+        )
+
+        status_code = getattr(
+            response,
+            "status_code",
+            None
+        )
+
+        elapsed = getattr(
+            response,
+            "elapsed",
+            None
+        )
+
+        url = getattr(
+            response,
+            "url",
+            None
+        )
+
+        status_color = (
+            Show._C["SUCCESS"]
+            if status_code is not None
+                and 200 <= status_code < 400
+            else Show._C["ERROR"]
+        )
+
+        Show._print(
+            Show._C["KEY"]
+            + "Status"
+            + Show._C["RESET"]
+            + "  │ "
+            + status_color
+            + str(status_code)
+            + Show._C["RESET"],
+            end="\n"
+        )
+
+        if url is not None:
+            Show._print(
+                Show._C["KEY"]
+                + "URL"
+                + Show._C["RESET"]
+                + "     │ "
+                + Show._C["VALUE"]
+                + str(url)
+                + Show._C["RESET"],
+                end="\n"
+            )
+
+        if elapsed is not None:
+            Show._print(
+                Show._C["KEY"]
+                + "Elapsed"
+                + Show._C["RESET"]
+                + " │ "
+                + Show._C["VALUE"]
+                + str(elapsed)
+                + Show._C["RESET"],
+                end="\n"
+            )
+
+        if headers:
+            response_headers = getattr(
+                response,
+                "headers",
+                None
+            )
+
+            if response_headers is not None:
+                Show._print(
+                    Show._C["KEY"]
+                    + "Headers"
+                    + Show._C["RESET"]
+                    + " │ ",
+                    dict(response_headers)
+                )
+
+        if body:
+            try:
+                content = response.json()
+            except Exception:
+                content = getattr(
+                    response,
+                    "text",
+                    ""
+                )
+
+            Show._print(
+                Show._C["KEY"]
+                + "Body"
+                + Show._C["RESET"]
+                + "    │ ",
+                content
+            )
+
+
+class MetaException(type):
+
+
+    def __call__(
+            cls,
+            exception: BaseException | BaseError
+        ) -> None:
+        Show._print(
+            Show._C["ERROR"]
+            + "EXCEPTION"
+            + Show._C["RESET"],
+            end="\n"
+        )
+
+        Show._print(
+            Show._C["KEY"]
+            + "Type"
+            + Show._C["RESET"]
+            + " │ "
+            + Show._C["TYPE"]
+            + type(exception).__name__
+            + Show._C["RESET"],
+            end="\n"
+        )
+
+        Show._print(
+            Show._C["KEY"]
+            + "Message"
+            + Show._C["RESET"]
+            + " │ "
+            + exception.message if isinstance(exception, BaseError) else str(exception),
+            end="\n"
+        )
+
+
+class MetaTable(type):
+
+    def __call__(
+            cls,
+            headers: list[object] | tuple[object, ...],
+            rows: list[list[object] | tuple[object, ...]]
+        ) -> None:
+
+        if not headers:
+            return
+
+        columns = len(headers)
+
+        normalized_rows = [
+            list(row[:columns])
+            for row in rows
+        ]
+
+        widths = [
+            len(str(headers[index]))
+            for index in range(columns)
+        ]
+
+        for row in normalized_rows:
+            for index, value in enumerate(row):
+                widths[index] = max(
+                    widths[index],
+                    len(str(value))
+                )
+
+        separator = (
+                Show._C["DIM"]
+                + "├"
+                + "┼".join(
+            "─" * (width + 2)
+            for width in widths
+        )
+                + "┤"
+                + Show._C["RESET"]
+        )
+
+        header = (
+                Show._C["KEY"]
+                + "│ "
+                + " │ ".join(
+            str(value).ljust(width)
+            for value, width
+            in zip(headers, widths)
+        )
+                + " │"
+                + Show._C["RESET"]
+        )
+
+        Show._print(
+            header,
+            end="\n"
+        )
+        Show._print(
+            separator,
+            end="\n"
+        )
+
+        for row in normalized_rows:
+
+            values = []
+
+            for index, width in enumerate(widths):
+                value = (
+                    row[index]
+                    if index < len(row)
+                    else ""
+                )
+
+                values.append(
+                    str(value).ljust(width)
+                )
+
+            Show._print(
+                Show._C["VALUE"]
+                + "│ "
+                + " │ ".join(values)
+                + " │"
+                + Show._C["RESET"],
+                end="\n"
+            )
+
+        Show._print(
+            "",
+            end="\n"
+        )
+
+
+class Show(metaclass=MetaShow):
 
 
     _current_test: str | None = None
@@ -263,6 +618,7 @@ class Show:
             separator=""
         )
 
+
     @staticmethod
     def _close(
         ) -> None:
@@ -282,13 +638,9 @@ class Show:
         Show._current_test_number = None
         Show._printing = False
 
-    @staticmethod
-    def print(
-            *values: str
-        ) -> None:
-        Show._print(*values, end="\n")
 
-    class Log:
+    class Log(metaclass=MetaLog):
+
 
         @staticmethod
         def debug(
@@ -305,6 +657,7 @@ class Show:
                 end="\n"
             )
 
+
         @staticmethod
         def info(
                 title: str,
@@ -318,6 +671,7 @@ class Show:
                 + msg,
                 end="\n"
             )
+
 
         @staticmethod
         def valid(
@@ -333,6 +687,7 @@ class Show:
                 end="\n"
             )
 
+
         @staticmethod
         def warning(
                 title: str,
@@ -346,6 +701,7 @@ class Show:
                 + msg,
                 end="\n"
             )
+
 
         @staticmethod
         def error(
@@ -361,6 +717,7 @@ class Show:
                 end="\n"
             )
 
+
         @staticmethod
         def critical(
                 title: str,
@@ -375,338 +732,24 @@ class Show:
                 end="\n"
             )
 
-    class Section:
 
-        @staticmethod
-        def show(
-                title: str
-            ) -> None:
+    class Section(metaclass=MetaSection): ...
 
-            width = 108
 
-            line = (
-                f"--- {Show._C["RESET"] + Show._C["TITLE"] + title + Show._C["RESET"] + Show._C["DIM"]} "
-                .center(width, "-")
-            )
+    class Request(metaclass=MetaRequest): ...
 
-            Show._print(
-                Show._C["RESET"]
-                + Show._C["DIM"]
-                + line
-                + Show._C["RESET"],
-                end="\n"
-            )
 
-    class Request:
+    class Response(metaclass=MetaResponse): ...
 
-        @staticmethod
-        def show(
-                method: str,
-                url: str,
-                *,
-                params: object | None = None,
-                headers: object | None = None,
-                body: object | None = None
-            ) -> None:
 
-            Show._print(
-                Show._C["TYPE"]
-                + "REQUEST"
-                + Show._C["RESET"],
-                end="\n"
-            )
+    class Exception(metaclass=MetaException): ...
 
-            Show._print(
-                Show._C["KEY"]
-                + "Method"
-                + Show._C["RESET"]
-                + "  │ "
-                + Show._C["VALUE"]
-                + method.upper()
-                + Show._C["RESET"],
-                end="\n"
-            )
 
-            Show._print(
-                Show._C["KEY"]
-                + "URL"
-                + Show._C["RESET"]
-                + "     │ "
-                + Show._C["VALUE"]
-                + url
-                + Show._C["RESET"],
-                end="\n"
-            )
+    class Table(metaclass=MetaTable): ...
 
-            if params is not None:
-                Show._print(
-                    Show._C["KEY"]
-                    + "Params"
-                    + Show._C["RESET"]
-                    + "  │ ",
-                    params
-                )
-
-            if headers is not None:
-                Show._print(
-                    Show._C["KEY"]
-                    + "Headers"
-                    + Show._C["RESET"]
-                    + " │ ",
-                    headers
-                )
-
-            if body is not None:
-                Show._print(
-                    Show._C["KEY"]
-                    + "Body"
-                    + Show._C["RESET"]
-                    + "    │ ",
-                    body
-                )
-
-            Show._print(
-                end="\n"
-            )
-
-    class Response:
-
-        @staticmethod
-        def show(
-                response: object,
-                *,
-                body: bool = True,
-                headers: bool = False
-            ) -> None:
-
-            Show._print(
-                Show._C["TYPE"]
-                + "RESPONSE"
-                + Show._C["RESET"],
-                end="\n"
-            )
-
-            status_code = getattr(
-                response,
-                "status_code",
-                None
-            )
-
-            elapsed = getattr(
-                response,
-                "elapsed",
-                None
-            )
-
-            url = getattr(
-                response,
-                "url",
-                None
-            )
-
-            status_color = (
-                Show._C["SUCCESS"]
-                if status_code is not None
-                and 200 <= status_code < 400
-                else Show._C["ERROR"]
-            )
-
-            Show._print(
-                Show._C["KEY"]
-                + "Status"
-                + Show._C["RESET"]
-                + "  │ "
-                + status_color
-                + str(status_code)
-                + Show._C["RESET"],
-                end="\n"
-            )
-
-            if url is not None:
-                Show._print(
-                    Show._C["KEY"]
-                    + "URL"
-                    + Show._C["RESET"]
-                    + "     │ "
-                    + Show._C["VALUE"]
-                    + str(url)
-                    + Show._C["RESET"],
-                    end="\n"
-                )
-
-            if elapsed is not None:
-                Show._print(
-                    Show._C["KEY"]
-                    + "Elapsed"
-                    + Show._C["RESET"]
-                    + " │ "
-                    + Show._C["VALUE"]
-                    + str(elapsed)
-                    + Show._C["RESET"],
-                    end="\n"
-                )
-
-            if headers:
-                response_headers = getattr(
-                    response,
-                    "headers",
-                    None
-                )
-
-                if response_headers is not None:
-                    Show._print(
-                        Show._C["KEY"]
-                        + "Headers"
-                        + Show._C["RESET"]
-                        + " │ ",
-                        dict(response_headers)
-                    )
-
-            if body:
-                try:
-                    content = response.json()
-                except Exception:
-                    content = getattr(
-                        response,
-                        "text",
-                        ""
-                    )
-
-                Show._print(
-                    Show._C["KEY"]
-                    + "Body"
-                    + Show._C["RESET"]
-                    + "    │ ",
-                    content
-                )
-
-    class Exception:
-
-        @staticmethod
-        def show(
-                exception: BaseException | BaseError
-            ) -> None:
-
-            Show._print(
-                Show._C["ERROR"]
-                + "EXCEPTION"
-                + Show._C["RESET"],
-                end="\n"
-            )
-
-            Show._print(
-                Show._C["KEY"]
-                + "Type"
-                + Show._C["RESET"]
-                + " │ "
-                + Show._C["TYPE"]
-                + type(exception).__name__
-                + Show._C["RESET"],
-                end="\n"
-            )
-
-            Show._print(
-                Show._C["KEY"]
-                + "Message"
-                + Show._C["RESET"]
-                + " │ "
-                + exception.message if isinstance(exception, BaseError) else str(exception),
-                end="\n"
-            )
-
-    class Table:
-
-        @staticmethod
-        def show(
-                headers: list[object] | tuple[object, ...],
-                rows: list[list[object] | tuple[object, ...]]
-            ) -> None:
-
-            if not headers:
-                return
-
-            columns = len(headers)
-
-            normalized_rows = [
-                list(row[:columns])
-                for row in rows
-            ]
-
-            widths = [
-                len(str(headers[index]))
-                for index in range(columns)
-            ]
-
-            for row in normalized_rows:
-                for index, value in enumerate(row):
-                    widths[index] = max(
-                        widths[index],
-                        len(str(value))
-                    )
-
-            separator = (
-                Show._C["DIM"]
-                + "├"
-                + "┼".join(
-                    "─" * (width + 2)
-                    for width in widths
-                )
-                + "┤"
-                + Show._C["RESET"]
-            )
-
-            header = (
-                Show._C["KEY"]
-                + "│ "
-                + " │ ".join(
-                    str(value).ljust(width)
-                    for value, width
-                    in zip(headers, widths)
-                )
-                + " │"
-                + Show._C["RESET"]
-            )
-
-            Show._print(
-                header,
-                end="\n"
-            )
-            Show._print(
-                separator,
-                end="\n"
-            )
-
-            for row in normalized_rows:
-
-                values = []
-
-                for index, width in enumerate(widths):
-
-                    value = (
-                        row[index]
-                        if index < len(row)
-                        else ""
-                    )
-
-                    values.append(
-                        str(value).ljust(width)
-                    )
-
-                Show._print(
-                    Show._C["VALUE"]
-                    + "│ "
-                    + " │ ".join(values)
-                    + " │"
-                    + Show._C["RESET"],
-                end="\n"
-                )
-
-            Show._print(
-                "",
-                end="\n"
-            )
 
     class Progress:
+
 
         def __init__(
                 self,
