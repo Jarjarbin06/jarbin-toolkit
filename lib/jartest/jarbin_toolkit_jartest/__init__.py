@@ -37,5 +37,5 @@ __all__ : list[str] = [
 
 __author__ : str = 'Nathan Jarjarbin'
 __email__ : str = 'nathan.amaraggi@epitech.eu'
-__version__ : str = "0.2.0.0"
+__version__ : str = "0.2.1.0"
 __license__ : str = "GPL"

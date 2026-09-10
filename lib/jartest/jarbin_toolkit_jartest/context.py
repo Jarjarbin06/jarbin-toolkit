@@ -10,7 +10,6 @@
 
 
 from typing import Any, Optional, Callable
-from sys import version
 import os
 import subprocess
 from shlex import split
@@ -40,7 +39,7 @@ class Context:
 
         @staticmethod
         def output(
-                **variables: str
+                **variables: bool
             ):
 
             def decorator(
@@ -62,7 +61,7 @@ class Context:
 
         @staticmethod
         def env(
-                **variables: str
+                **variables: Any
             ):
 
             def decorator(
@@ -122,16 +121,16 @@ class Context:
         condition = (condition or {}).copy()
 
         self._output: dict[str, Any] = {
-            "show_test": output.get("show_test", True),
-            "show_result": output.get("show_result", True),
-            "show_output": output.get("show_output", True),
-            "show_context": output.get("show_context", False),
+            "show_test": output.get("show_test", None),
+            "show_result": output.get("show_result", None),
+            "show_output": output.get("show_output", None),
+            "show_context": output.get("show_context", None),
         }
         self._env: dict[str, str] = env
         self._python: dict[str, Any] = {
-            "version": python.get("version", version),
+            "version": python.get("version", None),
         }
-        self._command: list[tuple[Optional[str], Optional[str]]] = [(cmd if isinstance(cmd, tuple) else (cmd, None)) for cmd in command]
+        self._command: list[tuple[Optional[str], Optional[str]]] = [cmd if isinstance(cmd, tuple) else (cmd, None) for cmd in command]
         self._condition: dict[str, Any] = {
             "eq": condition.get("eq", {}),
             "neq": condition.get("neq", {}),
@@ -147,21 +146,44 @@ class Context:
             setting: str,
             default: Any = None
         ) -> Any:
-        return getattr(self, f"_{category}").get(setting, default)
+        value = getattr(self, f"_{category}").get(setting)
+
+        if value is None:
+            return default
+
+        return value
 
 
     def inherit(
             self,
-            parent: "Context"
+            parent: "Context",
+            *,
+            output: bool = False,
+            env: bool = False,
+            python: bool = False,
+            command: bool = False,
+            condition: bool = False
         ) -> None:
 
-        #self._output.update(parent._output)
-        #self._env.update(parent._env)
-        #self._python.update(parent._python)
-        #self._command = parent._command.copy() + self._command
-        #for key in parent._condition:
-        #    self._condition[key].update(parent._condition[key])
-        pass
+        if output:
+            for key, value in parent._output.items():
+                if self._output.get(key) is None and value is not None and key != "show_context":
+                    self._output[key] = value
+        if env:
+            inherited_env = parent._env.copy()
+            inherited_env.update(self._env)
+            self._env = inherited_env
+        if python:
+            for key, value in parent._python.items():
+                if self._python.get(key) is None and value is not None:
+                    self._python[key] = value
+        if command:
+            self._command = parent._command.copy() + self._command
+        if condition:
+            for key in parent._condition:
+                inherited = parent._condition[key].copy()
+                inherited.update(self._condition[key])
+                self._condition[key] = inherited
 
 
     @staticmethod
@@ -210,17 +232,17 @@ class Context:
             self,
             *,
             jt_wide: bool = False
-        ) -> None:
+        ) -> bool:
 
         tab = "   " if jt_wide else "       "
 
-        if self._output["show_context"]:
+        if self.get("output", "show_context", False):
             Console.print(f"{Context._C["TITLE"]}{tab}Setup {Context._C["DIM"]}({'JarTest' if jt_wide else 'Benchmark'})")
 
 
         self._save["env"] = dict(os.environ)
 
-        if self._output["show_context"]:
+        if self.get("output", "show_context", False):
             Console.print(
                 f"{tab} - ENV | " + Context._C["VALUE"]
                 + "env saved"
@@ -230,7 +252,7 @@ class Context:
         for env, var in self._env.items():
             os.environ[env] = var
 
-            if self._output["show_context"]:
+            if self.get("output", "show_context", False):
                 Console.print(
                     f"{tab} - ENV | " + Context._C["VALUE"]
                     + f"{env} = {var}"
@@ -241,7 +263,7 @@ class Context:
             if cmd[0] is not None:
                 process = subprocess.run(split(cmd[0]), capture_output=True)
 
-                if self._output["show_context"]:
+                if self.get("output", "show_context", False):
                     Console.print(
                         f"{tab} - COMMAND"
                         + (Context._C["SUCCESS"] if not process.returncode else Context._C["ERROR"])
@@ -263,23 +285,28 @@ class Context:
                         )
                     )
 
+                if process.returncode:
+                    return False
+
+        return True
+
 
     def teardown(
             self,
             *,
             jt_wide: bool = False
-        ) -> None:
+        ) -> bool:
 
         tab = "   " if jt_wide else "       "
 
-        if self._output["show_context"]:
+        if self.get("output", "show_context", False):
             Console.print(f"{Context._C["TITLE"]}{tab}Teardown {Context._C["DIM"]}({'JarTest' if jt_wide else 'Benchmark'})")
 
 
         os.environ.clear()
         os.environ.update(self._save["env"])
 
-        if self._output["show_context"]:
+        if self.get("output", "show_context", False):
             Console.print(
                 f"{tab} - ENV | " + Context._C["VALUE"]
                 + "env restored"
@@ -290,7 +317,7 @@ class Context:
             if cmd[1] is not None:
                 process = subprocess.run(split(cmd[1]), capture_output=True)
 
-                if self._output["show_context"]:
+                if self.get("output", "show_context", False):
                     Console.print(
                         f"{tab} - COMMAND"
                         + (Context._C["SUCCESS"] if not process.returncode else Context._C["ERROR"])
@@ -312,6 +339,11 @@ class Context:
                         )
                     )
 
+                if process.returncode:
+                    return False
+
+        return True
+
 
     def __enter__(
             self
@@ -328,3 +360,6 @@ class Context:
         ) -> bool:
         self.teardown()
         return False
+
+    def __repr__(self):
+        return f"{self._output}\n{self._env}\n{self._python}\n{self._command}\n{self._condition}"

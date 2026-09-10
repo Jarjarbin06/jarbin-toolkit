@@ -12,7 +12,8 @@
 import subprocess
 import io
 from contextlib import redirect_stdout as _redirect_stdout, redirect_stderr as _redirect_stderr
-from typing import Any, Mapping
+from shlex import split
+from typing import Any
 from httpx import request as _request, Response
 
 
@@ -72,23 +73,23 @@ class Get:
 
         @staticmethod
         def cmd_all_std(
-                *args: str
+                command: str
             ) -> tuple[str, str, int]:
-            out, err, code = Get.Redirect._run_cmd(list(args))
+            out, err, code = Get.Redirect._run_cmd(split(command))
             return out, err, code
 
         @staticmethod
         def cmd_stdout(
-                *args: str
+                command: str
             ) -> tuple[str, int]:
-            out, _, code = Get.Redirect._run_cmd(list(args))
+            out, _, code = Get.Redirect._run_cmd(split(command))
             return out, code
 
         @staticmethod
         def cmd_stderr(
-                *args: str
+                command: str
             ) -> tuple[str, int]:
-            _, err, code = Get.Redirect._run_cmd(list(args))
+            _, err, code = Get.Redirect._run_cmd(split(command))
             return err, code
 
     class HTTP:

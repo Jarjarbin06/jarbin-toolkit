@@ -34,6 +34,7 @@ class JarTest:
         "ERROR": ANSI.Color.rgb_fg(255, 0, 255).s,
         "TIME": ANSI.Color.rgb_fg(0, 255, 255).s,
         "RUN": ANSI.Color.rgb_fg(100, 100, 255).s,
+        "SKIP": ANSI.Color.rgb_fg(255, 255, 100).s,
         "SUCCESS": ANSI.Color.rgb_fg(100, 255, 100).s,
         "FAIL": ANSI.Color.rgb_fg(255, 100, 100).s,
         "CRITIC": ANSI.Color.rgb_fg(255, 100, 100).s,
@@ -44,6 +45,7 @@ class JarTest:
     }
 
     _I: dict[str, str] = {
+        "SKIP": "⚠",
         "SUCCESS": "✔",
         "FAIL": "✘",
         "CRITIC": "☢"
@@ -64,10 +66,8 @@ class JarTest:
 
         self.tests : dict[str, Benchmark] = {}
         self.jartests : dict[str, JarTest] = {}
-        self.context: Context = context or Context()
+        self.context: Context = context if context is not None else Context()
         self._name: str = "?"
-
-        Show._show_output = self.context.get("output", "show_output", True)
 
 
     def _get_last_assertions(
@@ -90,6 +90,10 @@ class JarTest:
             self,
             test: Benchmark
         ) -> str:
+
+        if test.skipped:
+            return "   TEST  SKIPPED   "
+
         asserts = self._get_last_assertions(test)
 
         if not asserts:
@@ -102,24 +106,28 @@ class JarTest:
 
         a: AssertionResult = failed[0]
 
-        msg = (f"{a.message}" if a.message else "") + (": " if a.message and a.values else "") + (f"{a.actual!r} {a.meta.get('operator', '?')} {a.expected}" if a.values else "") + " (failed)"
+        msg = (f"{a.message}" if a.message else "") + (": " if a.message and a.values else "") + (f"{a.actual!r} {a.meta.get('operator', '?')} {a.expected!r}" if a.values else "") + " (failed)"
 
         if len(msg) > (len(Console) - 10) - 100:
-            msg = (f"{a.message}: " if a.message else "") + f"A {a.meta.get('operator', '?')} B (failed)"
+            msg = (f"{a.message} | " if a.message else "") + f"A {a.meta.get('operator', '?')} B (failed)"
 
         return f"{msg}"
+
 
     def _get_status(
             self,
             test: Benchmark
         ) -> str:
 
+        if test.skipped:
+            return "SKIP"
         if test.error is not None:
             return "CRITIC"
         elif self._has_failed_assertions(test):
             return "FAIL"
         else:
             return "SUCCESS"
+
 
     def _run_test(
             self,
@@ -131,23 +139,31 @@ class JarTest:
 
         test = self.tests[test_name]
 
-        Show._show_output = test.context.get("output", "show_output", True)
+        if not test.context.setup():
+            Console.print(f"{JarTest._C['FAIL']}Failed to setup test {JarTest._I['FAIL']}")
+            test.skip()
+            return
 
-        with test.context:
-            test(kw_n)
+        test.set_index(idx)
+        test(kw_n)
 
-            Show._close()
+        Show._close()
 
-            Show._show_output = self.context.get("output", "show_output", True)
+        if self.context.get("output", "show_test", True):
+            status = self._get_status(test)
+            Console.print(
+                f"{JarTest._C['DIM']}{idx:03d}{JarTest._C['RESET']} "
+                + f"{JarTest._C[status]}{self.tests[test_name].name.removeprefix('JT_')}  "
+                + JarTest._C['RESET'] + JarTest._C['DIM']
+                + ("." * (115 - (8 + len(test_name))))
+                +f"  {path} --- {test_name}{JarTest._C['RESET']}"
+            )
 
-            if self.context.get("output", "show_test", True):
-                status = self._get_status(test)
-                Console.print(
-                    f"{JarTest._C['DIM']}{idx:03d}{JarTest._C['RESET']} "
-                    + f"{JarTest._C[status]}{self.tests[test_name].name.removeprefix('JT_')}",
-                    ANSI.Cursor.move_column(59).s,
-                    f"{JarTest._C['DIM']}({path} / {test_name}){JarTest._C['RESET']}"
-                )
+        if not test.context.teardown():
+            Console.print(f"{JarTest._C['FAIL']}Failed to teardown test {JarTest._I['FAIL']}")
+            test.skip()
+            return
+
 
     def _show_results(
             self,
@@ -160,16 +176,14 @@ class JarTest:
         Console.print(
             (("╠═" if status == "CRITIC" else "├ ") if status != "SUCCESS" else "│ ") + JarTest._C["DIM"] + f"{idx:03d}",
             (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + f" {JarTest._C[status]}{JarTest._I[status]}{JarTest._C['RESET']} ",
-            (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + JarTest._C[
-                status] + f"{JarTest._C['BOLD'] if status == 'CRITIC' else ''}{f" {(test.name if len(test.name) < 50 else (test.name[:50] + '...')).removeprefix('JT_')} ".center(50, ('=' if status == 'CRITIC' else ('─' if status == 'FAIL' else ' '))):40}",
-            (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + JarTest._C[
-                "TIME"] + f"{f' {('0.000s' if status == 'CRITIC' or test.time == 0 else test.time_str)} '.center(15, ('═' if status == 'CRITIC' else ('─' if status == 'FAIL' else ' '))):}",
+            (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + JarTest._C[status] + f"{JarTest._C['BOLD'] if status == 'CRITIC' else ''}{f" {(test.name if len(test.name) < 50 else (test.name[:50] + '...')).removeprefix('JT_')} ".center(50, ('=' if status == 'CRITIC' else ('─' if status == 'FAIL' else ' '))):40}",
+            (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + JarTest._C["TIME"] + f"{f' {('0.000s' if status == 'CRITIC' or test.time == 0 else test.time_str)} '.center(15, ('═' if status == 'CRITIC' else ('─' if status == 'FAIL' else ' ')))}",
             (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + JarTest._C["RUN"] + f"{test.test_amount:03}",
-            (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + JarTest._C[
-                "ERROR"] + f"{(f' {JarTest._C['BOLD']}{f'{test.error.error}: {test.error.message}' if isinstance(test.error, BaseError) else test.error}' if status == 'CRITIC' else self._format_assertions(test))}",
-            (" │" if status == "SUCCESS" else ""),
+            (("═╬═" if status == "CRITIC" else " ┼ ") if status != "SUCCESS" else " │ ") + JarTest._C["ERROR"] + f"{(f' {JarTest._C['BOLD']}{f'{test.error.error}: {test.error.message}' if isinstance(test.error, BaseError) else test.error}' if status == 'CRITIC' else self._format_assertions(test))}",
+            (" │" if status in ["SUCCESS", "SKIP"] else ""),
             separator=""
         )
+
 
     def _run_tests(
             self,
@@ -185,7 +199,7 @@ class JarTest:
             _visited = set()
 
         if id(self) in _visited:
-            return
+            return idx
 
         _visited.add(id(self))
 
@@ -198,7 +212,9 @@ class JarTest:
             Console.print(line)
             Console.print(JarTest._C["TITLE"] + "─── TESTS ───".center(112, "="))
 
-        self.context.setup(jt_wide=True)
+        if not self.context.setup(jt_wide=True):
+            Console.print(f"{JarTest._C['FAIL']}Failed to setup JarTest {JarTest._I['FAIL']}")
+            self.skip()
 
         for name, test in self.tests.items():
             self._run_test(name, kw_n, idx, path)
@@ -221,9 +237,11 @@ class JarTest:
                 f"{path} / {name}"
             )
 
-        self.context.teardown(jt_wide=True)
+        if not self.context.teardown(jt_wide=True):
+            Console.print(f"{JarTest._C['FAIL']}Failed to teardown JarTest {JarTest._I['FAIL']}")
 
         return idx
+
 
     def run(
             self,
@@ -241,12 +259,11 @@ class JarTest:
             Console.print(ANSI.Line.clear_line() + Text.Format.apply(f"\n-- interrupt (^C) -- {JarTest._I["CRITIC"]}", JarTest._C["CRITIC"]))
             return e_critic
 
-        except SystemExit:
-            Console.print(ANSI.Line.clear_line() + Text.Format.apply(f"\n-- exit (sys-exit) -- {JarTest._I["FAIL"]}", JarTest._C["FAIL"]))
+        except SystemExit as err:
+            Console.print(ANSI.Line.clear_line() + Text.Format.apply(f"\n-- exit (sys-exit): {err} -- {JarTest._I["FAIL"]}", JarTest._C["FAIL"]))
             return e_failure
 
         else:
-
             if self.context.get("output", "show_result", True):
                 Console.print(JarTest._C["TITLE"] + "─── RESULTS ───".center(112, "="))
 
@@ -277,6 +294,17 @@ class JarTest:
                     return e_critic
 
             return e_success
+
+
+    def skip(
+            self
+        ) -> None:
+
+        for benchmark in self.tests.values():
+            benchmark.skip()
+
+        for jartest in self.jartests.values():
+            jartest.skip()
 
 
     def fetch(
@@ -349,6 +377,7 @@ class JarTest:
                             )
                             continue
 
+                        child.context.inherit(self.context, output=True)
                         self.jartests[child_name] = child
 
                     continue
@@ -372,6 +401,7 @@ class JarTest:
                     )
                     continue
 
+                obj.context.inherit(self.context, output=True)
                 self.jartests[name] = obj
                 continue
 
@@ -414,9 +444,29 @@ class JarTest:
                 )
                 continue
 
-            self.tests[final_name] = Benchmark(obj)
+            bm = Benchmark(obj)
+            self.tests[final_name] = bm
 
         return failed
+
+
+    def update_context(
+            self
+        ) -> None:
+
+        for benchmark in self.tests.values():
+
+            benchmark.context.inherit(self.context, output=True)
+
+            test_context = getattr(benchmark._test, "_jartest_context", None)
+
+            if test_context is not None:
+                benchmark.context.inherit(test_context, output=True)
+
+        for jartest in self.jartests.values():
+            jartest.context.inherit(self.context, output=True)
+
+            jartest.update_context()
 
 
     def get_tests(

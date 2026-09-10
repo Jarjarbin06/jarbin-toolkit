@@ -10,6 +10,7 @@
 
 
 import inspect
+
 from jarbin_toolkit_console import Console, ANSI
 from jarbin_toolkit_error import BaseError
 
@@ -375,99 +376,92 @@ class Show(metaclass=MetaShow):
     _current_test: str | None = None
     _current_test_number: int | None = None
     _printing: bool = False
-    _show_output: bool | None = None
 
 
     _C = {
         "DIM": ANSI.Color(ANSI.Color.C_FG_DARK).s,
-        "RESET": ANSI.Color(ANSI.Color.C_RESET).s,
-        "TITLE": ANSI.Color.rgb_fg(255, 160, 0).s,
-        "KEY": ANSI.Color.rgb_fg(255, 160, 0).s,
-        "VALUE": ANSI.Color.rgb_fg(0, 255, 255).s,
-        "TYPE": ANSI.Color.rgb_fg(100, 100, 255).s,
-        "SUCCESS": ANSI.Color.rgb_fg(100, 255, 100).s,
-        "WARNING": ANSI.Color.rgb_fg(255, 160, 0).s,
-        "ERROR": ANSI.Color.rgb_fg(255, 100, 100).s,
-        "CRITICAL": ANSI.Color.rgb_fg(255, 0, 255).s,
+        "RESET": ANSI.Color(ANSI.Color.C_RESET).s + ANSI.Color(ANSI.Color.C_FG_DARK).s,
+        "TITLE": ANSI.Color(ANSI.Color.C_FG_DARK).s + ANSI.Color.rgb_fg(255, 160, 0).s,
+        "KEY": ANSI.Color(ANSI.Color.C_FG_DARK).s + ANSI.Color.rgb_fg(255, 160, 0).s,
+        "VALUE": ANSI.Color(ANSI.Color.C_FG_DARK).s + ANSI.Color.rgb_fg(0, 255, 255).s,
+        "TYPE": ANSI.Color(ANSI.Color.C_FG_DARK).s + ANSI.Color.rgb_fg(100, 100, 255).s,
+        "SUCCESS": ANSI.Color(ANSI.Color.C_FG_DARK).s + ANSI.Color.rgb_fg(100, 255, 100).s,
+        "WARNING": ANSI.Color(ANSI.Color.C_FG_DARK).s + ANSI.Color.rgb_fg(255, 160, 0).s,
+        "ERROR": ANSI.Color(ANSI.Color.C_FG_DARK).s + ANSI.Color.rgb_fg(255, 100, 100).s,
+        "CRITICAL": ANSI.Color(ANSI.Color.C_FG_DARK).s + ANSI.Color.rgb_fg(255, 0, 255).s,
     }
 
 
     @staticmethod
     def _print(
             *values: object,
-            end: str | None = None
+            end: str | None = None,
+            forced: bool = False
         ) -> None:
 
-        if not Show._show_output:
-            return
+        if not forced:
+
+            stack = inspect.stack()
+
+            jt_frame = next(
+                (
+                    frame for frame in stack[1:]
+                    if frame.function.startswith("JT_")
+                ),
+                None
+            )
+
+            if jt_frame is None:
+                return
+
+            run_frame = next(
+                (
+                    frame for frame in stack[1:]
+                    if frame.function == "_run_test"
+                ),
+                None
+            )
+
+            if run_frame is None:
+                return
+
+            test_name = run_frame.frame.f_locals.get("test_name")
+            test_obj = run_frame.frame.f_locals.get("test")
+            jar_test = run_frame.frame.f_locals.get("self")
+
+            if (
+                    test_name is None
+                    or test_obj is None
+                    or jar_test is None
+            ):
+                return
+
+            if not test_obj.context.get("output", "show_output", True):
+                return
+
+            test_number = test_obj.index
+
+            if Show._current_test != test_name:
+                Show._current_test = test_name
+                Show._current_test_number = test_number
+                Show._printing = True
+
+                width = 112
+
+                title = (
+                    f"--- {test_number:03d} --- "
+                    f"{test_name.removeprefix('JT_')} --- output ---"
+                )
+
+                Console.print(
+                    Show._C["TITLE"]
+                    + title.center(width, "-"),
+                    separator="",
+                    start="\n"
+                )
 
         if end is None:
             end = Show._C["DIM"] + "│ \n" + Show._C["RESET"]
-
-        stack = inspect.stack()
-
-        jt_frame = next(
-            (
-                frame for frame in stack[1:]
-                if frame.function.startswith("JT_")
-            ),
-            None
-        )
-
-        if jt_frame is None:
-            return
-
-        run_frame = next(
-            (
-                frame for frame in stack[1:]
-                if frame.function == "run_test"
-            ),
-            None
-        )
-
-        if run_frame is None:
-            return
-
-        test_name = run_frame.frame.f_locals.get("test_name")
-
-        test_obj = run_frame.frame.f_locals.get("test")
-
-        jar_test = run_frame.frame.f_locals.get("self")
-
-        if (
-                test_name is None
-                or test_obj is None
-                or jar_test is None
-        ):
-            return
-
-        test_number = list(jar_test.tests.keys()).index(test_name)
-
-        # ------------------------------------------------------------
-        # Open output section when entering a new test
-        # ------------------------------------------------------------
-
-        if Show._current_test != test_name:
-            Show._current_test = test_name
-            Show._current_test_number = test_number
-            Show._printing = True
-
-            width = 112
-
-            title = (
-                f"--- {test_number:03d} --- "
-                f"{test_name.removeprefix('JT_')} --- output ---"
-            )
-
-            Console.print(
-                Show._C["TITLE"]
-                + title.center(width, "-"),
-                separator=""
-            )
-
-        # ------------------------------------------------------------
-        # Recursive formatter
-        # ------------------------------------------------------------
 
         def _format(value: object, indent: int = 0) -> list[str]:
 
@@ -593,10 +587,6 @@ class Show(metaclass=MetaShow):
                 + Show._C["RESET"]
             ]
 
-        # ------------------------------------------------------------
-        # Print
-        # ------------------------------------------------------------
-
         lines = []
 
         for value in values:
@@ -623,20 +613,36 @@ class Show(metaclass=MetaShow):
     def _close(
         ) -> None:
 
-        from jarbin_toolkit_console import Console, ANSI
+        from jarbin_toolkit_console import Console
 
         if not Show._printing:
             return
 
         Console.print(
-            ANSI.Color.rgb_fg(255, 160, 0).s
+            Show._C["TITLE"]
             + "-" * 112,
-            separator=""
+            separator="",
+            end="\n\n"
         )
 
         Show._current_test = None
         Show._current_test_number = None
         Show._printing = False
+
+
+    @staticmethod
+    def failed_fetch(
+            failed: list[tuple[str, str, inspect.Signature | None]]
+        ) -> None:
+
+        if failed:
+            Show._print("JarTest fetching failures:", end="\n", forced=True)
+            Show._print(failed, end="\n", forced=True)
+
+        else:
+            Show._print("JarTest successfully fetched tests.", end="\n", forced=True)
+
+        Console.print("\n\n")
 
 
     class Log(metaclass=MetaLog):

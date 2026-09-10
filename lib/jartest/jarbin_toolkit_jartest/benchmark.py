@@ -13,7 +13,7 @@ from types import TracebackType
 from typing import Callable, Any, Optional
 
 from jarbin_toolkit_jartest.assertion import AssertionResult
-from jarbin_toolkit_error import Error
+from jarbin_toolkit_error import BaseError
 
 from jarbin_toolkit_jartest.context import Context
 
@@ -31,13 +31,52 @@ class Benchmark:
         ) -> None :
         self._time : list[Optional[float | int]] = []
         self._assertion : list[Optional[list[AssertionResult]]] = []
-        self._error : list[Exception | Error | None] = []
+        self._error : list[Exception | BaseError | None] = []
         self._traceback : list[Optional[list[Optional[TracebackType]]]] = []
         self._result : list[Optional[Any]] = []
         self._test : Callable[[], None] = test
         self._test_name : str = test.__name__
         self._n : int = 0
-        self.context: Context = getattr(self._test, "_jartest_context", Context())
+        self._skipped : bool = False
+        self._idx : Optional[int] = None
+        self.context: Context = Context()
+
+
+    def set_index(
+            self,
+            index: int
+        ):
+        self._idx = index
+
+
+    @property
+    def index(
+            self
+        ) -> Optional[int] :
+        return self._idx
+
+
+    def skip(
+            self
+        ):
+        self._time = [0]
+        self._assertion = [None]
+        self._error = [None]
+        self._traceback = [None]
+        self._result = [None]
+        self._n = 0
+        self._skipped = True
+
+
+    @property
+    def skipped(
+            self
+        ) -> bool :
+        """
+            Get whether the benchmark was skipped.
+        """
+
+        return self._skipped
 
 
     @property
@@ -60,9 +99,14 @@ class Benchmark:
         """
 
         tmp_sum = 0.0
+
         for n in range(self.test_amount):
             tmp_sum += self._time[n]
-        return tmp_sum / self._n
+
+        if self._n:
+            return tmp_sum / self._n
+        else:
+            return 0
 
 
     @property
@@ -167,6 +211,9 @@ class Benchmark:
             self,
             n: int
         ) -> None:
+
+        if self._skipped:
+            return
 
         for _ in range(n):
 

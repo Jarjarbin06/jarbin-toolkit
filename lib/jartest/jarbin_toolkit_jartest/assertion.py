@@ -166,14 +166,14 @@ class Assertion(metaclass=MetaAssertion):
             message: str | None = None
     ) -> AssertionResult:
 
-        passed = (a in b)
+        passed = (b in a)
 
         result = AssertionResult(
             name="contain",
             passed=passed,
             values=(a, b),
-            expected=b,
-            actual=a,
+            expected=a,
+            actual=b,
             message=message,
             meta={
                 "operator": "contain",
@@ -191,14 +191,14 @@ class Assertion(metaclass=MetaAssertion):
             message: str | None = None
     ) -> AssertionResult:
 
-        passed = (a not in b)
+        passed = (b not in a)
 
         result = AssertionResult(
             name="ncontain",
             passed=passed,
             values=(a, b),
-            expected=b,
-            actual=a,
+            expected=a,
+            actual=b,
             message=message,
             meta={
                 "operator": "not contain",
