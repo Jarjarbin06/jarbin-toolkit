@@ -121,6 +121,11 @@ test-all:
 	@# parent #
 	@make -s test
 
+test-jartest:
+	@echo -e "$(YELLOW) [TEST] Running JarTest tests$(NC)"
+	@python -m tests
+	@echo -e "$(GREEN) [TEST]  JarTest tests ran$(NC)"
+
 check:
 	@echo -e "$(YELLOW) [CHECK] Checking package$(NC)"
 	@./$(SCRIPT_DIR)/check-package
