@@ -10,6 +10,8 @@
 
 
 from typing import Any
+from pathlib import Path
+from urllib.parse import quote
 from jarbin_toolkit_console.Text.format import Format
 from jarbin_toolkit_console.System.setting import Setting
 
@@ -159,7 +161,7 @@ class Text(Format):
             line: int | None = None
         ) -> Any:
         """
-            Get file link to line 'line' of the file 'path' (needs CLion from JetBrains to work).
+            Get file link to line 'line' of the file 'path'.
 
             Parameters:
                 path (str): Path to the file.
@@ -169,7 +171,22 @@ class Text(Format):
                 str: file link.
         """
 
-        if line:
-            return Text(f'\033]8;;jetbrains://clion/navigate/reference?file={path}&line={line}\033\\File "{path}", line {line}\033]8;;\033\\')
+        path = str(
+            Path(path).resolve()
+        )
+
+        uri = "file://" + quote(
+            path,
+            safe="/:"
+        )
+
+        if line is not None:
+            label = f'File "{path}", line {line}'
         else:
-            return Text(f'\033]8;;jetbrains://clion/navigate/reference?file={path}\033\\File "{path}"\033]8;;\033\\')
+            label = f'File "{path}"'
+
+        return Text(
+            f"\033]8;;{uri}\033\\"
+            f"{label}"
+            f"\033]8;;\033\\"
+        )
