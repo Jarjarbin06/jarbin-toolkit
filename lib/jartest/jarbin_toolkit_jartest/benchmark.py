@@ -16,6 +16,7 @@ from jarbin_toolkit_jartest.assertion import AssertionResult
 from jarbin_toolkit_error import BaseError
 
 from jarbin_toolkit_jartest.context import Context
+from jarbin_toolkit_jartest.show import Show
 
 
 class Benchmark:
@@ -298,10 +299,12 @@ class Benchmark:
         except AssertionError as err:
             assertion = err
             assertions = _current_assertions.get() or []
+            Show.Assertion(err)
 
         except Exception as err:
             exception = err
             assertions = _current_assertions.get() or []
+            Show.Exception(err)
 
         return result, sw.elapsed(), assertion, exception, assertions
 

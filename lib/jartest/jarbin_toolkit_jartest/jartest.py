@@ -106,10 +106,10 @@ class JarTest:
 
         a: AssertionResult = failed[0]
 
-        msg = (f"{a.message}" if a.message else "") + (": " if a.message and a.values else "") + (f"{a.actual!r} {a.meta.get('operator', '?')} {a.expected!r}" if a.values else "") + " (failed)"
+        msg = (f"{a.message}" if a.message else "") + (" | " if a.message and a.values else "") + (f"{a.values[0]!r} {a.meta.get('operator', '?')} {repr(a.values[1]) if len(a.values) == 2 else ""} " if a.values else "") + "(failed)"
 
         if len(msg) > (len(Console) - 10) - 100:
-            msg = (f"{a.message} | " if a.message else "") + f"A {a.meta.get('operator', '?')} B (failed)"
+            msg = (f"{a.message} | " if a.message else "") + f"A {a.meta.get('operator', '?')}{' B' if len(a.values) == 2 else ""} (failed)"
 
         return f"{msg}"
 

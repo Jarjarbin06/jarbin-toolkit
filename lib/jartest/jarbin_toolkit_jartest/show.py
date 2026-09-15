@@ -9,9 +9,12 @@
 #############################
 
 
+from __future__ import annotations
+
 import inspect
 
 from jarbin_toolkit_console import Console, ANSI
+from jarbin_toolkit_console.Text import Text
 from jarbin_toolkit_error import BaseError
 
 
@@ -370,6 +373,90 @@ class MetaTable(type):
         )
 
 
+class MetaAssertion(type):
+
+    def __call__(
+            cls,
+            result
+        ) -> None:
+
+        Show._print(
+            Show._C["ERROR"]
+            + "ASSERTION"
+            + Show._C["RESET"],
+            end="\n"
+        )
+
+        Show._print(
+            Show._C["KEY"]
+            + "Fail"
+            + Show._C["RESET"]
+            + "      │ "
+            + Show._C["ERROR"]
+            + result.name
+            + Show._C["RESET"],
+            end="\n"
+        )
+
+        if result.location is not None:
+            location = Text.file_link(*result.location).s
+
+            Show._print(
+                Show._C["KEY"]
+                + "Location"
+                + Show._C["RESET"]
+                + "  │ "
+                + location,
+                end="\n"
+            )
+
+        if result.error_message:
+
+            Show._print(
+                Show._C["KEY"]
+                + "Message"
+                + Show._C["RESET"]
+                + "   │ ",
+                end=""
+            )
+
+            for kind, value in result.error_message:
+
+                color = {
+                    "text": Show._C["DIM"],
+                    "value": Show._C["VALUE"],
+                    "actual": Show._C["ERROR"],
+                    "expected": Show._C["SUCCESS"],
+                }.get(
+                    kind,
+                    Show._C["VALUE"]
+                )
+
+                value = (
+                    repr(str(value))
+                    if kind in ("actual", "expected")
+                    else str(value)
+                )
+
+                Show._print(
+                    color
+                    + value
+                    + Show._C["RESET"],
+                    end="",
+                    show_start=False
+                )
+
+            Show._print(
+                end="\n",
+                show_start=False
+            )
+
+        Show._print(
+            "",
+            end="\n"
+        )
+
+
 class Show(metaclass=MetaShow):
 
 
@@ -396,6 +483,7 @@ class Show(metaclass=MetaShow):
     def _print(
             *values: object,
             end: str | None = None,
+            show_start: bool = True,
             forced: bool = False
         ) -> None:
 
@@ -602,7 +690,7 @@ class Show(metaclass=MetaShow):
                 )
 
         Console.print(
-            Show._C["DIM"] + "│ " + Show._C["RESET"]
+            (Show._C["DIM"] + "│ " + Show._C["RESET"] if show_start else "")
             + f"\n{Show._C['DIM']}│ {Show._C['RESET']}".join(lines),
             end=end,
             separator=""
@@ -823,3 +911,6 @@ class Show(metaclass=MetaShow):
             )
 
             self._started = False
+
+
+    class Assertion(metaclass=MetaAssertion): ...
