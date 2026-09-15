@@ -31,7 +31,7 @@ def JT_action_call():
 def JT_action_repr():
     action = Action.Action("print 'hello'", print, "hello")
 
-    Assertion.contain("Action", repr(action), "invalid representation")
+    Assertion.contain(repr(action), "Action", "invalid representation")
 
 
 def JT_actions_container():

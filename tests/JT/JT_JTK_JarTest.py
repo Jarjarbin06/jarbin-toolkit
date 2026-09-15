@@ -31,12 +31,12 @@ def JT_context_env():
 )
 def JT_context_multiple_env():
     Assertion.eq(
-        os.environ.get("JT_Test"),
+        str(os.environ.get("JT_Test")),
         "123",
         "invalid JT_Test"
     )
     Assertion.eq(
-        os.environ.get("JT_Second"),
+        str(os.environ.get("JT_Second")),
         "456",
         "invalid JT_Second"
     )

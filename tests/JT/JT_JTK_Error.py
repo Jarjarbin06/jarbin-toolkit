@@ -20,8 +20,8 @@ def JT_error_base():
     error = Error.Error.ErrorRuntime("msg")
 
     Assertion.contain(
-        "msg",
         str(error),
+        "msg",
         "message not an Exception"
     )
 
@@ -33,8 +33,8 @@ def JT_error_with_link():
     )
 
     Assertion.contain(
-        "file.py",
         str(error),
+        "file.py",
         "file not shown"
     )
 
@@ -52,8 +52,8 @@ def JT_error_logic():
     error = Error.Logic.ErrorLogicAssertion("logic error")
 
     Assertion.contain(
-        "logic error",
         str(error),
+        "logic error",
         "logic error message invalid"
     )
 
@@ -62,8 +62,8 @@ def JT_error_file():
     error = Error.File.ErrorFileParse("file error")
 
     Assertion.contain(
-        "file error",
         str(error),
+        "file error",
         "file error message invalid"
     )
 
@@ -72,8 +72,8 @@ def JT_error_network():
     error = Error.Network.ErrorNetwork("network error")
 
     Assertion.contain(
-        "network error",
         str(error),
+        "network error",
         "network error message invalid"
     )
 
@@ -82,8 +82,8 @@ def JT_error_state():
     error = Error.State.ErrorState("state error")
 
     Assertion.contain(
-        "state error",
         str(error),
+        "state error",
         "state error message invalid"
     )
 

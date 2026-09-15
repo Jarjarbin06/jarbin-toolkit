@@ -20,7 +20,7 @@ def JT_get_info():
     info = JTK.get_info()
 
     Assertion(isinstance(info, dict), "invalid info type")
-    Assertion.contain("version", info, "version is not in info")
+    Assertion.contain(info, "version", "version is not in info")
 
 
 def JT_benchmark_success():
@@ -48,7 +48,7 @@ def JT_fail():
     try:
         JTK.fail("test error")
     except Exception as e:
-        Assertion.contain("test error", str(e), "invalid string")
+        Assertion.contain(str(e), "test error", "invalid string")
 
 
 def JT_text():

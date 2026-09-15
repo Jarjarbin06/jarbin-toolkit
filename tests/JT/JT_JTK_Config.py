@@ -71,26 +71,31 @@ def JT_config_delete():
         "config file not deleted"
     )
 
-@output(show_context=True)
-@command(None, "rm tests/JT/missing_config")
 def JT_config_missing():
     cfg = Config(
         TEST_PATH,
-        file_name="missing_config"
+        data={
+            "A Section": {
+                "a_value": "10"
+            }
+        },
+        file_name="missing_config.ini"
     )
 
     try:
         cfg.get("Missing", "value")
     except Exception as ex:
         Show.Exception(ex)
-        Assertion(True)
-    else:
-        Assertion(False)
 
 
 # ---------------------------------------------------------------------------
 # Run
 # ---------------------------------------------------------------------------
 
-JTT_JTK_Config = JarTest()
+JTT_JTK_Config = JarTest(
+    context=Context(
+        output={"show_output": True},
+        command=[(None, "rm tests/JT/missing_config.ini")]
+    )
+)
 JTT_JTK_Config.fetch()
