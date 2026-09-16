@@ -15,7 +15,7 @@ class ActionTypeError(BaseError):
 
     def __init__(
             self,
-            message: str
+            message: str,
         ) -> None:
         """
             Type error
@@ -42,7 +42,7 @@ class ActionValueError(BaseError):
 
     def __init__(
             self,
-            message: str
+            message: str,
         ) -> None:
         """
             Value error
@@ -69,7 +69,7 @@ class ActionArgumentError(BaseError):
 
     def __init__(
             self,
-            message: str
+            message: str,
         ) -> None:
         """
             Argument error
@@ -96,7 +96,7 @@ class ActionExecutionError(BaseError):
 
     def __init__(
             self,
-            message: str
+            message: str,
         ) -> None:
         """
             Execution error
