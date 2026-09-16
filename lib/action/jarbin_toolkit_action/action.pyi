@@ -255,8 +255,8 @@ class Action:
     _output: Optional[Any]
     _kwargs: dict[str, Any]
     _execution_kwargs: dict[str, Any]
-    _status: ActionStatus
-    _previous_status: Optional[ActionStatus]
+    _status: ActionStatus | int
+    _previous_status: Optional[ActionStatus | int]
     _error: Optional[Exception]
     _timer: ActionTimer
     _settings: dict[str, Any]
