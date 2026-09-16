@@ -55,9 +55,21 @@ class ActionExecutionError(BaseError):
         super().__init__(message, error=type(self).__name__)
 
 
+class ActionThreadError(BaseError):
+
+
+    def __init__(
+            self,
+            message,
+        ):
+
+        super().__init__(message, error=type(self).__name__)
+
+
 __all__ = [
     'ActionTypeError',
     'ActionValueError',
     'ActionArgumentError',
     'ActionExecutionError',
+    'ActionThreadError',
 ]

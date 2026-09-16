@@ -1,6 +1,21 @@
-from typing import Any, overload, Callable, Optional
+from inspect import Signature
+from typing import (
+    Any,
+    overload,
+    Callable,
+    Optional
+)
+from threading import (
+    Event,
+    Lock,
+    Thread
+)
 
-from jarbin_toolkit_action.enums import ActionStatus
+from jarbin_toolkit_action.enums import (
+    ActionStatus,
+    ActionAsync
+)
+from jarbin_toolkit_action.time import ActionTimer
 
 
 class Action:
@@ -103,7 +118,7 @@ class Action:
     def __call__(
             self,
             **kwargs: Any,
-        ) -> Any:
+        ) -> Any | ActionAsync:
         """
             Execute the action with optional overriding keyword arguments.
 
@@ -142,10 +157,11 @@ class Action:
         ...
 
 
-    def set_setting(
+    def set_settings(
             self,
             *,
-            catch: Optional[bool] = None
+            catch: Optional[bool] = None,
+            asynchronous: Optional[bool] = None,
         ) -> None:
         """
             Set/override action's settings
@@ -155,11 +171,148 @@ class Action:
             catch : Optional[bool]
                 Catch exceptions at action call.
 
+            asynchronous: Optional[bool]
+                Execute the action asynchronous (if True, run in thread)
+
             Raises
             ----------
             ActionArgumentError
                 Invalid setting.
         """
+        ...
+
+
+    def start(
+            self,
+        ) -> None:
+        """
+            Start the thread
+
+            Raises
+            ----------
+            ActionThreadError
+                No pending async execution.
+                Action not pending.
+                Thread already running.
+        """
+        ...
+
+
+    def pause(
+            self,
+        ):
+        """
+            Pause the thread
+
+            Raises
+            ----------
+            ActionThreadError
+                Action not running.
+        """
+        ...
+
+
+    def resume(
+            self,
+        ):
+        """
+            Resume the thread
+
+            Raises
+            ----------
+            ActionThreadError
+                Action not paused.
+        """
+        ...
+
+
+    def cancel(
+            self,
+        ):
+        """
+            Cancel the thread
+
+            Raises
+            ----------
+            ActionThreadError
+                Action not pending, running nor paused.
+        """
+        ...
+
+
+    @staticmethod
+    def pause_point(
+        ) -> None:
+        """
+            Put a checkpoint for action threading (listen for pause event)
+        """
+
+
+    _thread_actions: dict[int, Any]
+    _thread_actions_lock: Lock
+    _function: Callable[[...], Any]
+    _signature: Signature
+    _output: Optional[Any]
+    _kwargs: dict[str, Any]
+    _execution_kwargs: dict[str, Any]
+    _status: ActionStatus
+    _previous_status: Optional[ActionStatus]
+    _error: Optional[Exception]
+    _timer: ActionTimer
+    _settings: dict[str, Any]
+    _thread: Optional[Thread]
+    _pause_event: Event
+    _cancel_event: Event
+    _execution_lock: Lock
+
+
+    def _validate_kwargs(
+            self,
+            kwargs: dict[str, Any],
+        ) -> dict[str, Any]:
+        ...
+
+
+    def _save_status(
+            self,
+        ):
+        ...
+
+
+    def _prepare_execution(
+            self,
+            kwargs: dict[str, Any],
+        ):
+        ...
+
+
+    def _execute_synchronous(
+            self,
+        ):
+        ...
+
+
+    def _execute_asynchronous(
+            self,
+        ) -> ActionAsync:
+        ...
+
+
+    def _thread_execution(
+            self,
+        ) -> None:
+        ...
+
+
+    def _kill_thread(
+            self,
+        ):
+        ...
+
+
+    @staticmethod
+    def _get_current_action(
+        ) -> Any:
         ...
 
 

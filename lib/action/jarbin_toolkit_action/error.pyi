@@ -109,4 +109,31 @@ class ActionExecutionError(BaseError):
         ...
 
 
+class ActionThreadError(BaseError):
+    """
+        Thread error for Action
+        (BaseError)
+
+        Methods
+        ----------
+        ActionThreadError(message: str) -> None
+            Creates a new ActionThreadError instance with the given message
+    """
+
+
+    def __init__(
+            self,
+            message: str,
+        ) -> None:
+        """
+            Therad error
+
+            Parameters
+            ----------
+            message : str
+                Message to be displayed when the error is raised
+        """
+        ...
+
+
 __all__: list[str]
