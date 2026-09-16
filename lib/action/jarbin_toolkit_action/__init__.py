@@ -1,27 +1,30 @@
-#############################
-###                       ###
-###     Jarbin-ToolKit    ###
-###        action         ###
-###  ----__init__.py----  ###
-###                       ###
-###=======================###
-### by JARJARBIN's STUDIO ###
-#############################
+# ============================================================================
+# JARBIN-TOOLKIT
+#
+# Package      : Action
+# File         : __init__.py
+#
+# Author       : JARJARBIN06
+# Organization : JARJARBIN's STUDIO
+# ============================================================================
 
 
-from jarbin_toolkit_action.action import (
-    Action,
-    Actions
-)
+from jarbin_toolkit_action.action import Action
+
+import jarbin_toolkit_action.error as Error
 
 
-__all__ : list[str] = [
+__author__ = 'Jarjarbin06'
+__email__ = 'nathan.amaraggi@outlook.fr'
+__version__ = "1.0.0.0"
+__license__ = "GPL"
+
+
+__all__ = [
+    '__author__',
+    '__email__',
+    '__version__',
+    '__license__',
     'Action',
-    'Actions'
+    'Error'
 ]
-
-
-__author__ : str = 'Nathan Jarjarbin'
-__email__ : str = 'nathan.amaraggi@epitech.eu'
-__version__ : str = "0.1.2.3"
-__license__ : str = "GPL"
