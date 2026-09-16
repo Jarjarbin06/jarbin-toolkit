@@ -12,6 +12,7 @@ from jarbin_toolkit_jartest import (
 )
 
 
+
 # ---------------------------------------------------------------------------
 # JarTest Context / decorators
 # ---------------------------------------------------------------------------
@@ -25,10 +26,7 @@ def JT_context_env():
     )
 
 
-@env(
-    JT_Test="123",
-    JT_Second="456"
-)
+@env(JT_Test="123", JT_Second="456")
 def JT_context_multiple_env():
     Assertion.eq(
         str(os.environ.get("JT_Test")),
