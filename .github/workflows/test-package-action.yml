@@ -38,10 +38,10 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics | true
     - name: Install jarbin-toolkit
       run: |
-        make -C .lib/error install
-        make -C .lib/time install
+        make -C lib/error install
+        make -C lib/time install
         
-        make -C .lib/action install
+        make -C lib/action install
     - name: Test action with pytest (xml)
       run: |
         pytest lib/action --cov=lib/action/jarbin_toolkit_action --cov-report=xml --cov-report=term-missing --cov-fail-under=80
