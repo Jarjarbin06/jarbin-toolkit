@@ -305,7 +305,9 @@ class Action:
         for key, value in kwargs.items():
 
             if not key in self._settings:
-                raise ActionArgumentError(f"\nInvalid setting: {key}={value}")
+                raise ActionArgumentError(
+                    f"\nInvalid setting: {key}={value}"
+                )
 
             self._settings[key] = value
 
