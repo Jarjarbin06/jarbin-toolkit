@@ -3,17 +3,17 @@ from typing import (
     Any,
     overload,
     Callable,
-    Optional
+    Optional,
 )
 from threading import (
     Event,
     Lock,
-    Thread
+    Thread,
 )
 
 from jarbin_toolkit_action.enums import (
     ActionStatus,
-    ActionAsync
+    ActionAsync,
 )
 from jarbin_toolkit_action.time import ActionTimer
 
@@ -38,14 +38,6 @@ class Action:
 
         duration : float
             Duration of the action after execution.
-
-        Methods
-        ----------
-        Action(name: str, function: Callable[..., Any], **kwargs: Any) -> None
-            Initialize an Action with an explicit name.
-
-        Action(function: Callable[..., Any], **kwargs: Any) -> None
-            Initialize an Action using the function's name.
     """
 
 
@@ -120,7 +112,7 @@ class Action:
             **kwargs: Any,
         ) -> Any | ActionAsync:
         """
-            Execute the action with optional overriding keyword arguments.
+            Execute the action (if not async, otherwise prepare thread) with optional overriding keyword arguments.
 
             Parameters
             ----------
@@ -138,7 +130,8 @@ class Action:
                 Invalid keyword arguments (for the given function).
 
             ActionExecutionError
-                Caught exception during action execution (if `catch` setting disabled)
+                Caught exception during action execution (if `catch` setting disabled).
+                Action already pending, running or paused
         """
         ...
 

@@ -27,11 +27,11 @@ from jarbin_toolkit_action.error import (
     ActionValueError,
     ActionArgumentError,
     ActionExecutionError,
-    ActionThreadError
+    ActionThreadError,
 )
 from jarbin_toolkit_action.enums import (
     ActionStatus,
-    ActionAsync
+    ActionAsync,
 )
 from jarbin_toolkit_action.time import ActionTimer
 
@@ -115,6 +115,7 @@ class Action:
 
         return ActionAsync.SUCCESS
 
+
     def _thread_execution(
             self,
         ):
@@ -157,6 +158,7 @@ class Action:
                 )
 
             self._save_status()
+
 
     def _kill_thread(
             self,
@@ -252,6 +254,7 @@ class Action:
         self._cancel_event = Event()
         self._execution_lock = Lock()
 
+
     def __call__(
             self,
             **kwargs,
@@ -260,11 +263,11 @@ class Action:
         with self._execution_lock:
 
             if self._status in (
-                    ActionStatus.PENDING,
-                    ActionStatus.RUNNING,
-                    ActionStatus.PAUSED,
+                ActionStatus.PENDING,
+                ActionStatus.RUNNING,
+                ActionStatus.PAUSED,
             ):
-                raise ActionThreadError(
+                raise ActionExecutionError(
                     f"\nCannot execute Action from status {self.status}"
                 )
 
@@ -303,6 +306,7 @@ class Action:
 
             self._settings[key] = value
 
+
     def start(
             self,
         ):
@@ -326,6 +330,7 @@ class Action:
 
             self._thread.start()
 
+
     def pause(
             self,
         ):
@@ -338,6 +343,7 @@ class Action:
 
             self._pause_event.clear()
             self._status = ActionStatus.PAUSED
+
 
     def resume(
             self,
@@ -352,6 +358,7 @@ class Action:
             self._pause_event.set()
             self._status = ActionStatus.RUNNING
 
+
     def cancel(
             self,
         ):
@@ -359,9 +366,9 @@ class Action:
         with self._execution_lock:
 
             if self._status not in (
-                    ActionStatus.PENDING,
-                    ActionStatus.RUNNING,
-                    ActionStatus.PAUSED,
+                ActionStatus.PENDING,
+                ActionStatus.RUNNING,
+                ActionStatus.PAUSED,
             ):
                 raise ActionThreadError(
                     f"\nCannot cancel Action from status {self.status}"

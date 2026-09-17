@@ -1,9 +1,22 @@
+# ============================================================================
+# JARBIN-TOOLKIT
+#
+# Package      : Action
+# File         : test_action.py
+#
+# Author       : Jarjarbin06
+# ============================================================================
+
+
 import time
 
 import pytest
 
-from jarbin_toolkit_action import Action
-from jarbin_toolkit_action.enums import ActionStatus, ActionAsync
+from jarbin_toolkit_action.action import Action
+from jarbin_toolkit_action.enums import (
+    ActionStatus,
+    ActionAsync,
+)
 from jarbin_toolkit_action.error import (
     ActionArgumentError,
     ActionExecutionError,
@@ -311,7 +324,7 @@ def test_action_cannot_execute_while_running() -> None:
     while act.status == ActionStatus.PENDING:
         time.sleep(0.001)
 
-    with pytest.raises(ActionThreadError):
+    with pytest.raises(ActionExecutionError):
         act()
 
     act._thread.join()

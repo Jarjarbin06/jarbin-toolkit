@@ -10,10 +10,9 @@
 
 
 from jarbin_toolkit_action.action import Action
-from jarbin_toolkit_action.time import ActionTimer
+from jarbin_toolkit_action.action_batch import ActionBatch
 
 import jarbin_toolkit_action.error as Error
-import jarbin_toolkit_action.enums as Enum
 
 
 __author__ = 'Jarjarbin06'
@@ -28,7 +27,6 @@ __all__ = [
     '__version__',
     '__license__',
     'Action',
-    'ActionTimer',
+    'ActionBatch',
     'Error',
-    'Enum',
 ]
