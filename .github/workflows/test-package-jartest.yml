@@ -7,9 +7,9 @@ permissions:
 
 on:
   push:
-    branches: [ "main", "develop", "action/*" ]
+    branches: [ "main", "develop", "jartest/*" ]
   pull_request:
-    branches: [ "main", "develop", "action/*" ]
+    branches: [ "main", "develop", "jartest/*" ]
 
 jobs:
   build:
@@ -36,15 +36,16 @@ jobs:
       run: |
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics | true
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics | true
-    - name: Install jarbin-toolkit-action
+    - name: Install jarbin-toolkit-jartest
       run: |
         make -C lib/error install
         make -C lib/time install
-        
-        make -C lib/action install
-    - name: Test action with pytest (xml)
+        make -C lib/console install
+
+        make -C lib/jartest install
+    - name: Test jartest with pytest (xml)
       run: |
-        pytest lib/action --cov=lib/action/jarbin_toolkit_action --cov-report=xml --cov-report=term-missing --cov-fail-under=80
+        pytest lib/jartest --cov=lib/jartest/jarbin_toolkit_jartest --cov-report=xml --cov-report=term-missing --cov-fail-under=80
     - name: Rename coverage file
       run: |
         mv coverage.xml coverage_${{ matrix.python-version }}.xml
