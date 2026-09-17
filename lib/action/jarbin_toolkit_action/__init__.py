@@ -11,9 +11,10 @@
 
 from jarbin_toolkit_action.action import Action
 from jarbin_toolkit_action.action_batch import ActionBatch
+from jarbin_toolkit_action.error import *
 
-import jarbin_toolkit_action.error as Error
-
+import jarbin_toolkit_action.enums as _Enums
+from jarbin_toolkit_action.time import ActionTimer as _ActionTimer
 
 __author__ = 'Jarjarbin06'
 __email__ = 'nathan.amaraggi@outlook.fr'
@@ -28,5 +29,11 @@ __all__ = [
     '__license__',
     'Action',
     'ActionBatch',
-    'Error',
+    'ActionTypeError',
+    'ActionValueError',
+    'ActionArgumentError',
+    'ActionExecutionError',
+    'ActionThreadError',
+    '_Enums',
+    '_ActionTimer',
 ]
