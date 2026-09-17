@@ -118,7 +118,7 @@ class ErrorLink:
     def _resolve_frame(
             self,
             frame
-        ) -> None:
+        ):
 
         if self.file is None:
             self.file = frame.f_code.co_filename
@@ -264,8 +264,8 @@ class ErrorLink:
 
     def display_link(
             self,
-            format: FormatType | str
-        ) -> str:
+            format
+        ):
 
         if isinstance(format, str):
             format = FormatType(format)
@@ -290,8 +290,8 @@ class ErrorLink:
 
     @staticmethod
     def _is_internal_frame(
-            filename: str
-        ) -> bool:
+            filename
+        ):
 
         filename = normcase(
             abspath(filename)
@@ -318,7 +318,7 @@ class ErrorLink:
     @staticmethod
     def _resolve_column(
             frame
-        ) -> int | None:
+        ):
 
         try:
             instruction = frame.f_lasti

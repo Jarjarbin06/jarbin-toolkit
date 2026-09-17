@@ -26,8 +26,8 @@ class ActionStatus(IntEnum):
 class ActionAsync(IntEnum):
 
 
-    FAILED = 0  # Not-in-use
     SUCCESS = 1
+    FAILED = 0
 
 
 __all__ = [

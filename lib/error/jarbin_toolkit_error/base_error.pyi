@@ -8,6 +8,18 @@ from jarbin_toolkit_error.error_link import ErrorLink
 
 
 class BaseError(Exception):
+    """
+        Base error exception
+        (Exception)
+    
+        Attributes
+        ----------
+        message : str
+            Error message
+
+        error : str
+            Error name
+    """
 
 
     message: str
@@ -18,17 +30,53 @@ class BaseError(Exception):
             self,
             message: str,
             *,
-            error = None,
-            format = FormatType.COMPACT,
+            error: Optional[str] = None,
+            format: FormatType = FormatType.COMPACT,
             link: Optional[dict[str, Any]] = None,
             do_raise: bool = False,
         ):
+        """
+            Initialize the error
+        
+            Parameters
+            ----------
+            message : str
+                Error message
+
+            error : Optional[str]
+                Error name (if not touched, automatically set to Exception's name)
+
+            format : FormatType
+                Error format
+
+            link : Optional[dict[str, Any]]
+                Error link
+
+            do_raise : bool
+                Error is raised on creation
+
+            Raises
+            ----------
+            TypeError
+                Message, error, format type invalid
+
+            ValueError
+                Invalid link
+        """
         ...
 
 
     def __str__(
             self
         ) -> str:
+        """
+            Representation of the error (following specified format)
+
+            Returns
+            ----------
+            str
+                Error's representation
+        """
         ...
 
 
