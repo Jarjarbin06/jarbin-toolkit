@@ -181,6 +181,9 @@ class Action:
         )
 
         if result == 0:
+            if not self._thread.is_alive():
+                return
+
             raise ActionThreadError(
                 "\nFailed to cancel Action thread"
             )
