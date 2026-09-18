@@ -4,8 +4,7 @@
 # Package      : Action
 # File         : __init__.py
 #
-# Author       : JARJARBIN06
-# Organization : JARJARBIN's STUDIO
+# Author       : Jarjarbin06
 # ============================================================================
 
 

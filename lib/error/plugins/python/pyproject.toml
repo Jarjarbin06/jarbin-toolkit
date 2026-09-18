@@ -3,8 +3,8 @@ requires = ["setuptools>=65.0", "wheel", "setuptools_scm[toml]>=6.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "jarbin-toolkit-error"
-version = "1.0.0.0"
+name = "jarbin-toolkit-error-python"
+version = "0.0.1.0"
 description = "Error tool (Formated error / Better visual / etc...)"
 authors = [
     { name = "Nathan Jarjarbin", email = "nathan.amaraggi@epitech.eu" }
@@ -14,6 +14,7 @@ requires-python = ">=3.11"
 license = "GPL-3.0-or-later"
 
 dependencies = [
+    "jarbin-toolkit-error>=1.0.0.0,<1.1.0.0"
 ]
 
 classifiers = [

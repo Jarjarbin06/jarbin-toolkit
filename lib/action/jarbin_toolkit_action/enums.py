@@ -12,6 +12,8 @@ from enum import IntEnum
 
 
 class ActionStatus(IntEnum):
+
+
     INACTIVE = 0
     PENDING = 1
     RUNNING = 2
@@ -22,8 +24,10 @@ class ActionStatus(IntEnum):
 
 
 class ActionAsync(IntEnum):
-    FAILED = 0  # Not-in-use
+
+
     SUCCESS = 1
+    FAILED = 0
 
 
 __all__ = [

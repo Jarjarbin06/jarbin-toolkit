@@ -5,11 +5,6 @@ class ActionTypeError(BaseError):
     """
         Type error for Action
         (BaseError)
-
-        Methods
-        ----------
-        ActionTypeError(message: str) -> None
-            Creates a new ActionTypeError instance with the given message
     """
 
 
@@ -32,11 +27,6 @@ class ActionValueError(BaseError):
     """
         Value error for Action
         (BaseError)
-
-        Methods
-        ----------
-        ActionValueError(message: str) -> None
-            Creates a new ActionValueError instance with the given message
     """
 
 
@@ -59,11 +49,6 @@ class ActionArgumentError(BaseError):
     """
         Argument error for Action
         (BaseError)
-
-        Methods
-        ----------
-        ActionArgumentError(message: str) -> None
-            Creates a new ActionArgumentError instance with the given message
     """
 
 
@@ -86,11 +71,6 @@ class ActionExecutionError(BaseError):
     """
         Execution error for Action
         (BaseError)
-
-        Methods
-        ----------
-        ActionExecutionError(message: str) -> None
-            Creates a new ActionExecutionError instance with the given message
     """
 
 
@@ -113,11 +93,6 @@ class ActionThreadError(BaseError):
     """
         Thread error for Action
         (BaseError)
-
-        Methods
-        ----------
-        ActionThreadError(message: str) -> None
-            Creates a new ActionThreadError instance with the given message
     """
 
 
