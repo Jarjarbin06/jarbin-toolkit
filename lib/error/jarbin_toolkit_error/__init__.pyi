@@ -1,4 +1,5 @@
 from .base_error import BaseJError
+from .python.type import JErrorType
 from .enums import FormatType
 
 from . import enums as _Enums

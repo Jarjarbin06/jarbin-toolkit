@@ -1,7 +1,7 @@
 # ============================================================================
 # JARBIN-TOOLKIT
 #
-# Package      : Error/errors
+# Package      : Error/python
 # File         : python.py
 #
 # Author       : Jarjarbin06
@@ -55,5 +55,3 @@ class JErrorType(BaseJError):
 __all__ = [
     'JErrorType'
 ]
-
-JErrorType(obj=None, name="my_var", expected=str, do_raise=True)

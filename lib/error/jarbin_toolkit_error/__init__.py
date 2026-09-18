@@ -9,6 +9,7 @@
 
 
 from jarbin_toolkit_error.base_error import BaseJError
+from jarbin_toolkit_error.python.type import JErrorType
 from jarbin_toolkit_error.enums import FormatType
 
 import jarbin_toolkit_error.enums as _Enums
@@ -28,6 +29,7 @@ __all__ = [
     '__version__',
     '__license__',
     'BaseJError',
+    'JErrorType',
     'FormatType',
     '_EmptyField',
     '_Enums',
