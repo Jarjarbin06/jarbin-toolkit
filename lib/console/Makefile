@@ -27,27 +27,7 @@ NC              := \033[0m
 # DEFAULT TARGET
 # ------------------------------------------------------------
 
-.DEFAULT_GOAL := help
-
-# ------------------------------------------------------------
-# HELP
-# ------------------------------------------------------------
-
-help:
-	@echo -e "$(GREEN)Available commands:$(NC)"
-	@echo ""
-	@echo -e "\tmake/make help\t\tShow this help message"
-	@echo ""
-	@echo -e "\tmake install\t\tInstall the package"
-	@echo -e "\tmake uninstall\t\tUninstall the package"
-	@echo -e "\tmake reinstall\t\tReinstall the package"
-	@echo ""
-	@echo -e "\tmake test\t\Test the package (pytest)"
-	@echo -e "\tmake check\t\tShow package info (PyPI)"
-	@echo ""
-	@echo -e "\tmake clean\t\tClean cache and build files"
-	@echo -e "\tmake info\t\tShow package info"
-	@echo ""
+.DEFAULT_GOAL := install
 
 # ------------------------------------------------------------
 # PACKAGE MANAGEMENT
@@ -55,17 +35,17 @@ help:
 
 install:
 	@echo -e "$(YELLOW) [INSTALL] Installing package$(NC)"
-	@./$(SCRIPT_DIR)/install-package
+	@pip install -e .
 	@echo -e "$(GREEN) [INSTALL] Installing package$(NC)"
 
 uninstall:
 	@echo -e "$(YELLOW) [UNINSTALL] Uninstalling package$(NC)"
-	@./$(SCRIPT_DIR)/uninstall-package
+	@echo "y" | pip uninstall $(PACKAGE_NAME) || true
 	@echo -e "$(GREEN) [UNINSTALL] Package uninstalled$(NC)"
 
 reinstall:
 	@echo -e "$(YELLOW) [REINSTALL] Reinstalling package$(NC)"
-	@make -s uninstall install
+	@make --no-print-directory uninstall install
 	@echo -e "$(GREEN) [REINSTALL] Package reinstalled$(NC)"
 
 # ------------------------------------------------------------
@@ -74,13 +54,25 @@ reinstall:
 
 test:
 	@echo -e "$(YELLOW) [TEST] Running tests$(NC)"
-	@./$(SCRIPT_DIR)/test-package
+	@pytest --debug=trace --cov=jarbin_toolkit --cov-report=html
+	@xdg-open htmlcov/index.html
+	@rm -f .coverage
 	@echo -e "$(GREEN) [TEST] Tests ran$(NC)"
+
+test-jartest:
+	@echo -e "$(YELLOW) [TEST] Running JarTest tests$(NC)"
+	@python -m tests
+	@echo -e "$(GREEN) [TEST]  JarTest tests ran$(NC)"
 
 check:
 	@echo -e "$(YELLOW) [CHECK] Checking package$(NC)"
-	@./$(SCRIPT_DIR)/check-package
+	@pip show $(PACKAGE_NAME) || true
 	@echo -e "$(GREEN) [CHECK] Package checked$(NC)"
+
+check-style:
+	@echo -e "$(YELLOW) [CHECK] Checking coding style$(NC)"
+	@flake8 . --count --exit-zero --max-line-length=100 --statistic
+	@echo -e "$(GREEN) [CHECK] Coding style checked$(NC)"
 
 # ------------------------------------------------------------
 # INFORMATION
@@ -107,6 +99,6 @@ clean:
 .PHONY: \
 	help \
 	install uninstall reinstall \
-	test check \
+	test check-style \
 	info \
 	clean
