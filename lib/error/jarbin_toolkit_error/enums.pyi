@@ -2,9 +2,11 @@ from enum import StrEnum
 from typing import (
     Self,
     Optional,
+    final,
 )
 
 
+@final
 class FormatType(StrEnum):
     """
         Format types enum
@@ -40,6 +42,7 @@ class FormatType(StrEnum):
         ...
 
 
+@final
 class ErrorColor(StrEnum):
     """
         Color enum for error

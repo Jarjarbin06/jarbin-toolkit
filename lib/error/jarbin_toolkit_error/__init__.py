@@ -12,6 +12,7 @@ from jarbin_toolkit_error.base_error import BaseJError
 from jarbin_toolkit_error.enums import FormatType
 
 import jarbin_toolkit_error.enums as _Enums
+from jarbin_toolkit_error.empty_field import EmptyField as _EmptyField
 from jarbin_toolkit_error.error_link import ErrorLink as _ErrorLink
 
 
@@ -28,6 +29,7 @@ __all__ = [
     '__license__',
     'BaseJError',
     'FormatType',
+    '_EmptyField',
     '_Enums',
     '_ErrorLink',
 ]

@@ -214,5 +214,5 @@ class BaseJError(Exception):
 
 
 __all__ = [
-    'BaseError',
+    'BaseJError',
 ]

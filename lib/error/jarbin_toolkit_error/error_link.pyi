@@ -1,10 +1,14 @@
 from os import PathLike
 from types import FrameType
-from typing import Optional
+from typing import (
+    Optional,
+    final,
+)
 
 from jarbin_toolkit_error.enums import FormatType
 
 
+@final
 class ErrorLink:
     """
         Link to where the error comes from

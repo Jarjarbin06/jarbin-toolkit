@@ -19,6 +19,7 @@ from os.path import (
     dirname,
     normcase,
 )
+from typing import final
 
 from jarbin_toolkit_error.enums import (
     FormatType,
@@ -26,6 +27,7 @@ from jarbin_toolkit_error.enums import (
 )
 
 
+@final
 class ErrorLink:
 
 

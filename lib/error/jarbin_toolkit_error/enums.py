@@ -9,8 +9,10 @@
 
 
 from enum import StrEnum
+from typing import final
 
 
+@final
 class FormatType(StrEnum):
 
 
@@ -37,6 +39,7 @@ class FormatType(StrEnum):
         return None
 
 
+@final
 class ErrorColor(StrEnum):
 
 
