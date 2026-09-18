@@ -1,4 +1,5 @@
 from .base_error import BaseError
+from .enums import FormatType
 
 from . import enums as _Enums
 from .error_link import ErrorLink as _ErrorLink
