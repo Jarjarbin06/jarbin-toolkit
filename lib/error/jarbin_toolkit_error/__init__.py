@@ -8,7 +8,7 @@
 # ============================================================================
 
 
-from jarbin_toolkit_error.base_error import BaseError
+from jarbin_toolkit_error.base_error import BaseJError
 from jarbin_toolkit_error.enums import FormatType
 
 import jarbin_toolkit_error.enums as _Enums
@@ -26,7 +26,7 @@ __all__ = [
     '__email__',
     '__version__',
     '__license__',
-    'BaseError',
+    'BaseJError',
     'FormatType',
     '_Enums',
     '_ErrorLink',

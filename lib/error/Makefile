@@ -35,10 +35,10 @@ NC              := \033[0m
 
 install:
 	@echo -e "$(YELLOW) [INSTALL] Installing package$(NC)"
-	@# dependent #
-	@make --no-print-directory -C plugin/python install || true
 	@# parent #
 	@pip install -e .
+	@# dependent #
+	@make --no-print-directory -C plugins/python install || true
 	@echo -e "$(GREEN) [INSTALL] Installing package$(NC)"
 
 uninstall:
@@ -46,7 +46,7 @@ uninstall:
 	@# parent #
 	@echo "y" | pip uninstall $(PACKAGE_NAME) || true
 	@# dependent #
-	@make --no-print-directory -C plugin/python uninstall || true
+	@make --no-print-directory -C plugins/python uninstall || true
 	@echo -e "$(GREEN) [UNINSTALL] Package uninstalled$(NC)"
 
 reinstall:
@@ -61,7 +61,7 @@ reinstall:
 test:
 	@echo -e "$(YELLOW) [TEST] Running tests$(NC)"
 	@# dependent #
-	@make --no-print-directory -C plugin/python test || true
+	@make --no-print-directory -C plugins/python test || true
 	@# parent #
 	@pytest --debug=trace --cov=$(PACKAGE_NAME) --cov-report=html
 	@xdg-open htmlcov/index.html
@@ -78,7 +78,7 @@ check:
 	@# parent #
 	@pip show $(PACKAGE_NAME) || true
 	@# dependent #
-	@make --no-print-directory -C plugin/python check || true
+	@make --no-print-directory -C plugins/python check || true
 	@echo -e "$(GREEN) [CHECK] Package checked$(NC)"
 
 check-style:
@@ -101,10 +101,10 @@ info:
 clean:
 	@echo -e "$(YELLOW) [CLEAN] Removing cache, test, log and build files$(NC)"
 	@# dependent #
-	@make --no-print-directory -C plugin/python clean || true
+	@make --no-print-directory -C plugins/python clean || true
 	@# parent #
 	@find . -type d -name "__pycache__" -exec rm -frd {} +
-	@rm -frd *.egg-info *.xml trace htmlcov .pytest_cache
+	@rm -frd *.egg-info *.xml trace htmlcov .pytest_cache .coverage
 	@echo -e "$(GREEN) [CLEAN] Done$(NC)"
 
 # ------------------------------------------------------------

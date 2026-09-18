@@ -139,7 +139,7 @@ clean:
 	@make --no-print-directory -C lib/jartest clean || true
 	@# parent #
 	@find . -type d -name "__pycache__" -exec rm -frd {} +
-	@rm -frd *.egg-info *.xml trace htmlcov .pytest_cache
+	@rm -frd *.egg-info *.xml trace htmlcov .pytest_cache .coverage
 	@echo -e "$(GREEN) [CLEAN] Done$(NC)"
 
 # ------------------------------------------------------------

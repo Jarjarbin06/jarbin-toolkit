@@ -7,7 +7,7 @@ from jarbin_toolkit_error.enums import FormatType
 from jarbin_toolkit_error.error_link import ErrorLink
 
 
-class BaseError(Exception):
+class BaseJError(Exception):
     """
         Base error exception
         (Exception)
