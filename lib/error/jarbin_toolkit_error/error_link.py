@@ -15,7 +15,6 @@ from os import PathLike
 from os.path import (
     exists,
     abspath,
-    join,
     dirname,
     normcase,
 )
@@ -289,7 +288,6 @@ class ErrorLink:
 
         return ""
 
-
     @staticmethod
     def _is_internal_frame(
             filename
@@ -297,24 +295,24 @@ class ErrorLink:
 
         filename = normcase(
             abspath(filename)
-        )
-
-        internal_files = {
-            normcase(
-                abspath(__file__)
-            ),
-        }
-
-        base_error_file = normcase(
-            join(
-                dirname(__file__),
-                "base_error.py"
             )
+
+        package_dir = normcase(
+            abspath(dirname(__file__))
         )
 
-        internal_files.add(base_error_file)
+        if (
+            filename == package_dir
+            or filename.startswith(package_dir + "/")
+        ):
+            return True
 
-        return filename in internal_files
+        parts = filename.split("/")
+
+        return any(
+            part.startswith("jarbin_toolkit_")
+            for part in parts
+        )
 
 
     @staticmethod
