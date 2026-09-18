@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.12, 3.13, 3.14]
+        python-version: [ 3.12, 3.13, 3.14 ]
 
     steps:
     - uses: actions/checkout@v7
@@ -41,7 +41,7 @@ jobs:
         make -C lib/error install
     - name: Test error with pytest (xml)
       run: |
-        pytest lib/error -k lib/error/plugins --cov=lib/error/jarbin_toolkit_error --cov-report=xml --cov-report=term-missing --cov-fail-under=80
+        pytest lib/error -k lib/error/plugins/* --cov=lib/error/jarbin_toolkit_error --cov-report=xml --cov-report=term-missing --cov-fail-under=80
         
         pytest lib/error/plugins/python --cov=lib/error/plugins/jarbin_toolkit_error_python --cov-report=xml --cov-report=term-missing --cov-fail-under=80
     - name: Rename coverage file

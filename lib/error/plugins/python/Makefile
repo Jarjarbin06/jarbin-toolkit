@@ -74,7 +74,7 @@ reinstall:
 
 test:
 	@echo -e "$(YELLOW) [TEST] Running tests$(NC)"
-	@pytest --debug=trace --cov=jarbin_toolkit_error --cov-report=html
+	@pytest --debug=trace --cov=jarbin_toolkit_error_python --cov-report=html
 	@xdg-open htmlcov/index.html
 	@rm -f .coverage
 	@echo -e "$(GREEN) [TEST] Tests ran$(NC)"
