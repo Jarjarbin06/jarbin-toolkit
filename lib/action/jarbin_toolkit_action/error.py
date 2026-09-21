@@ -8,21 +8,10 @@
 # ============================================================================
 
 
-from jarbin_toolkit_error import BaseError
+from jarbin_toolkit_error import BaseJError
 
 
-class ActionTypeError(BaseError):
-
-
-    def __init__(
-            self,
-            message,
-        ):
-
-        super().__init__(message, error=type(self).__name__)
-
-
-class ActionValueError(BaseError):
+class ActionTypeError(BaseJError):
 
 
     def __init__(
@@ -30,21 +19,10 @@ class ActionValueError(BaseError):
             message,
         ):
 
-        super().__init__(message, error=type(self).__name__)
+        super().__init__(message)
 
 
-class ActionArgumentError(BaseError):
-
-
-    def __init__(
-            self,
-            message,
-        ):
-
-        super().__init__(message, error=type(self).__name__)
-
-
-class ActionExecutionError(BaseError):
+class ActionValueError(BaseJError):
 
 
     def __init__(
@@ -52,10 +30,10 @@ class ActionExecutionError(BaseError):
             message,
         ):
 
-        super().__init__(message, error=type(self).__name__)
+        super().__init__(message)
 
 
-class ActionThreadError(BaseError):
+class ActionArgumentError(BaseJError):
 
 
     def __init__(
@@ -63,7 +41,29 @@ class ActionThreadError(BaseError):
             message,
         ):
 
-        super().__init__(message, error=type(self).__name__)
+        super().__init__(message)
+
+
+class ActionExecutionError(BaseJError):
+
+
+    def __init__(
+            self,
+            message,
+        ):
+
+        super().__init__(message)
+
+
+class ActionThreadError(BaseJError):
+
+
+    def __init__(
+            self,
+            message,
+        ):
+
+        super().__init__(message)
 
 
 __all__ = [
