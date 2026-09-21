@@ -14,7 +14,7 @@ requires-python = ">=3.11"
 license = "GPL-3.0-or-later"
 
 dependencies = [
-    "jarbin-toolkit-error>=0.1.6.0,<0.2.0.0",
+    "jarbin-toolkit-error>=1.0.0.0,<1.1.0.0",
     "jarbin_toolkit_time>=0.1.2.2,<0.2.0.0",
 ]
 

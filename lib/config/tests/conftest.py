@@ -1,3 +1,13 @@
+# ============================================================================
+# JARBIN-TOOLKIT
+#
+# Package      : Config
+# File         : conftest.py
+#
+# Author       : Jarjarbin06
+# ============================================================================
+
+
 import pytest
 
 import jarbin_toolkit_config
