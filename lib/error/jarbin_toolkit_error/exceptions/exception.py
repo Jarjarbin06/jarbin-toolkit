@@ -2,7 +2,7 @@
 # JARBIN-TOOLKIT
 #
 # Package      : Error/python
-# File         : python.py
+# File         : exception.py
 #
 # Author       : Jarjarbin06
 # ============================================================================
@@ -13,7 +13,17 @@ from jarbin_toolkit_error.empty_field import EmptyField
 from jarbin_toolkit_error.enums import FormatType
 
 
-class JErrorRuntime(BaseJError):
+class JException(BaseJError):
+
+
+    funny_message = None
+
+
+    def _show_funny(
+            self,
+            _class,
+        ):
+        return self.funny_message or type(self) is _class
 
 
     def __init__(
@@ -25,13 +35,8 @@ class JErrorRuntime(BaseJError):
             do_raise = False,
         ):
 
-        msg = "A bug has escaped containment. Please remain calm."
-
-        if message is not EmptyField:
-            msg += f"\n\n  → {message}"
-
         super().__init__(
-            msg,
+            message if message is not EmptyField else "",
             format = format,
             link = link,
             do_raise = do_raise
@@ -39,5 +44,5 @@ class JErrorRuntime(BaseJError):
 
 
 __all__ = [
-    'JErrorRuntime'
+    'JException',
 ]
