@@ -82,7 +82,7 @@ test:
 	@make --no-print-directory -C lib/time test || true
 	@# dependent #
 	@make --no-print-directory -C lib/console test || true
-	@make --no-print-directory -C lib/jartest install || true
+	@make --no-print-directory -C lib/jartest test || true
 	@# parent #
 	@pytest --debug=trace --cov=$(PACKAGE_NAME) --cov-report=html
 	@xdg-open htmlcov/index.html
