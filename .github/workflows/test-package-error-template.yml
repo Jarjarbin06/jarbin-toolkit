@@ -44,7 +44,7 @@ jobs:
         make -C lib/error/plugins/template install
     - name: Test error:python with pytest (xml)
       run: |
-        pytest lib/error/plugins/template --cov=lib/error/plugins/jarbin_toolkit_error_template --cov-report=xml --cov-report=term-missing --cov-fail-under=80
+        pytest lib/error/plugins/template --cov=jarbin_toolkit_error_template --cov-report=xml --cov-report=term-missing --cov-fail-under=80
     - name: Rename coverage file
       run: |
         mv coverage.xml coverage_${{ matrix.python-version }}.xml

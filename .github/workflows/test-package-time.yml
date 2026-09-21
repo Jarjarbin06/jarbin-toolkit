@@ -41,7 +41,7 @@ jobs:
         make -C lib/time install
     - name: Test time with pytest (xml)
       run: |
-        pytest lib/time --cov=lib/time/jarbin_toolkit_time --cov-report=xml --cov-report=term-missing --cov-fail-under=80
+        pytest lib/time --cov=jarbin_toolkit_time --cov-report=xml --cov-report=term-missing --cov-fail-under=80
     - name: Rename coverage file
       run: |
         mv coverage.xml coverage_${{ matrix.python-version }}.xml

@@ -46,7 +46,7 @@ jobs:
         make -C lib/console install
     - name: Test console with pytest (xml)
       run: |
-        pytest lib/console --cov=lib/console/jarbin_toolkit_console --cov-report=xml --cov-report=term-missing --cov-fail-under=80
+        pytest lib/console --cov=jarbin_toolkit_console --cov-report=xml --cov-report=term-missing --cov-fail-under=80
     - name: Rename coverage file
       run: |
         mv coverage.xml coverage_${{ matrix.python-version }}.xml

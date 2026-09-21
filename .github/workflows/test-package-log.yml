@@ -41,7 +41,7 @@ jobs:
         make -C lib/log install
     - name: Test log with pytest (xml)
       run: |
-        pytest lib/log --cov=lib/log/jarbin_toolkit_log --cov-report=xml --cov-report=term-missing --cov-fail-under=80
+        pytest lib/log --cov=jarbin_toolkit_log --cov-report=xml --cov-report=term-missing --cov-fail-under=80
     - name: Rename coverage file
       run: |
         mv coverage.xml coverage_${{ matrix.python-version }}.xml
