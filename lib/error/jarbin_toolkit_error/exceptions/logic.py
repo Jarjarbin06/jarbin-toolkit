@@ -59,7 +59,7 @@ class JErrorZeroDivision(JException):
             msg += f"\n\n  → {message}"
 
         super().__init__(
-            f"→ {message}",
+            msg,
             format = format,
             link = link,
             do_raise = do_raise
@@ -88,7 +88,7 @@ class JErrorOverflow(JException):
             msg += f"\n\n  → {message}"
 
         super().__init__(
-            f"→ {message}",
+            msg,
             format = format,
             link = link,
             do_raise = do_raise

@@ -165,7 +165,7 @@ class JErrorIndexError(JException):
         ):
 
         msg = (
-            "That key does not unlock this dictionary.\n\n"
+            "That index went beyond the edge of reality.\n\n"
             if self._show_funny(__class__)
             else ""
         )

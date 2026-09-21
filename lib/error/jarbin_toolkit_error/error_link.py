@@ -11,7 +11,11 @@
 
 import inspect
 import linecache
-from os import PathLike
+from pathlib import Path
+from os import (
+    PathLike,
+    sep,
+)
 from os.path import (
     exists,
     abspath,
@@ -295,7 +299,7 @@ class ErrorLink:
 
         filename = normcase(
             abspath(filename)
-            )
+        )
 
         package_dir = normcase(
             abspath(dirname(__file__))
@@ -303,15 +307,13 @@ class ErrorLink:
 
         if (
             filename == package_dir
-            or filename.startswith(package_dir + "/")
+            or filename.startswith(package_dir + sep)
         ):
             return True
 
-        parts = filename.split("/")
-
         return any(
             part.startswith("jarbin_toolkit_")
-            for part in parts
+            for part in Path(filename).parts
         )
 
 
