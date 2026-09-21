@@ -1,6 +1,6 @@
 import pytest
 
-import jarbin_toolkit_error_python
+import jarbin_toolkit_error_template
 
 
 def pytest_sessionstart(session):
@@ -9,5 +9,5 @@ def pytest_sessionstart(session):
     if terminal:
         terminal.write_sep(
             "=",
-            f"Testing jarbin-toolkit-error:python {jarbin_toolkit_error_python.__version__}",
+            f"Testing jarbin-toolkit-error:template {jarbin_toolkit_error_template.__version__}",
         )

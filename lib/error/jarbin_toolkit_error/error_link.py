@@ -11,14 +11,18 @@
 
 import inspect
 import linecache
-from os import PathLike
+from pathlib import Path
+from os import (
+    PathLike,
+    sep,
+)
 from os.path import (
     exists,
     abspath,
-    join,
     dirname,
     normcase,
 )
+from typing import final
 
 from jarbin_toolkit_error.enums import (
     FormatType,
@@ -26,6 +30,7 @@ from jarbin_toolkit_error.enums import (
 )
 
 
+@final
 class ErrorLink:
 
 
@@ -287,7 +292,6 @@ class ErrorLink:
 
         return ""
 
-
     @staticmethod
     def _is_internal_frame(
             filename
@@ -297,22 +301,20 @@ class ErrorLink:
             abspath(filename)
         )
 
-        internal_files = {
-            normcase(
-                abspath(__file__)
-            ),
-        }
-
-        base_error_file = normcase(
-            join(
-                dirname(__file__),
-                "base_error.py"
-            )
+        package_dir = normcase(
+            abspath(dirname(__file__))
         )
 
-        internal_files.add(base_error_file)
+        if (
+            filename == package_dir
+            or filename.startswith(package_dir + sep)
+        ):
+            return True
 
-        return filename in internal_files
+        return any(
+            part.startswith("jarbin_toolkit_")
+            for part in Path(filename).parts
+        )
 
 
     @staticmethod

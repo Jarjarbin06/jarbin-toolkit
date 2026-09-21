@@ -1,22 +1,24 @@
 import pytest
 
 from jarbin_toolkit_error import (
-    BaseError,
+    BaseJError,
     FormatType,
 )
 
 
 def test_default_values():
-    error = BaseError("Something went wrong")
+    error = BaseJError(
+        "Something went wrong",
+    )
 
     assert error.message == "Something went wrong"
-    assert error.error == "BaseError"
+    assert error.error == "BaseJError"
     assert error._format == FormatType.TRACEBACK
     assert error._link is not None
 
 
 def test_custom_error():
-    error = BaseError(
+    error = BaseJError(
         "Something went wrong",
         error="CustomError",
     )
@@ -25,7 +27,7 @@ def test_custom_error():
 
 
 def test_message_is_stripped():
-    error = BaseError(
+    error = BaseJError(
         "  Something went wrong  \n",
     )
 
@@ -33,7 +35,9 @@ def test_message_is_stripped():
 
 
 def test_empty_message():
-    error = BaseError("")
+    error = BaseJError(
+        "",
+    )
 
     assert error.message == ""
 
@@ -48,7 +52,7 @@ def test_empty_message():
     ],
 )
 def test_format_enum(format):
-    error = BaseError(
+    error = BaseJError(
         "Something went wrong",
         format=format,
     )
@@ -61,7 +65,7 @@ def test_format_enum(format):
     ["c", "compact", "p", "pretty", "d", "detailed", "t", "traceback"],
 )
 def test_format_string(format):
-    error = BaseError(
+    error = BaseJError(
         "Something went wrong",
         format=format,
     )
@@ -71,12 +75,14 @@ def test_format_string(format):
 
 def test_invalid_message_type():
     with pytest.raises(TypeError, match="Message must be of type str"):
-        BaseError(123)
+        BaseJError(
+            123,
+        )
 
 
 def test_invalid_error_type():
     with pytest.raises(TypeError, match="Error must be of type str"):
-        BaseError(
+        BaseJError(
             "Something went wrong",
             error=123,
         )
@@ -84,14 +90,14 @@ def test_invalid_error_type():
 
 def test_invalid_format_type():
     with pytest.raises(TypeError):
-        BaseError(
+        BaseJError(
             "Something went wrong",
             format=123,
         )
 
 
 def test_compact():
-    error = BaseError(
+    error = BaseJError(
         "Something went wrong",
         error="CustomError",
         format="compact",
@@ -103,7 +109,7 @@ def test_compact():
 
 
 def test_compact_multiline():
-    error = BaseError(
+    error = BaseJError(
         "Something went wrong\nin the file",
         error="CustomError",
         format="compact",
@@ -115,7 +121,7 @@ def test_compact_multiline():
 
 
 def test_pretty():
-    error = BaseError(
+    error = BaseJError(
         "Something went wrong",
         error="CustomError",
         format="pretty",
@@ -128,7 +134,7 @@ def test_pretty():
 
 
 def test_pretty_multiline():
-    error = BaseError(
+    error = BaseJError(
         "Something went wrong\nin the file",
         error="CustomError",
         format="pretty",
@@ -142,7 +148,7 @@ def test_pretty_multiline():
 
 
 def test_detailed():
-    error = BaseError(
+    error = BaseJError(
         "Something went wrong",
         error="CustomError",
         format="detailed",
@@ -156,7 +162,7 @@ def test_detailed():
 
 
 def test_traceback():
-    error = BaseError(
+    error = BaseJError(
         "Something went wrong",
         error="CustomError",
         format="traceback",
@@ -169,7 +175,7 @@ def test_traceback():
 
 
 def test_traceback_multiline():
-    error = BaseError(
+    error = BaseJError(
         "Something went wrong\nin the file",
         error="CustomError",
         format="traceback",
@@ -183,7 +189,7 @@ def test_traceback_multiline():
 
 
 def test_traceback_does_not_duplicate_indentation():
-    error = BaseError(
+    error = BaseJError(
         "first\nsecond\nthird",
         format="traceback",
     )
@@ -194,8 +200,8 @@ def test_traceback_does_not_duplicate_indentation():
 
 
 def test_do_raise():
-    with pytest.raises(BaseError) as raised:
-        BaseError(
+    with pytest.raises(BaseJError) as raised:
+        BaseJError(
             "Something went wrong",
             do_raise=True,
         )
@@ -204,13 +210,13 @@ def test_do_raise():
 
 
 def test_repr():
-    error = BaseError(
+    error = BaseJError(
         "Something went wrong",
         error="CustomError",
     )
 
     assert repr(error) == (
-        "<BaseError("
+        "<BaseJError("
         "error='CustomError', "
         "message='Something went wrong', "
         ")>"
@@ -218,6 +224,6 @@ def test_repr():
 
 
 def test_is_exception():
-    error = BaseError("Something went wrong")
+    error = BaseJError("Something went wrong")
 
     assert isinstance(error, Exception)

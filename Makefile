@@ -34,7 +34,7 @@ NC              := \033[0m
 # ------------------------------------------------------------
 
 install:
-	@echo -e "$(YELLOW) [INSTALL] Installing package$(NC)"
+	@echo -e "$(YELLOW) [INSTALL] ($(PACKAGE_NAME)) Installing package$(NC)"
 	@# independent #
 	@make --no-print-directory -C lib/action install || true
 	@make --no-print-directory -C lib/config install || true
@@ -46,10 +46,10 @@ install:
 	@make --no-print-directory -C lib/jartest install || true
 	@# parent #
 	@pip install -e .
-	@echo -e "$(GREEN) [INSTALL] Installing package$(NC)"
+	@echo -e "$(GREEN) [INSTALL] ($(PACKAGE_NAME)) Package installed$(NC)"
 
 uninstall:
-	@echo -e "$(YELLOW) [UNINSTALL] Uninstalling package$(NC)"
+	@echo -e "$(YELLOW) [UNINSTALL] ($(PACKAGE_NAME)) Uninstalling package$(NC)"
 	@# parent #
 	@echo "y" | pip uninstall $(PACKAGE_NAME) || true
 	@# dependent #
@@ -61,19 +61,19 @@ uninstall:
 	@make --no-print-directory -C lib/error uninstall || true
 	@make --no-print-directory -C lib/log uninstall || true
 	@make --no-print-directory -C lib/time uninstall || true
-	@echo -e "$(GREEN) [UNINSTALL] Package uninstalled$(NC)"
+	@echo -e "$(GREEN) [UNINSTALL] ($(PACKAGE_NAME)) Package uninstalled$(NC)"
 
 reinstall:
-	@echo -e "$(YELLOW) [REINSTALL] Reinstalling package$(NC)"
+	@echo -e "$(YELLOW) [REINSTALL] ($(PACKAGE_NAME)) Reinstalling package$(NC)"
 	@make --no-print-directory uninstall install
-	@echo -e "$(GREEN) [REINSTALL] Package reinstalled$(NC)"
+	@echo -e "$(GREEN) [REINSTALL] ($(PACKAGE_NAME)) Package reinstalled$(NC)"
 
 # ------------------------------------------------------------
 # TESTS & CHECKS
 # ------------------------------------------------------------
 
 test:
-	@echo -e "$(YELLOW) [TEST] Running tests$(NC)"
+	@echo -e "$(YELLOW) [TEST] ($(PACKAGE_NAME)) Running tests$(NC)"
 	@# independent #
 	@make --no-print-directory -C lib/action test || true
 	@make --no-print-directory -C lib/config test || true
@@ -82,20 +82,20 @@ test:
 	@make --no-print-directory -C lib/time test || true
 	@# dependent #
 	@make --no-print-directory -C lib/console test || true
-	@make --no-print-directory -C lib/jartest install || true
+	@make --no-print-directory -C lib/jartest test || true
 	@# parent #
 	@pytest --debug=trace --cov=$(PACKAGE_NAME) --cov-report=html
 	@xdg-open htmlcov/index.html
 	@rm -f .coverage
-	@echo -e "$(GREEN) [TEST] Tests ran$(NC)"
+	@echo -e "$(GREEN) [TEST] ($(PACKAGE_NAME)) Tests ran$(NC)"
 
 test-jartest:
-	@echo -e "$(YELLOW) [TEST] Running JarTest tests$(NC)"
+	@echo -e "$(YELLOW) [TEST] ($(PACKAGE_NAME)) Running JarTest tests$(NC)"
 	@python -m tests
-	@echo -e "$(GREEN) [TEST]  JarTest tests ran$(NC)"
+	@echo -e "$(GREEN) [TEST] ($(PACKAGE_NAME)) JarTest tests ran$(NC)"
 
 check:
-	@echo -e "$(YELLOW) [CHECK] Checking package$(NC)"
+	@echo -e "$(YELLOW) [CHECK] ($(PACKAGE_NAME)) Checking package$(NC)"
 	@# parent #
 	@pip show $(PACKAGE_NAME) || true
 	@# dependent #
@@ -107,19 +107,19 @@ check:
 	@make --no-print-directory -C lib/error check || true
 	@make --no-print-directory -C lib/log check || true
 	@make --no-print-directory -C lib/time check || true
-	@echo -e "$(GREEN) [CHECK] Package checked$(NC)"
+	@echo -e "$(GREEN) [CHECK] ($(PACKAGE_NAME)) Package checked$(NC)"
 
 check-style:
-	@echo -e "$(YELLOW) [CHECK] Checking coding style$(NC)"
+	@echo -e "$(YELLOW) [CHECK] ($(PACKAGE_NAME)) Checking coding style$(NC)"
 	@flake8 . --count --exit-zero --max-line-length=100 --statistic
-	@echo -e "$(GREEN) [CHECK] Coding style checked$(NC)"
+	@echo -e "$(GREEN) [CHECK] ($(PACKAGE_NAME)) Coding style checked$(NC)"
 
 # ------------------------------------------------------------
 # INFORMATION
 # ------------------------------------------------------------
 
 info:
-	@echo -e "$(YELLOW) [INFO] Getting package informations$(NC)"
+	@echo -e "$(YELLOW) [INFO] ($(PACKAGE_NAME)) Getting package informations$(NC)"
 	@$(PIP) show $(PACKAGE_NAME) >/dev/null 2>&1 && $(PIP) show $(PACKAGE_NAME) && echo -e "$(GREEN) [INFO] Package informations shown$(NC)" || echo -e "$(RED) [INFO] Package not installed$(NC)"
 
 # ------------------------------------------------------------
@@ -127,7 +127,7 @@ info:
 # ------------------------------------------------------------
 
 clean:
-	@echo -e "$(YELLOW) [CLEAN] Removing cache, test, log and build files$(NC)"
+	@echo -e "$(YELLOW) [CLEAN] ($(PACKAGE_NAME)) Removing cache, test, log and build files$(NC)"
 	@# independent #
 	@make --no-print-directory -C lib/action clean || true
 	@make --no-print-directory -C lib/config clean || true
@@ -139,8 +139,8 @@ clean:
 	@make --no-print-directory -C lib/jartest clean || true
 	@# parent #
 	@find . -type d -name "__pycache__" -exec rm -frd {} +
-	@rm -frd *.egg-info *.xml trace htmlcov .pytest_cache
-	@echo -e "$(GREEN) [CLEAN] Done$(NC)"
+	@rm -frd *.egg-info *.xml trace htmlcov .pytest_cache .coverage
+	@echo -e "$(GREEN) [CLEAN] ($(PACKAGE_NAME)) Cleaning done$(NC)"
 
 # ------------------------------------------------------------
 # SAFETY

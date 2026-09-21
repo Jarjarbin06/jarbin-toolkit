@@ -1,3 +1,7 @@
+from .my_exception import (
+    JErrorMyException,
+)
+
 __author__: str
 __email__: str
 __version__: str

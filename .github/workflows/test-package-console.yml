@@ -1,7 +1,7 @@
 # This workflow will install Python dependencies, run tests and lint with a variety of Python versions
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
-name: Console tester
+name: Test / Console
 permissions:
   contents: read
 
@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.12, 3.13, 3.14]
+        python-version: [ 3.12, 3.13, 3.14 ]
 
     steps:
     - uses: actions/checkout@v7
@@ -46,7 +46,7 @@ jobs:
         make -C lib/console install
     - name: Test console with pytest (xml)
       run: |
-        pytest lib/console --cov=lib/console/jarbin_toolkit_console --cov-report=xml --cov-report=term-missing --cov-fail-under=80
+        pytest lib/console --cov=jarbin_toolkit_console --cov-report=xml --cov-report=term-missing --cov-fail-under=80
     - name: Rename coverage file
       run: |
         mv coverage.xml coverage_${{ matrix.python-version }}.xml

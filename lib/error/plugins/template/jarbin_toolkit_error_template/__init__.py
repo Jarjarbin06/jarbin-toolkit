@@ -1,11 +1,18 @@
 # ============================================================================
 # JARBIN-TOOLKIT
 #
-# Package      : Error-Python
+# Package      : Error-Template
 # File         : __init__.py
 #
 # Author       : Jarjarbin06
 # ============================================================================
+
+
+from jarbin_toolkit_error import FormatType
+
+from jarbin_toolkit_error_template.my_exception import (
+    JErrorMyException,
+)
 
 
 __author__ = 'Jarjarbin06'
@@ -19,4 +26,6 @@ __all__ = [
     '__email__',
     '__version__',
     '__license__',
+    'JErrorMyException',
+    'FormatType',
 ]

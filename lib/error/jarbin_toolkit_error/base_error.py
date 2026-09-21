@@ -16,7 +16,7 @@ from jarbin_toolkit_error.enums import (
 from jarbin_toolkit_error.error_link import ErrorLink
 
 
-class BaseError(Exception):
+class BaseJError(Exception):
 
 
     def _str_compact(
@@ -214,5 +214,5 @@ class BaseError(Exception):
 
 
 __all__ = [
-    'BaseError',
+    'BaseJError',
 ]
