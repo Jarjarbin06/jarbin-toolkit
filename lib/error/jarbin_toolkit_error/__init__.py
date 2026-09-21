@@ -25,13 +25,13 @@ from jarbin_toolkit_error.exceptions.general import (
 from jarbin_toolkit_error.exceptions.value import (
     JErrorType,
     JErrorValue,
-    JErrorIndexError,
+    JErrorIndex,
     JErrorName,
     JErrorAttribute,
     JErrorKey,
 )
 
-from jarbin_toolkit_error.exceptions.logic import (
+from jarbin_toolkit_error.exceptions.arithmetic import (
     JErrorArithmetic,
     JErrorFloatingPoint,
     JErrorOverflow,
@@ -73,7 +73,7 @@ __all__ = [
 
     'JErrorType',
     'JErrorValue',
-    'JErrorIndexError',
+    'JErrorIndex',
     'JErrorName',
     'JErrorAttribute',
     'JErrorKey',

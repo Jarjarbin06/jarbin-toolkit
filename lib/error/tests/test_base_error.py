@@ -7,7 +7,9 @@ from jarbin_toolkit_error import (
 
 
 def test_default_values():
-    error = BaseJError("Something went wrong")
+    error = BaseJError(
+        "Something went wrong",
+    )
 
     assert error.message == "Something went wrong"
     assert error.error == "BaseJError"
@@ -33,7 +35,9 @@ def test_message_is_stripped():
 
 
 def test_empty_message():
-    error = BaseJError("")
+    error = BaseJError(
+        "",
+    )
 
     assert error.message == ""
 
@@ -71,7 +75,9 @@ def test_format_string(format):
 
 def test_invalid_message_type():
     with pytest.raises(TypeError, match="Message must be of type str"):
-        BaseJError(123)
+        BaseJError(
+            123,
+        )
 
 
 def test_invalid_error_type():

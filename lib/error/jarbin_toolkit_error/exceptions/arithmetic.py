@@ -2,7 +2,7 @@
 # JARBIN-TOOLKIT
 #
 # Package      : Error/python
-# File         : logic.py
+# File         : arithmetic.py
 #
 # Author       : Jarjarbin06
 # ============================================================================

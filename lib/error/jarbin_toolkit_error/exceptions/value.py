@@ -20,8 +20,8 @@ class JErrorType(JException):
             self,
             message = EmptyField,
             *,
-            actual = EmptyField,
             expected = EmptyField,
+            actual = EmptyField,
             format = FormatType.TRACEBACK,
             link = None,
             do_raise = False,
@@ -150,7 +150,7 @@ class JErrorName(JException):
         )
 
 
-class JErrorIndexError(JException):
+class JErrorIndex(JException):
 
 
     def __init__(
@@ -174,7 +174,9 @@ class JErrorIndexError(JException):
             msg += f"  Index: {index!r}\n"
 
         if obj is not EmptyField:
-            msg += f"  Actual length: {len(obj)!r}\n"
+            length= len(obj)
+            msg += f"  Actual length: {length!r}\n"
+            msg += f"  Last index: {length - 1!r}\n"
 
         if message is not EmptyField:
             msg += f"\n\n  → {message}"
@@ -225,6 +227,6 @@ __all__ = [
     'JErrorValue',
     'JErrorAttribute',
     'JErrorName',
-    'JErrorIndexError',
+    'JErrorIndex',
     'JErrorKey',
 ]
