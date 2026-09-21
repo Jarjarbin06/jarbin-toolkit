@@ -1,15 +1,15 @@
 # This workflow will install Python dependencies, run tests and lint with a variety of Python versions
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
-name: Console tester
+name: Test / Action
 permissions:
   contents: read
 
 on:
   push:
-    branches: [ "main", "develop", "console/*" ]
+    branches: [ "main", "develop", "action/*" ]
   pull_request:
-    branches: [ "main", "develop", "console/*" ]
+    branches: [ "main", "develop", "action/*" ]
 
 jobs:
   build:
@@ -36,17 +36,15 @@ jobs:
       run: |
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics | true
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics | true
-    - name: Install jarbin-toolkit-console
+    - name: Install jarbin-toolkit-action
       run: |
-        make -C lib/action install
+        make -C lib/error install
         make -C lib/time install
-        make -C lib/log install
-        make -C lib/config install
         
-        make -C lib/console install
-    - name: Test console with pytest (xml)
+        make -C lib/action install
+    - name: Test action with pytest (xml)
       run: |
-        pytest lib/console --cov=lib/console/jarbin_toolkit_console --cov-report=xml --cov-report=term-missing --cov-fail-under=80
+        pytest lib/action --cov=lib/action/jarbin_toolkit_action --cov-report=xml --cov-report=term-missing --cov-fail-under=80
     - name: Rename coverage file
       run: |
         mv coverage.xml coverage_${{ matrix.python-version }}.xml
