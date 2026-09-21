@@ -1,3 +1,13 @@
+# ============================================================================
+# JARBIN-TOOLKIT
+#
+# Package      : Error
+# File         : test_base_error.py
+#
+# Author       : Jarjarbin06
+# ============================================================================
+
+
 import pytest
 
 from jarbin_toolkit_error import (

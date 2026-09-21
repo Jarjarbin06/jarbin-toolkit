@@ -16,11 +16,10 @@ from jarbin_toolkit_action import (
     Action,
     ActionBatch,
     ActionArgumentError,
-    ActionThreadError,
     ActionTypeError,
     ActionExecutionError,
+    _Enums,
 )
-from jarbin_toolkit_action import _Enums
 
 
 def test_action_batch_init() -> None:

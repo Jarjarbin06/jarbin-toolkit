@@ -1,3 +1,13 @@
+# ============================================================================
+# JARBIN-TOOLKIT
+#
+# Package      : Error
+# File         : test_exceptions_exception.py
+#
+# Author       : Jarjarbin06
+# ============================================================================
+
+
 from jarbin_toolkit_error import (
     JException,
 )
