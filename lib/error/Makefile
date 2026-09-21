@@ -101,7 +101,7 @@ info:
 clean:
 	@echo -e "$(YELLOW) [CLEAN] Removing cache, test, log and build files ($(PACKAGE_NAME))$(NC)"
 	@# dependent #
-	@make --no-print-directory -C plugins/python clean || true
+	@make --no-print-directory -C plugins/template clean || true
 	@# parent #
 	@find . -type d -name "__pycache__" -exec rm -frd {} +
 	@rm -frd *.egg-info *.xml trace htmlcov .pytest_cache .coverage
