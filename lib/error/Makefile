@@ -38,7 +38,7 @@ install:
 	@# parent #
 	@pip install -e .
 	@# dependent #
-	@make --no-print-directory -C plugins/python install || true
+	@make --no-print-directory -C plugins/template install || true
 	@echo -e "$(GREEN) [INSTALL] Package installed ($(PACKAGE_NAME))$(NC)"
 
 uninstall:
@@ -61,7 +61,7 @@ reinstall:
 test:
 	@echo -e "$(YELLOW) [TEST] Running tests ($(PACKAGE_NAME))$(NC)"
 	@# dependent #
-	@make --no-print-directory -C plugins/python test || true
+	@make --no-print-directory -C plugins/template test || true
 	@# parent #
 	@pytest --debug=trace --cov=$(PACKAGE_NAME) --cov-report=html
 	@xdg-open htmlcov/index.html
