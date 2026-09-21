@@ -44,7 +44,10 @@ from jarbin_toolkit_error.exceptions.module import (
 )
 
 import jarbin_toolkit_error.enums as _Enums
-from jarbin_toolkit_error.empty_field import EmptyField as _EmptyField
+from jarbin_toolkit_error.empty_field import (
+    _EmptyField as _EmptyFieldClass,
+    EmptyField as _EmptyField,
+)
 from jarbin_toolkit_error.error_link import ErrorLink as _ErrorLink
 
 

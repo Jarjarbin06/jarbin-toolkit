@@ -15,7 +15,7 @@ PYTHON          ?= python3
 PIP             ?= pip3
 SHELL           := /bin/bash
 SCRIPT_DIR      := script
-PACKAGE_NAME    := jarbin_toolkit_error
+PACKAGE_NAME    := jarbin_toolkit_error_template
 
 # Colors (safe for most terminals)
 GREEN           := \033[0;32m
