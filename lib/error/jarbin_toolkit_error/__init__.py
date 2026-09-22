@@ -87,6 +87,7 @@ __all__ = [
     'JErrorModuleNotFound',
 
     '_EmptyField',
+    '_EmptyFieldClass',
     '_Enums',
     '_ErrorLink',
 ]
