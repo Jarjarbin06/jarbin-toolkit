@@ -7,7 +7,7 @@ from jarbin_toolkit_error import BaseJError
 class ActionTypeError(BaseJError):
     """
         Type error for Action
-        (BaseError)
+        (BaseJError)
     """
 
 
@@ -30,7 +30,7 @@ class ActionTypeError(BaseJError):
 class ActionValueError(BaseJError):
     """
         Value error for Action
-        (BaseError)
+        (BaseJError)
     """
 
 
@@ -53,7 +53,7 @@ class ActionValueError(BaseJError):
 class ActionArgumentError(BaseJError):
     """
         Argument error for Action
-        (BaseError)
+        (BaseJError)
     """
 
 
@@ -76,7 +76,7 @@ class ActionArgumentError(BaseJError):
 class ActionExecutionError(BaseJError):
     """
         Execution error for Action
-        (BaseError)
+        (BaseJError)
     """
 
 
@@ -99,7 +99,7 @@ class ActionExecutionError(BaseJError):
 class ActionThreadError(BaseJError):
     """
         Thread error for Action
-        (BaseError)
+        (BaseJError)
     """
 
 
