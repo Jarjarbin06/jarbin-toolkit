@@ -74,7 +74,7 @@ class Action:
 
             Raises
             ----------
-            ActionValueError
+            ActionValueJError
                 Invalid positional arguments.
                 Invalid keyword arguments (for the given function).
         """
@@ -100,7 +100,7 @@ class Action:
 
             Raises
             ----------
-            ActionValueError
+            ActionValueJError
                 Invalid positional arguments.
                 Invalid keyword arguments (for the given function).
         """
@@ -126,7 +126,7 @@ class Action:
 
             Raises
             ----------
-            ActionValueError
+            ActionValueJError
                 Invalid keyword arguments (for the given function).
 
             ActionExecutionError
