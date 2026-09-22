@@ -14,10 +14,10 @@ import time
 
 from jarbin_toolkit_action import (
     Action,
-    ActionArgumentError,
-    ActionExecutionError,
-    ActionThreadError,
-    ActionValueError,
+    ActionArgumentJError,
+    ActionExecutionJError,
+    ActionThreadJError,
+    ActionValueJError,
 )
 from jarbin_toolkit_action import _Enums
 
@@ -101,7 +101,7 @@ def test_action_invalid_kwargs() -> None:
 
     act = Action(sample, x=1)
 
-    with pytest.raises(ActionValueError):
+    with pytest.raises(ActionValueJError):
         act(invalid=2)
 
 
@@ -111,26 +111,26 @@ def test_action_invalid_execution_kwargs() -> None:
 
     act = Action(sample)
 
-    with pytest.raises(ActionValueError):
+    with pytest.raises(ActionValueJError):
         act(invalid=42)
 
 
 def test_action_caught_execution_error() -> None:
     def fail():
-        raise ValueError("failure")
+        raise ValueJError("failure")
 
     act = Action(fail)
 
-    with pytest.raises(ActionExecutionError):
+    with pytest.raises(ActionExecutionJError):
         act()
 
     assert act.status == _Enums.ActionStatus.FAILED
-    assert isinstance(act.error, ValueError)
+    assert isinstance(act.error, ValueJError)
 
 
 def test_action_catch_setting() -> None:
     def fail():
-        raise ValueError("failure")
+        raise ValueJError("failure")
 
     act = Action(fail)
     act.set_settings(catch=True)
@@ -139,13 +139,13 @@ def test_action_catch_setting() -> None:
 
     assert result is None
     assert act.status == _Enums.ActionStatus.FAILED
-    assert isinstance(act.error, ValueError)
+    assert isinstance(act.error, ValueJError)
 
 
 def test_action_invalid_setting() -> None:
     act = Action(lambda: None)
 
-    with pytest.raises(ActionArgumentError):
+    with pytest.raises(ActionArgumentJError):
         act.set_settings(invalid=True)
 
 
@@ -294,7 +294,7 @@ def test_action_pending_cancel() -> None:
 def test_action_cannot_start_without_async_call() -> None:
     act = Action(lambda: 42)
 
-    with pytest.raises(ActionThreadError):
+    with pytest.raises(ActionThreadJError):
         act.start()
 
 
@@ -305,7 +305,7 @@ def test_action_cannot_start_twice() -> None:
     act()
     act.start()
 
-    with pytest.raises(ActionThreadError):
+    with pytest.raises(ActionThreadJError):
         act.start()
 
     act._thread.join()
@@ -321,7 +321,7 @@ def test_action_cannot_execute_while_running() -> None:
     while act.status == _Enums.ActionStatus.PENDING:
         time.sleep(0.001)
 
-    with pytest.raises(ActionExecutionError):
+    with pytest.raises(ActionExecutionJError):
         act()
 
     act._thread.join()

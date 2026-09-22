@@ -8,7 +8,7 @@
 # ============================================================================
 
 
-from jarbin_toolkit_error.exceptions.exception import JException
+from jarbin_toolkit_error.exceptions.exceptions import JException
 from jarbin_toolkit_error.empty_field import EmptyField
 from jarbin_toolkit_error.enums import FormatType
 
