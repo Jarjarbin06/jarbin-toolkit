@@ -356,7 +356,7 @@ class Action:
 
         with self._execution_lock:
             if self._status != ActionStatus.PAUSED:
-                raise ActionThreadError(
+                raise ActionThreadJError(
                     f"\nCannot resume Action from status {self.status}"
                 )
 
@@ -375,7 +375,7 @@ class Action:
                 ActionStatus.RUNNING,
                 ActionStatus.PAUSED,
             ):
-                raise ActionThreadError(
+                raise ActionThreadJError(
                     f"\nCannot cancel Action from status {self.status}"
                 )
 

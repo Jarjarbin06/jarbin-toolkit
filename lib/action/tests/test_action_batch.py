@@ -15,9 +15,9 @@ import time
 from jarbin_toolkit_action import (
     Action,
     ActionBatch,
-    ActionArgumentError,
-    ActionTypeError,
-    ActionExecutionError,
+    ActionArgumentJError,
+    ActionTypeJError,
+    ActionExecutionJError,
     _Enums,
 )
 
@@ -49,7 +49,7 @@ def test_action_batch_empty() -> None:
 
 
 def test_action_batch_invalid_action() -> None:
-    with pytest.raises(ActionTypeError):
+    with pytest.raises(ActionTypeJError):
         ActionBatch(Action(lambda: 1), "invalid")
 
 
@@ -88,7 +88,7 @@ def test_action_batch_set_settings_partial() -> None:
 def test_action_batch_invalid_setting() -> None:
     batch = ActionBatch(Action(lambda: 1))
 
-    with pytest.raises(ActionArgumentError):
+    with pytest.raises(ActionArgumentJError):
         batch.set_settings(invalid=True)
 
 
@@ -167,14 +167,14 @@ def test_action_batch_cannot_call_while_pending() -> None:
 
     batch()
 
-    with pytest.raises(ActionExecutionError):
+    with pytest.raises(ActionExecutionJError):
         batch()
 
 
 def test_action_batch_run_requires_pending() -> None:
     batch = ActionBatch(Action(lambda: None))
 
-    with pytest.raises(ActionExecutionError):
+    with pytest.raises(ActionExecutionJError):
         batch.run()
 
 

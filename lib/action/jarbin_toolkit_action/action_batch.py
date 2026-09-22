@@ -15,7 +15,8 @@ from jarbin_toolkit_action.action import Action
 from jarbin_toolkit_action.errors import (
     ActionTypeJError,
     ActionArgumentJError,
-    ActionThreadJError, ActionExecutionJError,
+    ActionThreadJError,
+    ActionExecutionJError,
 )
 from jarbin_toolkit_action.enums import ActionStatus
 from jarbin_toolkit_action.time import ActionTimer
@@ -130,7 +131,7 @@ class ActionBatch:
         for key, value in kwargs.items():
 
             if key not in self._settings:
-                raise ActionArgumentError(
+                raise ActionArgumentJError(
                     f"\nInvalid setting: {key}={value}"
                 )
 
@@ -139,7 +140,7 @@ class ActionBatch:
                 or
                 (key == "time_out" and value is not None and value < 0)
             ):
-                raise ActionArgumentError(
+                raise ActionArgumentJError(
                     f"\nInvalid setting's value: {key}={value}"
                 )
 
@@ -159,7 +160,7 @@ class ActionBatch:
         ):
 
         if self._status != ActionStatus.PENDING:
-            raise ActionExecutionError(
+            raise ActionExecutionJError(
                 f"\nCannot start ActionBatch from status {self.status}"
             )
 

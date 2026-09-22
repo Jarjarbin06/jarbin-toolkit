@@ -22,7 +22,7 @@ class ActionTimer(StopWatch):
             self,
         ):
 
-        return super().elapsed(auto_update=False)
+        return super().elapsed()
 
 
 

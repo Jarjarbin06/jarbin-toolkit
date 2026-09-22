@@ -18,8 +18,8 @@ from jarbin_toolkit_action import (
     ActionExecutionJError,
     ActionThreadJError,
     ActionValueJError,
+    _Enums,
 )
-from jarbin_toolkit_action import _Enums
 
 
 def test_action_valid_construction() -> None:
@@ -117,7 +117,7 @@ def test_action_invalid_execution_kwargs() -> None:
 
 def test_action_caught_execution_error() -> None:
     def fail():
-        raise ValueJError("failure")
+        raise ValueError("failure")
 
     act = Action(fail)
 
@@ -125,12 +125,12 @@ def test_action_caught_execution_error() -> None:
         act()
 
     assert act.status == _Enums.ActionStatus.FAILED
-    assert isinstance(act.error, ValueJError)
+    assert isinstance(act.error, ValueError)
 
 
 def test_action_catch_setting() -> None:
     def fail():
-        raise ValueJError("failure")
+        raise ValueError("failure")
 
     act = Action(fail)
     act.set_settings(catch=True)
@@ -139,7 +139,7 @@ def test_action_catch_setting() -> None:
 
     assert result is None
     assert act.status == _Enums.ActionStatus.FAILED
-    assert isinstance(act.error, ValueJError)
+    assert isinstance(act.error, ValueError)
 
 
 def test_action_invalid_setting() -> None:
