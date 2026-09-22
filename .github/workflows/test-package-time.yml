@@ -38,6 +38,8 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics | true
     - name: Install jarbin-toolkit-time
       run: |
+        make -C lib/error install
+        
         make -C lib/time install
     - name: Test time with pytest (xml)
       run: |
