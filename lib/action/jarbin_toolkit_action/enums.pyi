@@ -1,6 +1,8 @@
 from enum import IntEnum
+from typing import final
 
 
+@final
 class ActionStatus(IntEnum):
     """
         Action status enum
@@ -40,6 +42,7 @@ class ActionStatus(IntEnum):
     CANCELLED: int
 
 
+@final
 class ActionAsync(IntEnum):
     """
         Action async startup enum

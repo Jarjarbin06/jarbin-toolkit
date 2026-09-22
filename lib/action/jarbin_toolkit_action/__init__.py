@@ -10,7 +10,7 @@
 
 from jarbin_toolkit_action.action import Action
 from jarbin_toolkit_action.action_batch import ActionBatch
-from jarbin_toolkit_action.error import *
+from jarbin_toolkit_action.errors import *
 
 import jarbin_toolkit_action.enums as _Enums
 from jarbin_toolkit_action.time import ActionTimer as _ActionTimer
@@ -28,11 +28,11 @@ __all__ = [
     '__license__',
     'Action',
     'ActionBatch',
-    'ActionTypeError',
-    'ActionValueError',
-    'ActionArgumentError',
-    'ActionExecutionError',
-    'ActionThreadError',
+    'ActionTypeJError',
+    'ActionValueJError',
+    'ActionArgumentJError',
+    'ActionExecutionJError',
+    'ActionThreadJError',
     '_Enums',
     '_ActionTimer',
 ]

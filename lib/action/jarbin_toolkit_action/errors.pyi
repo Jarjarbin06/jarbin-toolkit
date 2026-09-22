@@ -1,10 +1,13 @@
-from jarbin_toolkit_error import BaseError
+from typing import final
+
+from jarbin_toolkit_error import BaseJError
 
 
-class ActionTypeError(BaseError):
+@final
+class ActionTypeError(BaseJError):
     """
         Type error for Action
-        (BaseError)
+        (BaseJError)
     """
 
 
@@ -23,10 +26,11 @@ class ActionTypeError(BaseError):
         ...
 
 
-class ActionValueError(BaseError):
+@final
+class ActionValueError(BaseJError):
     """
         Value error for Action
-        (BaseError)
+        (BaseJError)
     """
 
 
@@ -45,10 +49,11 @@ class ActionValueError(BaseError):
         ...
 
 
-class ActionArgumentError(BaseError):
+@final
+class ActionArgumentError(BaseJError):
     """
         Argument error for Action
-        (BaseError)
+        (BaseJError)
     """
 
 
@@ -67,10 +72,11 @@ class ActionArgumentError(BaseError):
         ...
 
 
-class ActionExecutionError(BaseError):
+@final
+class ActionExecutionError(BaseJError):
     """
         Execution error for Action
-        (BaseError)
+        (BaseJError)
     """
 
 
@@ -89,10 +95,11 @@ class ActionExecutionError(BaseError):
         ...
 
 
-class ActionThreadError(BaseError):
+@final
+class ActionThreadError(BaseJError):
     """
         Thread error for Action
-        (BaseError)
+        (BaseJError)
     """
 
 

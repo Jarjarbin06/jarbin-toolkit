@@ -1,129 +1,456 @@
+# ============================================================================
+# JARBIN-TOOLKIT
+#
+# Package      : Time
+# File         : test_stopwatch.py
+#
+# Author       : Jarjarbin06
+# ============================================================================
+
+
+from time import (
+    time,
+    sleep,
+)
+
 import pytest
-import time
+
+from jarbin_toolkit_time import (
+    StopWatch,
+    StopWatchState,
+    Time,
+    TimeStateJError,
+)
 
 
-from jarbin_toolkit_time import StopWatch
+def test_default_values():
+    value = StopWatch()
+
+    assert value.state == StopWatchState.STOPPED
+    assert value._start is None
+    assert value._started_at is None
+    assert value._stopped_at is None
+    assert value._elapsed == 0.0
+    assert value.saved == []
 
 
-def test_stopwatch_default_start_false(
-    ) -> None:
-    sw = StopWatch()
-    assert sw._start == 0.0
-    assert sw == 0.0
+def test_start_on_creation():
+    value = StopWatch(
+        start=True,
+    )
+
+    assert value.state == StopWatchState.RUNNING
+    assert value._start is not None
+    assert isinstance(value.started_at, Time)
+    assert value.stopped_at is None
 
 
-def test_stopwatch_start_and_stop(
-    ) -> None:
-    sw = StopWatch()
-    sw.start()
-    time.sleep(0.1)
-    sw.stop()
+def test_start():
+    value = StopWatch()
 
-    assert 0.1 < sw < 0.11
+    value.start()
 
-
-def test_stopwatch_elapsed_auto_update(
-    ) -> None:
-    sw = StopWatch(start=True)
-    time.sleep(0.1)
-    elapsed = sw.elapsed()
-
-    assert elapsed >= 0.1
+    assert value.state == StopWatchState.RUNNING
+    assert value._start is not None
+    assert isinstance(value.started_at, Time)
+    assert value.stopped_at is None
 
 
-def test_stopwatch_elapsed_manual_update(
-    ) -> None:
-    sw = StopWatch(start=True)
-    time.sleep(0.05)
-    elapsed = sw.elapsed(auto_update=False)
+def test_start_already_running():
+    value = StopWatch(
+        start=True,
+    )
 
-    assert elapsed == 0.0
-
-
-def test_stopwatch_str(
-    ) -> None:
-    sw = StopWatch(start=True)
-    time.sleep(0.05)
-    elapsed = str(sw)
-
-    assert "0.0" in elapsed
+    with pytest.raises(
+        TimeStateJError,
+        match="StopWatch is already running",
+    ):
+        value.start()
 
 
-def test_stopwatch_reset(
-    ) -> None:
-    sw = StopWatch(start=True)
-    time.sleep(0.1)
-    sw.stop()
-    sw.reset()
+def test_start_restart():
+    value = StopWatch(
+        start=True,
+    )
 
-    assert sw == 0.0
-    assert sw._start == 0.0
+    value.save()
 
+    old_start = value._start
 
-def test_stopwatch_double_start(
-    ) -> None:
-    sw = StopWatch(start=True)
-    old_start = sw._start
-    time.sleep(0.1)
-    sw.start()  # Should restart
+    sleep(0.001)
 
-    assert sw._start != old_start
-    assert sw == 0.0
+    value.start(
+        restart=True,
+    )
 
-
-def test_stopwatch_update(
-    ) -> None:
-    sw = StopWatch(start=True)
-    time.sleep(0.1)
-    sw.update()
-
-    assert sw > 0.0
+    assert value.state == StopWatchState.RUNNING
+    assert value._start is not None
+    assert value._start >= old_start
+    assert value.elapsed() < 0.1
+    assert value.saved == []
 
 
-def test_stopwatch_equal(
-    ) -> None:
-    sw = StopWatch(start=True)
-    elapsed = sw.elapsed(auto_update=False)
+def test_start_paused():
+    value = StopWatch(
+        start=True,
+    )
 
-    assert elapsed == 0.0
+    value.pause()
 
-
-def test_stopwatch_greater(
-    ) -> None:
-    sw = StopWatch(start=True)
-    elapsed = sw.elapsed()
-
-    assert elapsed > 0.0
+    with pytest.raises(
+        TimeStateJError,
+        match="StopWatch is paused",
+    ):
+        value.start()
 
 
-def test_stopwatch_greater_or_equal(
-    ) -> None:
-    sw = StopWatch(start=True)
-    elapsed = sw.elapsed()
+def test_start_paused_restart():
+    value = StopWatch(
+        start=True,
+    )
 
-    assert elapsed >= 0.0
-    assert elapsed >= elapsed
+    sleep(0.001)
+    value.pause()
 
+    value.save()
 
-def test_stopwatch_lesser(
-    ) -> None:
-    sw = StopWatch(start=True)
-    elapsed = sw.elapsed()
+    value.start(
+        restart=True,
+    )
 
-    assert elapsed < 0.1
-
-
-def test_stopwatch_lesser_or_equal(
-    ) -> None:
-    sw = StopWatch(start=True)
-    elapsed = sw.elapsed()
-
-    assert elapsed <= 0.1
-    assert elapsed <= elapsed
+    assert value.state == StopWatchState.RUNNING
+    assert value._start is not None
+    assert value.saved == []
+    assert value.elapsed() < 0.1
 
 
-def test_stopwatch_not_equal(
-    ) -> None:
-    sw = StopWatch(start=True)
+def test_pause():
+    value = StopWatch(
+        start=True,
+    )
 
-    assert repr(sw) == "StopWatch(?)"
+    sleep(0.005)
+
+    value.pause()
+
+    assert value.state == StopWatchState.PAUSED
+    assert value._start is None
+    assert value.elapsed() > 0
+
+
+def test_pause_not_running():
+    value = StopWatch()
+
+    with pytest.raises(
+        TimeStateJError,
+        match="StopWatch is not running",
+    ):
+        value.pause()
+
+
+def test_pause_already_paused():
+    value = StopWatch(
+        start=True,
+    )
+
+    value.pause()
+
+    with pytest.raises(
+        TimeStateJError,
+        match="StopWatch is not running",
+    ):
+        value.pause()
+
+
+def test_resume():
+    value = StopWatch(
+        start=True,
+    )
+
+    sleep(0.005)
+    value.pause()
+
+    elapsed = value.elapsed()
+
+    sleep(0.005)
+
+    value.resume()
+
+    assert value.state == StopWatchState.RUNNING
+    assert value._start is not None
+    assert value.elapsed() >= elapsed
+
+
+def test_resume_not_paused():
+    value = StopWatch()
+
+    with pytest.raises(
+        TimeStateJError,
+        match="StopWatch is not paused",
+    ):
+        value.resume()
+
+
+def test_resume_running():
+    value = StopWatch(
+        start=True,
+    )
+
+    with pytest.raises(
+        TimeStateJError,
+        match="StopWatch is not paused",
+    ):
+        value.resume()
+
+
+def test_stop():
+    value = StopWatch(
+        start=True,
+    )
+
+    sleep(0.005)
+
+    value.stop()
+
+    assert value.state == StopWatchState.STOPPED
+    assert value._start is None
+    assert value._elapsed > 0
+    assert isinstance(value.stopped_at, Time)
+
+
+def test_stop_not_running():
+    value = StopWatch()
+
+    with pytest.raises(
+        TimeStateJError,
+        match="StopWatch is not running",
+    ):
+        value.stop()
+
+
+def test_stop_paused():
+    value = StopWatch(
+        start=True,
+    )
+
+    value.pause()
+
+    with pytest.raises(
+        TimeStateJError,
+        match="StopWatch is not running",
+    ):
+        value.stop()
+
+
+def test_elapsed_running():
+    value = StopWatch(
+        start=True,
+    )
+
+    first = value.elapsed()
+
+    sleep(0.005)
+
+    second = value.elapsed()
+
+    assert second > first
+
+
+def test_elapsed_stopped():
+    value = StopWatch(
+        start=True,
+    )
+
+    sleep(0.005)
+    value.stop()
+
+    elapsed = value.elapsed()
+
+    sleep(0.005)
+
+    assert value.elapsed() == elapsed
+
+
+def test_elapsed_paused():
+    value = StopWatch(
+        start=True,
+    )
+
+    sleep(0.005)
+    value.pause()
+
+    elapsed = value.elapsed()
+
+    sleep(0.005)
+
+    assert value.elapsed() == elapsed
+
+
+def test_save():
+    value = StopWatch(
+        start=True,
+    )
+
+    sleep(0.005)
+
+    result = value.save()
+
+    assert result == value.saved[0]
+    assert result <= value.elapsed()
+    assert len(value.saved) == 1
+
+
+def test_multiple_save():
+    value = StopWatch(
+        start=True,
+    )
+
+    sleep(0.005)
+    first = value.save()
+
+    sleep(0.005)
+    second = value.save()
+
+    assert len(value.saved) == 2
+    assert value.saved == [
+        first,
+        second,
+    ]
+    assert second > first
+
+
+def test_saved_is_copy():
+    value = StopWatch(
+        start=True,
+    )
+
+    value.save()
+
+    saved = value.saved
+    saved.clear()
+
+    assert len(value.saved) == 1
+
+
+def test_started_at():
+    before = time()
+
+    value = StopWatch(
+        start=True,
+    )
+
+    after = time()
+
+    assert isinstance(value.started_at, Time)
+    assert before <= value.started_at.timestamp() <= after
+
+
+def test_started_at_after_restart():
+    value = StopWatch(
+        start=True,
+    )
+
+    first = value.started_at.timestamp()
+
+    sleep(0.005)
+
+    value.start(
+        restart=True,
+    )
+
+    second = value.started_at.timestamp()
+
+    assert second > first
+
+
+def test_stopped_at():
+    value = StopWatch(
+        start=True,
+    )
+
+    before = time()
+
+    sleep(0.005)
+    value.stop()
+
+    after = time()
+
+    assert isinstance(value.stopped_at, Time)
+    assert before <= value.stopped_at.timestamp() <= after
+
+
+def test_stopped_at_running():
+    value = StopWatch(
+        start=True,
+    )
+
+    assert value.stopped_at is None
+
+
+def test_reset():
+    value = StopWatch(
+        start=True,
+    )
+
+    sleep(0.005)
+    value.save()
+    value.stop()
+
+    value.reset()
+
+    assert value.state == StopWatchState.STOPPED
+    assert value._start is None
+    assert value._started_at is None
+    assert value._stopped_at is None
+    assert value._elapsed == 0.0
+    assert value.saved == []
+
+
+def test_reset_running():
+    value = StopWatch(
+        start=True,
+    )
+
+    sleep(0.005)
+    value.reset()
+
+    assert value.state == StopWatchState.STOPPED
+    assert value.elapsed() == 0.0
+    assert value.started_at is None
+    assert value.stopped_at is None
+
+
+def test_reset_can_start_again():
+    value = StopWatch(
+        start=True,
+    )
+
+    sleep(0.005)
+    value.reset()
+    value.start()
+
+    assert value.state == StopWatchState.RUNNING
+    assert value.started_at is not None
+    assert value.elapsed() >= 0
+
+
+def test_pause_resume_preserves_elapsed():
+    value = StopWatch(
+        start=True,
+    )
+
+    sleep(0.005)
+    value.pause()
+
+    first = value.elapsed()
+
+    sleep(0.01)
+
+    value.resume()
+    sleep(0.005)
+    value.stop()
+
+    second = value.elapsed()
+
+    assert second > first
+    assert second < 0.1

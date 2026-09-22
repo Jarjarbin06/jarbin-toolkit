@@ -9,8 +9,10 @@
 
 
 from enum import IntEnum
+from typing import final
 
 
+@final
 class ActionStatus(IntEnum):
 
 
@@ -23,6 +25,7 @@ class ActionStatus(IntEnum):
     CANCELLED = 6
 
 
+@final
 class ActionAsync(IntEnum):
 
 

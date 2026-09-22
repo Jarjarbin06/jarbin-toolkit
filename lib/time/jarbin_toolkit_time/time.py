@@ -1,78 +1,164 @@
-#############################
-###                       ###
-###     Jarbin-ToolKit    ###
-###         time          ###
-###    ----time.py----    ###
-###                       ###
-###=======================###
-### by JARJARBIN's STUDIO ###
-#############################
+# ============================================================================
+# JARBIN-TOOLKIT
+#
+# Package      : Time
+# File         : time.py
+#
+# Author       : Jarjarbin06
+# ============================================================================
 
 
+from time import (
+    monotonic,
+    time,
+)
+from typing import final
+from datetime import datetime
+
+from jarbin_toolkit_time.enums import TimeFormat
+from jarbin_toolkit_time.errors import (
+    TimeTypeJError,
+    TimeValueJError,
+)
+
+
+@final
 class Time:
-    """
-        Time class.
-
-        Time tool.
-    """
-
-    @staticmethod
-    def wait(
-            sleep : int | float
-        ) -> float:
-        """
-            Wait for 'sleep' seconds and return the exact elapsed time during the wait function.
-
-            Parameters:
-                sleep (int | float) : Time to wait
-
-            Returns:
-                float : Exact elapsed time
-        """
-
-        from jarbin_toolkit_time.stopwatch import StopWatch
-
-        watch = StopWatch(True)
-
-        while watch.elapsed() < sleep:
-            watch.update()
-
-        return watch.elapsed()
 
 
-    @staticmethod
-    def pause(
-            msg : str = "Press enter to continue...",
+    def __init__(
+            self,
             *,
-            force_enter : bool = True
-        ) -> float:
-        """
-            Pause the program and print a message and return the exact elapsed time during the pause function.
+            format = TimeFormat.DEFAULT,
+            timestamp = None,
+            year = None,
+            month = None,
+            day = None,
+            hour = None,
+            minute = None,
+            second = None,
+            millisecond = None,
+        ):
 
-            Parameters:
-                msg (str, optional) : Message to be displayed
-                force_enter (bool, optional) : Force enter to continue with the prompt
+        if not isinstance(format, TimeFormat):
+            raise TimeTypeJError(
+                "Format must be of type TimeFormat"
+            )
 
-            Returns:
-                float : Exact elapsed time
-        """
+        values = {
+            "year": year,
+            "month": month,
+            "day": day,
+            "hour": hour,
+            "minute": minute,
+            "second": second,
+            "millisecond": millisecond,
+        }
 
-        ## cannot be tested with pytest ##
+        for name, value in values.items():
+            if value is not None and not isinstance(value, int):
+                raise TimeTypeJError(
+                    f"{name.capitalize()} must be of type int"
+                )
 
-        from jarbin_toolkit_time.stopwatch import StopWatch # pragma: no cover
+        if timestamp is not None:
+            if not isinstance(timestamp, float | int):
+                raise TimeTypeJError(
+                    "Timestamp must be of type float or int"
+                )
 
-        watch = StopWatch(True) # pragma: no cover
+            if any(value is not None for value in values.values()):
+                raise TimeValueJError(
+                    "Timestamp cannot be combined with date components"
+                )
 
-        if force_enter: # pragma: no cover
-            print(msg) # pragma: no cover
+            self._datetime = datetime.fromtimestamp(timestamp)
+        elif any(value is not None for value in values.values()):
+            current = datetime.now()
 
-            while (True): # pragma: no cover
-                try: # pragma: no cover
-                    input() # pragma: no cover
-                    break # pragma: no cover
-                except (EOFError, KeyboardInterrupt): # pragma: no cover
-                    continue # pragma: no cover
-        else: # pragma: no cover
-            input(msg) # pragma: no cover
+            try:
+                self._datetime = datetime(
+                    year=current.year if year is None else year,
+                    month=current.month if month is None else month,
+                    day=current.day if day is None else day,
+                    hour=current.hour if hour is None else hour,
+                    minute=current.minute if minute is None else minute,
+                    second=current.second if second is None else second,
+                    microsecond=(
+                        current.microsecond
+                        if millisecond is None
+                        else millisecond * 1000
+                    ),
+                )
+            except ValueError as error:
+                raise TimeValueJError(
+                    str(error)
+                ) from error
+        else:
+            self._datetime = datetime.now()
 
-        return watch.elapsed(True) # pragma: no cover
+        self.format = format
+
+
+    def __str__(
+            self,
+        ):
+
+        return self._datetime.strftime(self.format)
+
+
+    def __repr__(
+            self,
+        ):
+
+        return self._datetime.strftime(self.format)
+
+
+    def timestamp(
+            self,
+        ):
+
+        return self._datetime.timestamp()
+
+
+    @staticmethod
+    def parse(
+            value,
+            format = TimeFormat.DEFAULT,
+        ):
+
+        if not isinstance(value, str):
+            raise TimeTypeJError(
+                "Value must be of type str"
+            )
+
+        if not isinstance(format, TimeFormat):
+            raise TimeTypeJError(
+                "Format must be of type TimeFormat"
+            )
+
+        result = Time()
+
+        result._datetime = datetime.strptime(value, format)
+        result.format = format
+
+        return result
+
+
+    @staticmethod
+    def epoch(
+        ):
+
+        return time()
+
+
+    @staticmethod
+    def tick(
+        ):
+
+        return monotonic()
+
+
+__all__ = [
+    'Time',
+]

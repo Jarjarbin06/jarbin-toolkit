@@ -12,10 +12,10 @@
 from time import monotonic
 
 from jarbin_toolkit_action.action import Action
-from jarbin_toolkit_action.error import (
-    ActionTypeError,
-    ActionArgumentError,
-    ActionThreadError, ActionExecutionError,
+from jarbin_toolkit_action.errors import (
+    ActionTypeJError,
+    ActionArgumentJError,
+    ActionThreadJError, ActionExecutionJError,
 )
 from jarbin_toolkit_action.enums import ActionStatus
 from jarbin_toolkit_action.time import ActionTimer
@@ -51,7 +51,7 @@ class ActionBatch:
             elif isinstance(arg, ActionBatch):
                 self._actions += arg._actions
             else:
-                raise ActionTypeError(
+                raise ActionTypeJError(
                     "\nArguments must all be of type Action"
                 )
 
@@ -76,7 +76,7 @@ class ActionBatch:
                 ActionStatus.RUNNING,
                 ActionStatus.PAUSED,
             ):
-            raise ActionExecutionError(
+            raise ActionExecutionJError(
                 f"\nCannot execute ActionBatch from status {self.status}"
             )
 
@@ -94,7 +94,7 @@ class ActionBatch:
         if isinstance(other, Action | ActionBatch):
             return ActionBatch(self, other)
 
-        raise ActionTypeError(
+        raise ActionTypeJError(
             f"\n{type(other)} cannot be added with {type(self)}"
         )
 
@@ -110,7 +110,7 @@ class ActionBatch:
         elif isinstance(other, Action):
             self._actions.append(other)
 
-        raise ActionTypeError(
+        raise ActionTypeJError(
             f"\n{type(other)} cannot be added to {type(self)}"
         )
 
