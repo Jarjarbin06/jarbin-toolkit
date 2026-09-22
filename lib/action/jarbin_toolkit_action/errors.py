@@ -2,27 +2,24 @@
 # JARBIN-TOOLKIT
 #
 # Package      : Action
-# File         : error.py
+# File         : errors.py
 #
 # Author       : Jarjarbin06
 # ============================================================================
 
 
-from jarbin_toolkit_error import BaseJError
+from typing import final
+
+from jarbin_toolkit_error import (
+    JErrorType,
+    JErrorValue,
+    JErrorAttribute,
+    JException,
+)
 
 
-class ActionTypeError(BaseJError):
-
-
-    def __init__(
-            self,
-            message,
-        ):
-
-        super().__init__(message)
-
-
-class ActionValueError(BaseJError):
+@final
+class ActionTypeJError(JErrorType):
 
 
     def __init__(
@@ -33,7 +30,8 @@ class ActionValueError(BaseJError):
         super().__init__(message)
 
 
-class ActionArgumentError(BaseJError):
+@final
+class ActionValueJError(JErrorValue):
 
 
     def __init__(
@@ -44,7 +42,8 @@ class ActionArgumentError(BaseJError):
         super().__init__(message)
 
 
-class ActionExecutionError(BaseJError):
+@final
+class ActionArgumentJError(JException):
 
 
     def __init__(
@@ -55,7 +54,20 @@ class ActionExecutionError(BaseJError):
         super().__init__(message)
 
 
-class ActionThreadError(BaseJError):
+@final
+class ActionExecutionJError(JException):
+
+
+    def __init__(
+            self,
+            message,
+        ):
+
+        super().__init__(message)
+
+
+@final
+class ActionThreadJError(JException):
 
 
     def __init__(
@@ -67,9 +79,9 @@ class ActionThreadError(BaseJError):
 
 
 __all__ = [
-    'ActionTypeError',
-    'ActionValueError',
-    'ActionArgumentError',
-    'ActionExecutionError',
-    'ActionThreadError',
+    'ActionTypeJError',
+    'ActionValueJError',
+    'ActionArgumentJError',
+    'ActionExecutionJError',
+    'ActionThreadJError',
 ]

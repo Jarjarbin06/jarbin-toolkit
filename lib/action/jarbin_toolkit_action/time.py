@@ -9,9 +9,12 @@
 # ============================================================================
 
 
+from typing import final
+
 from jarbin_toolkit_time import StopWatch
 
 
+@final
 class ActionTimer(StopWatch):
 
 

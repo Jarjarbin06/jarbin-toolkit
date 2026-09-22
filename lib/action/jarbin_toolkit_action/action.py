@@ -22,12 +22,12 @@ from threading import (
     get_ident,
 )
 
-from jarbin_toolkit_action.error import (
-    ActionTypeError,
-    ActionValueError,
-    ActionArgumentError,
-    ActionExecutionError,
-    ActionThreadError,
+from jarbin_toolkit_action.errors import (
+    ActionTypeJError,
+    ActionValueJError,
+    ActionArgumentJError,
+    ActionExecutionJError,
+    ActionThreadJError,
 )
 from jarbin_toolkit_action.enums import (
     ActionStatus,
@@ -58,7 +58,7 @@ class Action:
 
             return dict(bound.arguments)
         except TypeError as error:
-            raise ActionValueError(
+            raise ActionValueJError(
                 f"\nInvalid arguments: {error}"
             ) from error
 
@@ -184,7 +184,7 @@ class Action:
             if not self._thread.is_alive():
                 return
 
-            raise ActionThreadError(
+            raise ActionThreadJError(
                 "\nFailed to cancel Action thread"
             )
 
@@ -194,7 +194,7 @@ class Action:
                 None,
             )
 
-            raise ActionThreadError(
+            raise ActionThreadJError(
                 "\nFailed to cancel Action thread safely"
             )
 
@@ -221,12 +221,12 @@ class Action:
         elif len(args) == 2:
             name, function = args
         else:
-            raise ActionValueError(
+            raise ActionValueJError(
                 f"\nAction() takes 1 or 2 positional arguments but {len(args)} were given"
             )
 
         if not callable(function):
-            raise ActionTypeError(
+            raise ActionTypeJError(
                 "\nFunction must be callable"
             )
 
@@ -234,7 +234,7 @@ class Action:
             name = f"Action({getattr(function, '__name__', '')})"
 
         if not isinstance(name, str):
-            raise ActionTypeError(
+            raise ActionTypeJError(
                 "\nName must be a string"
             )
 
@@ -270,7 +270,7 @@ class Action:
                 ActionStatus.RUNNING,
                 ActionStatus.PAUSED,
             ):
-                raise ActionExecutionError(
+                raise ActionExecutionJError(
                     f"\nCannot execute Action from status {self.status}"
                 )
 
@@ -283,7 +283,7 @@ class Action:
                 self._execute_synchronous()
 
         if self._error and not self._settings["catch"]:
-            raise ActionExecutionError(
+            raise ActionExecutionJError(
                 f"\nException caught during execution of {self}"
             ) from self._error
 
@@ -305,7 +305,7 @@ class Action:
         for key, value in kwargs.items():
 
             if not key in self._settings:
-                raise ActionArgumentError(
+                raise ActionArgumentJError(
                     f"\nInvalid setting: {key}={value}"
                 )
 
@@ -319,17 +319,17 @@ class Action:
         with self._execution_lock:
 
             if self._thread is None:
-                raise ActionThreadError(
+                raise ActionThreadJError(
                     "\nAction has no pending asynchronous execution"
                 )
 
             if self._status != ActionStatus.PENDING:
-                raise ActionThreadError(
+                raise ActionThreadJError(
                     f"\nCannot start Action from status {self.status}"
                 )
 
             if self._thread.is_alive():
-                raise ActionThreadError(
+                raise ActionThreadJError(
                     "\nAction thread is already running"
                 )
 
@@ -342,7 +342,7 @@ class Action:
 
         with self._execution_lock:
             if self._status != ActionStatus.RUNNING:
-                raise ActionThreadError(
+                raise ActionThreadJError(
                     f"\nCannot pause Action from status {self.status}"
                 )
 

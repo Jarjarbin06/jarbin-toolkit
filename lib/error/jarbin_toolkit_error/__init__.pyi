@@ -1,18 +1,18 @@
 from .base_error import BaseJError
 from .enums import FormatType
 
-from .exceptions.exception import (
+from .exceptions.exceptions import (
     JException,
 )
 
-from .exceptions.general import (
+from .exceptions.generals import (
     JErrorRuntime,
     JErrorSystem,
     JErrorRecursion,
     JErrorNotImplemented,
 )
 
-from .exceptions.value import (
+from .exceptions.values import (
     JErrorType,
     JErrorValue,
     JErrorIndex,
@@ -21,14 +21,14 @@ from .exceptions.value import (
     JErrorKey,
 )
 
-from .exceptions.arithmetic import (
+from .exceptions.arithmetics import (
     JErrorArithmetic,
     JErrorFloatingPoint,
     JErrorOverflow,
     JErrorZeroDivision,
 )
 
-from .exceptions.module import (
+from .exceptions.modules import (
     JErrorImport,
     JErrorModuleNotFound,
 )

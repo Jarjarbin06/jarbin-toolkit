@@ -11,18 +11,18 @@
 from jarbin_toolkit_error.base_error import BaseJError
 from jarbin_toolkit_error.enums import FormatType
 
-from jarbin_toolkit_error.exceptions.exception import (
+from jarbin_toolkit_error.exceptions.exceptions import (
     JException,
 )
 
-from jarbin_toolkit_error.exceptions.general import (
+from jarbin_toolkit_error.exceptions.generals import (
     JErrorRuntime,
     JErrorSystem,
     JErrorRecursion,
     JErrorNotImplemented,
 )
 
-from jarbin_toolkit_error.exceptions.value import (
+from jarbin_toolkit_error.exceptions.values import (
     JErrorType,
     JErrorValue,
     JErrorIndex,
@@ -31,14 +31,14 @@ from jarbin_toolkit_error.exceptions.value import (
     JErrorKey,
 )
 
-from jarbin_toolkit_error.exceptions.arithmetic import (
+from jarbin_toolkit_error.exceptions.arithmetics import (
     JErrorArithmetic,
     JErrorFloatingPoint,
     JErrorOverflow,
     JErrorZeroDivision,
 )
 
-from jarbin_toolkit_error.exceptions.module import (
+from jarbin_toolkit_error.exceptions.modules import (
     JErrorImport,
     JErrorModuleNotFound,
 )
