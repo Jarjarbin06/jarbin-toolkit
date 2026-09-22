@@ -46,7 +46,7 @@ uninstall:
 	@# parent #
 	@echo "y" | pip uninstall $(PACKAGE_NAME) || true
 	@# dependent #
-	@make --no-print-directory -C plugins/python uninstall || true
+	@make --no-print-directory -C plugins/template uninstall || true
 	@echo -e "$(GREEN) [UNINSTALL] ($(PACKAGE_NAME)) Package uninstalled$(NC)"
 
 reinstall:
@@ -78,7 +78,7 @@ check:
 	@# parent #
 	@pip show $(PACKAGE_NAME) || true
 	@# dependent #
-	@make --no-print-directory -C plugins/python check || true
+	@make --no-print-directory -C plugins/template check || true
 	@echo -e "$(GREEN) [CHECK] ($(PACKAGE_NAME)) Package checked$(NC)"
 
 check-style:

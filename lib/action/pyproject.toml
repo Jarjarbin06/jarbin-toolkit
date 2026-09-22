@@ -15,7 +15,7 @@ license = "GPL-3.0-or-later"
 
 dependencies = [
     "jarbin-toolkit-error>=1.0.0.0,<1.1.0.0",
-    "jarbin_toolkit_time>=0.1.2.2,<0.2.0.0",
+    "jarbin_toolkit_time>=1.0.0.0,<1.1.0.0",
 ]
 
 classifiers = [

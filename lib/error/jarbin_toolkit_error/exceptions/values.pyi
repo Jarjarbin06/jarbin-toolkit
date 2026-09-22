@@ -4,7 +4,7 @@ from typing import (
     Sized,
 )
 
-from .exception import JException
+from .exceptions import JException
 from jarbin_toolkit_error.empty_field import EmptyField
 from jarbin_toolkit_error.enums import FormatType
 
