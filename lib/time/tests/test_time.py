@@ -8,7 +8,7 @@
 # ============================================================================
 
 
-import time as _time
+from time import time
 from datetime import datetime
 
 import pytest
@@ -446,11 +446,11 @@ def test_parse_invalid_date():
 
 
 def test_epoch():
-    before = _time.time()
+    before = time()
 
     result = Time.epoch()
 
-    after = _time.time()
+    after = time()
 
     assert before <= result <= after
 

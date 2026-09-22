@@ -9,14 +9,13 @@
 
 
 from jarbin_toolkit_time.time import Time
+from jarbin_toolkit_time.stopwatch import StopWatch
 from jarbin_toolkit_time.enums import (
     TimeFormat,
     StopWatchState,
 )
 from jarbin_toolkit_time.errors import (
     TimeTypeJError,
-    TimeArgumentJError,
-    TimeExecutionJError,
     TimeValueJError,
     TimeStateJError,
 )
@@ -30,11 +29,10 @@ __license__ : str = "GPL"
 
 __all__ : list[str] = [
     'Time',
+    'StopWatch',
     'TimeFormat',
     'StopWatchState',
     'TimeTypeJError',
-    'TimeArgumentJError',
-    'TimeExecutionJError',
     'TimeValueJError',
     'TimeStateJError',
 ]
