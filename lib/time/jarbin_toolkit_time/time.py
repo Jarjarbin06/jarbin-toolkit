@@ -102,14 +102,14 @@ class Time:
 
     def __str__(
             self,
-        ) -> str:
+        ):
 
         return self._datetime.strftime(self.format)
 
 
     def __repr__(
             self,
-        ) -> str:
+        ):
 
         return self._datetime.strftime(self.format)
 
@@ -157,3 +157,8 @@ class Time:
         ):
 
         return monotonic()
+
+
+__all__ = [
+    'Time',
+]
