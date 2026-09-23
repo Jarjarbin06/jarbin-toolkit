@@ -17,8 +17,6 @@ concurrency:
 jobs:
   sync:
     name: Sync latest child branches
-    needs: gate
-    if: needs.gate.outputs.proceed == 'true'
     runs-on: ubuntu-latest
 
     steps:
