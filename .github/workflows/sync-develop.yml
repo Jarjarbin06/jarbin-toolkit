@@ -1,4 +1,4 @@
-name: Sync | Develop -> branches
+name: "Sync | Develop to branches"
 
 on:
   push:
