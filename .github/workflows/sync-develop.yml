@@ -2,7 +2,7 @@ name: "Sync | Develop to branches"
 
 on:
   push:
-    branches: [ develop" ]
+    branches: [ "develop" ]
   pull_request:
     branches: [ "develop" ]
 
