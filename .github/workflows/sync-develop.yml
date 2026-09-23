@@ -1,20 +1,10 @@
 name: Sync | Develop
 
 on:
-  workflow_run:
-    workflows:
-      - "CodeQL Advanced"
-      - "Test | Action"
-      #- "Test | Config" # temporarily excluded during refactor
-      #- "Test | Console" # temporarily excluded during refactor
-      - "Test | Error"
-      - "Test | Error:Template"
-      #- "Test | JarTest" # temporarily excluded during refactor
-      #- "Test | Log" # temporarily excluded during refactor
-      #- "Test | Jarbin-Toolkit" # temporarily excluded during refactor
-      - "Test | Time"
-    types:
-      - completed
+  push:
+    branches: [ "main", "develop", "action/*" ]
+  pull_request:
+    branches: [ "main", "develop", "action/*" ]
 
 permissions:
   contents: write
@@ -25,69 +15,6 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  gate:
-    name: Verify all test workflows passed
-    runs-on: ubuntu-latest
-    if: >
-      github.event.workflow_run.conclusion == 'success' &&
-      github.event.workflow_run.event == 'push' &&
-      github.event.workflow_run.head_branch == 'develop'
-    outputs:
-      proceed: ${{ steps.check.outputs.proceed }}
-      sha: ${{ github.event.workflow_run.head_sha }}
-
-    steps:
-      - name: Check all required workflows succeeded for this commit
-        id: check
-        uses: actions/github-script@v9
-        with:
-          script: |
-            const sha = context.payload.workflow_run.head_sha;
-            const required = [
-              - "CodeQL Advanced"
-              - "Test | Action"
-              //- "Test | Config" // temporarily excluded during refactor
-              //- "Test | Console" // temporarily excluded during refactor
-              - "Test | Error"
-              - "Test | Error:Template"
-              //- "Test | JarTest" // temporarily excluded during refactor
-              //- "Test | Log" // temporarily excluded during refactor
-              //- "Test | Jarbin-Toolkit" // temporarily excluded during refactor
-              - "Test | Time"
-            ];
-
-            const { data } = await github.rest.actions.listWorkflowRunsForRepo({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              head_sha: sha,
-              event: "push",
-              per_page: 100,
-            });
-
-            const latestByName = new Map();
-            for (const run of data.workflow_runs) {
-              const existing = latestByName.get(run.name);
-              if (!existing || new Date(run.run_started_at) > new Date(existing.run_started_at)) {
-                latestByName.set(run.name, run);
-              }
-            }
-
-            const missing = [];
-            const notOk = [];
-            for (const name of required) {
-              const run = latestByName.get(name);
-              if (!run) { missing.push(name); continue; }
-              if (run.status !== "completed" || run.conclusion !== "success") {
-                notOk.push(`${name} (${run.status}/${run.conclusion})`);
-              }
-            }
-
-            if (missing.length) core.warning(`Not yet run for ${sha}: ${missing.join(", ")}`);
-            if (notOk.length) core.warning(`Not successful for ${sha}: ${notOk.join(", ")}`);
-
-            const proceed = missing.length === 0 && notOk.length === 0;
-            core.setOutput("proceed", proceed ? "true" : "false");
-
   sync:
     name: Sync latest child branches
     needs: gate
