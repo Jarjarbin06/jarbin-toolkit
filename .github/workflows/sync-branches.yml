@@ -4,13 +4,13 @@ on:
   workflow_run:
     workflows:
       - "Test | Action"
-      - "Test | Config"
-      - "Test | Console"
-      - "Test | Error:Template"
+      #- "Test | Config" # temporarily excluded during refactor
+      #- "Test | Console" # temporarily excluded during refactor
       - "Test | Error"
-      - "Test | JarTest"
-      - "Test | Log"
-      - "Test | Jarbin-Toolkit"
+      - "Test | Error:Template"
+      #- "Test | JarTest" # temporarily excluded during refactor
+      #- "Test | Log" # temporarily excluded during refactor
+      #- "Test | Jarbin-Toolkit" # temporarily excluded during refactor
       - "Test | Time"
     types:
       - completed
