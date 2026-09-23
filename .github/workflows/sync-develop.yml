@@ -2,9 +2,9 @@ name: Sync | Develop -> branches
 
 on:
   push:
-    branches: [ "main", "develop", "action/*" ]
+    branches: [ develop" ]
   pull_request:
-    branches: [ "main", "develop", "action/*" ]
+    branches: [ "develop" ]
 
 permissions:
   contents: write
@@ -32,14 +32,12 @@ jobs:
 
       - name: Sync latest branches
         shell: bash
-        env:
-          DEVELOP_SHA: ${{ needs.gate.outputs.sha }}
         run: |
           set -u
 
           git fetch origin '+refs/heads/*:refs/remotes/origin/*'
 
-          echo "Syncing using tested commit: $DEVELOP_SHA"
+          echo "Syncing using develop tip: $(git rev-parse origin/develop)"
 
           failed=0
           failed_branches=()
@@ -68,7 +66,7 @@ jobs:
               echo "Latest branch: $branch"
               echo "::endgroup::"
 
-              echo "::group::Merging $DEVELOP_SHA into $branch"
+              echo "::group::Merging develop into $branch"
 
               if ! git checkout -B "$branch" "origin/$branch"; then
                   echo "::error::Failed to check out $branch"
@@ -78,7 +76,7 @@ jobs:
                   continue
               fi
 
-              if git merge --no-edit "$DEVELOP_SHA"; then
+              if git merge --no-edit "origin/develop"; then
                   if git push origin "HEAD:refs/heads/$branch"; then
                       echo "Successfully synchronized $branch"
                       synced_branches+=("$branch")
@@ -98,7 +96,7 @@ jobs:
           done
 
           {
-            echo "### Sync results (commit: $DEVELOP_SHA)"
+            echo "### Sync results"
             if [ "${#synced_branches[@]}" -gt 0 ]; then
               echo "**Synced:** ${synced_branches[*]}"
             fi
