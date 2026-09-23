@@ -1,0 +1,119 @@
+name: Sync / Develop
+
+on:
+  workflow_run:
+    workflows:
+      - "Test | Action"
+      - "Test | Config"
+      - "Test | Console"
+      - "Test | Error:Template"
+      - "Test | Error"
+      - "Test | JarTest"
+      - "Test | Log"
+      - "Test | Jarbin-Toolkit"
+      - "Test | Time"
+    types:
+      - completed
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: sync-develop
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    name: Sync latest child branches
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Sync latest branches
+        shell: bash
+        run: |
+          set -u
+
+          git fetch origin '+refs/heads/*:refs/remotes/origin/*'
+
+          failed=0
+          failed_branches=()
+          synced_branches=()
+
+          for group in action config console error jartest log time package; do
+              echo "::group::Finding latest $group branch"
+
+              versions="$(
+                  git for-each-ref \
+                      --format='%(refname:strip=4)' \
+                      "refs/remotes/origin/$group/" |
+                  sort -V
+              )"
+
+              latest="$(printf '%s\n' "$versions" | tail -n 1)"
+
+              if [ -z "$latest" ]; then
+                  echo "::warning::No branch found for $group"
+                  echo "::endgroup::"
+                  continue
+              fi
+
+              branch="$group/$latest"
+
+              echo "Latest branch: $branch"
+              echo "::endgroup::"
+
+              echo "::group::Merging develop into $branch"
+
+              if ! git checkout -B "$branch" "origin/$branch"; then
+                  echo "::error::Failed to check out $branch"
+                  failed=1
+                  failed_branches+=("$branch (checkout failed)")
+                  echo "::endgroup::"
+                  continue
+              fi
+
+              if git merge --no-edit "origin/develop"; then
+                  if git push origin "HEAD:refs/heads/$branch"; then
+                      echo "Successfully synchronized $branch"
+                      synced_branches+=("$branch")
+                  else
+                      echo "::error::Failed to push $branch"
+                      failed=1
+                      failed_branches+=("$branch (push failed)")
+                  fi
+              else
+                  echo "::error::Merge conflict while synchronizing $branch"
+                  git merge --abort || true
+                  failed=1
+                  failed_branches+=("$branch (merge conflict)")
+              fi
+
+              echo "::endgroup::"
+          done
+
+          {
+            echo "### Sync results"
+            if [ "${#synced_branches[@]}" -gt 0 ]; then
+              echo "**Synced:** ${synced_branches[*]}"
+            fi
+            if [ "${#failed_branches[@]}" -gt 0 ]; then
+              echo "**Failed:** ${failed_branches[*]}"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          exit "$failed"
