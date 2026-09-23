@@ -1,0 +1,52 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Test | Error:Template
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: [ "main", "develop", "error/*" ]
+  pull_request:
+    branches: [ "main", "develop", "error/*" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ 3.12, 3.13, 3.14 ]
+
+    steps:
+    - uses: actions/checkout@v7
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v7
+      with:
+        python-version: ${{ matrix.python-version }}
+        architecture: x64
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install flake8 pytest pytest-cov
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Lint with flake8
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics | true
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics | true
+    - name: Install jarbin-toolkit-error
+      run: |
+        make -C lib/error install
+    - name: Test error:python with pytest (xml)
+      run: |
+        pytest lib/error/plugins/template --cov=jarbin_toolkit_error_template --cov-report=xml --cov-report=term-missing --cov-fail-under=80
+    - name: Rename coverage file
+      run: |
+        mv coverage.xml coverage_${{ matrix.python-version }}.xml
+    - name: Upload coverage report (xml)
+      uses: actions/upload-artifact@v7
+      with:
+        name: coverage_${{ matrix.python-version }}-xml
+        path: coverage_${{ matrix.python-version }}.xml
