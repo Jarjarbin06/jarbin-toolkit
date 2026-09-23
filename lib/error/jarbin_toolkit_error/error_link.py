@@ -3,7 +3,6 @@
 #
 # Package      : Error
 # File         : error_link.py
-# Class        : ErrorLink
 #
 # Author       : Jarjarbin06
 # ============================================================================

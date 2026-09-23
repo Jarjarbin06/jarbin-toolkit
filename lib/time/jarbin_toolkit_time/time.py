@@ -40,9 +40,9 @@ class Time:
             millisecond = None,
         ):
 
-        if not isinstance(format, TimeFormat):
+        if not isinstance(format, TimeFormat | str):
             raise TimeTypeJError(
-                "Format must be of type TimeFormat"
+                "Format must be of type TimeFormat or str"
             )
 
         values = {
@@ -132,9 +132,9 @@ class Time:
                 "Value must be of type str"
             )
 
-        if not isinstance(format, TimeFormat):
+        if not isinstance(format, TimeFormat | str):
             raise TimeTypeJError(
-                "Format must be of type TimeFormat"
+                "Format must be of type TimeFormat or str"
             )
 
         result = Time()

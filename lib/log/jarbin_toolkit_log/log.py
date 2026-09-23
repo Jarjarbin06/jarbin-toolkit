@@ -1,553 +1,392 @@
-#############################
-###                       ###
-###     Jarbin-ToolKit    ###
-###     ----log.py----    ###
-###                       ###
-###=======================###
-### by JARJARBIN's STUDIO ###
-#############################
+# ============================================================================
+# JARBIN-TOOLKIT
+#
+# Package      : Log
+# File         : log.py
+#
+# Author       : Jarjarbin06
+# ============================================================================
 
 
-import threading
-from builtins import object
-from typing import Any, Callable
+from pathlib import Path
+from threading import Lock
+from uuid import uuid4
+from queue import Queue
+
+from jarbin_toolkit_time import (
+    Time,
+    TimeFormat,
+)
+
+from jarbin_toolkit_log.entry import LogEntry
+from jarbin_toolkit_log.comment import LogComment
+from jarbin_toolkit_log.enums import (
+    LogType,
+    LogLevel,
+)
+from jarbin_toolkit_log.errors import (
+    LogTypeJError,
+    LogRuntimeJError,
+)
+from jarbin_toolkit_log.renderer import LogRenderer
 
 
 class Log:
-    """
-        Log class.
 
-        Log file tool.
-    """
+
+    def _create_entry(
+            self,
+            level,
+            message,
+            scope,
+        ):
+        with self._sequence_lock:
+            sequence = self._sequence
+            self._sequence += 1
+
+        return LogEntry(
+            sequence,
+            level,
+            message,
+            self._entry_format,
+            self.type,
+            scope,
+        )
+
+
+    def _initialize_file(
+            self,
+            metadata,
+        ):
+        self.directory.mkdir(
+            parents=True,
+            exist_ok=True,
+        )
+
+        with self.path.open(
+            "w",
+            encoding="utf-8",
+        ) as file:
+            file.write(
+                LogRenderer.header(
+                    self._run_id,
+                    self._created_at,
+                    metadata,
+                )
+            )
+
+
+    def _insert_entries(
+            self,
+            entries,
+        ):
+        if not entries:
+            return
+
+        marker = LogRenderer.WAITING_MARKER
+        marker_bytes = marker.encode("utf-8")
+
+        rendered = "".join(
+            f"{entry}\n"
+            for entry in entries
+        )
+
+        rendered_bytes = rendered.encode("utf-8")
+
+        with self.path.open(
+            "rb+",
+        ) as file:
+            file.seek(
+                -(len(marker_bytes) + 1),
+                2,
+            )
+
+            current_marker = file.read(
+                len(marker_bytes),
+            )
+
+            if current_marker != marker_bytes:
+                raise LogRuntimeJError(
+                    "Log waiting marker was not found"
+                )
+
+            file.seek(
+                -len(marker_bytes),
+                1,
+            )
+
+            file.write(
+                rendered_bytes,
+            )
+            file.write(
+                marker_bytes,
+            )
+            file.write(
+                b"\n",
+            )
+            file.truncate()
+
+
+    def _flush(
+            self,
+        ):
+        entries = []
+
+        while not self._queue.empty():
+            entries.append(
+                self._queue.get_nowait()
+            )
+
+        if not entries:
+            return
+
+        self._insert_entries(
+            entries,
+        )
+
+        for _ in entries:
+            self._queue.task_done()
+
+        self._entries.extend(
+            entry
+            for entry in entries
+            if isinstance(entry, LogEntry)
+        )
+
+        self._updated_at = Time(
+            format=self._entry_format,
+        )
+
+
+    def _count_levels(
+            self,
+        ):
+        errors = 0
+        warnings = 0
+        criticals = 0
+
+        for entry in self._entries:
+            if entry.level == LogLevel.ERROR:
+                errors += 1
+
+            elif entry.level == LogLevel.WARNING:
+                warnings += 1
+
+            elif entry.level == LogLevel.CRITICAL:
+                criticals += 1
+
+        return warnings, errors, criticals
 
 
     def __init__(
             self,
-            path : str,
-            file_name : str | None = None,
-            json : bool = False
-        ) -> None:
-        """
-            Log class constructor.
-            (Thread safe)
+            directory,
+            name,
+            *,
+            type = LogType.JAR_LOG,
+            datetime_format = None,
+            entry_datetime_format = None,
+            metadata = None,
+        ):
 
-            Parameters:
-                path (str): path to log file
-                file_name (str | None, optional): name of log file
-                json (bool, optional): switch from log file to JSON file
-        """
+        if isinstance(type, str):
+            type = LogType(type)
 
-        from datetime import datetime
-        from platform import system
+        if not isinstance(type, LogType):
+            raise LogTypeJError(
+                "Type must be of type LogType or str"
+            )
 
-        self.log_path : str = (path if path[-1] in ["/", "\\"] else path + ("\\" if system() == "Windows" else "/"))
-        self.log_file_name : str = str(datetime.now()).replace(":", "_") if not file_name else file_name
-        self.log_file_type : str = "json" if json else "jar-log"
-        self._lock = threading.Lock()
+        if datetime_format and not isinstance(datetime_format, TimeFormat | str):
+            raise LogTypeJError(
+                "Datetime format must be of type TimeFormat or str"
+            )
 
-        try:
-            open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'x').close()
+        if entry_datetime_format and not isinstance(entry_datetime_format, TimeFormat | str):
+            raise LogTypeJError(
+                "Entry datetime format format must be of type TimeFormat or str"
+            )
 
-            with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'a') as log_file:
-                if self.log_file_type == "jar-log" :
-                    log_file.write("   date          time      | [TYPE]  title      | detail\n\n---START---")
-                elif self.log_file_type == "json":
-                    log_file.write(
-                        "{\n    \"file_name\": \"" + f"{self.log_file_name}.{self.log_file_type}" +
-                        "\",\n    \"logs\":\n    [")
-            log_file.close()
+        self._run_id = uuid4()
 
-            self.closed : bool = False
+        self._file_format = (
+            entry_datetime_format
+            or type.datetime_format
+        )
+        self._entry_format = (
+            entry_datetime_format
+            or type.datetime_format
+        )
 
+        self._created_at = Time(
+            format=self._file_format,
+        )
+        self._updated_at = self._created_at
+        self._closed_at = None
 
-        ## cannot be tested with pytest ##
+        self.directory = Path(directory)
+        self.name = name
+        self.type = type.name
+        self.path = (
+            Path(directory)
+            / f"{name}_{self._created_at!r}.{type.name}"
+        )
 
-        except FileNotFoundError as error: # pragma: no cover
-            raise error # pragma: no cover
+        self._sequence = 0
+        self._sequence_lock = Lock()
 
-        except FileExistsError:
-            self.closed : bool = True
+        self._queue = Queue()
+        self._entries = []
 
-        if not self.closed:
-            try:
-                with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'r') as log_file:
-                    string = log_file.read()
-                log_file.close()
-
-                if self.log_file_type == "jar-log":
-                    assert "   date          time      | [TYPE]  title      | detail\n\n---START---" in string
-
-                elif self.log_file_type == "json":
-                    assert ("{\n    \"file_name\": \"" + f"{self.log_file_name}.{self.log_file_type}" +
-                            "\",\n    \"logs\":\n    [" in string)
-
-            ## cannot be tested with pytest ##
-
-            except FileNotFoundError or AssertionError as error: # pragma: no cover
-                raise error # pragma: no cover
+        self._initialize_file(
+            metadata,
+        )
 
 
     def log(
             self,
-            status : str,
-            title : str,
-            description : str,
-            save_function : Callable[[str], None] | None = None
-        ) -> None:
-        """
-            Format a log message then save it.
-            Status : INFO, DEBUG, VALID, WARN, ERROR, CRIT
+            level,
+            message,
+            *,
+            scope = "",
+        ):
 
-            Parameters:
-                status (str): log status
-                title (str): log title
-                description (str): log description
-                save_function (Callable[[str], None] | None): saving function
-        """
+        if self._closed_at is not None:
+            raise LogRuntimeJError(
+                "Cannot write to a closed log"
+            )
 
-        from datetime import datetime
+        entry = self._create_entry(
+            level,
+            message,
+            scope,
+        )
 
-        if not self.closed:
-            if self.log_file_type == "jar-log":
-                status = f"[{status}]"
-                status += " " * 7
-                status = status[:7]
-                title += " " * (10 - len(title))
-                title = title[:10]
+        self._queue.put(
+            entry,
+        )
 
-            log_time : str = str(datetime.now())
-            log_str: str = ""
 
-            if self.log_file_type == "jar-log":
-                log_str = f"{log_time} | {status} {title} | {description}"
-            elif self.log_file_type == "json":
-                log_str = (
-                        "\n        {\n            \"time\": \"" +log_time +
-                        "\",\n            \"level\": \"" + status +
-                        "\",\n            \"title\": \"" + title +
-                        "\",\n            \"msg\": \"" + description +
-                        "\"\n        },")
+    async def log_async(
+            self,
+            level,
+            message,
+            *,
+            scope = "",
+        ):
 
-            if save_function is None:
-                self.save(log_str)
-            else:
-                save_function(log_str)
+        self.log(
+            level,
+            message,
+            scope=scope,
+        )
 
 
     def comment(
             self,
-            comment : str,
-            save_function : Callable[[str], None] | None = None
-        ) -> None:
-        """
-            Save a comment in the log file.
+            message,
+        ):
 
-            (does not work with json files yet)
+        if self._closed_at is not None:
+            raise LogRuntimeJError(
+                "Cannot write to a closed log"
+            )
 
+        comment = LogComment(
+            message,
+            self.type
+        )
 
-            Parameters:
-                comment (str): comment
-                save_function (Callable[[str], None] | None): saving function
-        """
-
-        formated = [f">>> {repr(line)}" for line in comment.split("\n")]
-
-        if not self.closed:
-            if save_function is None:
-                self.save_batch(formated)
-            else:
-                for line in formated:
-                    save_function(line)
+        self._queue.put(
+            comment,
+        )
 
 
-    def save(
+    async def comment_async(
             self,
-            log_str : str
-        ) -> None:
-        """
-            Save a new log in the log file.
+            message,
+        ):
 
-            Parameters:
-                log_str (str): log string
-        """
-
-        if not self.closed:
-            with self._lock:
-                with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'a') as log_file:
-                    if self.log_file_type == "jar-log":
-                        log_file.write(f"\n{log_str}")
-                    else:
-                        log_file.write(log_str)
+        self.comment(
+            message,
+        )
 
 
-    def save_batch(
+    def flush(
             self,
-            logs : list[str]
-        ) -> None:
-        """
-            Save new logs in the log file.
+        ):
+        if self._closed_at is not None:
+            raise LogRuntimeJError(
+                "Cannot flush a closed log"
+            )
 
-            Parameters:
-                logs (list[str]): log strings
-        """
-
-        if not self.closed:
-            with self._lock:
-                with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'a') as log_file:
-                    for log in logs:
-                        if self.log_file_type == "jar-log":
-                            log_file.write(f"\n{log}")
-                        else:
-                            log_file.write(log)
+        self._flush()
 
 
     def close(
-            self
-        ) -> None :
-        """
-            Close the log file.
-        """
-
-        if not self.closed:
-            with self._lock:
-                if self.log_file_type == "jar-log":
-                    with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'a') as log_file :
-                        log_file.write(f"\n----END----\n")
-                    log_file.close()
-
-                elif self.log_file_type == "json":
-                    string : str = self.read()[:-1]
-
-                    with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'w') as log_file:
-                        log_file.write(string + "\n    ]\n}")
-                    log_file.close()
-
-                self.closed = True
-
-
-    def delete(
-            self
-        ) -> None:
-        """
-            Delete the log file.
-        """
-
-        from os import remove
-
-        remove(f"{self.log_path}{self.log_file_name}.{self.log_file_type}")
-
-
-    def read(
-            self
-        ) -> str :
-        """
-            Read the log file and returns its content.
-
-            Returns:
-                str: content of the log file
-        """
-
-        log_str : str = ""
-
-        with open(f"{self.log_path}{self.log_file_name}.{self.log_file_type}", 'r') as log_file:
-            log_str = log_file.read()
-        log_file.close()
-
-        return log_str
-
-
-    def __str__(
             self,
-            filter : list[str] | str | None = None
-        ) -> str | None :
-        """
-            Returns a formated log file.
-
-            Parameters:
-                filter (list[str] | str | None, optional): filter
-
-            Return:
-                str: formated log string
-        """
-
-        log_str = self.read()
-
-        if self.log_file_type == "jar-log":
-            return self._jar_log_str(filter)
-
-        elif self.log_file_type == "json":
-            return self._json_str(filter)
-
-        ## cannot be tested with pytest ##
-
-        return log_str  # pragma: no cover
-
-
-    def _jar_log_str(
-            self,
-            filter : list[str] | str | None = None
-        ) -> str:
-        """
-            Returns a formated jar-log file.
-
-            Parameters:
-                filter (list[str] | str | None, optional): filter
-
-            Return:
-                str: formated log string
-        """
-
-        def filter_in_str(line : list[str]):
-            for f in filter:
-                for line_element in line:
-                    if f in line_element:
-                        return True
-            return False
-
-        from os import get_terminal_size
-        from sys import stdin
-
-        log_str = self.read()
-
-        color_dict: dict[str, tuple[str, str]] = {
-            "[INFO] ": ("\x1b[7m", "\x1b[0m"),
-            "[DEBUG]": ("\x1b[104m", "\x1b[94m"),
-            "[VALID]": ("\x1b[102m", "\x1b[92m"),
-            "[WARN] ": ("\x1b[103m", "\x1b[93m"),
-            "[ERROR]": ("\x1b[101m", "\x1b[91m"),
-            "[CRIT] ": ("\x1b[1m\x1b[48;2;0;0;0m\x1b[38;2;255;0;0m", "\x1b[1m\x1b[48;2;0;0;0m\x1b[38;2;255;0;0m")
-        }
-        start: int = log_str.index("---START---\n") + len("---START---\n")
-        end: int = log_str.index("----END----\n")
-        logs: list = [lines.split(" | ") for lines in log_str[start:end].splitlines()]
-        try:
-            t_size = get_terminal_size().columns
-        except OSError:
-            t_size = 100
-        footer: str = f"\x1b[4m\x1b[7m|\x1b[0m\x1b[1m\x1b[4m"
-        string: str = ""
-
-        string += f"JAR-LOG => {self.log_file_name}.{self.log_file_type}\n\n"
-        string += (
-                f"\x1b[4m\x1b[7m|\x1b[0m\x1b[1m\x1b[4m    date          time      | \x1b[0m" +
-                "\x1b[4m\x1b[7m[TYPE] \x1b[0m\x1b[1m\x1b[4m title      | detail" +
-                (" " * (t_size - 58)) + f"\x1b[0m\n")
-        string += f"\x1b[7m|\x1b[0m\x1b[1m" + (" " * (t_size - 1)) + f"\x1b[0m\n"
-
-        for log_line in logs:
-            if not filter or (len(log_line) == 3 and filter_in_str(log_line)):
-                if log_line[0][:3] == ">>>":
-                    string += f"\x1b[7m>>>\x1b[0m \x1b[0m{log_line[0][3:]}\x1b[0m\n"
-
-                else:
-                    if len(log_line) == 3 and log_line[1][:7].upper() in color_dict:
-                        color = color_dict[log_line[1][:7].upper()]
-                        string += (
-                                f"{color[0]}|\x1b[0m " +
-                                f"{color[1]}{log_line[0]}\x1b[0m | " +
-                                f"{color[0]}{log_line[1][0:7]}\x1b[0m " +
-                                f"{color[1]}\x1b[1m{log_line[1][8:]}\x1b[0m | " +
-                                (
-                                    f"{log_line[2][:(t_size - 1)]}..." if len(log_line[2]) > (t_size - 1) else
-                                    f"{color[1]}{log_line[2]}") + f"\x1b[0m\n")
-
-                    ## cannot be tested with pytest ##
-
-                    elif len(log_line) == 1:  # pragma: no cover
-                        string += f"\x1b[45m|\x1b[0m " + f"\x1b[35mUNFORMATTED\n\"{log_line[0]}\"\x1b[0m\n"  # pragma: no cover
-
-        string += footer + (" " * (t_size - 1)) + f"\x1b[0m"
-
-        return string
-
-
-    def _json_str(
-            self,
-            filter : list[str] | str | None = None
-        ) -> str:
-        """
-            Returns a formated json file.
-
-            Parameters:
-                filter (list[str] | str | None, optional): filter
-
-            Return:
-                str: formated log string
-        """
-
-        def filter_in_str(log_line : dict):
-            for f in filter:
-                for element in log_line.values():
-                    if f in element:
-                        return True
-            return False
-
-        import json
-
-        log_str = self.read()
-        parsed_json : dict = json.loads(log_str)
-        string : str = ""
-
-        string += f"JSON => {self.log_file_name}.{self.log_file_type}\n"
-        string += f"\n{'=' * 50}\n"
-
-        for log_line in parsed_json["logs"]:
-            if not filter or filter_in_str(log_line):
-                string += f"{log_line['time']} | {(log_line['level'] + (' ' * 5))[:5]} {(log_line['title'] + (' ' * 10))[:10]} | {log_line['msg']}\n"
-
-        string += f"{'=' * 50}"
-
-        return string
-
-
-    def str_filtered(
-            self,
-            f : list[str] | str
-        ) -> str:
-        """
-            Returns a formated and filtered log file.
-
-            Parameters:
-                f (list[str] | str): filter
-
-            Return:
-                str: formated log string
-        """
-
-        if isinstance(f, list):
-            for index in range(len(f)):
-                f[index] = f[index].upper()
-
-        else:
-            f = [f.upper()]
-
-        return self.__str__(f)
-
-    def clean(self, output_file_name: str | None = None, compress_repeats: bool = True, compress_log: bool = False) -> str:
-        """
-            Returns a compacted version of the log, optionally summarizing repeated messages.
-
-            (does not work with json files yet)
-
-            Parameters:
-                output_file_name (str | None, optional): if given, saves the cleaned log to this file
-                compress_repeats (bool, optional): whether to collapse repeated messages with counts
-
-            Returns:
-                str: cleaned log string
-        """
-
-        if output_file_name is None:
-            output_file_name = self.log_file_name + "_cleaned"
-
-        log_lines = []
-
-        if self.log_file_type == "jar-log":
-            log_str = self.read()
-            start = log_str.index("---START---\n") + len("---START---\n")
-            end = log_str.index("----END----\n")
-            raw_logs = [line for line in log_str[start:end].split("\n")]
-
-            for line in raw_logs:
-                if compress_log and len(line.split(" | ")) == 3:
-                    datetime, st, message = line.split(" | ")
-                    status, title = st.replace("[", "").replace(" ", "").split("]")
-
-                    if status in ["DEBUG", "WARN"]:
-                        status = "• " + status
-
-                    if status in ["ERROR", "CRIT"]:
-                        status = "/!\\ " + status + " /!\\"
-
-                    log_lines.append(f"{status} <{title}> \"{message}\"")
-
-                else:
-                    log_lines.append(line)
-
-            if compress_repeats:
-                compressed_lines = []
-                previous = None
-                count = 1
-
-                for line in log_lines:
-                    parts = line.split(" | ")
-
-                    if len(parts) == 3:
-                        key = " | ".join(parts[1:]).strip()
-
-                    else:
-                        key = line.strip()
-
-                    if key == previous:
-                        count += 1
-
-                    else:
-                        if previous is not None:
-                            if count > 1:
-                                compressed_lines[-1] += f" [x{count}]"
-
-                        compressed_lines.append(line)
-                        previous = key
-                        count = 1
-
-                if count > 1:
-                    compressed_lines[-1] += f" [x{count}]"
-
-                log_lines = compressed_lines
-
-        cleaned_log = "\n".join(log_lines)
-
-        with open(f"{self.log_path}{output_file_name}.{self.log_file_type}", 'w') as log_file:
-            if not compress_log:
-                log_file.write("   date          time      | [TYPE]  title      | detail\n\n---START---\n")
-
-            log_file.write(cleaned_log)
-
-            if not compress_log:
-                log_file.write(f"----END----\n")
-
-        return cleaned_log
-
-
-    @staticmethod
-    def exist(
-            path : str
-        ) -> bool:
-        """
-            Check if a log file exist in a directory
-
-            Returns:
-                bool: return whether the file exist or not
-        """
-
-        from os import listdir
-
-        if path[-1] != "/":
-            path += "/"
-
-        paths = listdir(path)
-
-        for path in paths:
-            if ".jar-log" in path:
-                return True
-            if ".json" in path:
-                return True
-
-        return False
-
-
-    def __repr__(
-            self
-        ) -> str:
-        """
-            Convert Log object to string.
-
-            Returns:
-                str: Log string
-        """
-
-        path = self.log_path
-        name = self.log_file_name
-        type = self.log_file_type
-
-        return f"Log({path=!r}, {name=!r}, {type=!r})"
+            *,
+            result = "SUCCESS",
+        ):
+        if self._closed_at is not None:
+            return
+
+        self._flush()
+
+        self._closed_at = Time(
+            format=self._file_format,
+        )
+
+        duration = (
+            self._closed_at.timestamp()
+            - self._created_at.timestamp()
+        ) * 1000
+
+        warnings, errors, criticals = self._count_levels()
+
+        marker = LogRenderer.WAITING_MARKER
+        marker_bytes = marker.encode("utf-8")
+
+        footer = LogRenderer.footer(
+            self._run_id,
+            self._closed_at,
+            f"{duration:.2f}",
+            result,
+            warnings=warnings,
+            errors=errors,
+            criticals=criticals,
+        )
+
+        footer_bytes = footer.encode("utf-8")
+
+        with self.path.open(
+                "rb+",
+        ) as file:
+            file.seek(
+                -(len(marker_bytes) + 1),
+                2,
+            )
+
+            current_marker = file.read(
+                len(marker_bytes),
+            )
+
+            if current_marker != marker_bytes:
+                raise LogRuntimeJError(
+                    "Log waiting marker was not found"
+                )
+
+            file.seek(
+                -len(marker_bytes),
+                1,
+            )
+
+            file.write(
+                footer_bytes,
+            )
+            file.truncate()
+
+
+__all__ = [
+    'Log',
+]

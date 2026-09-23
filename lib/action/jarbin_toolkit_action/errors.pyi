@@ -1,13 +1,17 @@
 from typing import final
 
-from jarbin_toolkit_error import BaseJError
+from jarbin_toolkit_error import (
+    JErrorType,
+    JErrorValue,
+    JException,
+)
 
 
 @final
-class ActionTypeJError(BaseJError):
+class ActionTypeJError(JErrorType):
     """
         Type error for Action
-        (BaseJError)
+        (JErrorType)
     """
 
 
@@ -27,10 +31,10 @@ class ActionTypeJError(BaseJError):
 
 
 @final
-class ActionValueJError(BaseJError):
+class ActionValueJError(JErrorValue):
     """
         Value error for Action
-        (BaseJError)
+        (JErrorValue)
     """
 
 
@@ -50,10 +54,10 @@ class ActionValueJError(BaseJError):
 
 
 @final
-class ActionArgumentJError(BaseJError):
+class ActionArgumentJError(JException):
     """
         Argument error for Action
-        (BaseJError)
+        (JException)
     """
 
 
@@ -73,10 +77,10 @@ class ActionArgumentJError(BaseJError):
 
 
 @final
-class ActionExecutionJError(BaseJError):
+class ActionExecutionJError(JException):
     """
         Execution error for Action
-        (BaseJError)
+        (JException)
     """
 
 
@@ -96,10 +100,10 @@ class ActionExecutionJError(BaseJError):
 
 
 @final
-class ActionThreadJError(BaseJError):
+class ActionThreadJError(JException):
     """
         Thread error for Action
-        (BaseJError)
+        (JException)
     """
 
 

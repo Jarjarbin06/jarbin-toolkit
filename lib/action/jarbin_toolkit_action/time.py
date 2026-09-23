@@ -3,7 +3,6 @@
 #
 # Package      : Action
 # File         : time.py
-# Class        : ActionTimer
 #
 # Author       : Jarjarbin06
 # ============================================================================

@@ -3,7 +3,6 @@
 #
 # Package      : Action
 # File         : action.py
-# Class        : Action
 #
 # Author       : Jarjarbin06
 # ============================================================================

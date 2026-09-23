@@ -3,7 +3,6 @@
 #
 # Package      : Action
 # File         : action_batch.py
-# Class        : ActionBatch
 #
 # Author       : Jarjarbin06
 # ============================================================================

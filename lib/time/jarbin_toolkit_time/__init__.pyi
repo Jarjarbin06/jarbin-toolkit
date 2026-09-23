@@ -1,3 +1,9 @@
+__author__: str
+__email__: str
+__version__: str
+__license__: str
+
+
 from .time import Time
 from .stopwatch import StopWatch
 from .enums import (
@@ -9,12 +15,6 @@ from .errors import (
     TimeValueJError,
     TimeStateJError,
 )
-
-
-__author__: str
-__email__: str
-__version__: str
-__license__: str
 
 
 __all__: list[str]

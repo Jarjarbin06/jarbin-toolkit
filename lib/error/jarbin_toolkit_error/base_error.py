@@ -3,7 +3,6 @@
 #
 # Package      : Error
 # File         : base_error.py
-# Class        : BaseError
 #
 # Author       : Jarjarbin06
 # ============================================================================

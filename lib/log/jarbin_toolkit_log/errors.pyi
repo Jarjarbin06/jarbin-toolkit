@@ -1,26 +1,17 @@
-# ============================================================================
-# JARBIN-TOOLKIT
-#
-# Package      : Time
-# File         : errors.py
-#
-# Author       : Jarjarbin06
-# ============================================================================
-
-
 from typing import final
 
 from jarbin_toolkit_error import (
     JErrorType,
     JErrorValue,
+    JErrorRuntime,
     JException,
 )
 
 
 @final
-class TimeTypeJError(JErrorType):
+class LogTypeJError(JErrorType):
     """
-        Type error for Time
+        Type error for Log
         (JErrorType)
     """
 
@@ -41,9 +32,9 @@ class TimeTypeJError(JErrorType):
 
 
 @final
-class TimeValueJError(JErrorValue):
+class LogValueJError(JErrorValue):
     """
-        Value error for Time
+        Value error for Log
         (JErrorValue)
     """
 
@@ -64,9 +55,32 @@ class TimeValueJError(JErrorValue):
 
 
 @final
-class TimeStateJError(JException):
+class LogRuntimeJError(JErrorRuntime):
     """
-        State error for Time
+        Runtime error for Log
+        (JErrorRuntime)
+    """
+
+
+    def __init__(
+            self,
+            message: str,
+        ):
+        """
+            Value error
+
+            Parameters
+            ----------
+            message : str
+                Message to be displayed when the error is raised
+        """
+        ...
+
+
+@final
+class LogStateJError(JException):
+    """
+        State error for Log
         (JException)
     """
 
@@ -86,8 +100,4 @@ class TimeStateJError(JException):
         ...
 
 
-__all__ = [
-    'TimeTypeJError',
-    'TimeValueJError',
-    'TimeStateJError',
-]
+__all__: list[str]

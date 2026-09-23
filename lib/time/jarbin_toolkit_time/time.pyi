@@ -25,7 +25,7 @@ class Time:
     def __init__(
             self,
             *,
-            format: TimeFormat = TimeFormat.DEFAULT,
+            format: TimeFormat | str = TimeFormat.DEFAULT,
             timestamp: Optional[float | int] = None,
             year: Optional[int] = None,
             month: Optional[int] = None,
@@ -101,7 +101,7 @@ class Time:
     @staticmethod
     def parse(
             value: str,
-            format: TimeFormat = TimeFormat.DEFAULT,
+            format: TimeFormat | str = TimeFormat.DEFAULT,
         ) -> Time:
         """
             Get a Time object from a formated string
