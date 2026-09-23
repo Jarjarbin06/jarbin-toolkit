@@ -1,4 +1,4 @@
-name: Sync | Develop
+name: Sync | Develop -> branches
 
 on:
   push:
