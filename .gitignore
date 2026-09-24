@@ -6,7 +6,7 @@ htmlcov/
 __pycache__/
 .idea/
 .obsidian/
-.coverage/
+.run/
 
 # --- FILES --- #
 trace
