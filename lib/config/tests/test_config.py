@@ -156,8 +156,8 @@ def test_open_metadata(
         tmp_path: Path,
     ):
     metadata = {
-        "user.description": "Test configuration",
-        "user.environment": "test",
+        "description": "Test configuration",
+        "environment": "test",
     }
 
     Config.create(
@@ -1148,8 +1148,8 @@ def test_complete_configuration_persistence(
         tmp_path: Path,
     ):
     metadata = {
-        "user.description": "Complete test",
-        "user.environment": "testing",
+        "description": "Complete test",
+        "environment": "testing",
     }
 
     config = Config.create(
