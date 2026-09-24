@@ -109,71 +109,6 @@ class Config:
         self._config = ConfigParser()
 
 
-    @classmethod
-    def create(
-            cls,
-            directory,
-            name,
-            *,
-            metadata=None,
-            has_extension=True,
-        ):
-
-        new_config = cls(
-            directory,
-            name,
-            metadata=metadata,
-            has_extension=has_extension,
-            _token=cls._CONSTRUCTOR_TOKEN,
-        )
-
-        try:
-            new_config.directory.mkdir(
-                parents=True,
-                exist_ok=True,
-            )
-
-            new_config.path.touch(
-                exist_ok=False,
-            )
-        except OSError as error:
-            raise ConfigRuntimeJError(
-                f"Failed to create config file: '{new_config.path}'"
-            ) from error
-
-        new_config._write_config()
-        new_config._write_metadata()
-
-        return new_config
-
-
-    @classmethod
-    def open(
-            cls,
-            directory,
-            name,
-            *,
-            has_extension=True,
-        ):
-
-        new_config = cls(
-            directory,
-            name,
-            has_extension=has_extension,
-            _token=cls._CONSTRUCTOR_TOKEN,
-        )
-
-        if not new_config.path.exists():
-            raise ConfigFileNotFoundJError(
-                f"Path doesn't exist: '{new_config.path}'"
-            )
-
-        new_config._read_config()
-        new_config._read_metadata()
-
-        return new_config
-
-
     def section_add(
             self,
             name,
@@ -420,6 +355,71 @@ class Config:
             ) from error
 
 
-__all__ : list[str] = [
+    @classmethod
+    def create(
+            cls,
+            directory,
+            name,
+            *,
+            metadata = None,
+            has_extension = True,
+        ):
+
+        new_config = cls(
+            directory,
+            name,
+            metadata=metadata,
+            has_extension=has_extension,
+            _token=cls._CONSTRUCTOR_TOKEN,
+        )
+
+        try:
+            new_config.directory.mkdir(
+                parents=True,
+                exist_ok=True,
+            )
+
+            new_config.path.touch(
+                exist_ok=False,
+            )
+        except OSError as error:
+            raise ConfigRuntimeJError(
+                f"Failed to create config file: '{new_config.path}'"
+            ) from error
+
+        new_config._write_config()
+        new_config._write_metadata()
+
+        return new_config
+
+
+    @classmethod
+    def open(
+            cls,
+            directory,
+            name,
+            *,
+            has_extension = True,
+        ):
+
+        new_config = cls(
+            directory,
+            name,
+            has_extension=has_extension,
+            _token=cls._CONSTRUCTOR_TOKEN,
+        )
+
+        if not new_config.path.exists():
+            raise ConfigFileNotFoundJError(
+                f"Path doesn't exist: '{new_config.path}'"
+            )
+
+        new_config._read_config()
+        new_config._read_metadata()
+
+        return new_config
+
+
+__all__ = [
     'Config',
 ]
