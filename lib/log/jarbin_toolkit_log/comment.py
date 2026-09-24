@@ -33,7 +33,13 @@ class LogComment:
             )
 
         self.message = message
-        self._type = type
+
+        try:
+            self._type = LogType(type)
+        except Exception as error:
+            raise LogTypeJError(
+                "Type must be of type str"
+            ) from error
 
 
     def __repr__(

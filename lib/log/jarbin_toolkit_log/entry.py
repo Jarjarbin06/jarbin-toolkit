@@ -50,6 +50,11 @@ class LogEntry:
                 "Type must be of type LogType or str"
             )
 
+        if not isinstance(message, str):
+            raise LogTypeJError(
+                "Message must be of type str"
+            )
+
         self._sequence = sequence
         self._creation_time = Time(format=format)
         self.level = level

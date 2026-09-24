@@ -266,7 +266,6 @@ def test_comment(
         encoding="utf-8",
     )
 
-    assert "this is a comment" in content
     assert "    | this is a comment" in content
 
 

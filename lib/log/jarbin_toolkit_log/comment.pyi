@@ -25,7 +25,7 @@ class LogComment:
     def __init__(
             self,
             message: str,
-            type: LogType
+            type: LogType | str
         ) -> None:
         """
             Initialize a comment entry
@@ -41,7 +41,7 @@ class LogComment:
             Raises
             ----------
             LogTypeJError
-                Message type invalid
+                Message, type type invalid
         """
         ...
 
