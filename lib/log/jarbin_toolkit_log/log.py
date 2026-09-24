@@ -228,7 +228,7 @@ class Log:
         self.name = name
         self.type = type.name
         self.path = (
-            Path(directory)
+            self.directory
             / f"{name}_{self._created_at!r}.{type.name}"
         )
 

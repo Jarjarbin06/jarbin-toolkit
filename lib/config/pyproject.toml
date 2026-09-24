@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jarbin-toolkit-config"
-version = "0.1.2.3"
+version = "1.0.0.0"
 description = "Config tool (Create / Set / Read / etc...)"
 authors = [
     { name = "Nathan Jarjarbin", email = "nathan.amaraggi@epitech.eu" }
@@ -14,6 +14,7 @@ requires-python = ">=3.11"
 license = "GPL-3.0-or-later"
 
 dependencies = [
+    "jarbin-toolkit-error>=1.0.0.0,<1.1.0.0",
 ]
 
 classifiers = [

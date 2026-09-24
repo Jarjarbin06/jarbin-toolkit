@@ -35,6 +35,8 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics | true
     - name: Install jarbin-toolkit-config
       run: |
+        make -C lib/error install
+        
         make -C lib/config install
     - name: Test config with pytest (xml)
       run: |

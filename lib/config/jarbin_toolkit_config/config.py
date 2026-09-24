@@ -1,271 +1,425 @@
-#############################
-###                       ###
-###     Jarbin-ToolKit    ###
-###        config         ###
-###   ----config.py----   ###
-###                       ###
-###=======================###
-### by JARJARBIN's STUDIO ###
-#############################
+# ============================================================================
+# JARBIN-TOOLKIT
+#
+# Package      : Config
+# File         : config.py
+#
+# Author       : Jarjarbin06
+# ============================================================================
 
 
-from builtins import type
-from typing import Any
+from configparser import ConfigParser
+from os import (
+    setxattr,
+    getxattr,
+    listxattr,
+)
+from pathlib import Path
+
+from jarbin_toolkit_config.errors import (
+    ConfigRuntimeJError,
+    ConfigFileNotFoundJError,
+    ConfigValueJError,
+)
 
 
 class Config:
-    """
-        Config class.
 
-        Config file tool.
-    """
+
+    _CONSTRUCTOR_TOKEN = object()
+    _METADATA_PREFIX = "user.jarbin."
+
+
+    def _write_metadata(
+            self,
+        ):
+
+        for key, value in self._metadata.items():
+            setxattr(
+                self.path,
+                f"{self._METADATA_PREFIX}{key}",
+                value.encode("utf-8"),
+            )
+
+
+    def _read_metadata(
+            self,
+        ):
+
+        self._metadata = {
+            key.removeprefix(self._METADATA_PREFIX): getxattr(
+                self.path,
+                key,
+            ).decode("utf-8")
+            for key in listxattr(self.path)
+            if key.startswith(self._METADATA_PREFIX)
+        }
+
+
+    def _write_config(
+            self,
+        ):
+
+        try:
+            with self.path.open("w", encoding="utf-8") as config_file:
+                self._config.write(config_file)
+        except OSError as error:
+            raise ConfigRuntimeJError(
+                f"Failed to write config file: '{self.path}'"
+            ) from error
+
+
+    def _read_config(
+            self,
+        ):
+
+        try:
+            self._config.read(
+                self.path,
+                encoding="utf-8",
+            )
+        except OSError as error:
+            raise ConfigRuntimeJError(
+                f"Failed to read config file: '{self.path}'"
+            ) from error
 
 
     def __init__(
             self,
-            path : str,
-            data : dict[str, dict[str, Any]] | None = None,
+            directory,
+            name,
             *,
-            file_name : str = "config.ini"
-        ) -> None:
-        """
-            Create a new config file if 'path'/'file_name' does not exist, read otherwise.
+            metadata = None,
+            has_extension = True,
+            _token = None,
+        ):
 
-            Parameters:
-                path (str): path to folder which you want your config file to be in
-                data (dict[str : dict[str, Any]] | None, optional): data to put in the config file
-                file_name (str, optional): name of config file
-        """
+        if _token is not self._CONSTRUCTOR_TOKEN:
+            raise ConfigRuntimeJError(
+                "Config objects must be created with Config.create() or opened with Config.open()"
+            )
 
-        from configparser import ConfigParser
-        from platform import system
+        self.directory = Path(directory)
+        self.name = name
+        self.path = (
+            self.directory
+            / f"{name}{'.ini' if has_extension else ''}"
+        )
+        self._metadata = metadata or {}
+        self._config = ConfigParser()
 
-        if path[-1] != "/":
-            path += "/"
 
-        self.config : ConfigParser | None = ConfigParser()
-        self.path : str | None = path
-        self.file_name : str | None = file_name
+    @classmethod
+    def create(
+            cls,
+            directory,
+            name,
+            *,
+            metadata=None,
+            has_extension=True,
+        ):
 
-        if not data:
-            data = {}
+        new_config = cls(
+            directory,
+            name,
+            metadata=metadata,
+            has_extension=has_extension,
+            _token=cls._CONSTRUCTOR_TOKEN,
+        )
 
-        for key in data:
-            self.config[key] = data[key]
+        try:
+            new_config.directory.mkdir(
+                parents=True,
+                exist_ok=True,
+            )
 
-        if system() == "Windows":
+            new_config.path.touch(
+                exist_ok=False,
+            )
+        except OSError as error:
+            raise ConfigRuntimeJError(
+                f"Failed to create config file: '{new_config.path}'"
+            ) from error
 
-            ## cannot be tested with pytest ##
+        new_config._write_config()
+        new_config._write_metadata()
 
-            self.path = self.path.replace("/", "\\") # pragma: no cover
-            self.file_name = self.file_name.replace("/", "\\") # pragma: no cover
+        return new_config
 
-        elif system() == "Linux":
 
-            ## cannot be tested with pytest ##
+    @classmethod
+    def open(
+            cls,
+            directory,
+            name,
+            *,
+            has_extension=True,
+        ):
 
-            self.path = self.path.replace("\\", "/") # pragma: no cover
-            self.file_name = self.file_name.replace("/", "\\") # pragma: no cover
+        new_config = cls(
+            directory,
+            name,
+            has_extension=has_extension,
+            _token=cls._CONSTRUCTOR_TOKEN,
+        )
 
-        if Config.exist(str(self.path), file_name=file_name):
-            self.config.read(str(self.path) + str(self.file_name))
+        if not new_config.path.exists():
+            raise ConfigFileNotFoundJError(
+                f"Path doesn't exist: '{new_config.path}'"
+            )
 
-            with open(str(self.path) + str(self.file_name), 'w') as config_file:
-                self.config.write(config_file)
+        new_config._read_config()
+        new_config._read_metadata()
 
-            config_file.close()
+        return new_config
 
-        else:
-            try:
-                open(str(self.path) + str(self.file_name), 'x').close()
 
-            except FileExistsError:
-                pass
+    def section_add(
+            self,
+            name,
+        ):
 
-            with open(str(self.path) + str(self.file_name), 'w') as config_file:
-                self.config.write(config_file)
+        if self._config.has_section(name):
+            raise ConfigValueJError(
+                f"Section already exists: '{name}'"
+            )
 
-            config_file.close()
+        self._config.add_section(name)
+        self._write_config()
+
+
+    def section_remove(
+            self,
+            name,
+        ):
+
+        if not self._config.has_section(name):
+            raise ConfigValueJError(
+                f"Section doesn't exist: '{name}'"
+            )
+
+        self._config.remove_section(name)
+        self._write_config()
+
+
+    def section_rename(
+            self,
+            old_name,
+            new_name,
+        ):
+
+        if not self._config.has_section(old_name):
+            raise ConfigValueJError(
+                f"Section doesn't exist: '{old_name}'"
+            )
+
+        if self._config.has_section(new_name):
+            raise ConfigValueJError(
+                f"Section already exists: '{new_name}'"
+            )
+
+        options = dict(self._config.items(old_name))
+
+        self._config.remove_section(old_name)
+        self._config.add_section(new_name)
+
+        for option, value in options.items():
+            self._config.set(
+                new_name,
+                option,
+                value,
+            )
+
+        self._write_config()
 
 
     def set(
             self,
-            section : str,
-            option : str,
-            data : Any
-        ) -> None:
-        """
-            Set a new value in a config file.
+            section,
+            option,
+            value,
+        ):
 
-            Parameters:
-                section (str): section name
-                option (str): option name
-                data (Any): data to put in the config file
-        """
+        if not self._config.has_section(section):
+            raise ConfigValueJError(
+                f"Section doesn't exist: '{section}'"
+            )
 
-        self.config.set(section, option, str(data))
+        self._config.set(
+            section,
+            option,
+            str(value),
+        )
 
-        with open(str(self.path) + str(self.file_name), 'w') as config_file:
-            self.config.write(config_file)
+        self._write_config()
 
-        config_file.close()
+
+    def set_batch(
+            self,
+            data,
+        ):
+
+        for section, options in data.items():
+            if not self._config.has_section(section):
+                self._config.add_section(section)
+
+            for option, value in options.items():
+                self._config.set(
+                    section,
+                    option,
+                    str(value),
+                )
+
+        self._write_config()
+
+
+    def option_remove(
+            self,
+            section,
+            option,
+        ):
+
+        if not self._config.has_section(section):
+            raise ConfigValueJError(
+                f"Section doesn't exist: '{section}'"
+            )
+
+        if not self._config.has_option(section, option):
+            raise ConfigValueJError(
+                f"Option doesn't exist: '{option}'"
+            )
+
+        self._config.remove_option(
+            section,
+            option,
+        )
+
+        self._write_config()
+
+
+    def section_exists(
+            self,
+            name,
+        ):
+
+        return self._config.has_section(name)
+
+
+    def option_exists(
+            self,
+            section,
+            option,
+        ):
+
+        return self._config.has_option(
+            section,
+            option,
+        )
 
 
     def get(
             self,
-            section : str,
-            option : str,
-            wanted_type : type = str
-        ) -> Any:
-        """
-            Get a value from the config file.
+            section,
+            option,
+        ):
 
-            Parameters:
-                section (str): section name
-                option (str): option name
-                wanted_type (type, optional): returned type
+        if not self._config.has_section(section):
+            raise ConfigValueJError(
+                f"Section doesn't exist: '{section}'"
+            )
 
-            Returns:
-                Any: data retrieved from config file and of type 'wanted_type'
-        """
+        if not self._config.has_option(section, option):
+            raise ConfigValueJError(
+                f"Option doesn't exist: '{option}'"
+            )
 
-        return wanted_type(self.config.get(section, option))
-
-
-    def get_bool(
-            self,
-            section : str,
-            option : str
-        ) -> bool:
-        """
-            Get a value as a bool from the config file.
-
-            Parameters:
-                section (str): section name
-                option (str): option name
-
-            Returns:
-                Any: data retrieved from config file and of type 'wanted_type'
-        """
-
-        return self.config.getboolean(section, option)
+        return self._config.get(
+            section,
+            option,
+        )
 
 
     def get_int(
             self,
-            section : str,
-            option : str
-        ) -> Any:
-        """
-            Get a value as a int from the config file.
+            section,
+            option,
+        ):
 
-            Parameters:
-                section (str): section name
-                option (str): option name
+        if not self._config.has_section(section):
+            raise ConfigValueJError(
+                f"Section doesn't exist: '{section}'"
+            )
 
-            Returns:
-                Any: data retrieved from config file and of type 'wanted_type'
-        """
+        if not self._config.has_option(section, option):
+            raise ConfigValueJError(
+                f"Option doesn't exist: '{option}'"
+            )
 
-        return self.config.getint(section, option)
+        try:
+            return self._config.getint(
+                section,
+                option,
+            )
+        except ValueError as error:
+            raise ConfigValueJError(
+                f"Option is not an integer: '{option}'"
+            ) from error
 
 
     def get_float(
             self,
-            section : str,
-            option : str
-        ) -> Any:
-        """
-            Get a value as a float from the config file.
+            section,
+            option,
+        ):
 
-            Parameters:
-                section (str): section name
-                option (str): option name
+        if not self._config.has_section(section):
+            raise ConfigValueJError(
+                f"Section doesn't exist: '{section}'"
+            )
 
-            Returns:
-                Any: data retrieved from config file and of type 'wanted_type'
-        """
+        if not self._config.has_option(section, option):
+            raise ConfigValueJError(
+                f"Option doesn't exist: '{option}'"
+            )
 
-        return self.config.getfloat(section, option)
+        try:
+            return self._config.getfloat(
+                section,
+                option,
+            )
+        except ValueError as error:
+            raise ConfigValueJError(
+                f"Option is not a float: '{option}'"
+            ) from error
 
 
-    def delete(
+    def get_bool(
             self,
-            cached : bool = False
-        ) -> bool:
-        """
-            Delete the config file.
+            section,
+            option,
+        ):
 
-            Parameters:
-                cached (bool, optional): keep the config file's data in memory
+        if not self._config.has_section(section):
+            raise ConfigValueJError(
+                f"Section doesn't exist: '{section}'"
+            )
 
-            Returns:
-                bool: True if deleted else False
-        """
+        if not self._config.has_option(section, option):
+            raise ConfigValueJError(
+                f"Option doesn't exist: '{option}'"
+            )
 
-        from os import remove
-
-        remove(str(self.path) + str(self.file_name))
-
-        if not cached:
-            self.config = None
-
-        if not Config.exist(str(self.path), file_name=str(self.file_name)):
-            self.path = None
-            self.file_name = None
-            return True
-
-        ## cannot be tested with pytest ##
-
-        else:
-            return False # pragma: no cover
+        try:
+            return self._config.getboolean(
+                section,
+                option,
+            )
+        except ValueError as error:
+            raise ConfigValueJError(
+                f"Option is not a boolean: '{option}'"
+            ) from error
 
 
-    @staticmethod
-    def exist(
-            path : str,
-            *,
-            file_name : str = "config.ini"
-        ) -> bool:
-        """
-            Check if a config file config.ini is empty or doesn't exist
-
-            Parameters:
-                path (str): path to config file
-                file_name (str, optional): name of config file
-
-            Returns:
-                bool: False if empty or not existing, True otherwise
-        """
-
-        if path[-1] != "/":
-            path += "/"
-
-        empty_config : bool = True
-
-        try :
-            with open(path + file_name, 'r') as config_file:
-                if config_file.read() == "":
-                    empty_config = False
-            config_file.close()
-
-        except FileNotFoundError:
-            empty_config = False
-
-        return empty_config
-
-
-    def __repr__(
-            self
-        ) -> str:
-        """
-            Convert Config object to string.
-
-            Returns:
-                str: Config string
-        """
-
-        path = self.path
-        file_name = self.file_name
-
-        return f"Config({path=!r}, ?, {file_name=!r})"
+__all__ : list[str] = [
+    'Config',
+]
