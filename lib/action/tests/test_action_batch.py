@@ -18,7 +18,8 @@ from jarbin_toolkit_action import (
     ActionArgumentJError,
     ActionTypeJError,
     ActionExecutionJError,
-    _Enums,
+    ActionStatus,
+    ActionAsync,
 )
 
 
@@ -135,7 +136,7 @@ def test_action_batch_call() -> None:
 
     batch()
 
-    assert batch.status == _Enums.ActionStatus.PENDING
+    assert batch.status == ActionStatus.PENDING
     assert results == [1, 2]
 
 
@@ -156,9 +157,9 @@ def test_action_batch_call_prepares_async_actions() -> None:
 
     batch()
 
-    assert batch.status == _Enums.ActionStatus.PENDING
-    assert action_1.status == _Enums.ActionStatus.PENDING
-    assert action_2.status == _Enums.ActionStatus.PENDING
+    assert batch.status == ActionStatus.PENDING
+    assert action_1.status == ActionStatus.PENDING
+    assert action_2.status == ActionStatus.PENDING
     assert results == []
 
 
@@ -200,7 +201,7 @@ def test_action_batch_run_synchronous() -> None:
 
     batch.run()
 
-    assert batch.status == _Enums.ActionStatus.SUCCESS
+    assert batch.status == ActionStatus.SUCCESS
     assert results == [1, 2]
 
 
@@ -223,15 +224,15 @@ def test_action_batch_run_asynchronous() -> None:
 
     batch()
 
-    assert action_1.status == _Enums.ActionStatus.PENDING
-    assert action_2.status == _Enums.ActionStatus.PENDING
+    assert action_1.status == ActionStatus.PENDING
+    assert action_2.status == ActionStatus.PENDING
     assert results == []
 
     batch.run()
 
-    assert batch.status == _Enums.ActionStatus.SUCCESS
-    assert action_1.status == _Enums.ActionStatus.SUCCESS
-    assert action_2.status == _Enums.ActionStatus.SUCCESS
+    assert batch.status == ActionStatus.SUCCESS
+    assert action_1.status == ActionStatus.SUCCESS
+    assert action_2.status == ActionStatus.SUCCESS
     assert sorted(results) == [1, 2]
 
 
@@ -263,10 +264,10 @@ def test_action_batch_max_worker() -> None:
 
     batch.run()
 
-    assert batch.status == _Enums.ActionStatus.SUCCESS
+    assert batch.status == ActionStatus.SUCCESS
     assert max_running <= 2
     assert all(
-        action.status == _Enums.ActionStatus.SUCCESS
+        action.status == ActionStatus.SUCCESS
         for action in actions
     )
 
@@ -294,7 +295,7 @@ def test_action_batch_max_worker_one() -> None:
 
     batch.run()
 
-    assert batch.status == _Enums.ActionStatus.SUCCESS
+    assert batch.status == ActionStatus.SUCCESS
     assert execution_order == [1, 2]
 
 
@@ -313,8 +314,8 @@ def test_action_batch_timeout() -> None:
 
     batch.run()
 
-    assert batch.status == _Enums.ActionStatus.SUCCESS
-    assert action.status == _Enums.ActionStatus.CANCELLED
+    assert batch.status == ActionStatus.SUCCESS
+    assert action.status == ActionStatus.CANCELLED
 
 
 def test_action_batch_timeout_does_not_cancel_fast_action() -> None:
@@ -332,8 +333,8 @@ def test_action_batch_timeout_does_not_cancel_fast_action() -> None:
 
     batch.run()
 
-    assert batch.status == _Enums.ActionStatus.SUCCESS
-    assert action.status == _Enums.ActionStatus.SUCCESS
+    assert batch.status == ActionStatus.SUCCESS
+    assert action.status == ActionStatus.SUCCESS
 
 
 def test_action_batch_timeout_only_applies_after_start() -> None:
@@ -360,10 +361,10 @@ def test_action_batch_timeout_only_applies_after_start() -> None:
 
     batch.run()
 
-    assert batch.status == _Enums.ActionStatus.SUCCESS
+    assert batch.status == ActionStatus.SUCCESS
     assert execution_order == [1, 1]
     assert all(
-        action.status == _Enums.ActionStatus.SUCCESS
+        action.status == ActionStatus.SUCCESS
         for action in actions
     )
 
@@ -391,14 +392,14 @@ def test_action_batch_status_after_run() -> None:
 
     batch()
 
-    assert batch._status == _Enums.ActionStatus.PENDING
-    assert batch.status == _Enums.ActionStatus.PENDING
+    assert batch._status == ActionStatus.PENDING
+    assert batch.status == ActionStatus.PENDING
 
     batch.run()
 
-    assert batch._status == _Enums.ActionStatus.INACTIVE
-    assert batch._previous_status == _Enums.ActionStatus.SUCCESS
-    assert batch.status == _Enums.ActionStatus.SUCCESS
+    assert batch._status == ActionStatus.INACTIVE
+    assert batch._previous_status == ActionStatus.SUCCESS
+    assert batch.status == ActionStatus.SUCCESS
 
 
 def test_action_batch_multiple_runs() -> None:
@@ -418,4 +419,4 @@ def test_action_batch_multiple_runs() -> None:
     batch.run()
 
     assert counter == 2
-    assert batch.status == _Enums.ActionStatus.SUCCESS
+    assert batch.status == ActionStatus.SUCCESS

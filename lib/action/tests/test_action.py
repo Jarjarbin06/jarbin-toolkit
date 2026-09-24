@@ -18,7 +18,8 @@ from jarbin_toolkit_action import (
     ActionExecutionJError,
     ActionThreadJError,
     ActionValueJError,
-    _Enums,
+    ActionStatus,
+    ActionAsync,
 )
 
 
@@ -63,7 +64,7 @@ def test_action_execution() -> None:
 
     assert result == 15
     assert act.output == 15
-    assert act.status == _Enums.ActionStatus.SUCCESS
+    assert act.status == ActionStatus.SUCCESS
     assert act.error is None
     assert act.duration is not None
 
@@ -81,7 +82,7 @@ def test_action_is_synchronous_by_default() -> None:
 
     assert result == 42
     assert calls == ["executed"]
-    assert act.status == _Enums.ActionStatus.SUCCESS
+    assert act.status == ActionStatus.SUCCESS
 
 
 def test_action_call_kwargs_override_defaults() -> None:
@@ -124,7 +125,7 @@ def test_action_caught_execution_error() -> None:
     with pytest.raises(ActionExecutionJError):
         act()
 
-    assert act.status == _Enums.ActionStatus.FAILED
+    assert act.status == ActionStatus.FAILED
     assert isinstance(act.error, ValueError)
 
 
@@ -138,7 +139,7 @@ def test_action_catch_setting() -> None:
     result = act()
 
     assert result is None
-    assert act.status == _Enums.ActionStatus.FAILED
+    assert act.status == ActionStatus.FAILED
     assert isinstance(act.error, ValueError)
 
 
@@ -155,8 +156,8 @@ def test_action_async_call_is_pending() -> None:
 
     result = act()
 
-    assert result == _Enums.ActionAsync.SUCCESS
-    assert act.status == _Enums.ActionStatus.PENDING
+    assert result == ActionAsync.SUCCESS
+    assert act.status == ActionStatus.PENDING
     assert act.output is None
 
 
@@ -166,12 +167,12 @@ def test_action_async_start() -> None:
 
     act()
 
-    assert act.status == _Enums.ActionStatus.PENDING
+    assert act.status == ActionStatus.PENDING
 
     act.start()
     act._thread.join()
 
-    assert act.status == _Enums.ActionStatus.SUCCESS
+    assert act.status == ActionStatus.SUCCESS
     assert act.output == 42
     assert act.error is None
     assert act.duration is not None
@@ -191,15 +192,15 @@ def test_action_async_lifecycle() -> None:
 
     result = act()
 
-    assert result == _Enums.ActionAsync.SUCCESS
-    assert act.status == _Enums.ActionStatus.PENDING
+    assert result == ActionAsync.SUCCESS
+    assert act.status == ActionStatus.PENDING
 
     act.start()
 
-    while act.status == _Enums.ActionStatus.PENDING:
+    while act.status == ActionStatus.PENDING:
         time.sleep(0.001)
 
-    assert act.status == _Enums.ActionStatus.SUCCESS
+    assert act.status == ActionStatus.SUCCESS
     assert steps == [1, 2]
     assert act.output == "done"
 
@@ -235,7 +236,7 @@ def test_action_pause_and_resume() -> None:
 
     act.pause()
 
-    assert act.status == _Enums.ActionStatus.PAUSED
+    assert act.status == ActionStatus.PAUSED
 
     release.set()
     time.sleep(0.05)
@@ -245,7 +246,7 @@ def test_action_pause_and_resume() -> None:
     act.resume()
     act._thread.join()
 
-    assert act.status == _Enums.ActionStatus.SUCCESS
+    assert act.status == ActionStatus.SUCCESS
     assert steps == [1, 2, 3]
     assert act.output == "done"
 
@@ -272,7 +273,7 @@ def test_action_cancel() -> None:
 
     act._thread.join()
 
-    assert act.status == _Enums.ActionStatus.CANCELLED
+    assert act.status == ActionStatus.CANCELLED
     assert act.output is None
     assert act.error is None
 
@@ -283,11 +284,11 @@ def test_action_pending_cancel() -> None:
 
     act()
 
-    assert act.status == _Enums.ActionStatus.PENDING
+    assert act.status == ActionStatus.PENDING
 
     act.cancel()
 
-    assert act.status == _Enums.ActionStatus.CANCELLED
+    assert act.status == ActionStatus.CANCELLED
     assert act.output is None
 
 
@@ -318,7 +319,7 @@ def test_action_cannot_execute_while_running() -> None:
     act()
     act.start()
 
-    while act.status == _Enums.ActionStatus.PENDING:
+    while act.status == ActionStatus.PENDING:
         time.sleep(0.001)
 
     with pytest.raises(ActionExecutionJError):
@@ -336,7 +337,7 @@ def test_action_can_switch_from_async_to_sync() -> None:
     act.start()
     act._thread.join()
 
-    assert act.status == _Enums.ActionStatus.SUCCESS
+    assert act.status == ActionStatus.SUCCESS
     assert act.output == 42
 
     act.set_settings(asynchronous=False)
@@ -344,7 +345,7 @@ def test_action_can_switch_from_async_to_sync() -> None:
     result = act()
 
     assert result == 42
-    assert act.status == _Enums.ActionStatus.SUCCESS
+    assert act.status == ActionStatus.SUCCESS
     assert act.output == 42
 
 
@@ -354,17 +355,17 @@ def test_action_can_switch_from_sync_to_async() -> None:
     result = act()
 
     assert result == 42
-    assert act.status == _Enums.ActionStatus.SUCCESS
+    assert act.status == ActionStatus.SUCCESS
 
     act.set_settings(asynchronous=True)
 
     result = act()
 
-    assert result == _Enums.ActionAsync.SUCCESS
-    assert act.status == _Enums.ActionStatus.PENDING
+    assert result == ActionAsync.SUCCESS
+    assert act.status == ActionStatus.PENDING
 
     act.start()
     act._thread.join()
 
-    assert act.status == _Enums.ActionStatus.SUCCESS
+    assert act.status == ActionStatus.SUCCESS
     assert act.output == 42
