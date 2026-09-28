@@ -35,10 +35,8 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics | true
     - name: Install jarbin-toolkit-console
       run: |
-        make -C lib/action install
+        make -C lib/error install
         make -C lib/time install
-        make -C lib/log install
-        make -C lib/config install
         
         make -C lib/console install
     - name: Test console with pytest (xml)
