@@ -16,9 +16,14 @@ from jarbin_toolkit_console.ansi.sgr.enums import (
     SGRStandardColorForegroundBright,
     SGRAttribute,
     SGRColorExtender,
-    SGRColorMode, SGRAdvancedUnderline, SGRPosition,
+    SGRAdvancedUnderline,
+    SGRPosition,
 )
-from jarbin_toolkit_console.ansi.sgr.color import Color, ColorRGB, Color256
+from jarbin_toolkit_console.ansi.sgr.color import (
+    Color,
+    ColorRGB,
+    Color256,
+)
 from jarbin_toolkit_console.ansi.ansi import CSI
 
 
