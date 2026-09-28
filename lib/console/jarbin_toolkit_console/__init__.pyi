@@ -4,7 +4,7 @@ __version__: str
 __license__: str
 
 
-#imports
+from . import ansi as ANSI
 
 
 __all__: list[str]

@@ -12,7 +12,6 @@ from .enums import (
 )
 from .errors import *
 
-from . import enums as _Enums
 from .time import ActionTimer as _ActionTimer
 
 

@@ -2,16 +2,16 @@
 # JARBIN-TOOLKIT
 #
 # Package      : Console
-# File         : Text.py
+# File         : text.py
 #
 # Author       : Jarjarbin06
 # ============================================================================
 
 
-class Text:
+class Text(str):
     pass
 
 
 __all__ = [
-    "Text"
+    'Text',
 ]

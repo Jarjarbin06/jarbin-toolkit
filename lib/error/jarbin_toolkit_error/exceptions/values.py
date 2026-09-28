@@ -1,7 +1,7 @@
 # ============================================================================
 # JARBIN-TOOLKIT
 #
-# Package      : Error/python
+# Package      : Error/exceptions
 # File         : value.py
 #
 # Author       : Jarjarbin06

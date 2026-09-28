@@ -1,26 +1,25 @@
 # ============================================================================
 # JARBIN-TOOLKIT
 #
-# Package      : Console
+# Package      : Console/ANSI
 # File         : __init__.py
 #
 # Author       : Jarjarbin06
 # ============================================================================
 
 
-__author__ = 'Nathan Jarjarbin'
-__email__ = 'nathan.amaraggi@epitech.eu'
-__version__ = "1.0.0.0"
-__license__ = "GPL"
-
-
-import jarbin_toolkit_console.ansi as ANSI
+from jarbin_toolkit_console.ansi.ansi import *
+import jarbin_toolkit_console.ansi.sgr as SGR
 
 
 __all__ : list[str] = [
-    '__author__',
-    '__email__',
-    '__version__',
-    '__license__',
     'ANSI',
+    'ESC',
+    'CSI',
+    'OSC',
+    "G0",
+    "G1",
+    "G2",
+    "G3",
+    'SGR',
 ]

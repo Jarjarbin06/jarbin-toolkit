@@ -1,0 +1,221 @@
+# ============================================================================
+# JARBIN-TOOLKIT
+#
+# Package      : Console/ANSI/SGR
+# File         : test_ansi_sgr_color.py
+#
+# Author       : Jarjarbin06
+# ============================================================================
+
+
+import pytest
+
+from jarbin_toolkit_console.ansi.sgr import (
+    SGR,
+    SGRReset,
+    SGRAttribute,
+    SGRAdvancedUnderline,
+    SGRStandardColorForeground,
+    SGRStandardColorBackground,
+    SGRStandardColorForegroundBright,
+    SGRStandardColorBackgroundBright,
+    SGRColorExtender,
+    SGRPosition,
+    Color256,
+    ColorRGB,
+)
+
+
+def test_sgr():
+    assert str(SGR(SGRAttribute.BOLD)) == "\033[1m"
+    assert str(SGR(SGRAttribute.BOLD, SGRAttribute.ITALIC)) == "\033[1;3m"
+
+
+def test_sgr_color():
+    assert str(
+        SGR(SGRColorExtender.FOREGROUND, ColorRGB(255, 0, 0))
+    ) == "\033[38;2;255;0;0m"
+
+    assert str(
+        SGR(SGRColorExtender.BACKGROUND, Color256(42))
+    ) == "\033[48;5;42m"
+
+
+def test_sgr_empty():
+    with pytest.raises(ValueError, match="SGR values are required"):
+        SGR()
+
+
+def test_sgr_invalid_value():
+    with pytest.raises(TypeError, match="SGR values must be strings or Color"):
+        SGR(123)
+
+
+def test_sgr_reset():
+    assert str(SGR.reset()) == "\033[0m"
+    assert str(SGR.reset(SGRReset.BOLD)) == "\033[22m"
+    assert str(
+        SGR.reset(SGRReset.BOLD, SGRReset.ITALIC)
+    ) == "\033[22;23m"
+
+
+def test_sgr_reset_invalid():
+    with pytest.raises(TypeError, match="SGR values must all be SGRReset"):
+        SGR.reset(SGRAttribute.BOLD)
+
+
+def test_sgr_attribute():
+    assert str(SGR.attribute(SGRAttribute.BOLD)) == "\033[1m"
+    assert str(
+        SGR.attribute(SGRAttribute.BOLD, SGRAttribute.ITALIC)
+    ) == "\033[1;3m"
+
+
+def test_sgr_attribute_invalid():
+    with pytest.raises(TypeError, match="SGR values must be SGRAttribute"):
+        SGR.attribute(SGRReset.ALL)
+
+
+def test_sgr_foreground():
+    assert str(
+        SGR.foreground(SGRStandardColorForeground.RED)
+    ) == "\033[31m"
+
+    assert str(
+        SGR.foreground(SGRStandardColorForegroundBright.RED)
+    ) == "\033[91m"
+
+
+@pytest.mark.parametrize(
+    "color",
+    [
+        SGRStandardColorBackground.RED,
+        SGRStandardColorBackgroundBright.RED,
+        SGRAttribute.BOLD,
+        "31",
+    ],
+)
+def test_sgr_foreground_invalid(color):
+    with pytest.raises(
+        TypeError,
+        match="SGR color must be SGRStandardColorForeground or SGRStandardColorForegroundBright",
+    ):
+        SGR.foreground(color)
+
+
+def test_sgr_background():
+    assert str(
+        SGR.background(SGRStandardColorBackground.BLUE)
+    ) == "\033[44m"
+
+    assert str(
+        SGR.background(SGRStandardColorBackgroundBright.BLUE)
+    ) == "\033[104m"
+
+
+@pytest.mark.parametrize(
+    "color",
+    [
+        SGRStandardColorForeground.BLUE,
+        SGRStandardColorForegroundBright.BLUE,
+        SGRAttribute.BOLD,
+        "44",
+    ],
+)
+def test_sgr_background_invalid(color):
+    with pytest.raises(
+        TypeError,
+        match="SGR color must be SGRStandardColorBackground or SGRStandardColorBackgroundBright",
+    ):
+        SGR.background(color)
+
+
+def test_sgr_color():
+    assert str(
+        SGR.color(
+            SGRColorExtender.FOREGROUND,
+            ColorRGB(255, 128, 0),
+        )
+    ) == "\033[38;2;255;128;0m"
+
+    assert str(
+        SGR.color(
+            SGRColorExtender.BACKGROUND,
+            Color256(42),
+        )
+    ) == "\033[48;5;42m"
+
+
+def test_sgr_color_invalid_extender():
+    with pytest.raises(
+        TypeError,
+        match="SGR extender must be SGRColorExtender",
+    ):
+        SGR.color(SGRAttribute.BOLD, ColorRGB(255, 0, 0))
+
+
+def test_sgr_color_invalid_color():
+    with pytest.raises(
+        TypeError,
+        match="SGR color must be Color256 or ColorRGB",
+    ):
+        SGR.color(SGRColorExtender.FOREGROUND, SGRAttribute.BOLD)
+
+
+def test_sgr_underline():
+    assert str(SGR.underline()) == "\033[4:1m"
+
+    assert str(
+        SGR.underline(SGRAdvancedUnderline.WAVY)
+    ) == "\033[4:3m"
+
+    assert str(
+        SGR.underline(
+            SGRAdvancedUnderline.DOUBLE,
+            ColorRGB(255, 0, 0),
+        )
+    ) == "\033[4:2;58;2;255;0;0m"
+
+    assert str(
+        SGR.underline(
+            SGRAdvancedUnderline.DOTTED,
+            Color256(42),
+        )
+    ) == "\033[4:4;58;5;42m"
+
+
+def test_sgr_underline_invalid_style():
+    with pytest.raises(
+        TypeError,
+        match="SGR style must be SGRAdvancedUnderline",
+    ):
+        SGR.underline(SGRAttribute.UNDERLINE)
+
+
+def test_sgr_underline_invalid_color():
+    with pytest.raises(
+        TypeError,
+        match="SGR color must be Color256 or ColorRGB",
+    ):
+        SGR.underline(
+            SGRAdvancedUnderline.SINGLE,
+            SGRAttribute.BOLD,
+        )
+
+
+def test_sgr_position():
+    assert str(
+        SGR.position(SGRPosition.SUPERSCRIPT)
+    ) == "\033[73m"
+
+    assert str(
+        SGR.position(SGRPosition.SUBSCRIPT)
+    ) == "\033[74m"
+
+
+def test_sgr_position_invalid():
+    with pytest.raises(
+        TypeError,
+        match="SGR type must be SGRPosition",
+    ):
+        SGR.position(SGRAttribute.BOLD)
