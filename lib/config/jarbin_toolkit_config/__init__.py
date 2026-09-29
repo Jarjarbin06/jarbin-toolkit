@@ -24,7 +24,7 @@ from jarbin_toolkit_config.errors import (
 )
 
 
-__all__ : list[str] = [
+__all__ = [
     '__author__',
     '__email__',
     '__version__',

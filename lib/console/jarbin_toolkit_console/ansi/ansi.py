@@ -94,13 +94,20 @@ class G3(ANSI):
     PREFIX = "\033+"
 
 
+class DCS(ANSI):
+
+
+    PREFIX = "\033P"
+
+
 __all__ = [
     'ANSI',
     'ESC',
     'CSI',
     'OSC',
-    "G0",
-    "G1",
-    "G2",
-    "G3",
+    'G0',
+    'G1',
+    'G2',
+    'G3',
+    'DCS',
 ]

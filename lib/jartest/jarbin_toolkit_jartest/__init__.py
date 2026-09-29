@@ -22,7 +22,7 @@ env = Context.Decorators.env
 command = Context.Decorators.command
 
 
-__all__ : list[str] = [
+__all__ = [
     'JarTest',
     'Benchmark',
     'Assertion',

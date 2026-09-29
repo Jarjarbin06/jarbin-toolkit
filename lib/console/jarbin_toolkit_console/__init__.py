@@ -17,7 +17,7 @@ __license__ = "GPL"
 import jarbin_toolkit_console.ansi as ANSI
 
 
-__all__ : list[str] = [
+__all__ = [
     '__author__',
     '__email__',
     '__version__',

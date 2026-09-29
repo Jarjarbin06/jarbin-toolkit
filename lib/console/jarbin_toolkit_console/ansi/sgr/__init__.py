@@ -1,7 +1,7 @@
 # ============================================================================
 # JARBIN-TOOLKIT
 #
-# Package      : Console/ANSI
+# Package      : Console/ANSI/SGR
 # File         : __init__.py
 #
 # Author       : Jarjarbin06
@@ -20,7 +20,7 @@ from jarbin_toolkit_console.ansi.sgr.enums import *
 from jarbin_toolkit_console.ansi.sgr.color import Color as _Color
 
 
-__all__ : list[str] = [
+__all__ = [
     'SGR',
 
     'Color256',

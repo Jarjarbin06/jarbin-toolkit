@@ -184,7 +184,7 @@ except Exception as error:  # pragma: no cover
     _fatal_error(error)  # pragma: no cover
 
 
-__all__ : list[str] = [
+__all__ = [
     'Action',
     'Config',
     'Console',
