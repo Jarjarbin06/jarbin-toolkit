@@ -10,32 +10,22 @@
 
 import pytest
 
-from jarbin_toolkit_console.ansi import (
-    ANSI,
-    ESC,
-    CSI,
-    OSC,
-    G0,
-    G1,
-    G2,
-    G3,
-    DCS,
-)
+from jarbin_toolkit_console.ansi import Sequence
 from jarbin_toolkit_console import Text
 
 
 @pytest.mark.parametrize(
     "ansi, expected",
     [
-        (ANSI, "test"),
-        (ESC, "\x1btest"),
-        (CSI, "\x1b[test"),
-        (OSC, "\x1b]test"),
-        (G0, "\x1b(test"),
-        (G1, "\x1b)test"),
-        (G2, "\x1b*test"),
-        (G3, "\x1b+test"),
-        (DCS, "\x1bPtest"),
+        (Sequence.ANSI, "test"),
+        (Sequence.ESC, "\x1btest"),
+        (Sequence.CSI, "\x1b[test"),
+        (Sequence.OSC, "\x1b]test"),
+        (Sequence.G0, "\x1b(test"),
+        (Sequence.G1, "\x1b)test"),
+        (Sequence.G2, "\x1b*test"),
+        (Sequence.G3, "\x1b+test"),
+        (Sequence.DCS, "\x1bPtest"),
     ],
 )
 def test_ansi_bases(ansi, expected):
@@ -45,15 +35,15 @@ def test_ansi_bases(ansi, expected):
 @pytest.mark.parametrize(
     "ansi",
     [
-        ANSI,
-        ESC,
-        CSI,
-        OSC,
-        G0,
-        G1,
-        G2,
-        G3,
-        DCS,
+        Sequence.ANSI,
+        Sequence.ESC,
+        Sequence.CSI,
+        Sequence.OSC,
+        Sequence.G0,
+        Sequence.G1,
+        Sequence.G2,
+        Sequence.G3,
+        Sequence.DCS,
     ],
 )
 @pytest.mark.parametrize(
@@ -74,7 +64,7 @@ def test_ansi_invalid_value(ansi, value):
 
 
 def test_ansi_add():
-    ansi = CSI("test")
+    ansi = Sequence.CSI("test")
 
     result = ansi + "hello"
 
@@ -83,7 +73,7 @@ def test_ansi_add():
 
 
 def test_ansi_radd():
-    ansi = CSI("test")
+    ansi = Sequence.CSI("test")
 
     result = "hello" + ansi
 
@@ -102,12 +92,12 @@ def test_ansi_radd():
     ],
 )
 def test_ansi_invalid_add(other):
-    ansi = CSI("test")
+    ansi = Sequence.CSI("test")
 
     assert ansi.__add__(other) is NotImplemented
     assert ansi.__radd__(other) is NotImplemented
 
 
 def test_ansi_repr():
-    assert repr(ANSI("test")) == "ANSI('test')"
-    assert repr(CSI("test")) == "ANSI('\\x1b[test')"
+    assert repr(Sequence.ANSI("test")) == "ANSI('test')"
+    assert repr(Sequence.CSI("test")) == "ANSI('\\x1b[test')"

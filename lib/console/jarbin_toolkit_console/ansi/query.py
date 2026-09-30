@@ -8,6 +8,7 @@
 # ============================================================================
 
 
+import base64
 import re
 import select
 import sys
@@ -17,8 +18,8 @@ import tty
 import os
 from typing import final
 
-from jarbin_toolkit_console.ansi.ansi import CSI
-from jarbin_toolkit_console.ansi.ansi import DCS
+from jarbin_toolkit_console.ansi.ansi import CSI, DCS
+from jarbin_toolkit_console.ansi.osc.enums import OSCClipboardSelection
 
 
 @final
@@ -349,6 +350,39 @@ class Query:
             name,
             value,
         )
+
+
+    @classmethod
+    def clipboard(
+            cls,
+            selection,
+        ):
+
+        if not isinstance(selection, OSCClipboardSelection):
+            raise TypeError("Query selection must be OSCClipboardSelection")
+
+        response = cls._request(
+            f"\x1b]52;{selection};?\x1b\\",
+            "\x1b\\",
+        )
+
+        match = cls._match(
+            response,
+            rf"\033\]52;{selection};(.*)\033\\",
+        )
+
+        if match is None:
+            return None
+
+        try:
+            return base64.b64decode(
+                match.group(1),
+            ).decode()
+        except (
+            ValueError,
+            UnicodeDecodeError,
+        ):
+            return None
 
 
 __all__ = [

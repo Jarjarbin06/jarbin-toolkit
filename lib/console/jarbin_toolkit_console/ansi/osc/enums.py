@@ -13,12 +13,23 @@ from typing import final
 
 
 @final
-class OSC(StrEnum):
+class OSCClipboardSelection(StrEnum):
 
 
-    pass
+    CLIPBOARD = "c"
+    PRIMARY = "p"
+    SECONDARY = "q"
+    SELECT = "s"
+    CUT_BUFFER_0 = "0"
+    CUT_BUFFER_1 = "1"
+    CUT_BUFFER_2 = "2"
+    CUT_BUFFER_3 = "3"
+    CUT_BUFFER_4 = "4"
+    CUT_BUFFER_5 = "5"
+    CUT_BUFFER_6 = "6"
+    CUT_BUFFER_7 = "7"
 
 
 __all__ = [
-    'OSC',
+    'OSCClipboardSelection',
 ]
