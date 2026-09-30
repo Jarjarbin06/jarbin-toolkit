@@ -56,48 +56,48 @@ class ANSI(Text):
 class ESC(ANSI):
 
 
-    PREFIX = "\033"
+    PREFIX = "\x1b"
 
 
 class CSI(ANSI):
 
 
-    PREFIX = "\033["
+    PREFIX = "\x1b["
 
 
 class OSC(ANSI):
 
 
-    PREFIX = "\033]"
+    PREFIX = "\x1b]"
 
 class G0(ANSI):
 
 
-    PREFIX = "\033("
+    PREFIX = "\x1b("
 
 
 class G1(ANSI):
 
 
-    PREFIX = "\033)"
+    PREFIX = "\x1b)"
 
 
 class G2(ANSI):
 
 
-    PREFIX = "\033*"
+    PREFIX = "\x1b*"
 
 
 class G3(ANSI):
 
 
-    PREFIX = "\033+"
+    PREFIX = "\x1b+"
 
 
 class DCS(ANSI):
 
 
-    PREFIX = "\033P"
+    PREFIX = "\x1bP"
 
 
 __all__ = [

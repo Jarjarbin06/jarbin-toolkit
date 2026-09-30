@@ -135,9 +135,9 @@ class Query:
         )
 
         pattern = (
-            r"\033\[\?(\d+);(\d+)R"
+            r"\x1b\[\?(\d+);(\d+)R"
             if private
-            else r"\033\[(\d+);(\d+)R"
+            else r"\x1b\[(\d+);(\d+)R"
         )
 
         match = cls._match(
@@ -162,9 +162,9 @@ class Query:
 
         sequence = CSI(">c" if secondary else "c")
         pattern = (
-            r"\033\[>([\d;]*)c"
+            r"\x1b\[>([\d;]*)c"
             if secondary
-            else r"\033\[\?([\d;]*)c"
+            else r"\x1b\[\?([\d;]*)c"
         )
 
         response = cls._request(
@@ -207,9 +207,9 @@ class Query:
         )
 
         pattern = (
-            r"\033\[\?(\d+)n"
+            r"\x1b\[\?(\d+)n"
             if private
-            else r"\033\[(\d+)n"
+            else r"\x1b\[(\d+)n"
         )
 
         match = cls._match(
@@ -243,9 +243,9 @@ class Query:
         )
 
         pattern = (
-            r"\033\[\?(\d+);(\d+)\$y"
+            r"\x1b\[\?(\d+);(\d+)\$y"
             if private
-            else r"\033\[(\d+);(\d+)\$y"
+            else r"\x1b\[(\d+);(\d+)\$y"
         )
 
         match = cls._match(
@@ -274,13 +274,13 @@ class Query:
             )
 
         response = cls._request(
-            DCS(f"$q{value}\033\\"),
-            "\033\\",
+            DCS(f"$q{value}\x1b\\"),
+            "\x1b\\",
         )
 
         match = cls._match(
             response,
-            r"\033P(\d+)\$r(.*)\033\\",
+            r"\x1bP(\d+)\$r(.*)\x1b\\",
         )
 
         if match is None:
@@ -299,12 +299,12 @@ class Query:
 
         response = cls._request(
             CSI(">0q"),
-            "\033\\",
+            "\x1b\\",
         )
 
         match = cls._match(
             response,
-            r"\033P>\|(.*)\033\\",
+            r"\x1bP>\|(.*)\x1b\\",
         )
 
         if match is None:
@@ -327,13 +327,13 @@ class Query:
         capability = capability.encode().hex()
 
         response = cls._request(
-            DCS(f"+q{capability}\033\\"),
-            "\033\\",
+            DCS(f"+q{capability}\x1b\\"),
+            "\x1b\\",
         )
 
         match = cls._match(
             response,
-            r"\033P1\+r(.*)\033\\",
+            r"\x1bP1\+r(.*)\x1b\\",
         )
 
         if match is None or "=" not in match.group(1):
@@ -368,7 +368,7 @@ class Query:
 
         match = cls._match(
             response,
-            rf"\033\]52;{selection};(.*)\033\\",
+            rf"\x1b\]52;{selection};(.*)\x1b\\",
         )
 
         if match is None:
