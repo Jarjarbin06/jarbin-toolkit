@@ -8,11 +8,14 @@
 # ============================================================================
 
 
-from ansi.screen.enums import (
+from jarbin_toolkit_console.ansi.screen.enums import (
     ScreenDisplayEraseMode,
     ScreenLineEraseMode,
 )
-from jarbin_toolkit_console.ansi.ansi import CSI
+from jarbin_toolkit_console.ansi.ansi import (
+    CSI,
+    ESC,
+)
 
 
 class ScreenErase(CSI):
@@ -48,11 +51,11 @@ class ScreenEdit(CSI):
     @classmethod
     def insert_characters(
             cls,
-            n = 0,
+            n = 1,
         ):
 
-        if not isinstance(n, int):
-            raise ValueError("ScreenEdit n must be int")
+        if not isinstance(n, int) or n < 1:
+            raise ValueError("ScreenEdit n must be positive int")
 
         return cls(f"{n}@")
 
@@ -60,11 +63,11 @@ class ScreenEdit(CSI):
     @classmethod
     def delete_characters(
             cls,
-            n = 0,
+            n = 1,
         ):
 
-        if not isinstance(n, int):
-            raise ValueError("ScreenEdit n must be int")
+        if not isinstance(n, int) or n < 1:
+            raise ValueError("ScreenEdit n must be positive int")
 
         return cls(f"{n}P")
 
@@ -72,11 +75,11 @@ class ScreenEdit(CSI):
     @classmethod
     def erase_characters(
             cls,
-            n = 0,
+            n = 1,
         ):
 
-        if not isinstance(n, int):
-            raise ValueError("ScreenEdit n must be int")
+        if not isinstance(n, int) or n < 1:
+            raise ValueError("ScreenEdit n must be positive int")
 
         return cls(f"{n}X")
 
@@ -84,11 +87,11 @@ class ScreenEdit(CSI):
     @classmethod
     def repeat_character(
             cls,
-            n = 0,
+            n = 1,
         ):
 
-        if not isinstance(n, int):
-            raise ValueError("ScreenEdit n must be int")
+        if not isinstance(n, int) or n < 1:
+            raise ValueError("ScreenEdit n must be positive int")
 
         return cls(f"{n}b")
 
@@ -96,11 +99,11 @@ class ScreenEdit(CSI):
     @classmethod
     def insert_lines(
             cls,
-            n = 0,
+            n = 1,
         ):
 
-        if not isinstance(n, int):
-            raise ValueError("ScreenEdit n must be int")
+        if not isinstance(n, int) or n < 1:
+            raise ValueError("ScreenEdit n must be positive int")
 
         return cls(f"{n}L")
 
@@ -108,11 +111,11 @@ class ScreenEdit(CSI):
     @classmethod
     def delete_lines(
             cls,
-            n = 0,
+            n = 1,
         ):
 
-        if not isinstance(n, int):
-            raise ValueError("ScreenEdit n must be int")
+        if not isinstance(n, int) or n < 1:
+            raise ValueError("ScreenEdit n must be positive int")
 
         return cls(f"{n}M")
 
@@ -123,11 +126,11 @@ class ScreenScroll(CSI):
     @classmethod
     def left(
             cls,
-            n = 0,
+            n = 1,
         ):
 
-        if not isinstance(n, int):
-            raise ValueError("ScreenScroll n must be int")
+        if not isinstance(n, int) or n < 1:
+            raise ValueError("ScreenScroll n must be positive int")
 
         return cls(f"{n} @")
 
@@ -135,11 +138,11 @@ class ScreenScroll(CSI):
     @classmethod
     def right(
             cls,
-            n = 0,
+            n = 1,
         ):
 
-        if not isinstance(n, int):
-            raise ValueError("ScreenScroll n must be int")
+        if not isinstance(n, int) or n < 1:
+            raise ValueError("ScreenScroll n must be positive int")
 
         return cls(f"{n} A")
 
@@ -147,12 +150,15 @@ class ScreenScroll(CSI):
     @classmethod
     def set_region(
             cls,
-            top = 0,
-            bottom = 20,
+            top,
+            bottom,
         ):
 
-        if not isinstance(top, int) or not isinstance(bottom, int):
-            raise ValueError("ScreenScroll top and bottom must be int")
+        if not isinstance(top, int) or not isinstance(bottom, int) or top < 1 or bottom < 1:
+            raise ValueError("ScreenScroll top and bottom must be positive int")
+
+        if top >= bottom:
+            raise ValueError("ScreenScroll top must be strictly smaller than bottom")
 
         return cls(f"{top};{bottom}r")
 
@@ -165,18 +171,18 @@ class ScreenScroll(CSI):
         return cls("r")
 
 
-class ScreenMargin(CSI):
+class ScreenMargins(CSI):
 
 
     @classmethod
     def set(
             cls,
-            left = 0,
-            right = 20,
+            left,
+            right,
         ):
 
         if not isinstance(left, int) or not isinstance(right, int):
-            raise ValueError("ScreenScroll left and right must be int")
+            raise ValueError("ScreenMargins left and right must be int")
 
         return cls(f"{left};{right}s")
 
@@ -220,7 +226,7 @@ class ScreenBuffer(CSI):
 
 
     @classmethod
-    def use_alternate(
+    def alternate(
             cls,
         ):
 
@@ -228,7 +234,7 @@ class ScreenBuffer(CSI):
 
 
     @classmethod
-    def use_normal(
+    def normal(
             cls,
         ):
 
@@ -236,7 +242,7 @@ class ScreenBuffer(CSI):
 
 
     @classmethod
-    def xterm_use_alternate(
+    def xterm_alternate(
             cls,
         ):
 
@@ -244,7 +250,7 @@ class ScreenBuffer(CSI):
 
 
     @classmethod
-    def xterm_use_normal(
+    def xterm_normal(
             cls,
         ):
 
@@ -252,7 +258,7 @@ class ScreenBuffer(CSI):
 
 
     @classmethod
-    def xterm_use_alternate_with_cursor(
+    def xterm_alternate_with_cursor(
             cls,
         ):
 
@@ -260,18 +266,227 @@ class ScreenBuffer(CSI):
 
 
     @classmethod
-    def xterm_use_normal_with_cursor(
+    def xterm_normal_with_cursor(
             cls,
         ):
 
         return cls("?1049l")
 
 
+class ScreenTest(ESC):
+
+
+    @classmethod
+    def alignment_test(
+            cls,
+        ):
+
+        return cls("#8")
+
+
+class ScreenRectangle(CSI):
+
+
+    @classmethod
+    def erase(
+            cls,
+            top,
+            left,
+            bottom,
+            right,
+        ):
+
+        if not isinstance(top, int) or not isinstance(left, int) or not isinstance(bottom, int) or not isinstance(right, int):
+            raise ValueError("ScreenRectangle top, left, bottom and right must be int")
+
+        return cls(f"{top};{left};{bottom};{right}$z")
+
+
+    @classmethod
+    def fill(
+            cls,
+            char,
+            top,
+            left,
+            bottom,
+            right,
+        ):
+
+        if not isinstance(char, str) or len(char) != 1:
+            raise ValueError("ScreenRectangle char must be a single character")
+
+        if not isinstance(top, int) or not isinstance(left, int) or not isinstance(bottom, int) or not isinstance(right, int):
+            raise ValueError("ScreenRectangle top, left, bottom and right must be int")
+
+        return cls(f"{char};{top};{left};{bottom};{right}$x")
+
+
+    @classmethod
+    def copy(
+            cls,
+            src_top,
+            src_left,
+            src_bottom,
+            src_right,
+            src_page,
+            dest_top,
+            dest_left,
+            dest_page,
+        ):
+
+        if not isinstance(src_top, int) or not isinstance(src_left, int) or not isinstance(src_bottom, int) or not isinstance(src_right, int) or not isinstance(src_page, int):
+            raise ValueError("ScreenRectangle src_top, src_left, src_bottom, src_right and src_page must be int")
+
+        if not isinstance(dest_top, int) or not isinstance(dest_left, int) or not isinstance(dest_page, int):
+            raise ValueError("ScreenRectangle dest_top, dest_left and dest_page must be int")
+
+        return cls(f"{src_top};{src_left};{src_bottom};{src_right};{src_page};{dest_top};{dest_left};{dest_page}$v")
+
+
+class ScreenMode(CSI):
+
+
+    @classmethod
+    def enable_132_columns(
+            cls,
+        ):
+
+        return cls(f"?3h")
+
+
+    @classmethod
+    def disable_132_columns(
+            cls,
+        ):
+
+        return cls(f"?3l")
+
+
+    @classmethod
+    def disable_132_column_switching(
+            cls,
+        ):
+
+        return cls(f"?40h")
+
+
+    @classmethod
+    def enable_132_column_switching(
+            cls,
+        ):
+
+        return cls(f"?40l")
+
+
+    @classmethod
+    def preserve_screen_on_resize(
+            cls,
+        ):
+
+        return cls(f"?95h")
+
+
+    @classmethod
+    def clear_screen_on_resize(
+            cls,
+        ):
+
+        return cls(f"?95l")
+
+
+    @classmethod
+    def enable_reverse_video(
+            cls,
+        ):
+
+        return cls(f"?5h")
+
+
+    @classmethod
+    def disable_reverse_video(
+            cls,
+        ):
+
+        return cls(f"?5l")
+
+
+    @classmethod
+    def enable_smooth_scroll(
+            cls,
+        ):
+
+        return cls(f"?4h")
+
+
+    @classmethod
+    def disable_smooth_scroll(
+            cls,
+        ):
+
+        return cls(f"?4l")
+
+
+class ScreenSize(CSI):
+
+
+    @classmethod
+    def set_columns(
+            cls,
+            columns,
+        ):
+
+        if not isinstance(columns, int) or columns < 1:
+            raise ValueError("ScreenSize columns must be a positive int")
+
+        return cls(f"{columns}$|")
+
+
+    @classmethod
+    def set_lines(
+            cls,
+            lines,
+        ):
+
+        if not isinstance(lines, int) or lines < 1:
+            raise ValueError("ScreenSize lines must be a positive int")
+
+        return cls(f"{lines}*|")
+
+
+class ScreenControl(ESC):
+
+
+    @classmethod
+    def normal_index(
+            cls,
+        ):
+        return cls("D")
+
+
+    @classmethod
+    def reverse_index(
+            cls,
+        ):
+        return cls("M")
+
+
+    @classmethod
+    def next_line(
+            cls,
+        ):
+        return cls("E")
+
+
 __all__ = [
     'ScreenErase',
     'ScreenEdit',
     'ScreenScroll',
-    'ScreenMargin',
+    'ScreenMargins',
     'ScreenWriteMode',
     'ScreenBuffer',
+    'ScreenTest',
+    'ScreenRectangle',
+    'ScreenMode',
+    'ScreenSize',
+    'ScreenControl',
 ]

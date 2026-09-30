@@ -19,7 +19,7 @@ class LogType(StrEnum):
 
 
     JAR_LOG = f"jar-log {TimeFormat.LOG_DATETIME_MILLISECONDS}"
-    LOG = f"log {TimeFormat.ISO_DATETIME_TZ_MILLISECONDS}"
+    LOG = f"log {TimeFormat.ISO_DATETIME}"
 
 
     @property

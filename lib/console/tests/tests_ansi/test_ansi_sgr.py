@@ -2,7 +2,7 @@
 # JARBIN-TOOLKIT
 #
 # Package      : Console/ANSI/SGR
-# File         : test_ansi_sgr_color.py
+# File         : test_ansi_sgr.py
 #
 # Author       : Jarjarbin06
 # ============================================================================
@@ -21,24 +21,26 @@ from jarbin_toolkit_console.ansi.sgr import (
     SGRStandardColorBackgroundBright,
     SGRColorExtender,
     SGRPosition,
+)
+from jarbin_toolkit_console.ansi import (
     Color256,
     ColorRGB,
 )
 
 
 def test_sgr():
-    assert str(SGR(SGRAttribute.BOLD)) == "\033[1m"
-    assert str(SGR(SGRAttribute.BOLD, SGRAttribute.ITALIC)) == "\033[1;3m"
+    assert str(SGR(SGRAttribute.BOLD)) == "\x1b[1m"
+    assert str(SGR(SGRAttribute.BOLD, SGRAttribute.ITALIC)) == "\x1b[1;3m"
 
 
 def test_sgr_color():
     assert str(
         SGR(SGRColorExtender.FOREGROUND, ColorRGB(255, 0, 0))
-    ) == "\033[38;2;255;0;0m"
+    ) == "\x1b[38;2;255;0;0m"
 
     assert str(
         SGR(SGRColorExtender.BACKGROUND, Color256(42))
-    ) == "\033[48;5;42m"
+    ) == "\x1b[48;5;42m"
 
 
 def test_sgr_empty():
@@ -52,11 +54,11 @@ def test_sgr_invalid_value():
 
 
 def test_sgr_reset():
-    assert str(SGR.reset()) == "\033[0m"
-    assert str(SGR.reset(SGRReset.BOLD)) == "\033[22m"
+    assert str(SGR.reset()) == "\x1b[0m"
+    assert str(SGR.reset(SGRReset.BOLD)) == "\x1b[22m"
     assert str(
         SGR.reset(SGRReset.BOLD, SGRReset.ITALIC)
-    ) == "\033[22;23m"
+    ) == "\x1b[22;23m"
 
 
 def test_sgr_reset_invalid():
@@ -65,10 +67,10 @@ def test_sgr_reset_invalid():
 
 
 def test_sgr_attribute():
-    assert str(SGR.attribute(SGRAttribute.BOLD)) == "\033[1m"
+    assert str(SGR.attribute(SGRAttribute.BOLD)) == "\x1b[1m"
     assert str(
         SGR.attribute(SGRAttribute.BOLD, SGRAttribute.ITALIC)
-    ) == "\033[1;3m"
+    ) == "\x1b[1;3m"
 
 
 def test_sgr_attribute_invalid():
@@ -79,11 +81,11 @@ def test_sgr_attribute_invalid():
 def test_sgr_foreground():
     assert str(
         SGR.foreground(SGRStandardColorForeground.RED)
-    ) == "\033[31m"
+    ) == "\x1b[31m"
 
     assert str(
         SGR.foreground(SGRStandardColorForegroundBright.RED)
-    ) == "\033[91m"
+    ) == "\x1b[91m"
 
 
 @pytest.mark.parametrize(
@@ -106,11 +108,11 @@ def test_sgr_foreground_invalid(color):
 def test_sgr_background():
     assert str(
         SGR.background(SGRStandardColorBackground.BLUE)
-    ) == "\033[44m"
+    ) == "\x1b[44m"
 
     assert str(
         SGR.background(SGRStandardColorBackgroundBright.BLUE)
-    ) == "\033[104m"
+    ) == "\x1b[104m"
 
 
 @pytest.mark.parametrize(
@@ -136,14 +138,14 @@ def test_sgr_color():
             SGRColorExtender.FOREGROUND,
             ColorRGB(255, 128, 0),
         )
-    ) == "\033[38;2;255;128;0m"
+    ) == "\x1b[38;2;255;128;0m"
 
     assert str(
         SGR.color(
             SGRColorExtender.BACKGROUND,
             Color256(42),
         )
-    ) == "\033[48;5;42m"
+    ) == "\x1b[48;5;42m"
 
 
 def test_sgr_color_invalid_extender():
@@ -163,25 +165,25 @@ def test_sgr_color_invalid_color():
 
 
 def test_sgr_underline():
-    assert str(SGR.underline()) == "\033[4:1m"
+    assert str(SGR.underline()) == "\x1b[4:1m"
 
     assert str(
         SGR.underline(SGRAdvancedUnderline.WAVY)
-    ) == "\033[4:3m"
+    ) == "\x1b[4:3m"
 
     assert str(
         SGR.underline(
             SGRAdvancedUnderline.DOUBLE,
             ColorRGB(255, 0, 0),
         )
-    ) == "\033[4:2;58;2;255;0;0m"
+    ) == "\x1b[4:2;58;2;255;0;0m"
 
     assert str(
         SGR.underline(
             SGRAdvancedUnderline.DOTTED,
             Color256(42),
         )
-    ) == "\033[4:4;58;5;42m"
+    ) == "\x1b[4:4;58;5;42m"
 
 
 def test_sgr_underline_invalid_style():
@@ -206,11 +208,11 @@ def test_sgr_underline_invalid_color():
 def test_sgr_position():
     assert str(
         SGR.position(SGRPosition.SUPERSCRIPT)
-    ) == "\033[73m"
+    ) == "\x1b[73m"
 
     assert str(
         SGR.position(SGRPosition.SUBSCRIPT)
-    ) == "\033[74m"
+    ) == "\x1b[74m"
 
 
 def test_sgr_position_invalid():

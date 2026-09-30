@@ -1,8 +1,8 @@
 # ============================================================================
 # JARBIN-TOOLKIT
 #
-# Package      : Console/ANSI/SGR
-# File         : test_ansi_sgr_color.py
+# Package      : Console/ANSI
+# File         : test_ansi_color.py
 #
 # Author       : Jarjarbin06
 # ============================================================================
@@ -10,10 +10,10 @@
 
 import pytest
 
-from jarbin_toolkit_console.ansi.sgr import (
-    SGRColorMode,
+from jarbin_toolkit_console.ansi import (
     Color256,
     ColorRGB,
+    ColorHEX,
     _Color,
 )
 
@@ -24,23 +24,11 @@ def test_color():
     assert str(color) == "1;2;3"
 
 
-def test_color_ignores_mode_validation():
-    color = _Color(mode=SGRColorMode.RGB, value=255)
-
-    assert str(color) == "2;255"
-
-
-def test_color_invalid_value():
-    with pytest.raises(ValueError, match="Color values must all be numbers"):
-        _Color(value="invalid")
-
-
 def test_color256():
     color = Color256(42)
 
-    assert color.mode == SGRColorMode.INDEXED
     assert color.color == 42
-    assert str(color) == "5;42"
+    assert str(color) == "42"
 
 
 @pytest.mark.parametrize("value", [-1, 256, "42", None, 1.5])
@@ -52,11 +40,10 @@ def test_color256_invalid(value):
 def test_color_rgb():
     color = ColorRGB(10, 20, 30)
 
-    assert color.mode == SGRColorMode.RGB
     assert color.r == 10
     assert color.g == 20
     assert color.b == 30
-    assert str(color) == "2;10;20;30"
+    assert str(color) == "10;20;30"
 
 
 @pytest.mark.parametrize(
@@ -79,3 +66,40 @@ def test_color_rgb_invalid(values):
         match="RGB values must all be numbers between 0 and 255",
     ):
         ColorRGB(*values)
+
+
+def test_color_hex():
+    color = ColorHEX("058AcF")
+
+    assert str(color) == "058ACF"
+
+
+def test_color_hex_with_hashtag():
+    color = ColorHEX("#058AcF")
+
+    assert str(color) == "058ACF"
+
+
+@pytest.mark.parametrize("value", [-1, "42", None, 1.5, "0000000", "X00er0", "'00000", ""],
+)
+def test_color_hex_invalid(value):
+    with pytest.raises(
+        ValueError,
+        match="HEX color must be string and contain exactly 6 hexadecimal digits",
+    ):
+        ColorHEX(value)
+
+
+def test_color_rgb_to_hex():
+    color = ColorRGB(10, 20, 30).to_hex()
+
+    assert str(color) == "0A141E"
+
+
+def test_color_hex_to_rgb():
+    color = ColorHEX("0A141E").to_rgb()
+
+    assert color.r == 10
+    assert color.g == 20
+    assert color.b == 30
+    assert str(color) == "10;20;30"

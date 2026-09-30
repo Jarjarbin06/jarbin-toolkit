@@ -79,8 +79,8 @@ class LogEntry:
             )
 
         return (
-            f"{self._sequence:05} "
-            f"{self.level}:{filling} "
+            f"[{self._creation_time!s:<29}] "
+            f"{self.level}: "
             f"{self.message}"
         )
 

@@ -18,8 +18,9 @@ from jarbin_toolkit_console.ansi.sgr.enums import (
     SGRColorExtender,
     SGRAdvancedUnderline,
     SGRPosition,
+    SGRColorMode,
 )
-from jarbin_toolkit_console.ansi.sgr.color import (
+from jarbin_toolkit_console.ansi.color import (
     Color,
     ColorRGB,
     Color256,
@@ -108,7 +109,9 @@ class SGR(CSI):
         if not isinstance(color, Color256 | ColorRGB):
             raise TypeError("SGR color must be Color256 or ColorRGB")
 
-        return cls(extender, color)
+        mode = SGRColorMode.RGB if isinstance(color, ColorRGB) else SGRColorMode.INDEXED
+
+        return cls(extender, mode, color)
 
 
     @classmethod
@@ -126,7 +129,9 @@ class SGR(CSI):
             if not isinstance(color, Color256 | ColorRGB):
                 raise TypeError("SGR color must be Color256 or ColorRGB")
 
-            return cls(style, SGRColorExtender.UNDERLINE, color)
+            mode = SGRColorMode.RGB if isinstance(color, ColorRGB) else SGRColorMode.INDEXED
+
+            return cls(style, SGRColorExtender.UNDERLINE, mode, color)
 
         return cls(style)
 

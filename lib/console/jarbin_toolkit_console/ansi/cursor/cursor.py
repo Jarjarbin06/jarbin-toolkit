@@ -1,8 +1,8 @@
 # ============================================================================
 # JARBIN-TOOLKIT
 #
-# Package      : Console/ANSI/SGR
-# File         : sgr.py
+# Package      : Console/ANSI/Cursor
+# File         : cursor.py
 #
 # Author       : Jarjarbin06
 # ============================================================================

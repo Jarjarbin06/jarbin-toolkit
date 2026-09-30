@@ -16,11 +16,16 @@ __license__ = "GPL"
 
 import jarbin_toolkit_console.ansi as ANSI
 
+from jarbin_toolkit_console.text import Text
+
 
 __all__ = [
     '__author__',
     '__email__',
     '__version__',
     '__license__',
+
     'ANSI',
+
+    'Text',
 ]
