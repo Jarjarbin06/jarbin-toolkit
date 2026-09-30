@@ -10,9 +10,8 @@
 
 import pytest
 
-from jarbin_toolkit_console.ansi.query import (
-    Query,
-)
+from jarbin_toolkit_console.ansi.query import Query
+from jarbin_toolkit_console.ansi.osc.enums import OSCClipboardSelection
 
 
 def test_query_cursor_position(monkeypatch):
@@ -61,7 +60,7 @@ def test_query_cursor_position_private(monkeypatch):
 def test_query_cursor_position_invalid_response(
         monkeypatch,
         response,
-):
+    ):
     monkeypatch.setattr(
         Query,
         "_request",
@@ -85,7 +84,7 @@ def test_query_cursor_position_invalid_response(
 def test_query_cursor_position_private_invalid_response(
         monkeypatch,
         response,
-):
+    ):
     monkeypatch.setattr(
         Query,
         "_request",
@@ -264,7 +263,7 @@ def test_query_device_status_invalid(value):
 
 def test_query_device_status_cursor_position(
         monkeypatch,
-):
+    ):
     def cursor_position(private):
         assert private is True
         return (12, 34)
@@ -300,7 +299,7 @@ def test_query_device_status_invalid_response(
         monkeypatch,
         private,
         response,
-):
+    ):
     monkeypatch.setattr(
         Query,
         "_request",
@@ -402,7 +401,7 @@ def test_query_mode_invalid_response(
         monkeypatch,
         private,
         response,
-):
+    ):
     monkeypatch.setattr(
         Query,
         "_request",
@@ -471,7 +470,7 @@ def test_query_status_string_invalid(value):
 def test_query_status_string_invalid_response(
         monkeypatch,
         response,
-):
+    ):
     monkeypatch.setattr(
         Query,
         "_request",
@@ -512,7 +511,7 @@ def test_query_version(monkeypatch):
 def test_query_version_invalid_response(
         monkeypatch,
         response,
-):
+    ):
     monkeypatch.setattr(
         Query,
         "_request",
@@ -591,7 +590,7 @@ def test_query_terminal_capability_invalid(value):
 def test_query_terminal_capability_invalid_response(
         monkeypatch,
         response,
-):
+    ):
     monkeypatch.setattr(
         Query,
         "_request",
@@ -618,3 +617,117 @@ def test_query_match():
 
     assert match is not None
     assert match.group(1) == "hello"
+
+
+def test_query_clipboard(monkeypatch):
+    def request(sequence, terminator):
+        assert str(sequence) == "\x1b]52;c;?\x1b\\"
+        assert terminator == "\x1b\\"
+        return "\x1b]52;c;SGVsbG8=\x1b\\"
+
+    monkeypatch.setattr(
+        Query,
+        "_request",
+        request,
+    )
+
+    assert Query.clipboard(
+        OSCClipboardSelection.CLIPBOARD,
+    ) == "Hello"
+
+
+@pytest.mark.parametrize(
+    "selection",
+    list(OSCClipboardSelection),
+)
+def test_query_clipboard_selections(
+        monkeypatch,
+        selection,
+    ):
+    def request(sequence, terminator):
+        assert str(sequence) == (
+            f"\x1b]52;{selection};?\x1b\\"
+        )
+        assert terminator == "\x1b\\"
+        return (
+            f"\x1b]52;{selection};SGVsbG8=\x1b\\"
+        )
+
+    monkeypatch.setattr(
+        Query,
+        "_request",
+        request,
+    )
+
+    assert Query.clipboard(
+        selection,
+    ) == "Hello"
+
+
+@pytest.mark.parametrize(
+    "selection",
+    [
+        "c",
+        0,
+        None,
+        1.5,
+        True,
+    ],
+)
+def test_query_clipboard_invalid_selection(selection):
+    with pytest.raises(
+        TypeError,
+        match="Query selection must be OSCClipboardSelection",
+    ):
+        Query.clipboard(selection)
+
+
+@pytest.mark.parametrize(
+    "response",
+    [
+        None,
+        "",
+        "\x1b]52;c;SGVsbG8=",
+        "\x1b]52;c;SGVsbG8=\x1bX",
+        "invalid",
+    ],
+)
+def test_query_clipboard_invalid_response(
+        monkeypatch,
+        response,
+    ):
+    monkeypatch.setattr(
+        Query,
+        "_request",
+        lambda sequence, terminator: response,
+    )
+
+    assert Query.clipboard(
+        OSCClipboardSelection.CLIPBOARD,
+    ) is None
+
+
+@pytest.mark.parametrize(
+    "value",
+    [
+        "invalid-base64",
+        "//79",
+    ],
+    )
+def test_query_clipboard_invalid_value(
+        monkeypatch,
+        value,
+    ):
+    response = (
+        f"\x1b]52;c;{value}\x1b\\"
+    )
+
+    monkeypatch.setattr(
+        Query,
+        "_request",
+        lambda sequence, terminator: response,
+    )
+
+    assert Query.clipboard(
+        OSCClipboardSelection.CLIPBOARD,
+    ) is None

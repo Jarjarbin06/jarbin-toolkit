@@ -186,6 +186,14 @@ class CursorPosition(CSI):
         return cls(f"{y};{x}f")
 
 
+    @classmethod
+    def home(
+            cls,
+        ):
+
+        return cls("H")
+
+
 class CursorSave(CSI):
 
 
