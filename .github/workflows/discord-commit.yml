@@ -1,0 +1,28 @@
+name: Discord Commit Notification
+
+on:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  discord:
+    name: Send commit to Discord
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Send Discord notification
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          python scripts/discord_commit.py
