@@ -20,15 +20,7 @@ import jarbin_toolkit_console.ansi.osc as OSC
 
 from jarbin_toolkit_console.ansi.query import Query
 
-from jarbin_toolkit_console.ansi.color import (
-    Color256,
-    ColorRGB,
-    ColorHEX,
-)
-
 import jarbin_toolkit_console.ansi.ansi as Sequence
-
-from jarbin_toolkit_console.ansi.color import Color as _Color
 
 
 __all__ = [
@@ -44,11 +36,5 @@ __all__ = [
 
     'Query',
 
-    'Color256',
-    'ColorRGB',
-    'ColorHEX',
-
     'Sequence',
-
-    '_Color',
 ]

@@ -10,7 +10,7 @@
 
 import pytest
 
-from jarbin_toolkit_console.ansi import (
+from jarbin_toolkit_console import (
     Color256,
     ColorRGB,
     ColorHEX,

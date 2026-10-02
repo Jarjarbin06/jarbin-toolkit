@@ -11,6 +11,7 @@
 import base64
 from pathlib import Path
 
+from jarbin_toolkit_console.color import ColorHEX
 from jarbin_toolkit_console.ansi.query import Query
 from jarbin_toolkit_console.ansi.osc.enums import OSCClipboardSelection
 from jarbin_toolkit_console.ansi.ansi import OSC
@@ -80,6 +81,11 @@ class OSCColor(OSC):
             color,
         ):
 
+        color = ColorHEX(color) if isinstance(color, str) else color
+
+        if not isinstance(color, ColorHEX):
+            raise TypeError("OSCColor color must be ColorHEX")
+
         return cls(f"10;#{color}{ST}")
 
 
@@ -88,6 +94,11 @@ class OSCColor(OSC):
             cls,
             color,
         ):
+
+        color = ColorHEX(color) if isinstance(color, str) else color
+
+        if not isinstance(color, ColorHEX):
+            raise TypeError("OSCColor color must be ColorHEX")
 
         return cls(f"11;#{color}{ST}")
 
@@ -98,6 +109,11 @@ class OSCColor(OSC):
             color,
         ):
 
+        color = ColorHEX(color) if isinstance(color, str) else color
+
+        if not isinstance(color, ColorHEX):
+            raise TypeError("OSCColor color must be ColorHEX")
+
         return cls(f"12;#{color}{ST}")
 
 
@@ -107,6 +123,11 @@ class OSCColor(OSC):
             color,
         ):
 
+        color = ColorHEX(color) if isinstance(color, str) else color
+
+        if not isinstance(color, ColorHEX):
+            raise TypeError("OSCColor color must be ColorHEX")
+
         return cls(f"13;#{color}{ST}")
 
 
@@ -115,6 +136,11 @@ class OSCColor(OSC):
             cls,
             color,
         ):
+
+        color = ColorHEX(color) if isinstance(color, str) else color
+
+        if not isinstance(color, ColorHEX):
+            raise TypeError("OSCColor color must be ColorHEX")
 
         return cls(f"14;#{color}{ST}")
 

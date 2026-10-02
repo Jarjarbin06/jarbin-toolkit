@@ -21,6 +21,7 @@ from jarbin_toolkit_console.ansi.screen.screen import (
     ScreenSize,
     ScreenControl,
 )
+
 from jarbin_toolkit_console.ansi.screen.enums import (
     ScreenLineEraseMode,
     ScreenDisplayEraseMode,

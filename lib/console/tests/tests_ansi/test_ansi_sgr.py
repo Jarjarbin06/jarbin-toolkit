@@ -22,7 +22,7 @@ from jarbin_toolkit_console.ansi.sgr import (
     SGRColorExtender,
     SGRPosition,
 )
-from jarbin_toolkit_console.ansi import (
+from jarbin_toolkit_console import (
     Color256,
     ColorRGB,
 )

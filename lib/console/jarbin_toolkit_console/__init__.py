@@ -18,6 +18,16 @@ import jarbin_toolkit_console.ansi as ANSI
 
 from jarbin_toolkit_console.text import Text
 
+import jarbin_toolkit_console.format as Format
+
+from jarbin_toolkit_console.color import (
+    Color256,
+    ColorRGB,
+    ColorHEX,
+)
+
+from jarbin_toolkit_console.color import Color as _Color
+
 
 __all__ = [
     '__author__',
@@ -28,4 +38,13 @@ __all__ = [
     'ANSI',
 
     'Text',
+
+    'Format',
+
+    'Color256',
+    'ColorRGB',
+    'ColorHEX',
+
+    '_Color',
+
 ]

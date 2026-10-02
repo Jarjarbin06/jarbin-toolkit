@@ -10,8 +10,8 @@
 
 import pytest
 
-from jarbin_toolkit_console.ansi.query import Query
-from jarbin_toolkit_console.ansi.osc.enums import OSCClipboardSelection
+from jarbin_toolkit_console.ansi import Query
+from jarbin_toolkit_console.ansi.osc import OSCClipboardSelection
 
 
 def test_query_cursor_position(monkeypatch):

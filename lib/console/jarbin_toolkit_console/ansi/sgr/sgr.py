@@ -20,7 +20,7 @@ from jarbin_toolkit_console.ansi.sgr.enums import (
     SGRPosition,
     SGRColorMode,
 )
-from jarbin_toolkit_console.ansi.color import (
+from jarbin_toolkit_console.color import (
     Color,
     ColorRGB,
     Color256,
