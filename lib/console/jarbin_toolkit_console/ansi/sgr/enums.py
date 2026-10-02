@@ -75,7 +75,7 @@ class SGRReset(StrEnum):
     FOREGROUND_COLOR = "39"
     BACKGROUND_COLOR = "49"
     PROPORTIONAL_SPACING = "50"
-    FRAMED = "54"
+    FRAME = "54"
     ENCIRCLE = "54"
     OVERLINE = "55"
     UNDERLINE_COLOR = "59"

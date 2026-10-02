@@ -15,6 +15,7 @@ class ANSI(Text):
 
 
     PREFIX = ""
+    _can_format = False
 
 
     def __new__(

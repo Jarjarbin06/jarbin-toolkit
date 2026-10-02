@@ -1,22 +1,15 @@
 # ============================================================================
 # JARBIN-TOOLKIT
 #
-# Package      : Console
-# File         : text.py
+# Package      : Console/ANSI
+# File         : __init__.py
 #
 # Author       : Jarjarbin06
 # ============================================================================
 
 
-from jarbin_toolkit_console.format.format import Format
-
-
-class Text(str, Format):
-
-
-    pass
+#imports
 
 
 __all__ = [
-    'Text',
 ]

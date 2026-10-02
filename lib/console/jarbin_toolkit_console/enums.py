@@ -11,7 +11,7 @@
 from enum import Enum
 from typing import final
 
-from jarbin_toolkit_console.ansi.color import ColorRGB
+from jarbin_toolkit_console.color import ColorRGB
 
 
 @final

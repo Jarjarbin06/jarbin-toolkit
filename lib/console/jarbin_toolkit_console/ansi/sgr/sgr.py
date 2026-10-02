@@ -48,28 +48,28 @@ class SGR(CSI):
     @classmethod
     def reset(
             cls,
-            *values,
+            *resets,
         ):
 
-        if not values:
+        if not resets:
             return cls(SGRReset.ALL)
 
-        if not all(isinstance(value, SGRReset) for value in values):
-            raise TypeError("SGR values must all be SGRReset")
+        if not all(isinstance(reset, SGRReset) for reset in resets):
+            raise TypeError("SGR resets must all be SGRReset")
 
-        return cls(*values)
+        return cls(*resets)
 
 
     @classmethod
     def attribute(
             cls,
-            *values,
+            *attributes,
         ):
 
-        if not all(isinstance(value, SGRAttribute) for value in values):
-            raise TypeError("SGR values must be SGRAttribute")
+        if not all(isinstance(atr, SGRAttribute) for atr in attributes):
+            raise TypeError("SGR attributes must be SGRAttribute")
 
-        return cls(*values)
+        return cls(*attributes)
 
 
     @classmethod
@@ -139,13 +139,13 @@ class SGR(CSI):
     @classmethod
     def position(
             cls,
-            value,
+            position,
         ):
 
-        if not isinstance(value, SGRPosition):
-            raise TypeError("SGR type must be SGRPosition")
+        if not isinstance(position, SGRPosition):
+            raise TypeError("SGR position must be SGRPosition")
 
-        return cls(value)
+        return cls(position)
 
 
 
