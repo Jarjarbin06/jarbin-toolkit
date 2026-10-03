@@ -19,7 +19,7 @@ from jarbin_toolkit_console.enums import PresetColor
 class Style:
 
 
-    def _get_sequence(
+    def _get_style_sequence(
             self,
             sequence,
         ):
@@ -41,7 +41,7 @@ class Style:
             self
         ]
 
-        return self._get_sequence(sequence)
+        return self._get_style_sequence(sequence)
 
 
     def f_style_bold(
@@ -62,7 +62,7 @@ class Style:
             )
         ]
 
-        return self._get_sequence(sequence)
+        return self._get_style_sequence(sequence)
 
 
     def f_style_faint(
@@ -83,7 +83,7 @@ class Style:
             )
         ]
 
-        return self._get_sequence(sequence)
+        return self._get_style_sequence(sequence)
 
 
     def f_style_dim(
@@ -113,7 +113,7 @@ class Style:
             )
         ]
 
-        return self._get_sequence(sequence)
+        return self._get_style_sequence(sequence)
 
 
     def f_style_underline(
@@ -164,7 +164,7 @@ class Style:
                 )
             ]
 
-        return self._get_sequence(sequence)
+        return self._get_style_sequence(sequence)
 
 
     def f_style_strikethrough(
@@ -185,7 +185,7 @@ class Style:
             )
         ]
 
-        return self._get_sequence(sequence)
+        return self._get_style_sequence(sequence)
 
 
     def f_style_blink(
@@ -207,7 +207,7 @@ class Style:
             )
         ]
 
-        return self._get_sequence(sequence)
+        return self._get_style_sequence(sequence)
 
 
     def f_style_reverse(
@@ -228,7 +228,7 @@ class Style:
             )
         ]
 
-        return self._get_sequence(sequence)
+        return self._get_style_sequence(sequence)
 
 
     def f_style_hide(
@@ -249,7 +249,7 @@ class Style:
             )
         ]
 
-        return self._get_sequence(sequence)
+        return self._get_style_sequence(sequence)
 
 
     def f_style_show(
@@ -270,7 +270,7 @@ class Style:
             )
         ]
 
-        return self._get_sequence(sequence)
+        return self._get_style_sequence(sequence)
 
 
     def f_style_frame(
@@ -291,7 +291,7 @@ class Style:
             )
         ]
 
-        return self._get_sequence(sequence)
+        return self._get_style_sequence(sequence)
 
 
     def f_style_encircle(
@@ -312,7 +312,7 @@ class Style:
             )
         ]
 
-        return self._get_sequence(sequence)
+        return self._get_style_sequence(sequence)
 
 
     def f_style_overline(
@@ -333,7 +333,7 @@ class Style:
             )
         ]
 
-        return self._get_sequence(sequence)
+        return self._get_style_sequence(sequence)
 
 
     def f_style_superscript(
@@ -354,7 +354,7 @@ class Style:
             )
         ]
 
-        return self._get_sequence(sequence)
+        return self._get_style_sequence(sequence)
 
 
     def f_style_subscript(
@@ -375,274 +375,4 @@ class Style:
             )
         ]
 
-        return self._get_sequence(sequence)
-
-
-    def f_style_foreground(
-            self,
-            color = ColorRGB(255, 255, 255),
-            *,
-            reset = True,
-        ):
-
-        SGR = self._get_sgr()
-
-        if isinstance(color, Color256 | ColorRGB | ColorHEX):
-            color = color.to_rgb() if isinstance(color, ColorHEX) else color
-            mode = SGR.SGRColorMode.RGB if isinstance(color, ColorRGB) else SGR.SGRColorMode.INDEXED
-
-            sequence = [
-                SGR.SGR(SGR.SGRColorExtender.FOREGROUND, mode, color),
-                self,
-                (
-                    SGR.SGR(SGR.SGRReset.FOREGROUND_COLOR)
-                    if reset else
-                    ""
-                )
-            ]
-
-        else:
-            sequence = [
-                SGR.SGR(color),
-                self,
-                (
-                    SGR.SGR(SGR.SGRReset.FOREGROUND_COLOR)
-                    if reset else
-                    ""
-                )
-            ]
-
-        return self._get_sequence(sequence)
-
-
-    def f_style_background(
-            self,
-            color = ColorRGB(255, 255, 255),
-            *,
-            reset = True,
-        ):
-
-        SGR = self._get_sgr()
-
-        if isinstance(color, Color256 | ColorRGB | ColorHEX):
-            color = color.to_rgb() if isinstance(color, ColorHEX) else color
-            mode = SGR.SGRColorMode.RGB if isinstance(color, ColorRGB) else SGR.SGRColorMode.INDEXED
-
-            sequence = [
-                SGR.SGR(SGR.SGRColorExtender.BACKGROUND, mode, color),
-                self,
-                (
-                    SGR.SGR(SGR.SGRReset.BACKGROUND_COLOR)
-                    if reset else
-                    ""
-                )
-            ]
-
-        else:
-            sequence = [
-                SGR.SGR(color),
-                self,
-                (
-                    SGR.SGR(SGR.SGRReset.BACKGROUND_COLOR)
-                    if reset else
-                    ""
-                )
-            ]
-
-        return self._get_sequence(sequence)
-
-
-    def f_style_default_foreground(
-            self,
-        ):
-
-        SGR = self._get_sgr()
-
-        sequence = [
-            SGR.SGR(SGR.SGRReset.FOREGROUND_COLOR),
-            self,
-        ]
-
-        return self._get_sequence(sequence)
-
-
-    def f_style_default_background(
-            self,
-        ):
-
-        SGR = self._get_sgr()
-
-        sequence = [
-            SGR.SGR(SGR.SGRReset.BACKGROUND_COLOR),
-            self,
-        ]
-
-        return self._get_sequence(sequence)
-
-
-    def f_style_success(
-            self,
-            *,
-            background = False,
-            reset = True,
-        ):
-
-        color = PresetColor.SUCCESS.value
-
-        if background:
-            return self.f_style_background(
-                color,
-                reset=reset,
-            )
-
-        return self.f_style_foreground(
-            color,
-            reset=reset,
-        )
-
-
-    def f_style_failure(
-            self,
-            *,
-            background = False,
-            reset = True,
-        ):
-
-        color = PresetColor.FAILURE.value
-
-        if background:
-            return self.f_style_background(
-                color,
-                reset=reset,
-            )
-
-        return self.f_style_foreground(
-            color,
-            reset=reset,
-        )
-
-
-    def f_style_error(
-            self,
-            *,
-            background = False,
-            reset = True,
-        ):
-
-        color = PresetColor.ERROR.value
-
-        if background:
-            return self.f_style_background(
-                color,
-                reset=reset,
-            )
-
-        return self.f_style_foreground(
-            color,
-            reset=reset,
-        )
-
-
-    def f_style_warning(
-            self,
-            *,
-            background = False,
-            reset = True,
-        ):
-
-        color = PresetColor.WARNING.value
-
-        if background:
-            return self.f_style_background(
-                color,
-                reset=reset,
-            )
-
-        return self.f_style_foreground(
-            color,
-            reset=reset,
-        )
-
-
-    def f_style_notice(
-            self,
-            *,
-            background = False,
-            reset = True,
-        ):
-
-        color = PresetColor.NOTICE.value
-
-        if background:
-            return self.f_style_background(
-                color,
-                reset=reset,
-            )
-
-        return self.f_style_foreground(
-            color,
-            reset=reset,
-        )
-
-
-    def f_style_info(
-            self,
-            *,
-            background = False,
-            reset = True,
-        ):
-
-        color = PresetColor.INFO.value
-
-        if background:
-            return self.f_style_background(
-                color,
-                reset=reset,
-            )
-
-        return self.f_style_foreground(
-            color,
-            reset=reset,
-        )
-
-
-    def f_style_debug(
-            self,
-            *,
-            background = False,
-            reset = True,
-        ):
-
-        color = PresetColor.DEBUG.value
-
-        if background:
-            return self.f_style_background(
-                color,
-                reset=reset,
-            )
-
-        return self.f_style_foreground(
-            color,
-            reset=reset,
-        )
-
-
-    def f_style_critical(
-            self,
-            *,
-            background = False,
-            reset = True,
-        ):
-
-        color = PresetColor.CRITICAL.value
-
-        if background:
-            return self.f_style_background(
-                color,
-                reset=reset,
-            )
-
-        return self.f_style_foreground(
-            color,
-            reset=reset,
-        )
+        return self._get_style_sequence(sequence)

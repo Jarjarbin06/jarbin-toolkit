@@ -1,7 +1,9 @@
+from .layout import Layout
 from .style import Style
+from .color import Color
 
 
-class Format(Style):
+class Format(Style, Color, Layout):
 
 
     @classmethod
