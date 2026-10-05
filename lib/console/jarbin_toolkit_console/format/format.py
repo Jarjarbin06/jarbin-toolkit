@@ -12,9 +12,10 @@ from jarbin_toolkit_console.format.layout import Layout
 from jarbin_toolkit_console.format.color import Color
 from jarbin_toolkit_console.format.style import Style
 from jarbin_toolkit_console.format.border import Border
+from jarbin_toolkit_console.format.decoration import Decoration
 
 
-class Format(Style, Color, Layout, Border):
+class Format(Style, Color, Layout, Border, Decoration):
 
 
     _can_format = True

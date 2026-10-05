@@ -8,7 +8,10 @@
 # ============================================================================
 
 
-from enum import Enum
+from enum import (
+    Enum,
+    StrEnum,
+)
 from typing import final
 
 from jarbin_toolkit_console.color import ColorRGB
@@ -54,7 +57,7 @@ class PresetColor(Enum):
 
 
 @final
-class PresetSymbol(Enum):
+class PresetSymbol(StrEnum):
 
 
     # Status
@@ -96,41 +99,10 @@ class PresetBorder(Enum):
 class PresetSpinner(Enum):
 
 
-    LINE = (
-        "-",
-        "\\",
-        "|",
-        "/",
-    )
-
-    DOT = (
-        ".  ",
-        ".. ",
-        "...",
-        " ..",
-        "  .",
-        "   ",
-    )
-
-    BRAILLE = (
-        "⠋",
-        "⠙",
-        "⠹",
-        "⠸",
-        "⠼",
-        "⠴",
-        "⠦",
-        "⠧",
-        "⠇",
-        "⠏",
-    )
-
-    BLOCK = (
-        "▖",
-        "▘",
-        "▝",
-        "▗",
-    )
+    LINE = ("-", "\\", "|", "/",)
+    DOT = (".  ", ".. ", "...", " ..", "  .", "   ")
+    BRAILLE = ("⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏")
+    BLOCK = ("▖", "▘", "▝", "▗")
 
 
 @final

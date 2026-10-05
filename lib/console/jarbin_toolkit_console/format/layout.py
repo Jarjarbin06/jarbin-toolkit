@@ -8,10 +8,7 @@
 # ============================================================================
 
 
-from jarbin_toolkit_console.format.enums import (
-    FormatPaddingPosition,
-    FormatAlignPosition,
-)
+from jarbin_toolkit_console.format.enums import FormatPosition
 
 
 class Layout:
@@ -33,7 +30,7 @@ class Layout:
             amount,
             *,
             fill = " ",
-            align = FormatPaddingPosition.LEFT,
+            align = FormatPosition.LEFT,
         ):
 
         if len(fill) != 1:
@@ -44,16 +41,16 @@ class Layout:
 
         new_text = self
 
-        if align == FormatPaddingPosition.LEFT:
+        if align == FormatPosition.LEFT:
             new_text = (fill * amount) + self
 
-        elif align == FormatPaddingPosition.CENTER:
+        elif align == FormatPosition.CENTER:
             half_amount = amount // 2
             half_amount_r = amount % 2
 
             new_text = (fill * half_amount) + self + (fill * (half_amount + half_amount_r))
 
-        elif align == FormatPaddingPosition.RIGHT:
+        elif align == FormatPosition.RIGHT:
             new_text = self + (fill * amount)
 
         return self._get_layout_text(new_text)
@@ -66,7 +63,7 @@ class Layout:
             fill = " ",
         ):
 
-        return self.f_layout_pad(amount, fill=fill, align=FormatPaddingPosition.LEFT)
+        return self.f_layout_pad(amount, fill=fill, align=FormatPosition.LEFT)
 
 
     def f_layout_pad_center(
@@ -76,7 +73,7 @@ class Layout:
             fill = " ",
         ):
 
-        return self.f_layout_pad(amount, fill=fill, align=FormatPaddingPosition.CENTER)
+        return self.f_layout_pad(amount, fill=fill, align=FormatPosition.CENTER)
 
 
     def f_layout_pad_right(
@@ -86,14 +83,14 @@ class Layout:
             fill = " ",
         ):
 
-        return self.f_layout_pad(amount, fill=fill, align=FormatPaddingPosition.RIGHT)
+        return self.f_layout_pad(amount, fill=fill, align=FormatPosition.RIGHT)
 
 
     def f_layout_align(
             self,
             width,
             *,
-            align = FormatAlignPosition.LEFT,
+            align = FormatPosition.LEFT,
         ):
 
         Cursor = self._get_cursor()
@@ -105,13 +102,13 @@ class Layout:
 
         new_text = self
 
-        if remaining_width < 1 or align == FormatAlignPosition.LEFT:
+        if remaining_width < 1 or align == FormatPosition.LEFT:
             new_text = Cursor.CursorPosition.column(1) + self[:width]
 
-        elif align == FormatAlignPosition.CENTER:
+        elif align == FormatPosition.CENTER:
             new_text = Cursor.CursorPosition.column(remaining_width // 2 + 1) + self[:width]
 
-        elif align == FormatAlignPosition.RIGHT:
+        elif align == FormatPosition.RIGHT:
             new_text = Cursor.CursorPosition.column(remaining_width + 1) + self[:width]
 
         return self._get_layout_text(new_text)
@@ -122,7 +119,7 @@ class Layout:
             width,
         ):
 
-        return self.f_layout_align(width, align=FormatAlignPosition.LEFT)
+        return self.f_layout_align(width, align=FormatPosition.LEFT)
 
 
     def f_layout_align_center(
@@ -130,7 +127,7 @@ class Layout:
             width,
         ):
 
-        return self.f_layout_align(width, align=FormatAlignPosition.CENTER)
+        return self.f_layout_align(width, align=FormatPosition.CENTER)
 
 
     def f_layout_align_right(
@@ -138,7 +135,7 @@ class Layout:
             width,
         ):
 
-        return self.f_layout_align(width, align=FormatAlignPosition.RIGHT)
+        return self.f_layout_align(width, align=FormatPosition.RIGHT)
 
 
     def f_layout_indent(

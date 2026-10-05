@@ -16,14 +16,17 @@ from jarbin_toolkit_console.format.style import Style
 
 from jarbin_toolkit_console.format.border import Border
 
+from jarbin_toolkit_console.format.decoration import Decoration
 
 
 __all__ = [
-    "Layout",
+    'Layout',
 
-    "Color",
+    'Color',
 
-    "Style",
+    'Style',
 
-    "Border",
+    'Border',
+
+    'Decoration',
 ]

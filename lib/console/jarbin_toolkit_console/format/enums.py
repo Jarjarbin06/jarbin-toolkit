@@ -13,7 +13,7 @@ from typing import final
 
 
 @final
-class FormatPaddingPosition(StrEnum):
+class FormatPosition(StrEnum):
 
 
     LEFT = "left"
@@ -22,9 +22,8 @@ class FormatPaddingPosition(StrEnum):
 
 
 @final
-class FormatAlignPosition(StrEnum):
+class FormatOrder(StrEnum):
 
 
-    LEFT = "left"
-    CENTER = "center"
-    RIGHT = "right"
+    BEFORE = "before"
+    AFTER = "after"
