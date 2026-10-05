@@ -21,13 +21,13 @@ class Style:
 
     def _get_style_sequence(
             self,
-            sequence,
+            style,
         ):
 
         if not getattr(self, "_can_format", False):
             return self
 
-        return self.__class__("".join(map(str, sequence)))
+        return self.__class__("".join(map(str, style)))
 
 
     def f_style_reset(

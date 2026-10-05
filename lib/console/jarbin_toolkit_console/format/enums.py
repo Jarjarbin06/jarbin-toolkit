@@ -19,3 +19,12 @@ class FormatPaddingPosition(StrEnum):
     LEFT = "left"
     CENTER = "center"
     RIGHT = "right"
+
+
+@final
+class FormatAlignPosition(StrEnum):
+
+
+    LEFT = "left"
+    CENTER = "center"
+    RIGHT = "right"

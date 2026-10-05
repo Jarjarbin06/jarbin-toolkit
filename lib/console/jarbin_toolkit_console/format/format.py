@@ -11,13 +11,15 @@
 from jarbin_toolkit_console.format.layout import Layout
 from jarbin_toolkit_console.format.color import Color
 from jarbin_toolkit_console.format.style import Style
+from jarbin_toolkit_console.format.border import Border
 
 
-class Format(Style, Color, Layout):
+class Format(Style, Color, Layout, Border):
 
 
     _can_format = True
     _sgr = None
+    _cursor = None
 
 
     @classmethod
@@ -31,3 +33,16 @@ class Format(Style, Color, Layout):
             cls._sgr = SGR
 
         return cls._sgr
+
+
+    @classmethod
+    def _get_cursor(
+            cls,
+        ):
+
+        if cls._cursor is None:
+            import jarbin_toolkit_console.ansi.cursor as Cursor
+
+            cls._cursor = Cursor
+
+        return cls._cursor

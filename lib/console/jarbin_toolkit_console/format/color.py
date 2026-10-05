@@ -21,13 +21,13 @@ class Color:
 
     def _get_color_sequence(
             self,
-            sequence,
+            color,
         ):
 
         if not getattr(self, "_can_format", False):
             return self
 
-        return self.__class__("".join(map(str, sequence)))
+        return self.__class__("".join(map(str, color)))
 
 
     def f_color_foreground(
