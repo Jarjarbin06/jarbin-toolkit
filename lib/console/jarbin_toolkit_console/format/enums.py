@@ -27,3 +27,9 @@ class FormatOrder(StrEnum):
 
     BEFORE = "before"
     AFTER = "after"
+
+
+__all__ = [
+    'FormatPosition',
+    'FormatOrder',
+]

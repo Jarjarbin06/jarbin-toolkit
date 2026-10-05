@@ -18,6 +18,8 @@ from jarbin_toolkit_console.format.border import Border
 
 from jarbin_toolkit_console.format.decoration import Decoration
 
+from jarbin_toolkit_console.format.collection import Collection
+
 
 __all__ = [
     'Layout',
@@ -29,4 +31,6 @@ __all__ = [
     'Border',
 
     'Decoration',
+
+    'Collection',
 ]

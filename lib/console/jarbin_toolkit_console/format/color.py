@@ -474,3 +474,8 @@ class Color:
             color,
             reset=reset,
         )
+
+
+__all__ = [
+    'Color',
+]

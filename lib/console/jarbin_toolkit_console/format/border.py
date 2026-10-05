@@ -336,3 +336,8 @@ class Border:
             new_text = new_text.f_border_box(border=border, padding=padding)
 
         return  new_text
+
+
+__all__ = [
+    'Border',
+]

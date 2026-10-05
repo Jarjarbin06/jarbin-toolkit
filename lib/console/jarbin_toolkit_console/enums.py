@@ -83,6 +83,10 @@ class PresetSymbol(StrEnum):
     ARROW = "➜"
     STAR = "★"
 
+    # Checkbox
+    UNCHECKED = "☐"
+    CHECKED = "☑"
+
 
 @final
 class PresetBorder(Enum):
@@ -113,3 +117,12 @@ class PresetProgress(Enum):
     ASCII = ("=", "-")
     ARROW = (">", "-")
     DOT = ("●", "○")
+
+
+__all__ = [
+    'PresetColor',
+    'PresetSymbol',
+    'PresetBorder',
+    'PresetSpinner',
+    'PresetProgress',
+]

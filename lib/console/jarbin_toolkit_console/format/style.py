@@ -376,3 +376,8 @@ class Style:
         ]
 
         return self._get_style_sequence(sequence)
+
+
+__all__ = [
+    'Style',
+]

@@ -189,3 +189,8 @@ class Decoration:
         ):
 
         return self.f_decoration_symbol(PresetSymbol.ELLIPSIS, order=order)
+
+
+__all__ = [
+    'Decoration',
+]

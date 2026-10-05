@@ -23,3 +23,6 @@ class Format(Style, Color, Layout):
             cls,
         ) -> object:
         ...
+
+
+__all__: list[str]
