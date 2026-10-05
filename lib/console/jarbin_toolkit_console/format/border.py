@@ -320,3 +320,19 @@ class Border:
         ]
 
         return self._get_border_text("\n".join(new_text))
+
+
+    def f_border_nested(
+            self,
+            depth = 1,
+            *,
+            border=PresetBorder.SINGLE,
+            padding=0,
+        ):
+
+        new_text = self
+
+        for _ in range(depth):
+            new_text = new_text.f_border_box(border=border, padding=padding)
+
+        return  new_text
