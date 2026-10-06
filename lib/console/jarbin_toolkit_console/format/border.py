@@ -37,8 +37,8 @@ class Border:
         return lines
 
 
+    @staticmethod
     def _get_border_width(
-            self,
             lines,
         ):
 
@@ -150,8 +150,8 @@ class Border:
     def f_border_box(
             self,
             *,
-            border=PresetBorder.SINGLE,
-            padding=0,
+            border = PresetBorder.SINGLE,
+            padding = 0,
         ):
 
         if padding < 0:
@@ -260,8 +260,8 @@ class Border:
             self,
             title,
             *,
-            border=PresetBorder.SINGLE,
-            padding=0,
+            border = PresetBorder.SINGLE,
+            padding = 0,
         ):
 
         if padding < 0:
@@ -277,7 +277,7 @@ class Border:
 
         content_width = max(
             width + padding_width,
-            len(title) + 2 + padding_width,
+            len(title) + 4 + padding_width,
         )
 
         vertical_padding = [
@@ -292,23 +292,24 @@ class Border:
                 f"{v}"
                 f"{horizontal_padding}"
                 f"{line}"
-                f"{' ' * (content_width - len(line) - padding * 4)}"
+                f"{' ' * (content_width - len(line) - padding_width)}"
                 f"{horizontal_padding}"
                 f"{v}"
             )
 
+        title_content = f" {title} "
         title_line = (
             f"{tl}"
-            f"{h * (padding * 2)}"
-            f" {title} "
-            f"{h * (content_width - (padding * 2) - len(title) - 2)}"
+            f"{h}"
+            f"{title_content}"
+            f"{h * (content_width - len(title_content) - 1)}"
             f"{tr}"
         )
 
         bottom = (
-                bl
-                + h * content_width
-                + br
+            f"{bl}"
+            f"{h * content_width}"
+            f"{br}"
         )
 
         new_text = [
@@ -326,8 +327,8 @@ class Border:
             self,
             depth = 1,
             *,
-            border=PresetBorder.SINGLE,
-            padding=0,
+            border = PresetBorder.SINGLE,
+            padding = 0,
         ):
 
         new_text = self

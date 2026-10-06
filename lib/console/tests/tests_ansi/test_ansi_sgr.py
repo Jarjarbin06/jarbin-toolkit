@@ -62,7 +62,7 @@ def test_sgr_reset():
 
 
 def test_sgr_reset_invalid():
-    with pytest.raises(TypeError, match="SGR values must all be SGRReset"):
+    with pytest.raises(TypeError, match="SGR resets must all be SGRReset"):
         SGR.reset(SGRAttribute.BOLD)
 
 
@@ -74,7 +74,7 @@ def test_sgr_attribute():
 
 
 def test_sgr_attribute_invalid():
-    with pytest.raises(TypeError, match="SGR values must be SGRAttribute"):
+    with pytest.raises(TypeError, match="SGR attributes must be SGRAttribute"):
         SGR.attribute(SGRReset.ALL)
 
 
@@ -218,6 +218,6 @@ def test_sgr_position():
 def test_sgr_position_invalid():
     with pytest.raises(
         TypeError,
-        match="SGR type must be SGRPosition",
+        match="SGR position must be SGRPosition",
     ):
         SGR.position(SGRAttribute.BOLD)

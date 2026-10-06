@@ -8,6 +8,7 @@
 # ============================================================================
 
 
+from jarbin_toolkit_console.enums import PresetSymbol
 from jarbin_toolkit_console.format.enums import FormatPosition
 
 
@@ -154,7 +155,7 @@ class Layout:
         if first_line is not None:
             new_text[0] = f"{first_line}{new_text[0]}"
 
-        return self._get_layout_text(new_text)
+        return self._get_layout_text("\n".join(new_text))
 
 
     def f_layout_dedent(
@@ -162,12 +163,23 @@ class Layout:
             fill = " ",
         ):
 
-        new_text = []
+        lines = self.splitlines()
 
-        for line in self.splitlines():
-            new_text.append(line.removeprefix(fill))
+        if not lines:
+            return self
 
-        return self._get_layout_text(new_text)
+        indent = min(
+            len(line) - len(line.lstrip(fill))
+            for line in lines
+            if line
+        )
+
+        new_text = [
+            line[indent:]
+            for line in lines
+        ]
+
+        return self._get_layout_text("\n".join(new_text))
 
 
     def f_layout_get_width(
@@ -188,7 +200,7 @@ class Layout:
             self,
             width,
             *,
-            break_long_words=False,
+            break_long_words = False,
         ):
 
         if width <= 0:
@@ -238,8 +250,8 @@ class Layout:
             self,
             width,
             *,
-            suffix="…",
-            break_long_words=False,
+            suffix = PresetSymbol.ELLIPSIS,
+            break_long_words = False,
         ):
 
         if width < 0:
@@ -343,7 +355,7 @@ class Layout:
 
         lines = self.splitlines()
         new_text = []
-        len_num = len(str(len(lines) + start))
+        len_num = len(str(len(lines) + start - 1))
 
         for line in range(0, len(lines)):
             new_text.append(f"{line + start:0{len_num}d}{separator}{lines[line]}")
@@ -355,7 +367,7 @@ class Layout:
             self,
         ):
 
-        new_text: list = self.splitlines().reverse()
+        new_text = self.splitlines()[::-1]
 
         return self._get_layout_text("\n".join(new_text))
 

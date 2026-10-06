@@ -47,6 +47,52 @@ class Color256(Color):
 
         return self._values["color"]
 
+    @classmethod
+    def test(
+            cls,
+        ):  # pragma: no cover
+
+        from jarbin_toolkit_console.ansi.sgr.sgr import SGR
+        from jarbin_toolkit_console.ansi.sgr.enums import (
+            SGRColorExtender,
+            SGRReset,
+        )
+
+        def print_color(
+                color,
+            ):
+            print(
+                SGR.color(SGRColorExtender.BACKGROUND, cls(color)),
+                f"{color:3d}",
+                SGR.reset(SGRReset.BACKGROUND_COLOR),
+                end="",
+            )
+
+        print("System colors:")
+        for start in (0, 8):
+            for color in range(start, start + 8):
+                print_color(color)
+            print()
+
+        print("\nColor cube (16-231):")
+
+        for green in range(6):
+            for red in range(6):
+                for blue in range(6):
+                    color = 16 + (red * 36) + (green * 6) + blue
+                    print_color(color)
+
+                print()
+
+            print()
+
+        print("Grayscale (232-255):")
+
+        for color in range(232, 256):
+            print_color(color)
+
+        print()
+
 
 class ColorRGB(Color):
 

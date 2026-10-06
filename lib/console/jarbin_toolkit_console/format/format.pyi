@@ -1,9 +1,4 @@
-from .layout import Layout
-from .style import Style
-from .color import Color
-
-
-class Format(Style, Color, Layout):
+class Format():
 
 
     _can_format: bool = True

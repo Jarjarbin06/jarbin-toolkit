@@ -177,6 +177,12 @@ def test_cursor_position_invalid_x_position(method, x):
         method(1, x)
 
 
+def test_cursor_home():
+    assert str(
+        CursorPosition.home()
+    ) == "\x1b[H"
+
+
 def test_cursor_save():
     assert str(CursorSave.save()) == "\x1b[s"
     assert str(CursorSave.restore()) == "\x1b[u"

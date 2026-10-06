@@ -26,6 +26,15 @@ from jarbin_toolkit_console.color import (
     ColorHEX,
 )
 
+from jarbin_toolkit_console.enums import (
+    PresetSymbol,
+    PresetBorder,
+    PresetColor,
+    PresetBox,
+    PresetProgress,
+    PresetSpinner,
+)
+
 from jarbin_toolkit_console.color import Color as _Color
 
 
@@ -44,6 +53,13 @@ __all__ = [
     'Color256',
     'ColorRGB',
     'ColorHEX',
+
+    'PresetSymbol',
+    'PresetBorder',
+    'PresetColor',
+    'PresetBox',
+    'PresetProgress',
+    'PresetSpinner',
 
     '_Color',
 

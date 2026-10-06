@@ -20,6 +20,15 @@ from jarbin_toolkit_console.color import ColorRGB
 @final
 class PresetColor(Enum):
 
+    # Basic colors
+    BLACK = ColorRGB(0, 0, 0)
+    RED = ColorRGB(255, 0, 0)
+    GREEN = ColorRGB(0, 255, 0)
+    YELLOW = ColorRGB(255, 255, 0)
+    BLUE = ColorRGB(0, 0, 255)
+    MAGENTA = ColorRGB(255, 0, 255)
+    CYAN = ColorRGB(0, 255, 255)
+    WHITE = ColorRGB(255, 255, 255)
 
     # Log colors
     DEBUG = ColorRGB(0, 0, 255)
@@ -89,6 +98,89 @@ class PresetSymbol(StrEnum):
 
 
 @final
+class PresetBox(StrEnum):
+
+
+    # Box Drawing - Light
+    LIGHT_HORIZONTAL = "─"
+    LIGHT_VERTICAL = "│"
+
+    LIGHT_TEE_UP = "┬"
+    LIGHT_TEE_DOWN = "┴"
+    LIGHT_TEE_LEFT = "├"
+    LIGHT_TEE_RIGHT = "┤"
+
+    LIGHT_CORNER_TOP_LEFT = "┌"
+    LIGHT_CORNER_TOP_RIGHT = "┐"
+    LIGHT_CORNER_BOTTOM_LEFT = "└"
+    LIGHT_CORNER_BOTTOM_RIGHT = "┘"
+
+    LIGHT_CROSS = "┼"
+
+    # Box Drawing - Heavy
+    HEAVY_HORIZONTAL = "━"
+    HEAVY_VERTICAL = "┃"
+
+    HEAVY_TEE_UP = "┳"
+    HEAVY_TEE_DOWN = "┻"
+    HEAVY_TEE_LEFT = "┣"
+    HEAVY_TEE_RIGHT = "┫"
+
+    HEAVY_CORNER_TOP_LEFT = "┏"
+    HEAVY_CORNER_TOP_RIGHT = "┓"
+    HEAVY_CORNER_BOTTOM_LEFT = "┗"
+    HEAVY_CORNER_BOTTOM_RIGHT = "┛"
+
+    HEAVY_CROSS = "╋"
+
+    # Box Drawing - Double
+    DOUBLE_HORIZONTAL = "═"
+    DOUBLE_VERTICAL = "║"
+
+    DOUBLE_TEE_UP = "╦"
+    DOUBLE_TEE_DOWN = "╩"
+    DOUBLE_TEE_LEFT = "╠"
+    DOUBLE_TEE_RIGHT = "╣"
+
+    DOUBLE_CORNER_TOP_LEFT = "╔"
+    DOUBLE_CORNER_TOP_RIGHT = "╗"
+    DOUBLE_CORNER_BOTTOM_LEFT = "╚"
+    DOUBLE_CORNER_BOTTOM_RIGHT = "╝"
+
+    DOUBLE_CROSS = "╬"
+
+    # Box Drawing - Rounded
+    ROUND_HORIZONTAL = "─"
+    ROUND_VERTICAL = "│"
+
+    ROUND_TEE_UP = "┬"
+    ROUND_TEE_DOWN = "┴"
+    ROUND_TEE_LEFT = "├"
+    ROUND_TEE_RIGHT = "┤"
+
+    ROUND_CORNER_TOP_LEFT = "╭"
+    ROUND_CORNER_TOP_RIGHT = "╮"
+    ROUND_CORNER_BOTTOM_LEFT = "╰"
+    ROUND_CORNER_BOTTOM_RIGHT = "╯"
+
+    # Box Drawing - Double
+    ASCII_HORIZONTAL = "-"
+    ASCII_VERTICAL = "|"
+
+    ASCII_TEE_UP = "+"
+    ASCII_TEE_DOWN = "+"
+    ASCII_TEE_LEFT = "+"
+    ASCII_TEE_RIGHT = "+"
+
+    ASCII_CORNER_TOP_LEFT = "+"
+    ASCII_CORNER_TOP_RIGHT = "+"
+    ASCII_CORNER_BOTTOM_LEFT = "+"
+    ASCII_CORNER_BOTTOM_RIGHT = "+"
+
+    ASCII_CROSS = "+"
+
+
+@final
 class PresetBorder(Enum):
 
 
@@ -122,6 +214,7 @@ class PresetProgress(Enum):
 __all__ = [
     'PresetColor',
     'PresetSymbol',
+    'PresetBox',
     'PresetBorder',
     'PresetSpinner',
     'PresetProgress',
