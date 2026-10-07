@@ -1,7 +1,7 @@
 # ============================================================================
 # JARBIN-TOOLKIT
 #
-# Package      : Console/ANSI
+# Package      : Console/Format
 # File         : enums.py
 #
 # Author       : Jarjarbin06

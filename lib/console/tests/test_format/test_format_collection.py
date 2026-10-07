@@ -1,3 +1,13 @@
+# ============================================================================
+# JARBIN-TOOLKIT
+#
+# Package      : Console/Format
+# File         : test_format_collection.py
+#
+# Author       : Jarjarbin06
+# ============================================================================
+
+
 import pytest
 
 from jarbin_toolkit_console import (

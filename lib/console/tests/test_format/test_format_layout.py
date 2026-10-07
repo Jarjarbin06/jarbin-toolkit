@@ -1,3 +1,13 @@
+# ============================================================================
+# JARBIN-TOOLKIT
+#
+# Package      : Console/Format
+# File         : test_format_layout.py
+#
+# Author       : Jarjarbin06
+# ============================================================================
+
+
 import pytest
 
 from jarbin_toolkit_console import Text
@@ -97,7 +107,7 @@ def test_layout_indent_custom():
             fill="-",
             first_line="> ",
         )
-    ) == "> --Hello\n--World"
+    ) == "> --------Hello\n--------World"
 
 
 def test_layout_dedent():

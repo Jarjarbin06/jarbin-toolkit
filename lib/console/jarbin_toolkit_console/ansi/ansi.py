@@ -11,29 +11,33 @@
 from jarbin_toolkit_console.text import Text
 
 
-class ANSI(Text):
+class ANSI(str):
 
 
     PREFIX = ""
-    _can_format = False
 
 
     def __new__(
             cls,
             value,
         ):
+
         if not isinstance(value, str):
             raise TypeError("ANSI value must be a string")
 
-        return super().__new__(cls, f"{cls.PREFIX}{value}")
+        return super().__new__(
+            cls,
+            f"{cls.PREFIX}{value}",
+        )
 
 
     def __add__(
             self,
             other,
         ):
-        if isinstance(other, (str, Text)):
-            return Text(str.__add__(self, str(other)))
+
+        if isinstance(other, str):
+            return Text(str.__add__(self, other))
 
         return NotImplemented
 
@@ -42,15 +46,17 @@ class ANSI(Text):
             self,
             other,
         ):
-        if isinstance(other, (str, Text)):
-            return Text(str.__add__(str(other), self))
+
+        if isinstance(other, str):
+            return Text(str.__add__(other, self))
 
         return NotImplemented
 
 
     def __repr__(
-            self
+            self,
         ) -> str:
+
         return f"ANSI({str.__repr__(self)})"
 
 

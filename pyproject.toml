@@ -21,6 +21,7 @@ dependencies = [
     "jarbin-toolkit-time>=1.0.0.0,<1.1.0.0",
     "jarbin-toolkit-console>=1.0.0.0,<1.1.0.0",
     "jarbin-toolkit-jartest>=1.0.0.0,<1.1.0.0",
+    "wcwidth==0.9.2",
 ]
 
 classifiers = [

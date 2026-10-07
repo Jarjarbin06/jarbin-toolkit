@@ -40,21 +40,24 @@ class Layout:
         if amount < 0:
             raise ValueError("Amount must be non-negative")
 
-        new_text = self
+        lines = self.splitlines()
+        new_text = []
 
-        if align == FormatPosition.LEFT:
-            new_text = (fill * amount) + self
+        for line in lines:
 
-        elif align == FormatPosition.CENTER:
-            half_amount = amount // 2
-            half_amount_r = amount % 2
+            if align == FormatPosition.LEFT:
+                new_text.append(f"{fill * amount}{line}")
 
-            new_text = (fill * half_amount) + self + (fill * (half_amount + half_amount_r))
+            elif align == FormatPosition.CENTER:
+                half_amount = amount // 2
+                half_amount_r = amount % 2
 
-        elif align == FormatPosition.RIGHT:
-            new_text = self + (fill * amount)
+                new_text.append(f"{fill * half_amount}{line}{fill * (half_amount + half_amount_r)}")
 
-        return self._get_layout_text(new_text)
+            elif align == FormatPosition.RIGHT:
+                new_text.append(f"{line}{fill * amount}")
+
+        return self._get_layout_text("\n".join(new_text))
 
 
     def f_layout_pad_left(
@@ -99,20 +102,23 @@ class Layout:
         if width < 0:
             raise ValueError("Width must be non-negative")
 
-        remaining_width = width - len(self)
+        lines = self.splitlines()
+        new_text = []
 
-        new_text = self
+        for line in lines:
 
-        if remaining_width < 1 or align == FormatPosition.LEFT:
-            new_text = Cursor.CursorPosition.column(1) + self[:width]
+            remaining_width = width - len(line)
 
-        elif align == FormatPosition.CENTER:
-            new_text = Cursor.CursorPosition.column(remaining_width // 2 + 1) + self[:width]
+            if remaining_width < 1 or align == FormatPosition.LEFT:
+                new_text.append(f"{Cursor.CursorPosition.column(1)}{line[:width]}")
 
-        elif align == FormatPosition.RIGHT:
-            new_text = Cursor.CursorPosition.column(remaining_width + 1) + self[:width]
+            elif align == FormatPosition.CENTER:
+                new_text.append(f"{Cursor.CursorPosition.column(remaining_width // 2 + 1)}{line[:width]}")
 
-        return self._get_layout_text(new_text)
+            elif align == FormatPosition.RIGHT:
+                new_text.append(f"{Cursor.CursorPosition.column(remaining_width + 1)}{line[:width]}")
+
+        return self._get_layout_text("\n".join(new_text))
 
 
     def f_layout_align_left(
@@ -141,16 +147,20 @@ class Layout:
 
     def f_layout_indent(
             self,
-            width = 4,
+            indent = 1,
             *,
+            width = 4,
             fill = " ",
             first_line = None,
         ):
 
+        if width == 0 and first_line is None:
+            return self
+
         new_text = []
 
         for line in self.splitlines():
-            new_text.append(f"{fill * width}{line}")
+            new_text.append(f"{(fill * width) * indent}{line}")
 
         if first_line is not None:
             new_text[0] = f"{first_line}{new_text[0]}"
