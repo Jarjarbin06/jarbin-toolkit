@@ -11,7 +11,7 @@
 from jarbin_toolkit_console.text import Text
 
 
-class ANSI(str):
+class ANSI(Text):
 
 
     PREFIX = ""

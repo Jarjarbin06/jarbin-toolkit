@@ -8,31 +8,34 @@
 # ============================================================================
 
 
-from enum import StrEnum
+from enum import (
+    IntEnum,
+    auto,
+)
 from typing import final
 
 
 @final
-class ConsoleAlign(StrEnum):
+class ConsoleAlign(IntEnum):
 
 
-    LEFT = "left"
-    CENTER = "center"
-    RIGHT = "right"
+    LEFT = auto()
+    CENTER = auto()
+    RIGHT = auto()
 
 
-class ConsoleOverflow(StrEnum):
+class ConsoleOverflow(IntEnum):
 
 
-    TRUNCATE = "truncate"
-    ELLIPSIS = "ellipsis"
+    TRUNCATE = auto()
+    ELLIPSIS = auto()
 
 
-class ConsoleOutputMode(StrEnum):
+class ConsoleOutputMode(IntEnum):
 
 
-    NORMAL = "normal"
-    OVERWRITE = "overwrite"
+    NORMAL = auto()
+    OVERWRITE = auto()
 
 
 __all__ = [

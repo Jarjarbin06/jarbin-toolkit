@@ -11,6 +11,7 @@
 from enum import (
     IntEnum,
     StrEnum,
+    auto
 )
 from typing import final
 
@@ -19,9 +20,9 @@ from typing import final
 class StopWatchState(IntEnum):
 
 
-    STOPPED = 0
-    RUNNING = 1
-    PAUSED = 2
+    STOPPED = auto()
+    RUNNING = auto()
+    PAUSED = auto()
 
 
 @final

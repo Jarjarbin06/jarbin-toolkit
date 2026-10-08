@@ -2,7 +2,7 @@
 # JARBIN-TOOLKIT
 #
 # Package      : Console/Console
-# File         : test_format_context.py
+# File         : test_console_context.py
 #
 # Author       : Jarjarbin06
 # ============================================================================
@@ -10,7 +10,7 @@
 
 import pytest
 
-from jarbin_toolkit_console.console.context import (
+from jarbin_toolkit_console.console import (
     Context,
     _ContextMeta,
 )

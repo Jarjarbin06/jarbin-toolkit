@@ -2,7 +2,7 @@
 # JARBIN-TOOLKIT
 #
 # Package      : Console/Console
-# File         : test_format_cursor.py
+# File         : test_console_cursor.py
 #
 # Author       : Jarjarbin06
 # ============================================================================
@@ -10,7 +10,7 @@
 
 import pytest
 
-from jarbin_toolkit_console.console.cursor import Cursor
+from jarbin_toolkit_console.console import Cursor
 
 
 def test_get_cursor_position(monkeypatch):

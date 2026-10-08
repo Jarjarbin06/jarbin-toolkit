@@ -2,7 +2,7 @@
 # JARBIN-TOOLKIT
 #
 # Package      : Console/Console
-# File         : test_format_io.py
+# File         : test_console_io.py
 #
 # Author       : Jarjarbin06
 # ============================================================================
@@ -11,7 +11,7 @@
 import pytest
 import sys
 
-from jarbin_toolkit_console.console.io import IO
+from jarbin_toolkit_console.console import IO
 
 
 def test_io_stdout():

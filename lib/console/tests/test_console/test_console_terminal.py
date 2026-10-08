@@ -2,7 +2,7 @@
 # JARBIN-TOOLKIT
 #
 # Package      : Console/Console
-# File         : test_format_terminal.py
+# File         : test_console_terminal.py
 #
 # Author       : Jarjarbin06
 # ============================================================================
@@ -10,7 +10,7 @@
 
 import pytest
 
-from jarbin_toolkit_console.console.terminal import Terminal
+from jarbin_toolkit_console.console import Terminal
 
 
 class FakeStream:

@@ -2,7 +2,7 @@
 # JARBIN-TOOLKIT
 #
 # Package      : Console/Console
-# File         : test_format_console.py
+# File         : test_console_console.py
 #
 # Author       : Jarjarbin06
 # ============================================================================
@@ -11,8 +11,8 @@
 import pytest
 from io import StringIO
 
-from jarbin_toolkit_console.console.console import Console
-from jarbin_toolkit_console.console.enums import ConsoleAlign
+from jarbin_toolkit_console.console import Console
+from jarbin_toolkit_console.console import ConsoleAlign
 
 
 def test_console_inherits_context():

@@ -18,9 +18,11 @@ import jarbin_toolkit_console.ansi as ANSI
 
 from jarbin_toolkit_console.text import Text
 
-from jarbin_toolkit_console.console import Console
-
 import jarbin_toolkit_console.format as Format
+
+import jarbin_toolkit_console.console as Console
+
+import jarbin_toolkit_console.animation as Animation
 
 from jarbin_toolkit_console.color import (
     Color256,
@@ -37,8 +39,6 @@ from jarbin_toolkit_console.enums import (
     PresetSpinner,
 )
 
-import jarbin_toolkit_console.console as _Console
-
 from jarbin_toolkit_console.color import Color as _Color
 
 
@@ -52,9 +52,11 @@ __all__ = [
 
     'Text',
 
+    'Format',
+
     'Console',
 
-    'Format',
+    'Animation',
 
     'Color256',
     'ColorRGB',
@@ -68,6 +70,4 @@ __all__ = [
     'PresetSpinner',
 
     '_Color',
-    '_Console',
-
 ]

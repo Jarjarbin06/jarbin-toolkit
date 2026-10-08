@@ -8,7 +8,10 @@
 # ============================================================================
 
 
-from enum import IntEnum
+from enum import (
+    IntEnum,
+    auto,
+)
 from typing import final
 
 
@@ -16,21 +19,21 @@ from typing import final
 class ActionStatus(IntEnum):
 
 
-    INACTIVE = 0
-    PENDING = 1
-    RUNNING = 2
-    PAUSED = 3
-    SUCCESS = 4
-    FAILED = 5
-    CANCELLED = 6
+    INACTIVE = auto()
+    PENDING = auto()
+    RUNNING = auto()
+    PAUSED = auto()
+    SUCCESS = auto()
+    FAILED = auto()
+    CANCELLED = auto()
 
 
 @final
 class ActionAsync(IntEnum):
 
 
-    SUCCESS = 1
-    FAILED = 0
+    SUCCESS = auto()
+    FAILED = auto()
 
 
 __all__ = [

@@ -2,7 +2,7 @@
 # JARBIN-TOOLKIT
 #
 # Package      : Console/Console
-# File         : test_format_input.py
+# File         : test_console_input.py
 #
 # Author       : Jarjarbin06
 # ============================================================================
@@ -10,7 +10,7 @@
 
 import pytest
 
-from jarbin_toolkit_console.console.input import Input
+from jarbin_toolkit_console.console import Input
 
 
 class FakeStream:

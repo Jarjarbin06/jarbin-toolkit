@@ -9,38 +9,40 @@
 
 
 from enum import (
+    IntEnum,
     StrEnum,
     Enum,
+    auto,
 )
 from typing import final
 
 
 @final
-class FormatPosition(StrEnum):
+class FormatPosition(IntEnum):
 
 
-    LEFT = "left"
-    CENTER = "center"
-    RIGHT = "right"
-
-
-@final
-class FormatOrder(StrEnum):
-
-
-    BEFORE = "before"
-    AFTER = "after"
+    LEFT = auto()
+    CENTER = auto()
+    RIGHT = auto()
 
 
 @final
-class FormatStrength(StrEnum):
+class FormatOrder(IntEnum):
 
 
-    LIGHT = "light"
-    HEAVY = "heavy"
-    DOUBLE = "double"
-    ROUND = "round"
-    ASCII = "ascii"
+    BEFORE = auto()
+    AFTER = auto()
+
+
+@final
+class FormatStrength(IntEnum):
+
+
+    LIGHT = auto()
+    HEAVY = auto()
+    DOUBLE = auto()
+    ROUND = auto()
+    ASCII = auto()
 
 
 @final

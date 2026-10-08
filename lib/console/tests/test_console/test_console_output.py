@@ -2,7 +2,7 @@
 # JARBIN-TOOLKIT
 #
 # Package      : Console/Console
-# File         : test_format_output.py
+# File         : test_console_output.py
 #
 # Author       : Jarjarbin06
 # ============================================================================
@@ -11,12 +11,12 @@
 import pytest
 from io import StringIO
 
-from jarbin_toolkit_console.console.enums import (
+from jarbin_toolkit_console.console import (
     ConsoleAlign,
     ConsoleOutputMode,
     ConsoleOverflow,
+    Output,
 )
-from jarbin_toolkit_console.console.output import Output
 
 
 @pytest.fixture(autouse=True)

@@ -16,6 +16,9 @@ from jarbin_toolkit_console.format.format import Format
 class Text(str, Format):
 
 
+    _can_format = True
+
+
     def _new(
             self,
             value,
@@ -34,7 +37,7 @@ class Text(str, Format):
             other,
         ):
         if isinstance(other, str):
-            return self._new(super().__add__(other))
+            return self._new(str.__add__(str(self), other))
 
         return NotImplemented
 
@@ -54,7 +57,7 @@ class Text(str, Format):
             other,
         ):
         if isinstance(other, int):
-            return self._new(super().__mul__(other))
+            return self._new(str.__mul__(str(self), other))
 
         return NotImplemented
 
@@ -64,7 +67,7 @@ class Text(str, Format):
             other,
         ):
         if isinstance(other, int):
-            return self._new(super().__rmul__(other))
+            return self._new(str.__rmul__(str(self), other))
 
         return NotImplemented
 
