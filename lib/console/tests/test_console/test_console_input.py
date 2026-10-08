@@ -11,6 +11,7 @@
 import pytest
 
 from jarbin_toolkit_console.console import Input
+from jarbin_toolkit_console import ConsoleJError
 
 
 class FakeStream:
@@ -107,7 +108,7 @@ def test_raw_non_tty():
 )
 def test_raw_negative_count(count):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="Count must be non-negative",
     ):
         Input.raw(count=count)
@@ -119,7 +120,7 @@ def test_raw_negative_count(count):
 )
 def test_raw_negative_timeout(timeout):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="Timeout must be non-negative",
     ):
         Input.raw(timeout=timeout)

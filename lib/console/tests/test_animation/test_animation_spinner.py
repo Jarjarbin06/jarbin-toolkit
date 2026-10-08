@@ -15,7 +15,7 @@ from jarbin_toolkit_console.animation import (
     AnimationMode,
     Spinner,
 )
-from jarbin_toolkit_console.enums import PresetSpinner
+from jarbin_toolkit_console import PresetSpinner
 
 
 @pytest.mark.parametrize(

@@ -8,6 +8,7 @@
 # ============================================================================
 
 
+from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.ansi.screen.enums import (
     ScreenDisplayEraseMode,
     ScreenLineEraseMode,
@@ -28,7 +29,7 @@ class ScreenErase(CSI):
         ):
 
         if not isinstance(mode, ScreenDisplayEraseMode):
-            raise ValueError("ScreenErase mode must be ScreenDisplayEraseMode")
+            raise ConsoleJError("ScreenErase mode must be ScreenDisplayEraseMode")
 
         return cls(f"{mode}J")
 
@@ -40,7 +41,7 @@ class ScreenErase(CSI):
         ):
 
         if not isinstance(mode, ScreenLineEraseMode):
-            raise ValueError("ScreenErase mode must be ScreenLineEraseMode")
+            raise ConsoleJError("ScreenErase mode must be ScreenLineEraseMode")
 
         return cls(f"{mode}K")
 
@@ -55,7 +56,7 @@ class ScreenEdit(CSI):
         ):
 
         if not isinstance(n, int) or n < 1:
-            raise ValueError("ScreenEdit n must be positive int")
+            raise ConsoleJError("ScreenEdit n must be positive int")
 
         return cls(f"{n}@")
 
@@ -67,7 +68,7 @@ class ScreenEdit(CSI):
         ):
 
         if not isinstance(n, int) or n < 1:
-            raise ValueError("ScreenEdit n must be positive int")
+            raise ConsoleJError("ScreenEdit n must be positive int")
 
         return cls(f"{n}P")
 
@@ -79,7 +80,7 @@ class ScreenEdit(CSI):
         ):
 
         if not isinstance(n, int) or n < 1:
-            raise ValueError("ScreenEdit n must be positive int")
+            raise ConsoleJError("ScreenEdit n must be positive int")
 
         return cls(f"{n}X")
 
@@ -91,7 +92,7 @@ class ScreenEdit(CSI):
         ):
 
         if not isinstance(n, int) or n < 1:
-            raise ValueError("ScreenEdit n must be positive int")
+            raise ConsoleJError("ScreenEdit n must be positive int")
 
         return cls(f"{n}b")
 
@@ -103,7 +104,7 @@ class ScreenEdit(CSI):
         ):
 
         if not isinstance(n, int) or n < 1:
-            raise ValueError("ScreenEdit n must be positive int")
+            raise ConsoleJError("ScreenEdit n must be positive int")
 
         return cls(f"{n}L")
 
@@ -115,7 +116,7 @@ class ScreenEdit(CSI):
         ):
 
         if not isinstance(n, int) or n < 1:
-            raise ValueError("ScreenEdit n must be positive int")
+            raise ConsoleJError("ScreenEdit n must be positive int")
 
         return cls(f"{n}M")
 
@@ -130,7 +131,7 @@ class ScreenScroll(CSI):
         ):
 
         if not isinstance(n, int) or n < 1:
-            raise ValueError("ScreenScroll n must be positive int")
+            raise ConsoleJError("ScreenScroll n must be positive int")
 
         return cls(f"{n} @")
 
@@ -142,7 +143,7 @@ class ScreenScroll(CSI):
         ):
 
         if not isinstance(n, int) or n < 1:
-            raise ValueError("ScreenScroll n must be positive int")
+            raise ConsoleJError("ScreenScroll n must be positive int")
 
         return cls(f"{n} A")
 
@@ -155,10 +156,10 @@ class ScreenScroll(CSI):
         ):
 
         if not isinstance(top, int) or not isinstance(bottom, int) or top < 1 or bottom < 1:
-            raise ValueError("ScreenScroll top and bottom must be positive int")
+            raise ConsoleJError("ScreenScroll top and bottom must be positive int")
 
         if top >= bottom:
-            raise ValueError("ScreenScroll top must be strictly smaller than bottom")
+            raise ConsoleJError("ScreenScroll top must be strictly smaller than bottom")
 
         return cls(f"{top};{bottom}r")
 
@@ -182,7 +183,7 @@ class ScreenMargins(CSI):
         ):
 
         if not isinstance(left, int) or not isinstance(right, int):
-            raise ValueError("ScreenMargins left and right must be int")
+            raise ConsoleJError("ScreenMargins left and right must be int")
 
         return cls(f"{left};{right}s")
 
@@ -297,7 +298,7 @@ class ScreenRectangle(CSI):
         ):
 
         if not isinstance(top, int) or not isinstance(left, int) or not isinstance(bottom, int) or not isinstance(right, int):
-            raise ValueError("ScreenRectangle top, left, bottom and right must be int")
+            raise ConsoleJError("ScreenRectangle top, left, bottom and right must be int")
 
         return cls(f"{top};{left};{bottom};{right}$z")
 
@@ -313,10 +314,10 @@ class ScreenRectangle(CSI):
         ):
 
         if not isinstance(char, str) or len(char) != 1:
-            raise ValueError("ScreenRectangle char must be a single character")
+            raise ConsoleJError("ScreenRectangle char must be a single character")
 
         if not isinstance(top, int) or not isinstance(left, int) or not isinstance(bottom, int) or not isinstance(right, int):
-            raise ValueError("ScreenRectangle top, left, bottom and right must be int")
+            raise ConsoleJError("ScreenRectangle top, left, bottom and right must be int")
 
         return cls(f"{char};{top};{left};{bottom};{right}$x")
 
@@ -335,10 +336,10 @@ class ScreenRectangle(CSI):
         ):
 
         if not isinstance(src_top, int) or not isinstance(src_left, int) or not isinstance(src_bottom, int) or not isinstance(src_right, int) or not isinstance(src_page, int):
-            raise ValueError("ScreenRectangle src_top, src_left, src_bottom, src_right and src_page must be int")
+            raise ConsoleJError("ScreenRectangle src_top, src_left, src_bottom, src_right and src_page must be int")
 
         if not isinstance(dest_top, int) or not isinstance(dest_left, int) or not isinstance(dest_page, int):
-            raise ValueError("ScreenRectangle dest_top, dest_left and dest_page must be int")
+            raise ConsoleJError("ScreenRectangle dest_top, dest_left and dest_page must be int")
 
         return cls(f"{src_top};{src_left};{src_bottom};{src_right};{src_page};{dest_top};{dest_left};{dest_page}$v")
 
@@ -436,7 +437,7 @@ class ScreenSize(CSI):
         ):
 
         if not isinstance(columns, int) or columns < 1:
-            raise ValueError("ScreenSize columns must be a positive int")
+            raise ConsoleJError("ScreenSize columns must be a positive int")
 
         return cls(f"{columns}$|")
 
@@ -448,7 +449,7 @@ class ScreenSize(CSI):
         ):
 
         if not isinstance(lines, int) or lines < 1:
-            raise ValueError("ScreenSize lines must be a positive int")
+            raise ConsoleJError("ScreenSize lines must be a positive int")
 
         return cls(f"{lines}*|")
 

@@ -8,6 +8,7 @@
 # ============================================================================
 
 
+from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.format.enums import FormatStrength
 from jarbin_toolkit_console.enums import (
     PresetSymbol,
@@ -76,7 +77,7 @@ class Collection:
         len_items = len(items)
 
         if len(checked) != len_items:
-            raise ValueError("Checked must be the same length as the number of items")
+            raise ConsoleJError("Checked must be the same length as the number of items")
 
         new_text = [
             f"{marker_checked if checked[line] else marker_unchecked} {items[line]}"
@@ -113,7 +114,7 @@ class Collection:
             parents = [False] * (depth - 1)
 
         if len(parents) != depth - 1:
-            raise ValueError(
+            raise ConsoleJError(
                 "parents must contain one value for each parent level"
             )
 
@@ -148,7 +149,7 @@ class Collection:
             tee = PresetBox.ASCII_TEE_LEFT
 
         else:
-            raise ValueError(f"Unsupported format strength: {strength}")
+            raise ConsoleJError(f"Unsupported format strength: {strength}")
 
         indent = "".join(
             "    " if parent_last else f"{vertical}   "
@@ -182,7 +183,7 @@ class Collection:
             parents = []
 
         if not hasattr(items, "__iter__") or isinstance(items, str):
-            raise TypeError("items must be an iterable of tree items")
+            raise ConsoleJError("items must be an iterable of tree items")
 
         items = list(items)
         result = []
@@ -192,7 +193,7 @@ class Collection:
 
             if isinstance(item, tuple):
                 if len(item) != 2:
-                    raise ValueError(
+                    raise ConsoleJError(
                         "Tree branches must contain an item and its children"
                     )
 
@@ -236,10 +237,10 @@ class Collection:
         ):
 
         if not hasattr(items, "__iter__") or isinstance(items, str):
-            raise TypeError("items must be an iterable of tree items")
+            raise ConsoleJError("items must be an iterable of tree items")
 
         if not isinstance(prefix, str):
-            raise TypeError("prefix must be a string")
+            raise ConsoleJError("prefix must be a string")
 
         tree = f"{self}\n{self.f_collection_tree_branch(items, depth=1, strength=strength)}"
 

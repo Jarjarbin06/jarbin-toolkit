@@ -11,11 +11,13 @@
 import pytest
 
 from jarbin_toolkit_console import (
+    ConsoleJError,
     ColorRGB,
     Color256,
     ColorHEX,
     Text,
 )
+from jarbin_toolkit_console import PresetColor
 from jarbin_toolkit_console.format import FormatStyle
 
 
@@ -35,7 +37,7 @@ def test_composition_multiple_styles():
 
 
 def test_composition_style_invalid():
-    with pytest.raises(TypeError, match="Styles must be FormatStyle"):
+    with pytest.raises(ConsoleJError, match="Styles must be FormatStyle"):
         Text("Hello").f_composition_style("bold")
 
 
@@ -60,7 +62,6 @@ def test_composition_style_invalid():
     ],
 )
 def test_composition_colored(kwargs, expected):
-    from jarbin_toolkit_console.enums import PresetColor
 
     class ColorHolder:
         def __init__(self, value):
@@ -85,7 +86,7 @@ def test_composition_colored_invalid(name):
         value = "invalid"
 
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match=f"{name} must contain a Color256, ColorRGB or ColorHEX",
     ):
         Text("Hello").f_composition_colored(

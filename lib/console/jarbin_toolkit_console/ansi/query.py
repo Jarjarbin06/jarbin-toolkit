@@ -18,6 +18,7 @@ import tty
 import os
 from typing import final
 
+from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.ansi.ansi import CSI, DCS
 from jarbin_toolkit_console.ansi.osc.enums import OSCClipboardSelection
 
@@ -192,7 +193,7 @@ class Query:
         ):
 
         if not isinstance(status, int) or status < 0:
-            raise ValueError(
+            raise ConsoleJError(
                 "Query status must be a non-negative integer"
             )
 
@@ -231,7 +232,7 @@ class Query:
         ):
 
         if not isinstance(mode, int) or mode < 0:
-            raise ValueError(
+            raise ConsoleJError(
                 "Query mode must be a non-negative integer"
             )
 
@@ -269,7 +270,7 @@ class Query:
         ):
 
         if not isinstance(value, str):
-            raise TypeError(
+            raise ConsoleJError(
                 "Query value must be a string"
             )
 
@@ -320,7 +321,7 @@ class Query:
         ):
 
         if not isinstance(capability, str):
-            raise TypeError(
+            raise ConsoleJError(
                 "Query capability must be a string"
             )
 
@@ -359,7 +360,7 @@ class Query:
         ):
 
         if not isinstance(selection, OSCClipboardSelection):
-            raise TypeError("Query selection must be OSCClipboardSelection")
+            raise ConsoleJError("Query selection must be OSCClipboardSelection")
 
         response = cls._request(
             f"\x1b]52;{selection};?\x1b\\",

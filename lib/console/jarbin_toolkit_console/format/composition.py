@@ -8,7 +8,7 @@
 # ============================================================================
 
 
-
+from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.format.enums import FormatStyle
 from jarbin_toolkit_console.color import (
     Color256,
@@ -39,7 +39,7 @@ class Composition:
         SGR = self._get_sgr()
 
         if any(not isinstance(style, FormatStyle) for style in styles):
-            raise TypeError("Styles must be FormatStyle")
+            raise ConsoleJError("Styles must be FormatStyle")
 
         prefix = [style.value[0] for style in styles]
         suffix = [style.value[1] for style in styles]
@@ -71,7 +71,7 @@ class Composition:
                 continue
 
             if not isinstance(color.value, (Color256, ColorRGB, ColorHEX)):
-                raise TypeError(
+                raise ConsoleJError(
                     f"{name} must contain a Color256, ColorRGB or ColorHEX"
                 )
 

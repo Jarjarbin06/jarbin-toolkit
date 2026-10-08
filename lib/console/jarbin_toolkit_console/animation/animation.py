@@ -10,6 +10,7 @@
 
 from numbers import Real
 
+from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.animation.enums import (
     AnimationDirection,
     AnimationMode,
@@ -36,13 +37,13 @@ class Animation:
         )
 
         if not frames:
-            raise ValueError("Animation must contain at least one frame")
+            raise ConsoleJError("Animation must contain at least one frame")
 
         if not isinstance(mode, AnimationMode):
-            raise TypeError("Mode must be an AnimationMode")
+            raise ConsoleJError("Mode must be an AnimationMode")
 
         if not isinstance(direction, AnimationDirection):
-            raise TypeError(
+            raise ConsoleJError(
                 "Direction must be an AnimationDirection"
             )
 
@@ -71,10 +72,10 @@ class Animation:
         ):
 
         if not isinstance(index, int):
-            raise TypeError("Frame index must be an integer")
+            raise ConsoleJError("Frame index must be an integer")
 
         if index < 0 or index >= length:
-            raise ValueError("Frame index out of range")
+            raise ConsoleJError("Frame index out of range")
 
 
     @staticmethod
@@ -89,10 +90,10 @@ class Animation:
                 not isinstance(duration, Real)
                 or isinstance(duration, bool)
         ):
-            raise TypeError("Duration must be a number")
+            raise ConsoleJError("Duration must be a number")
 
         if duration <= 0:
-            raise ValueError("Duration must be greater than zero")
+            raise ConsoleJError("Duration must be greater than zero")
 
 
     def _frame_duration(
@@ -105,7 +106,7 @@ class Animation:
             duration = self._duration
 
         if duration is None:
-            raise RuntimeError(
+            raise ConsoleIRuntimeError(
                 "Animation has no duration"
             )
 
@@ -297,10 +298,10 @@ class Animation:
         ):
 
         if not isinstance(steps, int):
-            raise TypeError("Steps must be an integer")
+            raise ConsoleJError("Steps must be an integer")
 
         if steps < 0:
-            raise ValueError("Steps must be non-negative")
+            raise ConsoleJError("Steps must be non-negative")
 
         for _ in range(steps):
             self._advance(1)
@@ -315,10 +316,10 @@ class Animation:
         ):
 
         if not isinstance(steps, int):
-            raise TypeError("Steps must be an integer")
+            raise ConsoleJError("Steps must be an integer")
 
         if steps < 0:
-            raise ValueError("Steps must be non-negative")
+            raise ConsoleJError("Steps must be non-negative")
 
         for _ in range(steps):
             self._advance(-1)
@@ -356,7 +357,7 @@ class Animation:
         ):
 
         if not isinstance(mode, AnimationMode):
-            raise TypeError("Mode must be an AnimationMode")
+            raise ConsoleJError("Mode must be an AnimationMode")
 
         self._mode = mode
         self._finished = self._is_terminal()
@@ -400,10 +401,10 @@ class Animation:
         ):
 
         if not isinstance(elapsed, Real) or isinstance(elapsed, bool):
-            raise TypeError("Elapsed time must be a number")
+            raise ConsoleJError("Elapsed time must be a number")
 
         if elapsed < 0:
-            raise ValueError("Elapsed time must be non-negative")
+            raise ConsoleJError("Elapsed time must be non-negative")
 
         if self._finished:
             return self.current

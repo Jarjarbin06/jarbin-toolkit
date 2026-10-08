@@ -12,6 +12,7 @@ import pytest
 
 from jarbin_toolkit_console.format import Border
 from jarbin_toolkit_console import (
+    ConsoleJError,
     Text,
     PresetBorder,
 )
@@ -112,7 +113,7 @@ def test_border_padding():
     ],
 )
 def test_border_negative_padding(method):
-    with pytest.raises(ValueError, match="Padding cannot be negative"):
+    with pytest.raises(ConsoleJError, match="Padding cannot be negative"):
         method(Text("Hello"))
 
 

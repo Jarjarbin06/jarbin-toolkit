@@ -23,6 +23,7 @@ class Format(Style, Color, Layout, Border, Decoration, Collection, Composition):
     _can_format = True
     _sgr = None
     _cursor = None
+    _osc = None
 
 
     @classmethod
@@ -49,6 +50,19 @@ class Format(Style, Color, Layout, Border, Decoration, Collection, Composition):
             cls._cursor = Cursor
 
         return cls._cursor
+
+
+    @classmethod
+    def _get_osc(
+            cls,
+        ):
+
+        if cls._osc is None:
+            import jarbin_toolkit_console.ansi.osc.osc as OSC
+
+            cls._osc = OSC
+
+        return cls._osc
 
 
 __all__ = [

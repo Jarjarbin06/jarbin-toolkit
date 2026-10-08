@@ -9,6 +9,7 @@
 
 
 from jarbin_toolkit_console.animation.frame import Frame
+from jarbin_toolkit_console.error import ConsoleJError
 
 
 class AnimationRenderer:
@@ -24,16 +25,16 @@ class AnimationRenderer:
         ):
 
         if not callable(render):
-            raise TypeError("Render must be callable")
+            raise ConsoleJError("Render must be callable")
 
         if clear is not None and not callable(clear):
-            raise TypeError("Clear must be callable")
+            raise ConsoleJError("Clear must be callable")
 
         if start is not None and not callable(start):
-            raise TypeError("Start must be callable")
+            raise ConsoleJError("Start must be callable")
 
         if stop is not None and not callable(stop):
-            raise TypeError("Stop must be callable")
+            raise ConsoleJError("Stop must be callable")
 
         self._render = render
         self._clear = clear

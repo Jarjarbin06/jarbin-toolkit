@@ -8,6 +8,7 @@
 # ============================================================================
 
 
+from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.enums import PresetSymbol
 from jarbin_toolkit_console.format.enums import FormatPosition
 
@@ -35,10 +36,10 @@ class Layout:
         ):
 
         if len(fill) != 1:
-            raise ValueError("Fill character must be a single character")
+            raise ConsoleJError("Fill character must be a single character")
 
         if amount < 0:
-            raise ValueError("Amount must be non-negative")
+            raise ConsoleJError("Amount must be non-negative")
 
         lines = self.splitlines()
         new_text = []
@@ -100,7 +101,7 @@ class Layout:
         Cursor = self._get_cursor()
 
         if width < 0:
-            raise ValueError("Width must be non-negative")
+            raise ConsoleJError("Width must be non-negative")
 
         lines = self.splitlines()
         new_text = []
@@ -214,10 +215,10 @@ class Layout:
         ):
 
         if width <= 0:
-            raise ValueError("Width must be greater than zero")
+            raise ConsoleJError("Width must be greater than zero")
 
         if not isinstance(break_long_words, bool):
-            raise TypeError("break_long_words must be a boolean")
+            raise ConsoleJError("break_long_words must be a boolean")
 
         words = self.split()
         lines = []
@@ -265,13 +266,13 @@ class Layout:
         ):
 
         if width < 0:
-            raise ValueError("Width must be non-negative")
+            raise ConsoleJError("Width must be non-negative")
 
         if not isinstance(suffix, str):
-            raise TypeError("Suffix must be a string")
+            raise ConsoleJError("Suffix must be a string")
 
         if not isinstance(break_long_words, bool):
-            raise TypeError("break_long_words must be a boolean")
+            raise ConsoleJError("break_long_words must be a boolean")
 
         if len(self) <= width:
             return self
@@ -314,7 +315,7 @@ class Layout:
             self,
         ):
 
-        return self.splitlines()
+        return [self.__class__(line) for line in self.splitlines()]
 
 
     def f_layout_first_line(
@@ -380,6 +381,40 @@ class Layout:
         new_text = self.splitlines()[::-1]
 
         return self._get_layout_text("\n".join(new_text))
+
+
+    def f_layout_hyperlink(
+            self,
+            *,
+            link = None,
+        ):
+
+        OSC = self._get_osc()
+
+        new_text = [
+            OSC.OSCHyperlink.open(link or self),
+            self,
+            OSC.OSCHyperlink.close(),
+        ]
+
+        return self._get_layout_text(new_text)
+
+
+    def f_layout_file_link(
+            self,
+            *,
+            file = None,
+        ):
+
+        OSC = self._get_osc()
+
+        new_text = [
+            OSC.OSCFileLink.open(file or self),
+            self,
+            OSC.OSCFileLink.close(),
+        ]
+
+        return self._get_layout_text(new_text)
 
 
 __all__ = [

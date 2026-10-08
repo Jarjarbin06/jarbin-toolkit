@@ -11,6 +11,7 @@
 import pytest
 
 from jarbin_toolkit_console import (
+    ConsoleJError,
     Color256,
     ColorRGB,
     ColorHEX,
@@ -33,7 +34,7 @@ def test_color256():
 
 @pytest.mark.parametrize("value", [-1, 256, "42", None, 1.5])
 def test_color256_invalid(value):
-    with pytest.raises(ValueError, match="Color must be a number between 0 and 255"):
+    with pytest.raises(ConsoleJError, match="Color must be a number between 0 and 255"):
         Color256(value)
 
 
@@ -62,7 +63,7 @@ def test_color_rgb():
 )
 def test_color_rgb_invalid(values):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="RGB values must all be numbers between 0 and 255",
     ):
         ColorRGB(*values)
@@ -84,7 +85,7 @@ def test_color_hex_with_hashtag():
 )
 def test_color_hex_invalid(value):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="HEX color must be string and contain exactly 6 hexadecimal digits",
     ):
         ColorHEX(value)

@@ -11,6 +11,7 @@
 import pytest
 
 from jarbin_toolkit_console import (
+    ConsoleJError,
     PresetSymbol,
     PresetBorder,
     Text,
@@ -70,7 +71,7 @@ def test_collection_checklist():
 
 def test_collection_checklist_invalid_length():
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="Checked must be the same length as the number of items",
     ):
         Text("").f_collection_checklist(
@@ -142,7 +143,7 @@ def test_collection_tree_item_parent_state():
 
 def test_collection_tree_item_invalid_parents():
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="parents must contain one value for each parent level",
     ):
         Text("").f_collection_tree_item(
@@ -176,7 +177,7 @@ def test_collection_tree_branch():
 
 def test_collection_tree_branch_invalid_items():
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="items must be an iterable of tree items",
     ):
         Text("").f_collection_tree_branch("invalid")
@@ -184,7 +185,7 @@ def test_collection_tree_branch_invalid_items():
 
 def test_collection_tree_branch_invalid_tuple():
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="Tree branches must contain an item and its children",
     ):
         Text("").f_collection_tree_branch(
@@ -203,14 +204,14 @@ def test_collection_tree_prefix():
 
 def test_collection_tree_invalid_items():
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="items must be an iterable of tree items",
     ):
         Text("").f_collection_tree("invalid")
 
 
 def test_collection_tree_invalid_prefix():
-    with pytest.raises(TypeError, match="prefix must be a string"):
+    with pytest.raises(ConsoleJError, match="prefix must be a string"):
         Text("").f_collection_tree([], prefix=1)
 
 

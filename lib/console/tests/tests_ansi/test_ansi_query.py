@@ -12,6 +12,7 @@ import pytest
 
 from jarbin_toolkit_console.ansi import Query
 from jarbin_toolkit_console.ansi.osc import OSCClipboardSelection
+from jarbin_toolkit_console import ConsoleJError
 
 
 def test_query_cursor_position(monkeypatch):
@@ -255,7 +256,7 @@ def test_query_device_status(
 )
 def test_query_device_status_invalid(value):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="Query status must be a non-negative integer",
     ):
         Query.device_status(value)
@@ -376,7 +377,7 @@ def test_query_mode(
 )
 def test_query_mode_invalid(value):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="Query mode must be a non-negative integer",
     ):
         Query.mode(value)
@@ -450,7 +451,7 @@ def test_query_status_string_empty_value(monkeypatch):
 )
 def test_query_status_string_invalid(value):
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="Query value must be a string",
     ):
         Query.status_string(value)
@@ -567,7 +568,7 @@ def test_query_terminal_capability_empty_value(monkeypatch):
 )
 def test_query_terminal_capability_invalid(value):
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="Query capability must be a string",
     ):
         Query.terminal_capability(value)
@@ -676,7 +677,7 @@ def test_query_clipboard_selections(
 )
 def test_query_clipboard_invalid_selection(selection):
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="Query selection must be OSCClipboardSelection",
     ):
         Query.clipboard(selection)

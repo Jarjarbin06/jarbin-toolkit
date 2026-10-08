@@ -12,6 +12,7 @@ __author__ = 'Jarjarbin06'
 __email__ = 'nathan.amaraggi@outlook.fr'
 __version__ = "1.0.0.0"
 __license__ = "GPL"
+__github__ = "https://github.com/Jarjarbin06/jarbin-toolkit"
 
 
 from jarbin_toolkit_action.action import Action
@@ -32,6 +33,7 @@ __all__ = [
     '__email__',
     '__version__',
     '__license__',
+    '__github__',
 
     'Action',
     'ActionBatch',

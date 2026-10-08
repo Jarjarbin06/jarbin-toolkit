@@ -14,6 +14,7 @@ from jarbin_toolkit_console.console import (
     Context,
     _ContextMeta,
 )
+from jarbin_toolkit_console import ConsoleJError
 
 
 def test_alternate_screen(monkeypatch):
@@ -41,7 +42,7 @@ def test_alternate_screen_already_active():
     Context._is_alternate = True
 
     try:
-        with pytest.raises(IOError, match="Already on alternate screen"):
+        with pytest.raises(ConsoleJError, match="Already on alternate screen"):
             Context.alternate_screen()
     finally:
         Context._is_alternate = False
@@ -72,7 +73,7 @@ def test_normal_screen_already_active():
     Context._is_alternate = False
 
     try:
-        with pytest.raises(IOError, match="Already on normal screen"):
+        with pytest.raises(ConsoleJError, match="Already on normal screen"):
             Context.normal_screen()
     finally:
         Context._is_alternate = False

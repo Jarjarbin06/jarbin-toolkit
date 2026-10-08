@@ -8,6 +8,7 @@
 # ============================================================================
 
 
+from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.text import Text
 
 
@@ -25,7 +26,7 @@ class Frame(Text):
         ):
 
         if duration is not None and duration <= 0:
-            raise ValueError("Duration must be greater than zero")
+            raise ConsoleJError("Duration must be greater than zero")
 
         instance = super().__new__(
             cls,

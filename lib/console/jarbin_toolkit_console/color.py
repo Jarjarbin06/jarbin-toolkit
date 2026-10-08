@@ -8,6 +8,9 @@
 # ============================================================================
 
 
+from jarbin_toolkit_console.error import ConsoleJError
+
+
 class Color:
 
 
@@ -35,7 +38,7 @@ class Color256(Color):
         ):
 
         if not isinstance(color, int) or not 0 <= color <= 255:
-            raise ValueError("Color must be a number between 0 and 255")
+            raise ConsoleJError("Color must be a number between 0 and 255")
 
         super().__init__(color=color)
 
@@ -105,7 +108,7 @@ class ColorRGB(Color):
         ):
 
         if not all(isinstance(value, int) and 0 <= value <= 255 for value in [r, g, b]):
-            raise ValueError("RGB values must all be numbers between 0 and 255")
+            raise ConsoleJError("RGB values must all be numbers between 0 and 255")
 
         super().__init__(r=r, g=g, b=b)
 
@@ -159,7 +162,7 @@ class ColorHEX(Color):
             char.upper() in self._allowed
             for char in color
         ):
-            raise ValueError("HEX color must be string and contain exactly 6 hexadecimal digits")
+            raise ConsoleJError("HEX color must be string and contain exactly 6 hexadecimal digits")
 
         super().__init__(color=color.upper())
 

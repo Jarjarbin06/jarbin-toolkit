@@ -8,6 +8,7 @@
 # ============================================================================
 
 
+from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.enums import PresetBorder
 
 
@@ -53,7 +54,7 @@ class Border:
         ):
 
         if padding < 0:
-            raise ValueError("Padding cannot be negative")
+            raise ConsoleJError("Padding cannot be negative")
 
         h, _, _, _, _, _ = border.value
 
@@ -79,7 +80,7 @@ class Border:
         ):
 
         if padding < 0:
-            raise ValueError("Padding cannot be negative")
+            raise ConsoleJError("Padding cannot be negative")
 
         h, _, _, _, _, _ = border.value
 
@@ -105,7 +106,7 @@ class Border:
         ):
 
         if padding < 0:
-            raise ValueError("Padding cannot be negative")
+            raise ConsoleJError("Padding cannot be negative")
 
         _, v, _, _, _, _ = border.value
 
@@ -130,7 +131,7 @@ class Border:
         ):
 
         if padding < 0:
-            raise ValueError("Padding cannot be negative")
+            raise ConsoleJError("Padding cannot be negative")
 
         _, v, _, _, _, _ = border.value
 
@@ -155,7 +156,7 @@ class Border:
         ):
 
         if padding < 0:
-            raise ValueError("Padding cannot be negative")
+            raise ConsoleJError("Padding cannot be negative")
 
         h, v, tl, tr, bl, br = border.value
 
@@ -265,7 +266,7 @@ class Border:
         ):
 
         if padding < 0:
-            raise ValueError("Padding cannot be negative")
+            raise ConsoleJError("Padding cannot be negative")
 
         h, v, tl, tr, bl, br = border.value
 

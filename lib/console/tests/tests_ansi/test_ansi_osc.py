@@ -16,11 +16,13 @@ from jarbin_toolkit_console.ansi.osc import (
     OSCColor,
     OSCWindow,
     OSCHyperlink,
+    OSCFileLink,
     OSCNotification,
     OSCClipboard,
     OSCShell,
     OSCClipboardSelection,
 )
+from jarbin_toolkit_console import ConsoleJError
 
 
 ST = "\x1b\\"
@@ -62,7 +64,7 @@ def test_osc_title_invalid_value(
         value,
     ):
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="OSCTitle name must be string",
     ):
         method(value)
@@ -80,7 +82,7 @@ def test_osc_title_invalid_value(
 )
 def test_osc_title_invalid_property(value):
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="OSCTitle name and value must be strings",
     ):
         OSCTitle.set_property(*value)
@@ -151,7 +153,7 @@ def test_osc_window(tmp_path):
 
 def test_osc_window_invalid_type():
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="OSCWindow path must be string",
     ):
         OSCWindow.set_directory(1)
@@ -161,7 +163,7 @@ def test_osc_window_missing_path(tmp_path):
     path = tmp_path / "missing"
 
     with pytest.raises(
-        FileNotFoundError,
+        ConsoleJError,
         match="OSCWindow path must exist",
     ):
         OSCWindow.set_directory(str(path))
@@ -172,7 +174,7 @@ def test_osc_window_file(tmp_path):
     path.touch()
 
     with pytest.raises(
-        FileNotFoundError,
+        ConsoleJError,
         match="OSCWindow path must be a directory",
     ):
         OSCWindow.set_directory(str(path))
@@ -204,10 +206,42 @@ def test_osc_hyperlink():
 )
 def test_osc_hyperlink_invalid_link(link):
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="OSCHyperlink link must be string",
     ):
         OSCHyperlink.open(link)
+
+
+# ============================================================================
+# OSCFileLink
+# ============================================================================
+
+
+def test_osc_hyperlink():
+    assert str(
+        OSCFileLink.open("/home/user/file.txt")
+    ) == f"\x1b]8;;file:///home/user/file.txt{ST}"
+
+    assert str(
+        OSCFileLink.close()
+    ) == f"\x1b]8;;{ST}"
+
+
+@pytest.mark.parametrize(
+    "file",
+    [
+        1,
+        None,
+        1.5,
+        True,
+    ],
+)
+def test_osc_hyperlink_invalid_link(file):
+    with pytest.raises(
+        ConsoleJError,
+        match="OSCFileLink file must be string",
+    ):
+        OSCFileLink.open(file)
 
 
 # ============================================================================
@@ -239,7 +273,7 @@ def test_osc_notification():
 )
 def test_osc_notification_invalid_simple(message):
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="OSCNotification message must be string",
     ):
         OSCNotification.notify_simple(message)
@@ -260,7 +294,7 @@ def test_osc_notification_invalid_advanced(
         message,
     ):
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="OSCNotification title and message must be string",
     ):
         OSCNotification.notify_advanced(
@@ -304,7 +338,7 @@ def test_osc_clipboard_copy_selections(selection):
 )
 def test_osc_clipboard_copy_invalid_value(value):
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="OSCClipboard value must be string",
     ):
         OSCClipboard.copy(value)
@@ -321,7 +355,7 @@ def test_osc_clipboard_copy_invalid_value(value):
 )
 def test_osc_clipboard_copy_invalid_selection(selection):
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="OSCClipboard selection must be OSCClipboardSelection",
     ):
         OSCClipboard.copy(
@@ -357,7 +391,7 @@ def test_osc_clipboard_clear_selections(selection):
 )
 def test_osc_clipboard_clear_invalid_selection(selection):
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="OSCClipboard selection must be OSCClipboardSelection",
     ):
         OSCClipboard.clear(selection)
@@ -398,6 +432,7 @@ def test_osc_clipboard_paste_selections(
     )
 
     assert OSCClipboard.paste(selection) == "Hello"
+    assert OSCClipboard.paste(selection) == "Hello"
 
 
 @pytest.mark.parametrize(
@@ -411,7 +446,7 @@ def test_osc_clipboard_paste_selections(
 )
 def test_osc_clipboard_paste_invalid_selection(selection):
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="OSCClipboard selection must be OSCClipboardSelection",
     ):
         OSCClipboard.paste(selection)

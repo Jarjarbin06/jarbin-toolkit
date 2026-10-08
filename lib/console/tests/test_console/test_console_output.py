@@ -17,6 +17,7 @@ from jarbin_toolkit_console.console import (
     ConsoleOverflow,
     Output,
 )
+from jarbin_toolkit_console import ConsoleJError
 
 
 @pytest.fixture(autouse=True)
@@ -106,7 +107,7 @@ def test_print_separator():
         "A",
         "B",
         "C",
-        sep=" | ",
+        separator=" | ",
         width=20,
         stream=stream,
         reset=False,
@@ -241,7 +242,7 @@ def test_print_overflow_wrap_invalid():
     stream = StringIO()
 
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="Overflow cannot be used with wrap",
     ):
         Output.print(

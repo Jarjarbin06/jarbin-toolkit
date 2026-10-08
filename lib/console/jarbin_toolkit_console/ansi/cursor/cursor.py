@@ -8,8 +8,8 @@
 # ============================================================================
 
 
+from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.ansi.cursor.enums import CursorStyles
-
 from jarbin_toolkit_console.ansi.ansi import CSI
 
 
@@ -23,7 +23,7 @@ class CursorPosition(CSI):
         ):
 
         if not isinstance(n, int) or n < 1:
-            raise ValueError("CursorPosition n must be a positive integer")
+            raise ConsoleJError("CursorPosition n must be a positive integer")
 
         return cls(f"{n}A")
 
@@ -35,7 +35,7 @@ class CursorPosition(CSI):
         ):
 
         if not isinstance(n, int) or n < 1:
-            raise ValueError("CursorPosition n must be a positive integer")
+            raise ConsoleJError("CursorPosition n must be a positive integer")
 
         return cls(f"{n}B")
 
@@ -47,7 +47,7 @@ class CursorPosition(CSI):
         ):
 
         if not isinstance(n, int) or n < 1:
-            raise ValueError("CursorPosition n must be a positive integer")
+            raise ConsoleJError("CursorPosition n must be a positive integer")
 
         return cls(f"{n}C")
 
@@ -59,7 +59,7 @@ class CursorPosition(CSI):
         ):
 
         if not isinstance(n, int) or n < 1:
-            raise ValueError("CursorPosition n must be a positive integer")
+            raise ConsoleJError("CursorPosition n must be a positive integer")
 
         return cls(f"{n}D")
 
@@ -71,7 +71,7 @@ class CursorPosition(CSI):
         ):
 
         if not isinstance(n, int) or n < 1:
-            raise ValueError("CursorPosition n must be a positive integer")
+            raise ConsoleJError("CursorPosition n must be a positive integer")
 
         return cls(f"{n}E")
 
@@ -83,7 +83,7 @@ class CursorPosition(CSI):
         ):
 
         if not isinstance(n, int) or n < 1:
-            raise ValueError("CursorPosition n must be a positive integer")
+            raise ConsoleJError("CursorPosition n must be a positive integer")
 
         return cls(f"{n}F")
 
@@ -95,7 +95,7 @@ class CursorPosition(CSI):
         ):
 
         if not isinstance(x, int) or x < 1:
-            raise ValueError("CursorPosition x must be a positive integer")
+            raise ConsoleJError("CursorPosition x must be a positive integer")
 
         return cls(f"{x}G")
 
@@ -107,7 +107,7 @@ class CursorPosition(CSI):
         ):
 
         if not isinstance(y, int) or y < 1:
-            raise ValueError("CursorPosition y must be a positive integer")
+            raise ConsoleJError("CursorPosition y must be a positive integer")
 
         return cls(f"{y}d")
 
@@ -120,7 +120,7 @@ class CursorPosition(CSI):
         ):
 
         if not isinstance(y, int) or not isinstance(x, int) or y < 1 or x < 1:
-            raise ValueError("CursorPosition y and x must be a positive integer")
+            raise ConsoleJError("CursorPosition y and x must be a positive integer")
 
         return cls(f"{y};{x}H")
 
@@ -132,7 +132,7 @@ class CursorPosition(CSI):
         ):
 
         if not isinstance(n, int) or n < 1:
-            raise ValueError("CursorPosition n must be a positive integer")
+            raise ConsoleJError("CursorPosition n must be a positive integer")
 
         return cls(f"{n}I")
 
@@ -144,7 +144,7 @@ class CursorPosition(CSI):
         ):
 
         if not isinstance(n, int) or n < 1:
-            raise ValueError("CursorPosition n must be a positive integer")
+            raise ConsoleJError("CursorPosition n must be a positive integer")
 
         return cls(f"{n}Z")
 
@@ -156,7 +156,7 @@ class CursorPosition(CSI):
         ):
 
         if not isinstance(x, int) or x < 1:
-            raise ValueError("CursorPosition x must be a positive integer")
+            raise ConsoleJError("CursorPosition x must be a positive integer")
 
         return cls(f"{x}a")
 
@@ -168,7 +168,7 @@ class CursorPosition(CSI):
         ):
 
         if not isinstance(y, int) or y < 1:
-            raise ValueError("CursorPosition y must be a positive integer")
+            raise ConsoleJError("CursorPosition y must be a positive integer")
 
         return cls(f"{y}e")
 
@@ -181,7 +181,7 @@ class CursorPosition(CSI):
         ):
 
         if not isinstance(y, int) or not isinstance(x, int) or y < 1 or x < 1:
-            raise ValueError("CursorPosition y and x must be a positive integer")
+            raise ConsoleJError("CursorPosition y and x must be a positive integer")
 
         return cls(f"{y};{x}f")
 
@@ -223,7 +223,7 @@ class CursorStyle(CSI):
         ):
 
         if not isinstance(style, CursorStyles):
-            raise TypeError("CursorStyle style must be CursorStyles")
+            raise ConsoleJError("CursorStyle style must be CursorStyles")
 
         return cls(f"{style} q")
 

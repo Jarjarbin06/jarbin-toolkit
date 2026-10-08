@@ -8,6 +8,7 @@
 # ============================================================================
 
 
+from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.text import Text
 
 
@@ -23,7 +24,7 @@ class ANSI(Text):
         ):
 
         if not isinstance(value, str):
-            raise TypeError("ANSI value must be a string")
+            raise ConsoleJError("ANSI value must be a string")
 
         return super().__new__(
             cls,

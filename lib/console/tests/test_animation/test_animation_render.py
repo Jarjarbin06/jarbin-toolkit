@@ -14,6 +14,7 @@ from jarbin_toolkit_console.animation import (
     AnimationRenderer,
     Frame,
 )
+from jarbin_toolkit_console import ConsoleJError
 
 
 def test_renderer_basic():
@@ -120,9 +121,9 @@ def test_renderer_context_manager_stops_on_exception():
         stop=lambda: calls.append("stop"),
     )
 
-    with pytest.raises(RuntimeError):
+    with pytest.raises(ConsoleJError):
         with renderer:
-            raise RuntimeError("failure")
+            raise ConsoleJError("failure")
 
     assert calls == ["stop"]
 
@@ -137,7 +138,7 @@ def test_renderer_context_manager_stops_on_exception():
 )
 def test_renderer_invalid_render(argument, message):
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match=message,
     ):
         AnimationRenderer(argument)
@@ -145,7 +146,7 @@ def test_renderer_invalid_render(argument, message):
 
 def test_renderer_invalid_clear():
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="Clear must be callable",
     ):
         AnimationRenderer(
@@ -156,7 +157,7 @@ def test_renderer_invalid_clear():
 
 def test_renderer_invalid_start():
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="Start must be callable",
     ):
         AnimationRenderer(
@@ -167,7 +168,7 @@ def test_renderer_invalid_start():
 
 def test_renderer_invalid_stop():
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="Stop must be callable",
     ):
         AnimationRenderer(

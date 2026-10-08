@@ -16,6 +16,7 @@ from jarbin_toolkit_console.animation import (
     AnimationMode,
     AnimationState,
 )
+from jarbin_toolkit_console import ConsoleJError
 
 
 class Clock:
@@ -244,16 +245,16 @@ def test_controller_context_manager(controller):
 
 
 def test_controller_context_manager_on_exception(controller):
-    with pytest.raises(RuntimeError):
+    with pytest.raises(ConsoleJError):
         with controller:
-            raise RuntimeError("failure")
+            raise ConsoleJError("failure")
 
     assert controller.stopped is True
 
 
 def test_controller_invalid_animation():
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="Animation must be an Animation",
     ):
         AnimationController("animation")
@@ -263,7 +264,7 @@ def test_controller_invalid_clock():
     animation = Animation(["A"])
 
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="Clock must be callable",
     ):
         AnimationController(
@@ -283,7 +284,7 @@ def test_controller_negative_elapsed(controller, elapsed):
     controller.start()
 
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="Elapsed time must be non-negative",
     ):
         controller.update(elapsed)

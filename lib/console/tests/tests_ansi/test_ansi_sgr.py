@@ -25,6 +25,7 @@ from jarbin_toolkit_console.ansi.sgr import (
 from jarbin_toolkit_console import (
     Color256,
     ColorRGB,
+    ConsoleJError,
 )
 
 
@@ -44,12 +45,12 @@ def test_sgr_color():
 
 
 def test_sgr_empty():
-    with pytest.raises(ValueError, match="SGR values are required"):
+    with pytest.raises(ConsoleJError, match="SGR values are required"):
         SGR()
 
 
 def test_sgr_invalid_value():
-    with pytest.raises(TypeError, match="SGR values must be strings or Color"):
+    with pytest.raises(ConsoleJError, match="SGR values must be strings or Color"):
         SGR(123)
 
 
@@ -62,7 +63,7 @@ def test_sgr_reset():
 
 
 def test_sgr_reset_invalid():
-    with pytest.raises(TypeError, match="SGR resets must all be SGRReset"):
+    with pytest.raises(ConsoleJError, match="SGR resets must all be SGRReset"):
         SGR.reset(SGRAttribute.BOLD)
 
 
@@ -74,7 +75,7 @@ def test_sgr_attribute():
 
 
 def test_sgr_attribute_invalid():
-    with pytest.raises(TypeError, match="SGR attributes must be SGRAttribute"):
+    with pytest.raises(ConsoleJError, match="SGR attributes must be SGRAttribute"):
         SGR.attribute(SGRReset.ALL)
 
 
@@ -99,7 +100,7 @@ def test_sgr_foreground():
 )
 def test_sgr_foreground_invalid(color):
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="SGR color must be SGRStandardColorForeground or SGRStandardColorForegroundBright",
     ):
         SGR.foreground(color)
@@ -126,7 +127,7 @@ def test_sgr_background():
 )
 def test_sgr_background_invalid(color):
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="SGR color must be SGRStandardColorBackground or SGRStandardColorBackgroundBright",
     ):
         SGR.background(color)
@@ -150,7 +151,7 @@ def test_sgr_color():
 
 def test_sgr_color_invalid_extender():
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="SGR extender must be SGRColorExtender",
     ):
         SGR.color(SGRAttribute.BOLD, ColorRGB(255, 0, 0))
@@ -158,7 +159,7 @@ def test_sgr_color_invalid_extender():
 
 def test_sgr_color_invalid_color():
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="SGR color must be Color256 or ColorRGB",
     ):
         SGR.color(SGRColorExtender.FOREGROUND, SGRAttribute.BOLD)
@@ -188,7 +189,7 @@ def test_sgr_underline():
 
 def test_sgr_underline_invalid_style():
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="SGR style must be SGRAdvancedUnderline",
     ):
         SGR.underline(SGRAttribute.UNDERLINE)
@@ -196,7 +197,7 @@ def test_sgr_underline_invalid_style():
 
 def test_sgr_underline_invalid_color():
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="SGR color must be Color256 or ColorRGB",
     ):
         SGR.underline(
@@ -217,7 +218,7 @@ def test_sgr_position():
 
 def test_sgr_position_invalid():
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="SGR position must be SGRPosition",
     ):
         SGR.position(SGRAttribute.BOLD)

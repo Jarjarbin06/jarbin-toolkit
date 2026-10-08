@@ -10,6 +10,7 @@
 
 from jarbin_toolkit_time import Time
 
+from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.animation.animation import Animation
 from jarbin_toolkit_console.animation.enums import AnimationState
 
@@ -25,10 +26,10 @@ class AnimationController:
         ):
 
         if not isinstance(animation, Animation):
-            raise TypeError("Animation must be an Animation")
+            raise ConsoleJError("Animation must be an Animation")
 
         if not callable(clock):
-            raise TypeError("Clock must be callable")
+            raise ConsoleJError("Clock must be callable")
 
         self._animation = animation
         self._clock = clock
@@ -166,7 +167,7 @@ class AnimationController:
             self._started_at = now
 
         if elapsed < 0:
-            raise ValueError("Elapsed time must be non-negative")
+            raise ConsoleJError("Elapsed time must be non-negative")
 
         self._elapsed += elapsed
 

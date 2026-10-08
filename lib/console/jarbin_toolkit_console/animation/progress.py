@@ -10,6 +10,7 @@
 
 from numbers import Real
 
+from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.enums import PresetProgress
 from jarbin_toolkit_console.text import Text
 
@@ -26,7 +27,7 @@ class Progress:
         ):
 
         if maximum <= minimum:
-            raise ValueError(
+            raise ConsoleJError(
                 "Maximum must be greater than minimum"
             )
 
@@ -43,10 +44,10 @@ class Progress:
         ):
 
         if not isinstance(value, Real) or isinstance(value, bool):
-            raise TypeError("Progress value must be a number")
+            raise ConsoleJError("Progress value must be a number")
 
         if value < self._minimum or value > self._maximum:
-            raise ValueError("Progress value out of range")
+            raise ConsoleJError("Progress value out of range")
 
 
     @property
@@ -140,18 +141,18 @@ class ProgressRenderer:
         ):
 
         if width <= 0:
-            raise ValueError("Width must be greater than zero")
+            raise ConsoleJError("Width must be greater than zero")
 
         if filled is not None or empty is not None:
 
             if filled is None or empty is None:
-                raise ValueError(
+                raise ConsoleJError(
                     "Both filled and empty must be provided"
                 )
 
         else:
             if not isinstance(preset, PresetProgress):
-                raise TypeError(
+                raise ConsoleJError(
                     "Preset must be a PresetProgress"
                 )
 
@@ -177,7 +178,7 @@ class ProgressRenderer:
         ):
 
         if width <= 0:
-            raise ValueError("Width must be greater than zero")
+            raise ConsoleJError("Width must be greater than zero")
 
         self._width = width
 
@@ -188,7 +189,7 @@ class ProgressRenderer:
         ):
 
         if not isinstance(progress, Progress):
-            raise TypeError("Progress must be a Progress")
+            raise ConsoleJError("Progress must be a Progress")
 
         filled = round(
             progress.percentage / 100 * self._width

@@ -11,6 +11,7 @@
 import base64
 from pathlib import Path
 
+from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.color import ColorHEX
 from jarbin_toolkit_console.ansi.query import Query
 from jarbin_toolkit_console.ansi.osc.enums import OSCClipboardSelection
@@ -30,7 +31,7 @@ class OSCTitle(OSC):
         ):
 
         if not isinstance(name, str):
-            raise TypeError("OSCTitle name must be string")
+            raise ConsoleJError("OSCTitle name must be string")
 
         return cls(f"0;{name}{ST}")
 
@@ -42,7 +43,7 @@ class OSCTitle(OSC):
         ):
 
         if not isinstance(icon, str):
-            raise TypeError("OSCTitle name must be string")
+            raise ConsoleJError("OSCTitle name must be string")
 
         return cls(f"1;{icon}{ST}")
 
@@ -54,7 +55,7 @@ class OSCTitle(OSC):
         ):
 
         if not isinstance(title, str):
-            raise TypeError("OSCTitle name must be string")
+            raise ConsoleJError("OSCTitle name must be string")
 
         return cls(f"2;{title}{ST}")
 
@@ -67,7 +68,7 @@ class OSCTitle(OSC):
         ):
 
         if not isinstance(name, str) or not isinstance(value, str):
-            raise TypeError("OSCTitle name and value must be strings")
+            raise ConsoleJError("OSCTitle name and value must be strings")
 
         return cls(f"3;{name}={value}{ST}")
 
@@ -84,7 +85,7 @@ class OSCColor(OSC):
         color = ColorHEX(color) if isinstance(color, str) else color
 
         if not isinstance(color, ColorHEX):
-            raise TypeError("OSCColor color must be ColorHEX")
+            raise ConsoleJError("OSCColor color must be ColorHEX")
 
         return cls(f"10;#{color}{ST}")
 
@@ -98,7 +99,7 @@ class OSCColor(OSC):
         color = ColorHEX(color) if isinstance(color, str) else color
 
         if not isinstance(color, ColorHEX):
-            raise TypeError("OSCColor color must be ColorHEX")
+            raise ConsoleJError("OSCColor color must be ColorHEX")
 
         return cls(f"11;#{color}{ST}")
 
@@ -112,7 +113,7 @@ class OSCColor(OSC):
         color = ColorHEX(color) if isinstance(color, str) else color
 
         if not isinstance(color, ColorHEX):
-            raise TypeError("OSCColor color must be ColorHEX")
+            raise ConsoleJError("OSCColor color must be ColorHEX")
 
         return cls(f"12;#{color}{ST}")
 
@@ -126,7 +127,7 @@ class OSCColor(OSC):
         color = ColorHEX(color) if isinstance(color, str) else color
 
         if not isinstance(color, ColorHEX):
-            raise TypeError("OSCColor color must be ColorHEX")
+            raise ConsoleJError("OSCColor color must be ColorHEX")
 
         return cls(f"13;#{color}{ST}")
 
@@ -140,7 +141,7 @@ class OSCColor(OSC):
         color = ColorHEX(color) if isinstance(color, str) else color
 
         if not isinstance(color, ColorHEX):
-            raise TypeError("OSCColor color must be ColorHEX")
+            raise ConsoleJError("OSCColor color must be ColorHEX")
 
         return cls(f"14;#{color}{ST}")
 
@@ -196,16 +197,16 @@ class OSCWindow(OSC):
         ):
 
         if not isinstance(path, str):
-            raise TypeError("OSCWindow path must be string")
+            raise ConsoleJError("OSCWindow path must be string")
 
         try:
             path = Path(path).resolve(strict=True)
         except FileNotFoundError:
             if not force:
-                raise FileNotFoundError("OSCWindow path must exist")
+                raise ConsoleJError("OSCWindow path must exist")
 
         if not force and not path.is_dir():
-            raise FileNotFoundError("OSCWindow path must be a directory")
+            raise ConsoleJError("OSCWindow path must be a directory")
 
         return cls(f"7;file://{path}{ST}")
 
@@ -220,9 +221,32 @@ class OSCHyperlink(OSC):
         ):
 
         if not isinstance(link, str):
-            raise TypeError("OSCHyperlink link must be string")
+            raise ConsoleJError("OSCHyperlink link must be string")
 
         return cls(f"8;;{link}{ST}")
+
+
+    @classmethod
+    def close(
+            cls,
+        ):
+
+        return cls(f"8;;{ST}")
+
+
+class OSCFileLink(OSC):
+
+
+    @classmethod
+    def open(
+            cls,
+            file,
+        ):
+
+        if not isinstance(file, str):
+            raise ConsoleJError("OSCFileLink file must be string")
+
+        return cls(f"8;;file://{file}{ST}")
 
 
     @classmethod
@@ -243,7 +267,7 @@ class OSCNotification(OSC):
         ):
 
         if not isinstance(message, str):
-            raise TypeError("OSCNotification message must be string")
+            raise ConsoleJError("OSCNotification message must be string")
 
         return cls(f"9;{message}{ST}")
 
@@ -256,7 +280,7 @@ class OSCNotification(OSC):
         ):
 
         if not isinstance(title, str) or not isinstance(message, str):
-            raise TypeError("OSCNotification title and message must be string")
+            raise ConsoleJError("OSCNotification title and message must be string")
 
         return cls(f"777;notify;{title};{message}{ST}")
 
@@ -272,12 +296,12 @@ class OSCClipboard(OSC):
         ):
 
         if not isinstance(value, str):
-            raise TypeError(
+            raise ConsoleJError(
                 "OSCClipboard value must be string"
             )
 
         if not isinstance(selection, OSCClipboardSelection):
-            raise TypeError(
+            raise ConsoleJError(
                 "OSCClipboard selection must be "
                 "OSCClipboardSelection"
             )
@@ -298,7 +322,7 @@ class OSCClipboard(OSC):
         ):
 
         if not isinstance(selection, OSCClipboardSelection):
-            raise TypeError(
+            raise ConsoleJError(
                 "OSCClipboard selection must be "
                 "OSCClipboardSelection"
             )
@@ -313,7 +337,7 @@ class OSCClipboard(OSC):
         ):
 
         if not isinstance(selection, OSCClipboardSelection):
-            raise TypeError(
+            raise ConsoleJError(
                 "OSCClipboard selection must be "
                 "OSCClipboardSelection"
             )
@@ -363,6 +387,7 @@ __all__ = [
     'OSCColor',
     'OSCWindow',
     'OSCHyperlink',
+    'OSCFileLink',
     'OSCNotification',
     'OSCClipboard',
     'OSCShell',

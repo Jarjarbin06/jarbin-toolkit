@@ -41,7 +41,9 @@ class Terminal:
             stream = None
         ):
 
-        return cls.size(stream=stream)[0]
+        size = cls.size(stream=stream)
+
+        return size[0] if size is not None else None
 
 
     @classmethod
@@ -51,7 +53,9 @@ class Terminal:
             stream = None
         ):
 
-        return cls.size(stream=stream)[1]
+        size = cls.size(stream=stream)
+
+        return size[1] if size is not None else None
 
 
     @classmethod

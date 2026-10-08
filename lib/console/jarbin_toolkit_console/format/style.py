@@ -13,7 +13,6 @@ from jarbin_toolkit_console.color import (
     Color256,
     ColorHEX,
 )
-from jarbin_toolkit_console.enums import PresetColor
 
 
 class Style:
@@ -127,6 +126,9 @@ class Style:
         SGR = self._get_sgr()
 
         if style is not None:
+
+            if isinstance(color, ColorHEX):
+                color = color.to_rgb()
 
             if color:
                 mode = SGR.SGRColorMode.RGB if isinstance(color, ColorRGB) else SGR.SGRColorMode.INDEXED

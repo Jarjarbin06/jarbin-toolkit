@@ -27,6 +27,7 @@ from jarbin_toolkit_console.ansi.screen import (
     ScreenDisplayEraseMode,
     ScreenLineEraseMode,
 )
+from jarbin_toolkit_console import ConsoleJError
 
 
 def test_screen_erase_display():
@@ -78,7 +79,7 @@ def test_screen_erase_line(mode):
 )
 def test_screen_erase_display_invalid(mode):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="ScreenErase mode must be ScreenDisplayEraseMode",
     ):
         ScreenErase.erase_display(mode)
@@ -95,7 +96,7 @@ def test_screen_erase_display_invalid(mode):
 )
 def test_screen_erase_line_invalid(mode):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="ScreenErase mode must be ScreenLineEraseMode",
     ):
         ScreenErase.erase_line(mode)
@@ -166,7 +167,7 @@ def test_screen_edit_values(method):
 )
 def test_screen_edit_invalid(method, value):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="ScreenEdit n must be positive int",
     ):
         method(value)
@@ -211,7 +212,7 @@ def test_screen_scroll():
 )
 def test_screen_scroll_invalid_n(method, value):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="ScreenScroll n must be positive int",
     ):
         method(value)
@@ -234,7 +235,7 @@ def test_screen_scroll_invalid_n(method, value):
 )
 def test_screen_scroll_invalid_region_values(top, bottom):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="ScreenScroll top and bottom must be positive int",
     ):
         ScreenScroll.set_region(top, bottom)
@@ -250,7 +251,7 @@ def test_screen_scroll_invalid_region_values(top, bottom):
 )
 def test_screen_scroll_invalid_region_order(top, bottom):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="ScreenScroll top must be strictly smaller than bottom",
     ):
         ScreenScroll.set_region(top, bottom)
@@ -283,7 +284,7 @@ def test_screen_margins():
 )
 def test_screen_margins_invalid(left, right):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="ScreenMargins left and right must be int",
     ):
         ScreenMargins.set(left, right)
@@ -349,7 +350,7 @@ def test_screen_rectangle_fill():
 )
 def test_screen_rectangle_fill_invalid_char(char):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="ScreenRectangle char must be a single character",
     ):
         ScreenRectangle.fill(char, 1, 2, 10, 20)
@@ -386,7 +387,7 @@ def test_screen_rectangle_invalid_position(method, values):
         args = values
 
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="ScreenRectangle top, left, bottom and right must be int",
     ):
         method(*args)
@@ -438,7 +439,7 @@ def test_screen_rectangle_copy():
 )
 def test_screen_rectangle_copy_invalid(values):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="ScreenRectangle .* must be int",
     ):
         ScreenRectangle.copy(*values)
@@ -502,7 +503,7 @@ def test_screen_size():
 )
 def test_screen_size_invalid_columns(value):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="ScreenSize columns must be a positive int",
     ):
         ScreenSize.set_columns(value)
@@ -514,7 +515,7 @@ def test_screen_size_invalid_columns(value):
 )
 def test_screen_size_invalid_lines(value):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="ScreenSize lines must be a positive int",
     ):
         ScreenSize.set_lines(value)

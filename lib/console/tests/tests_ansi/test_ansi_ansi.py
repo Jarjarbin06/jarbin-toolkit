@@ -11,7 +11,10 @@
 import pytest
 
 from jarbin_toolkit_console.ansi import Sequence
-from jarbin_toolkit_console import Text
+from jarbin_toolkit_console import (
+    Text,
+    ConsoleJError,
+)
 
 
 @pytest.mark.parametrize(
@@ -57,7 +60,7 @@ def test_ansi_bases(ansi, expected):
 )
 def test_ansi_invalid_value(ansi, value):
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="ANSI value must be a string",
     ):
         ansi(value)

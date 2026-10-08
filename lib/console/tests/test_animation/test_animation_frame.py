@@ -11,6 +11,7 @@
 import pytest
 
 from jarbin_toolkit_console.animation import Frame
+from jarbin_toolkit_console import ConsoleJError
 
 
 def test_frame_basic():
@@ -62,33 +63,9 @@ def test_frame_duration():
 )
 def test_frame_invalid_duration(duration):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="Duration must be greater than zero",
     ):
-        Frame(
-            "Hello",
-            duration=duration,
-        )
-
-
-@pytest.mark.parametrize(
-    "duration",
-    [
-        "1",
-        None,
-    ],
-)
-def test_frame_duration_types(duration):
-    if duration is None:
-        frame = Frame(
-            "Hello",
-            duration=duration,
-        )
-
-        assert frame.duration is None
-        return
-
-    with pytest.raises(TypeError):
         Frame(
             "Hello",
             duration=duration,

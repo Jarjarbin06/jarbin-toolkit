@@ -17,6 +17,7 @@ from jarbin_toolkit_console.ansi.cursor import (
     CursorMode,
     CursorStyles,
 )
+from jarbin_toolkit_console import ConsoleJError
 
 
 def test_cursor_position():
@@ -79,7 +80,7 @@ def test_cursor_position_values():
 @pytest.mark.parametrize("value", [0, -1, -100])
 def test_cursor_position_invalid_n(method, value):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="CursorPosition n must be a positive integer",
     ):
         method(value)
@@ -101,7 +102,7 @@ def test_cursor_position_invalid_n(method, value):
 @pytest.mark.parametrize("value", ["1", 1.5, None])
 def test_cursor_position_invalid_n_type(method, value):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="CursorPosition n must be a positive integer",
     ):
         method(value)
@@ -117,7 +118,7 @@ def test_cursor_position_invalid_n_type(method, value):
 @pytest.mark.parametrize("value", [0, -1, -100, "1", 1.5, None])
 def test_cursor_position_invalid_x(method, value):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="CursorPosition x must be a positive integer",
     ):
         method(value)
@@ -133,7 +134,7 @@ def test_cursor_position_invalid_x(method, value):
 @pytest.mark.parametrize("value", [0, -1, -100, "1", 1.5, None])
 def test_cursor_position_invalid_y(method, value):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="CursorPosition y must be a positive integer",
     ):
         method(value)
@@ -152,7 +153,7 @@ def test_cursor_position_invalid_y(method, value):
 )
 def test_cursor_position_invalid_y_position(method, y):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="CursorPosition y and x must be a positive integer",
     ):
         method(y, 1)
@@ -171,7 +172,7 @@ def test_cursor_position_invalid_y_position(method, y):
 )
 def test_cursor_position_invalid_x_position(method, x):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="CursorPosition y and x must be a positive integer",
     ):
         method(1, x)
@@ -212,7 +213,7 @@ def test_cursor_style_values(style):
 )
 def test_cursor_style_invalid(style):
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="CursorStyle style must be CursorStyles",
     ):
         CursorStyle.set(style)

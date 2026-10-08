@@ -13,6 +13,7 @@ from time import monotonic
 import termios
 import tty
 
+from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.console.io import IO
 
 
@@ -42,10 +43,10 @@ class Input:
         ):
 
         if count is not None and count < 0:
-            raise ValueError("Count must be non-negative")
+            raise ConsoleJError("Count must be non-negative")
 
         if timeout is not None and timeout < 0:
-            raise ValueError("Timeout must be non-negative")
+            raise ConsoleJError("Timeout must be non-negative")
 
         if stream is None:
             stream = IO.stdin

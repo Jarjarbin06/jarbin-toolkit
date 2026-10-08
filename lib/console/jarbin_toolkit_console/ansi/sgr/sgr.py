@@ -8,6 +8,7 @@
 # ============================================================================
 
 
+from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.ansi.sgr.enums import (
     SGRReset,
     SGRStandardColorBackgroundBright,
@@ -38,10 +39,10 @@ class SGR(CSI):
         ):
 
         if not values:
-            raise ValueError("SGR values are required")
+            raise ConsoleJError("SGR values are required")
 
         if not all(isinstance(value, str | Color) for value in values):
-            raise TypeError("SGR values must be strings or Color")
+            raise ConsoleJError("SGR values must be strings or Color")
 
         return super().__new__(cls, f"{';'.join([str(value) for value in values])}m")
 
@@ -56,7 +57,7 @@ class SGR(CSI):
             return cls(SGRReset.ALL)
 
         if not all(isinstance(reset, SGRReset) for reset in resets):
-            raise TypeError("SGR resets must all be SGRReset")
+            raise ConsoleJError("SGR resets must all be SGRReset")
 
         return cls(*resets)
 
@@ -68,7 +69,7 @@ class SGR(CSI):
         ):
 
         if not all(isinstance(atr, SGRAttribute) for atr in attributes):
-            raise TypeError("SGR attributes must be SGRAttribute")
+            raise ConsoleJError("SGR attributes must be SGRAttribute")
 
         return cls(*attributes)
 
@@ -80,7 +81,7 @@ class SGR(CSI):
         ):
 
         if not isinstance(color, SGRStandardColorForeground | SGRStandardColorForegroundBright):
-            raise TypeError("SGR color must be SGRStandardColorForeground or SGRStandardColorForegroundBright")
+            raise ConsoleJError("SGR color must be SGRStandardColorForeground or SGRStandardColorForegroundBright")
 
         return cls(color)
 
@@ -92,7 +93,7 @@ class SGR(CSI):
         ):
 
         if not isinstance(color, SGRStandardColorBackground | SGRStandardColorBackgroundBright):
-            raise TypeError("SGR color must be SGRStandardColorBackground or SGRStandardColorBackgroundBright")
+            raise ConsoleJError("SGR color must be SGRStandardColorBackground or SGRStandardColorBackgroundBright")
 
         return cls(color)
 
@@ -105,13 +106,13 @@ class SGR(CSI):
         ):
 
         if not isinstance(extender, SGRColorExtender):
-            raise TypeError("SGR extender must be SGRColorExtender")
+            raise ConsoleJError("SGR extender must be SGRColorExtender")
 
         if isinstance(color, ColorHEX):
             color = color.to_rgb()
 
         if not isinstance(color, Color256 | ColorRGB):
-            raise TypeError("SGR color must be Color256 or ColorRGB")
+            raise ConsoleJError("SGR color must be Color256 or ColorRGB")
 
         mode = SGRColorMode.RGB if isinstance(color, ColorRGB) else SGRColorMode.INDEXED
 
@@ -126,7 +127,7 @@ class SGR(CSI):
         ):
 
         if not isinstance(style, SGRAdvancedUnderline):
-            raise TypeError("SGR style must be SGRAdvancedUnderline")
+            raise ConsoleJError("SGR style must be SGRAdvancedUnderline")
 
         if color is not None:
 
@@ -134,7 +135,7 @@ class SGR(CSI):
                 color = color.to_rgb()
 
             if not isinstance(color, Color256 | ColorRGB):
-                raise TypeError("SGR color must be Color256 or ColorRGB")
+                raise ConsoleJError("SGR color must be Color256 or ColorRGB")
 
             mode = SGRColorMode.RGB if isinstance(color, ColorRGB) else SGRColorMode.INDEXED
 
@@ -150,7 +151,7 @@ class SGR(CSI):
         ):
 
         if not isinstance(position, SGRPosition):
-            raise TypeError("SGR position must be SGRPosition")
+            raise ConsoleJError("SGR position must be SGRPosition")
 
         return cls(position)
 

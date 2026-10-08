@@ -14,7 +14,10 @@ from jarbin_toolkit_console.animation import (
     Progress,
     ProgressRenderer,
 )
-from jarbin_toolkit_console.enums import PresetProgress
+from jarbin_toolkit_console import (
+    ConsoleJError,
+    PresetProgress,
+)
 
 
 def test_progress_basic():
@@ -71,7 +74,7 @@ def test_progress_maximum():
 )
 def test_progress_invalid_range(minimum, maximum):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="Maximum must be greater than minimum",
     ):
         Progress(
@@ -89,7 +92,7 @@ def test_progress_invalid_range(minimum, maximum):
 )
 def test_progress_invalid_value(value):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="Progress value out of range",
     ):
         Progress(value=value)
@@ -106,7 +109,7 @@ def test_progress_invalid_value(value):
 )
 def test_progress_invalid_value_type(value):
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="Progress value must be a number",
     ):
         Progress(value=value)
@@ -166,7 +169,7 @@ def test_progress_increment_past_maximum():
     progress = Progress(value=99)
 
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="Progress value out of range",
     ):
         progress.increment(2)
@@ -176,7 +179,7 @@ def test_progress_decrement_past_minimum():
     progress = Progress(value=1)
 
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="Progress value out of range",
     ):
         progress.decrement(2)
@@ -294,7 +297,7 @@ def test_progress_renderer_set_width():
 )
 def test_progress_renderer_invalid_width(width):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="Width must be greater than zero",
     ):
         ProgressRenderer(width=width)
@@ -312,7 +315,7 @@ def test_progress_renderer_set_invalid_width(width):
     renderer = ProgressRenderer()
 
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="Width must be greater than zero",
     ):
         renderer.set_width(width)
@@ -331,7 +334,7 @@ def test_progress_renderer_missing_character(
     ):
 
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="Both filled and empty must be provided",
     ):
         ProgressRenderer(
@@ -350,7 +353,7 @@ def test_progress_renderer_missing_character(
 )
 def test_progress_renderer_invalid_preset(preset):
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="Preset must be a PresetProgress",
     ):
         ProgressRenderer(
@@ -362,7 +365,7 @@ def test_progress_renderer_invalid_progress():
     renderer = ProgressRenderer()
 
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="Progress must be a Progress",
     ):
         renderer.render(50)

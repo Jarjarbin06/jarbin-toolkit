@@ -8,6 +8,7 @@
 # ============================================================================
 
 
+from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.ansi.screen.screen import ScreenBuffer
 from jarbin_toolkit_console.console.output import Output
 
@@ -41,7 +42,7 @@ class Context:
         ):
 
         if cls._is_alternate:
-            raise IOError("Already on alternate screen")
+            raise ConsoleJError("Already on alternate screen")
 
         Output.write(ScreenBuffer.alternate())
         cls._is_alternate = True
@@ -53,7 +54,7 @@ class Context:
         ):
 
         if not cls._is_alternate:
-            raise IOError("Already on normal screen")
+            raise ConsoleJError("Already on normal screen")
 
         Output.write(ScreenBuffer.normal())
         cls._is_alternate = False

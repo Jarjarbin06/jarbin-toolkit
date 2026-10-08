@@ -10,7 +10,10 @@
 
 import pytest
 
-from jarbin_toolkit_console import Text
+from jarbin_toolkit_console import (
+    ConsoleJError,
+    Text,
+)
 from jarbin_toolkit_console.format import FormatPosition
 
 
@@ -46,14 +49,14 @@ def test_layout_pad_custom_fill():
 )
 def test_layout_pad_invalid_fill(fill):
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="Fill character must be a single character",
     ):
         Text("Hello").f_layout_pad(1, fill=fill)
 
 
 def test_layout_pad_negative():
-    with pytest.raises(ValueError, match="Amount must be non-negative"):
+    with pytest.raises(ConsoleJError, match="Amount must be non-negative"):
         Text("Hello").f_layout_pad(-1)
 
 
@@ -90,7 +93,7 @@ def test_layout_align_small_width():
 
 
 def test_layout_align_negative_width():
-    with pytest.raises(ValueError, match="Width must be non-negative"):
+    with pytest.raises(ConsoleJError, match="Width must be non-negative"):
         Text("Hello").f_layout_align(-1)
 
 
@@ -141,7 +144,7 @@ def test_layout_wrap_break_long_words():
 
 def test_layout_wrap_invalid_width():
     with pytest.raises(
-        ValueError,
+        ConsoleJError,
         match="Width must be greater than zero",
     ):
         Text("Hello").f_layout_wrap(0)
@@ -149,7 +152,7 @@ def test_layout_wrap_invalid_width():
 
 def test_layout_wrap_invalid_break_long_words():
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="break_long_words must be a boolean",
     ):
         Text("Hello").f_layout_wrap(
@@ -199,13 +202,13 @@ def test_layout_truncate_custom_suffix():
 
 
 def test_layout_truncate_invalid_suffix():
-    with pytest.raises(TypeError, match="Suffix must be a string"):
+    with pytest.raises(ConsoleJError, match="Suffix must be a string"):
         Text("Hello").f_layout_truncate(2, suffix=None)
 
 
 def test_layout_truncate_invalid_break_long_words():
     with pytest.raises(
-        TypeError,
+        ConsoleJError,
         match="break_long_words must be a boolean",
     ):
         Text("Hello").f_layout_truncate(
@@ -245,7 +248,18 @@ def test_layout_number_lines_custom():
 
 
 def test_layout_reverse_lines():
-    # This intentionally specifies the intended API behavior.
     assert str(
         Text("One\nTwo\nThree").f_layout_reverse_lines()
     ) == "Three\nTwo\nOne"
+
+
+def test_layout_file_link():
+    assert str(
+        Text("my_link.txt").f_layout_file_link()
+    ) == "\x1b]8;;file://my_link.txt\x1b\\my_link.txt\x1b]8;;\x1b\\"
+
+
+def test_layout_hyperlink():
+    assert str(
+        Text("my_link").f_layout_hyperlink()
+    ) == "\x1b]8;;my_link\x1b\\my_link\x1b]8;;\x1b\\"

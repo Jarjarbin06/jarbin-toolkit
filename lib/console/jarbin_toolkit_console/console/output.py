@@ -8,7 +8,7 @@
 # ============================================================================
 
 
-from jarbin_toolkit_console.ansi.query import Query
+from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.format.enums import FormatPosition
 from jarbin_toolkit_console.console.enums import ConsoleOverflow
 from jarbin_toolkit_console.console.terminal import Terminal
@@ -48,7 +48,7 @@ class Output:
     def print(
             cls,
             *values,
-            sep = " ",
+            separator = " ",
             end = "\n",
             stream = None,
             prefix = "",
@@ -68,10 +68,10 @@ class Output:
             or overflow is not None and not isinstance(overflow, ConsoleOverflow)
             or mode is not None and not isinstance(mode, ConsoleOutputMode)
         ):
-            raise TypeError("Align, overflow, and mode must be of type ConsoleOutputMode")
+            raise ConsoleJError("Align, overflow, and mode must be of type ConsoleOutputMode")
 
         if overflow is not None and wrap:
-            raise ValueError("Overflow cannot be used with wrap")
+            raise ConsoleJError("Overflow cannot be used with wrap")
 
         if stream is None:
             stream = IO.stdout
@@ -81,7 +81,7 @@ class Output:
 
         new_text = Text("")
 
-        new_text += sep.join(
+        new_text += separator.join(
             f"{prefix}{value}{suffix}"
             for value in values
         )
@@ -148,7 +148,6 @@ class Output:
             cls,
             *,
             stream = None,
-
         ):
 
         if stream is None:
