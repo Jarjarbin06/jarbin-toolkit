@@ -1,10 +1,2 @@
 pytest>=9.1.1
-jarbin-toolkit>=2.0
-jarbin-toolkit-action>=1.0.0.0
-jarbin-toolkit-config>=1.0.0.0
-jarbin-toolkit-console>=1.0.0.0
-jarbin-toolkit-error>=1.0.0.0
-jarbin-toolkit-log>=1.0.0.0
-jarbin-toolkit-time>=1.0.0.0
-jarbin-toolkit-jartest>=1.0.0.0
 wcwidth==0.9.2
