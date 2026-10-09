@@ -10,6 +10,10 @@
 
 import pytest
 
+import os
+
+os.environ["JARBIN_CONSOLE_NO_BANNER"] = "1"
+
 import jarbin_toolkit_console
 
 

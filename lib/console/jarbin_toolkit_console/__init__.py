@@ -139,7 +139,13 @@ def _banner(
     sleep(1)
 
 
-if True:  #Set to 'False' to disable banner
+def _check_env(
+    ):
+    from os import getenv
+
+    return getenv("JARBIN_CONSOLE_NO_BANNER") != "1"
+
+if _check_env():
     _banner()
 
 
