@@ -231,11 +231,29 @@ def test_datetime_component_type(name):
         )
 
 
+def test_custom_format():
+    value = Time(
+        format="%d/%m/%Y",
+        year=2026,
+        month=9,
+        day=22,
+    )
+
+    assert str(value) == "22/09/2026"
+
+
+def test_parse_custom_format():
+    value = Time.parse(
+        "22/09/2026",
+        "%d/%m/%Y",
+    )
+
+    assert value._datetime == datetime(2026, 9, 22)
+
+
 @pytest.mark.parametrize(
     "format",
     [
-        "invalid",
-        "%Y-%m-%d",
         123,
         None,
     ],
@@ -243,7 +261,7 @@ def test_datetime_component_type(name):
 def test_invalid_format_type(format):
     with pytest.raises(
         TimeTypeJError,
-        match="Format must be of type TimeFormat",
+        match="Format must be of type TimeFormat or str",
     ):
         Time(
             format=format,
@@ -415,17 +433,6 @@ def test_parse_invalid_value_type():
     ):
         Time.parse(
             1234567890,
-        )
-
-
-def test_parse_invalid_format_type():
-    with pytest.raises(
-        TimeTypeJError,
-        match="Format must be of type TimeFormat",
-    ):
-        Time.parse(
-            "2026-09-22",
-            "%Y-%m-%d",
         )
 
 
