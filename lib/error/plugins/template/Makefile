@@ -60,7 +60,7 @@ install:
 
 uninstall:
 	@echo -e "$(YELLOW) [UNINSTALL] ($(PACKAGE_NAME)) Uninstalling package$(NC)"
-	@echo "y" | pip uninstall jarbin_toolkit_error
+	@echo "y" | pip uninstall $(PACKAGE_NAME) || true
 	@echo -e "$(GREEN) [UNINSTALL] ($(PACKAGE_NAME)) Package uninstalled$(NC)"
 
 reinstall:

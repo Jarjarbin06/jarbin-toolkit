@@ -164,7 +164,6 @@ class BaseJError(Exception):
                 "Format must be of type FormatType or str"
             )
 
-
         if not link:
             link = ErrorLink()
         else:
@@ -198,6 +197,31 @@ class BaseJError(Exception):
             return self._str_traceback()
 
         return f"{self.error}: {self.message}"
+
+
+    @property
+    def format(
+            self
+        ):
+
+        return self._format
+
+
+    @format.setter
+    def format(
+            self,
+            format: FormatType
+        ):
+
+        if isinstance(format, str):
+            format = FormatType(format)
+
+        if not isinstance(format, FormatType):
+            raise TypeError(
+                "Format must be of type FormatType or str"
+            )
+
+        self._format = format
 
 
     def __repr__(
