@@ -63,4 +63,6 @@ class JErrorMyException(JException):
         ...
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'JErrorMyException',
+]

@@ -86,7 +86,7 @@ class LogLevel(StrEnum):
         ...
 
 
-_log_level_max_len: int
-
-
-__all__: list[str]
+__all__: list[str] = [
+    'LogType',
+    'LogLevel',
+]

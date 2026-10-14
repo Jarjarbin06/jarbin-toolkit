@@ -106,4 +106,7 @@ class JErrorModuleNotFound(JException):
         ...
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'JErrorImport',
+    'JErrorModuleNotFound',
+]

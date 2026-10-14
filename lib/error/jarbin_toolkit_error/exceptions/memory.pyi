@@ -94,4 +94,7 @@ class JErrorBuffer(JException):
         ...
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'JErrorMemory',
+    'JErrorBuffer',
+]

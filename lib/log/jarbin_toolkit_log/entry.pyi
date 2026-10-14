@@ -108,4 +108,6 @@ class LogEntry:
     _type = type
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'LogEntry',
+]

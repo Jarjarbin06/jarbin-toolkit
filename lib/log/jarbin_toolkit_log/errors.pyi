@@ -100,4 +100,9 @@ class LogStateJError(JException):
         ...
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'LogTypeJError',
+    'LogValueJError',
+    'LogRuntimeJError',
+    'LogStateJError',
+]

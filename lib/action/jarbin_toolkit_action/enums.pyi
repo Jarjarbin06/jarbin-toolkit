@@ -62,4 +62,7 @@ class ActionAsync(IntEnum):
     FAILED: int
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'ActionStatus',
+    'ActionAsync',
+]

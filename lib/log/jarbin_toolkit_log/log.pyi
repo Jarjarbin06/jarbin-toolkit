@@ -269,4 +269,6 @@ class Log:
     _entries: list
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'Log',
+]

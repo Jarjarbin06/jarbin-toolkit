@@ -31,4 +31,6 @@ class _EmptyField:
 EmptyField: _EmptyField
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'EmptyField',
+]

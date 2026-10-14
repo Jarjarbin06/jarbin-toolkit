@@ -108,4 +108,6 @@ class BaseJError(Exception):
         ...
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'BaseJError',
+]

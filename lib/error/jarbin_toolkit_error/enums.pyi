@@ -82,4 +82,7 @@ class ErrorColor(StrEnum):
     WARNING_BACKGROUND: str
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'FormatType',
+    'ErrorColor',
+]

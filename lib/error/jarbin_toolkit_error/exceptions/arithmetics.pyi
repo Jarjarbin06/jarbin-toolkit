@@ -184,4 +184,9 @@ class JErrorFloatingPoint(JException):
         ...
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'JErrorArithmetic',
+    'JErrorZeroDivision',
+    'JErrorOverflow',
+    'JErrorFloatingPoint',
+]

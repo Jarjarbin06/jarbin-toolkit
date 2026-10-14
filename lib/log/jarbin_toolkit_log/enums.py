@@ -92,5 +92,4 @@ _log_level_max_len = max(
 __all__ = [
     'LogType',
     'LogLevel',
-    '_log_level_max_len',
 ]

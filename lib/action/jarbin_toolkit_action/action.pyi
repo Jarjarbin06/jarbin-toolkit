@@ -309,4 +309,6 @@ class Action:
         ...
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'Action',
+]

@@ -201,6 +201,6 @@ class ActionBatch:
         ...
 
 
-__all__ = [
+__all__: list[str] = [
     'ActionBatch',
 ]

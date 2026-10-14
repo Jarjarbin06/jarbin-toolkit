@@ -263,7 +263,7 @@ class TimeFormat(StrEnum):
     WEEK_OF_YEAR_WITH_DAY: str
 
 
-__all__ = [
+__all__: list[str] = [
     'StopWatchState',
     'TimeFormat',
 ]

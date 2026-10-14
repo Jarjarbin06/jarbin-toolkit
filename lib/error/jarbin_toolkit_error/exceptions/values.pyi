@@ -299,4 +299,11 @@ class JErrorKey(JException):
         ...
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'JErrorType',
+    'JErrorValue',
+    'JErrorAttribute',
+    'JErrorName',
+    'JErrorIndex',
+    'JErrorKey',
+]

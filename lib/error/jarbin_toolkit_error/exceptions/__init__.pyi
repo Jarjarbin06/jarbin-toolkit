@@ -52,4 +52,41 @@ from .memory import (
 )
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'JException',
+
+    'JErrorOS',
+    'JErrorRuntime',
+    'JErrorSystem',
+    'JErrorRecursion',
+    'JErrorNotImplemented',
+
+    'JErrorType',
+    'JErrorValue',
+    'JErrorIndex',
+    'JErrorName',
+    'JErrorAttribute',
+    'JErrorKey',
+
+    'JErrorArithmetic',
+    'JErrorFloatingPoint',
+    'JErrorOverflow',
+    'JErrorZeroDivision',
+
+    'JErrorImport',
+    'JErrorModuleNotFound',
+
+    'JErrorIO',
+    'JErrorFileNotFound',
+    'JErrorFileExists',
+    'JErrorPermission',
+    'JErrorIsADirectory',
+    'JErrorNotADirectory',
+    'JErrorDirectoryNotEmpty',
+
+    'JErrorAssertion',
+    'JErrorLookup',
+
+    'JErrorMemory',
+    'JErrorBuffer',
+]

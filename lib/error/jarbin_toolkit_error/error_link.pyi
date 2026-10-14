@@ -173,4 +173,6 @@ class ErrorLink:
         ...
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'ErrorLink',
+]

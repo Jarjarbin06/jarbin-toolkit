@@ -18,4 +18,20 @@ from .errors import (
 )
 
 
-__all__: list[str]
+__all__: list[str] = [
+    '__author__',
+    '__email__',
+    '__version__',
+    '__license__',
+    '__github__',
+
+    'Time',
+    'StopWatch',
+
+    'TimeFormat',
+    'StopWatchState',
+
+    'TimeTypeJError',
+    'TimeValueJError',
+    'TimeStateJError',
+]

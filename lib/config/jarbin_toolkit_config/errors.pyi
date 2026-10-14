@@ -101,4 +101,9 @@ class ConfigFileNotFoundJError(JException):
         ...
 
 
-__all__:list[str]
+__all__: list[str] = [
+    'ConfigTypeJError',
+    'ConfigValueJError',
+    'ConfigRuntimeJError',
+    'ConfigFileNotFoundJError',
+]

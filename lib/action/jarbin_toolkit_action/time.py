@@ -24,7 +24,6 @@ class ActionTimer(StopWatch):
         return super().elapsed()
 
 
-
 __all__ = [
     'ActionTimer',
 ]

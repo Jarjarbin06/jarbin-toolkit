@@ -25,4 +25,6 @@ class ActionTimer(StopWatch):
         ...
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'ActionTimer',
+]

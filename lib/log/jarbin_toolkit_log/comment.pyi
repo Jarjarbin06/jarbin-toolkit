@@ -63,4 +63,6 @@ class LogComment:
     _type: LogType
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'LogComment',
+]

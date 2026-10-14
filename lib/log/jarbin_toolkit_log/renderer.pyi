@@ -102,4 +102,6 @@ class LogRenderer:
         ...
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'LogRenderer',
+]

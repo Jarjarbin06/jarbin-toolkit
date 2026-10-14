@@ -155,6 +155,7 @@ class JErrorSystem(JException):
 
 
 __all__ = [
+    'JErrorOS',
     'JErrorRuntime',
     'JErrorNotImplemented',
     'JErrorRecursion',

@@ -158,4 +158,6 @@ class Time:
     _datetime: datetime
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'Time',
+]

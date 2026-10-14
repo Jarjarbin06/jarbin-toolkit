@@ -10,7 +10,7 @@
 
 __author__ = 'Nathan Jarjarbin'
 __email__ = 'nathan.amaraggi@epitech.eu'
-__version__ = "1.0.0.0"
+__version__ = "1.0.0.1"
 __license__ = "GPL"
 __github__ = "https://github.com/Jarjarbin06/jarbin-toolkit"
 

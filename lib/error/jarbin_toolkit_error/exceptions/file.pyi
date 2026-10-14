@@ -334,4 +334,12 @@ class JErrorDirectoryNotEmpty(JException):
         ...
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'JErrorIO',
+    'JErrorFileNotFound',
+    'JErrorFileExists',
+    'JErrorPermission',
+    'JErrorIsADirectory',
+    'JErrorNotADirectory',
+    'JErrorDirectoryNotEmpty',
+]

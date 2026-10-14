@@ -223,4 +223,10 @@ class JErrorSystem(JException):
         ...
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'JErrorOS',
+    'JErrorRuntime',
+    'JErrorNotImplemented',
+    'JErrorRecursion',
+    'JErrorSystem',
+]

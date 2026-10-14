@@ -164,4 +164,6 @@ class StopWatch:
     _saved: list[float | int]
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'StopWatch',
+]

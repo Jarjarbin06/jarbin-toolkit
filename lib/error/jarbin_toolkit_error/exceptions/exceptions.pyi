@@ -65,4 +65,6 @@ class JException(BaseJError):
         ...
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'JException',
+]
