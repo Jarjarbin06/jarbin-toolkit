@@ -1,9 +1,7 @@
 import pytest
 
-from jarbin_toolkit_error_template import (
-    JErrorMyException,
-    FormatType,
-)
+from jarbin_toolkit_error_template import JErrorMyException
+from jarbin_toolkit_error import FormatType
 
 
 def test_default_values():
