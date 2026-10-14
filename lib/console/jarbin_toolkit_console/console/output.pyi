@@ -156,6 +156,6 @@ class Output:
     _previous_height: int
 
 
-__all__ = [
+__all__: list[str] = [
     'Output',
 ]

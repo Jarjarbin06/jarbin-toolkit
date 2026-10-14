@@ -68,7 +68,7 @@ def test_border_single_operations(method, expected):
         (PresetBorder.SINGLE, "─", "│"),
         (PresetBorder.DOUBLE, "═", "║"),
         (PresetBorder.HEAVY, "━", "┃"),
-        (PresetBorder.ROUNDED, "─", "│"),
+        (PresetBorder.ROUND, "─", "│"),
         (PresetBorder.ASCII, "-", "|"),
     ],
 )
@@ -147,7 +147,7 @@ def test_border_title_with_padding():
         (Text.f_border_single, PresetBorder.SINGLE),
         (Text.f_border_double, PresetBorder.DOUBLE),
         (Text.f_border_heavy, PresetBorder.HEAVY),
-        (Text.f_border_rounded, PresetBorder.ROUNDED),
+        (Text.f_border_rounded, PresetBorder.ROUND),
         (Text.f_border_ascii, PresetBorder.ASCII),
     ],
 )

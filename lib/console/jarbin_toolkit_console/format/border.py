@@ -247,7 +247,7 @@ class Border:
             self,
         ):
 
-        return self.f_border_box(border=PresetBorder.ROUNDED)
+        return self.f_border_box(border=PresetBorder.ROUND)
 
 
     def f_border_ascii(

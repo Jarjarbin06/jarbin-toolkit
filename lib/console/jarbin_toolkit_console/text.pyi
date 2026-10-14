@@ -8,7 +8,10 @@
 # ============================================================================
 
 
-from typing import Any
+from typing import (
+    Any,
+    Optional
+)
 
 from .format.format import Format
 
@@ -30,6 +33,50 @@ class Text(str, Format):
             ----------
             int
                 Length
+        """
+        ...
+
+
+    def split(
+            self,
+            sep: Optional[str] = None,
+            maxsplit: int = -1,
+        ) -> list[Text]:
+        """
+            Split a string into multiple parts.
+
+            Parameters
+            ----------
+            sep : str
+                Splitter
+
+            maxsplit : int
+                Maximum number of parts to split
+
+            Returns
+            ----------
+            list[Text]
+                Splited text
+        """
+        ...
+
+
+    def splitlines(
+            self,
+            keepends: bool = False
+        ) -> list[Text]:
+        """
+            Split a string per line.
+
+            Parameters
+            ----------
+            keepends : bool
+                Keep ends of each line
+
+            Returns
+            ----------
+            list[Text]
+                Splited text
         """
         ...
 

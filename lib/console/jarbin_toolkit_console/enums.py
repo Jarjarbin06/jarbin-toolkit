@@ -149,7 +149,7 @@ class PresetBox(StrEnum):
 
     DOUBLE_CROSS = "╬"
 
-    # Box Drawing - Rounded
+    # Box Drawing - ROUND
     ROUND_HORIZONTAL = "─"
     ROUND_VERTICAL = "│"
 
@@ -208,7 +208,7 @@ class PresetBorder(Enum):
         "┗",
         "┛"
     )
-    ROUNDED = (
+    ROUND = (
         "─",
         "│",
         "╭",

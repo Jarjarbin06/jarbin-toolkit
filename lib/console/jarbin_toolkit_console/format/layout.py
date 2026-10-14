@@ -98,8 +98,6 @@ class Layout:
             align = FormatPosition.LEFT,
         ):
 
-        Cursor = self._get_cursor()
-
         if width < 0:
             raise ConsoleJError("Width must be non-negative")
 
@@ -111,13 +109,13 @@ class Layout:
             remaining_width = width - len(line)
 
             if remaining_width < 1 or align == FormatPosition.LEFT:
-                new_text.append(f"{Cursor.CursorPosition.column(1)}{line[:width]}")
+                new_text.append(f"{line}")
 
             elif align == FormatPosition.CENTER:
-                new_text.append(f"{Cursor.CursorPosition.column(remaining_width // 2 + 1)}{line[:width]}")
+                new_text.append(f"{" " * (remaining_width // 2)}{line}")
 
             elif align == FormatPosition.RIGHT:
-                new_text.append(f"{Cursor.CursorPosition.column(remaining_width + 1)}{line[:width]}")
+                new_text.append(f"{" " * remaining_width}{line}")
 
         return self._get_layout_text("\n".join(new_text))
 

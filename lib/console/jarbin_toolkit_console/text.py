@@ -6,7 +6,7 @@
 #
 # Author       : Jarjarbin06
 # ============================================================================
-
+from typing import LiteralString, SupportsIndex
 
 from wcwidth import width
 
@@ -30,6 +30,25 @@ class Text(str, Format):
             self,
         ):
         return width(str(self))
+
+
+    def split(
+            self,
+            sep = None,
+            maxsplit = -1,
+        ):
+        splited = super().split(sep, maxsplit)
+
+        return [Text(text) for text in splited]
+
+
+    def splitlines(
+            self,
+            keepends = False
+        ):
+        splited = super().splitlines(keepends)
+
+        return [Text(text) for text in splited]
 
 
     def __add__(
