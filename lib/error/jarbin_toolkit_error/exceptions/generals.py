@@ -13,6 +13,31 @@ from jarbin_toolkit_error.empty_field import EmptyField
 from jarbin_toolkit_error.enums import FormatType
 
 
+class JErrorOS(JException):
+
+
+    def __init__(
+            self,
+            message = EmptyField,
+            *,
+            format = FormatType.TRACEBACK,
+            link = None,
+            do_raise = False,
+        ):
+
+        msg = ""
+
+        if message is not EmptyField:
+            msg += f"\n\n  → {message}"
+
+        super().__init__(
+            msg,
+            format = format,
+            link = link,
+            do_raise = do_raise
+        )
+
+
 class JErrorRuntime(JException):
 
 

@@ -53,6 +53,7 @@ class Log:
             datetime_format: Optional[TimeFormat | str] = None,
             entry_datetime_format: Optional[TimeFormat | str] = None,
             metadata: dict[str, Any] = None,
+            run_id: Optional[str | int] = None,
         ):
         """
             Initialize and create the log file
@@ -60,13 +61,26 @@ class Log:
             Parameters
             ----------
             directory : PathLike | str
-                
-        
-            Returns
-            ----------
-            
-                
-        
+                Log directory
+
+            name : str
+                Log file name
+
+            type : LogType
+                Log type
+
+            datetime_format : Optional[TimeFormat | str]
+                Log datetime format
+
+            entry_datetime_format : Optional[TimeFormat | str]
+                Entry datetime format
+
+            metadata : dict[str, Any]
+                Log metadata
+
+            run_id : Optional[str | int]
+                Run id
+
             Raises
             ----------
             LogTypeJError

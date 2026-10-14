@@ -187,6 +187,7 @@ class Log:
             datetime_format = None,
             entry_datetime_format = None,
             metadata = None,
+            run_id = None,
         ):
 
         if isinstance(type, str):
@@ -207,7 +208,7 @@ class Log:
                 "Entry datetime format format must be of type TimeFormat or str"
             )
 
-        self._run_id = uuid4()
+        self._run_id = str(run_id or uuid4())
 
         self._file_format = (
             entry_datetime_format

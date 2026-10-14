@@ -10,7 +10,7 @@
 
 __author__ = 'Jarjarbin06'
 __email__ = 'nathan.amaraggi@outlook.fr'
-__version__ = "1.0.0.0"
+__version__ = "1.0.1.0"
 __license__ = "GPL"
 __github__ = "https://github.com/Jarjarbin06/jarbin-toolkit"
 
@@ -24,6 +24,7 @@ from jarbin_toolkit_error.exceptions.exceptions import (
 )
 
 from jarbin_toolkit_error.exceptions.generals import (
+    JErrorOS,
     JErrorRuntime,
     JErrorSystem,
     JErrorRecursion,
@@ -51,6 +52,26 @@ from jarbin_toolkit_error.exceptions.modules import (
     JErrorModuleNotFound,
 )
 
+from jarbin_toolkit_error.exceptions.file import (
+    JErrorIO,
+    JErrorFileNotFound,
+    JErrorFileExists,
+    JErrorPermission,
+    JErrorIsADirectory,
+    JErrorNotADirectory,
+    JErrorDirectoryNotEmpty,
+)
+
+from jarbin_toolkit_error.exceptions.assertion import (
+    JErrorAssertion,
+    JErrorLookup,
+)
+
+from jarbin_toolkit_error.exceptions.memory import (
+    JErrorMemory,
+    JErrorBuffer,
+)
+
 import jarbin_toolkit_error.enums as _Enums
 from jarbin_toolkit_error.empty_field import (
     _EmptyField as _EmptyFieldClass,
@@ -72,6 +93,7 @@ __all__ = [
 
     'JException',
 
+    'JErrorOS',
     'JErrorRuntime',
     'JErrorSystem',
     'JErrorRecursion',
@@ -91,6 +113,20 @@ __all__ = [
 
     'JErrorImport',
     'JErrorModuleNotFound',
+
+    'JErrorIO',
+    'JErrorFileNotFound',
+    'JErrorFileExists',
+    'JErrorPermission',
+    'JErrorIsADirectory',
+    'JErrorNotADirectory',
+    'JErrorDirectoryNotEmpty',
+
+    'JErrorAssertion',
+    'JErrorLookup',
+
+    'JErrorMemory',
+    'JErrorBuffer',
 
     '_EmptyField',
     '_EmptyFieldClass',

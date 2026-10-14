@@ -9,11 +9,21 @@
 
 
 from jarbin_toolkit_error import (
+    JErrorOS,
     JErrorRuntime,
     JErrorNotImplemented,
     JErrorRecursion,
     JErrorSystem,
 )
+
+
+def test_jerror_os():
+    error = JErrorOS(
+        "this is a message",
+    )
+
+    assert error.error == "JErrorOS"
+    assert "this is a message" in error.message
 
 
 def test_jerror_runtime():

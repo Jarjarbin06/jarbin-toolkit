@@ -11,6 +11,7 @@ from .exceptions.exceptions import (
     JException,
 )
 from .exceptions.generals import (
+    JErrorOS,
     JErrorRuntime,
     JErrorSystem,
     JErrorRecursion,
@@ -34,7 +35,23 @@ from .exceptions.modules import (
     JErrorImport,
     JErrorModuleNotFound,
 )
-
+from .exceptions.file import (
+    JErrorIO,
+    JErrorFileNotFound,
+    JErrorFileExists,
+    JErrorPermission,
+    JErrorIsADirectory,
+    JErrorNotADirectory,
+    JErrorDirectoryNotEmpty,
+)
+from .exceptions.assertion import (
+    JErrorAssertion,
+    JErrorLookup,
+)
+from .exceptions.memory import (
+    JErrorMemory,
+    JErrorBuffer,
+)
 from . import enums as _Enums
 from .empty_field import (
     _EmptyField as _EmptyFieldClass,

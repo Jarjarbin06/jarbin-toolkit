@@ -67,6 +67,43 @@ class Color:
         return self._get_color_sequence(sequence)
 
 
+    def f_color_background(
+            self,
+            color = ColorRGB(255, 255, 255),
+            *,
+            reset = True,
+        ):
+
+        SGR = self._get_sgr()
+
+        if isinstance(color, Color256 | ColorRGB | ColorHEX):
+            color = color.to_rgb() if isinstance(color, ColorHEX) else color
+            mode = SGR.SGRColorMode.RGB if isinstance(color, ColorRGB) else SGR.SGRColorMode.INDEXED
+
+            sequence = [
+                SGR.SGR(SGR.SGRColorExtender.BACKGROUND, mode, color),
+                self,
+                (
+                    SGR.SGR(SGR.SGRReset.BACKGROUND_COLOR)
+                    if reset else
+                    ""
+                )
+            ]
+
+        else:
+            sequence = [
+                SGR.SGR(color),
+                self,
+                (
+                    SGR.SGR(SGR.SGRReset.BACKGROUND_COLOR)
+                    if reset else
+                    ""
+                )
+            ]
+
+        return self._get_color_sequence(sequence)
+
+
     def f_color_black(
             self,
             *,
@@ -241,43 +278,6 @@ class Color:
             return self.f_color_foreground(SGR.SGRStandardColorForegroundBright.WHITE, reset=reset)
 
         return self.f_color_foreground(SGR.SGRStandardColorForeground.WHITE, reset=reset)
-
-
-    def f_color_background(
-            self,
-            color = ColorRGB(255, 255, 255),
-            *,
-            reset = True,
-        ):
-
-        SGR = self._get_sgr()
-
-        if isinstance(color, Color256 | ColorRGB | ColorHEX):
-            color = color.to_rgb() if isinstance(color, ColorHEX) else color
-            mode = SGR.SGRColorMode.RGB if isinstance(color, ColorRGB) else SGR.SGRColorMode.INDEXED
-
-            sequence = [
-                SGR.SGR(SGR.SGRColorExtender.BACKGROUND, mode, color),
-                self,
-                (
-                    SGR.SGR(SGR.SGRReset.BACKGROUND_COLOR)
-                    if reset else
-                    ""
-                )
-            ]
-
-        else:
-            sequence = [
-                SGR.SGR(color),
-                self,
-                (
-                    SGR.SGR(SGR.SGRReset.BACKGROUND_COLOR)
-                    if reset else
-                    ""
-                )
-            ]
-
-        return self._get_color_sequence(sequence)
 
 
     def f_color_default_foreground(
