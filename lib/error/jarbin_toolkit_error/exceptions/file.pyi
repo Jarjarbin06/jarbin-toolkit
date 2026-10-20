@@ -1,13 +1,12 @@
+from os import PathLike
 from typing import (
-    Optional,
     Any,
 )
-from os import PathLike
 
-from .exceptions import JException
 from jarbin_toolkit_error.empty_field import EmptyField
 from jarbin_toolkit_error.enums import FormatType
 
+from .exceptions import JException
 
 class JErrorIO(JException):
     """
@@ -18,10 +17,10 @@ class JErrorIO(JException):
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -49,7 +48,6 @@ class JErrorIO(JException):
             ValueError
                 Invalid link
         """
-        ...
 
 
 class JErrorFileNotFound(JException):
@@ -61,11 +59,11 @@ class JErrorFileNotFound(JException):
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
-            path: PathLike | str = EmptyField,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            path: PathLike | str = EmptyField,  # pyright: ignore[reportArgumentType]
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -96,7 +94,6 @@ class JErrorFileNotFound(JException):
             ValueError
                 Invalid link
         """
-        ...
 
 
 class JErrorFileExists(JException):
@@ -108,11 +105,11 @@ class JErrorFileExists(JException):
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
-            path: PathLike | str = EmptyField,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            path: PathLike | str = EmptyField,  # pyright: ignore[reportArgumentType]
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -143,7 +140,6 @@ class JErrorFileExists(JException):
             ValueError
                 Invalid link
         """
-        ...
 
 
 class JErrorPermission(JException):
@@ -155,11 +151,11 @@ class JErrorPermission(JException):
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
-            path: PathLike | str = EmptyField,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            path: PathLike | str = EmptyField,  # pyright: ignore[reportArgumentType]
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -190,7 +186,6 @@ class JErrorPermission(JException):
             ValueError
                 Invalid link
         """
-        ...
 
 
 class JErrorIsADirectory(JException):
@@ -202,11 +197,11 @@ class JErrorIsADirectory(JException):
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
-            path: PathLike | str = EmptyField,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            path: PathLike | str = EmptyField,  # pyright: ignore[reportArgumentType]
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -237,7 +232,6 @@ class JErrorIsADirectory(JException):
             ValueError
                 Invalid link
         """
-        ...
 
 
 class JErrorNotADirectory(JException):
@@ -249,11 +243,11 @@ class JErrorNotADirectory(JException):
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
-            path: PathLike | str = EmptyField,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            path: PathLike | str = EmptyField,  # pyright: ignore[reportArgumentType]
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -284,7 +278,6 @@ class JErrorNotADirectory(JException):
             ValueError
                 Invalid link
         """
-        ...
 
 
 class JErrorDirectoryNotEmpty(JException):
@@ -296,11 +289,11 @@ class JErrorDirectoryNotEmpty(JException):
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
-            path: PathLike | str = EmptyField,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            path: PathLike | str = EmptyField,  # pyright: ignore[reportArgumentType]
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -331,15 +324,14 @@ class JErrorDirectoryNotEmpty(JException):
             ValueError
                 Invalid link
         """
-        ...
 
 
 __all__: list[str] = [
-    'JErrorIO',
-    'JErrorFileNotFound',
+    'JErrorDirectoryNotEmpty',
     'JErrorFileExists',
-    'JErrorPermission',
+    'JErrorFileNotFound',
+    'JErrorIO',
     'JErrorIsADirectory',
     'JErrorNotADirectory',
-    'JErrorDirectoryNotEmpty',
+    'JErrorPermission',
 ]

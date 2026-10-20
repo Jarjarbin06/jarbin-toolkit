@@ -1,11 +1,10 @@
 from os import PathLike
 from pathlib import Path
+from queue import Queue
 from threading import Lock
 from typing import (
     Any,
-    Optional,
 )
-from queue import Queue
 
 from jarbin_toolkit_time import (
     Time,
@@ -13,10 +12,9 @@ from jarbin_toolkit_time import (
 )
 
 from .enums import (
-    LogType,
     LogLevel,
+    LogType,
 )
-
 
 class Log:
     """
@@ -49,15 +47,15 @@ class Log:
             directory: PathLike | str,
             name: str,
             *,
-            type: LogType = LogType.JAR_LOG,
-            datetime_format: Optional[TimeFormat | str] = None,
-            entry_datetime_format: Optional[TimeFormat | str] = None,
-            metadata: dict[str, Any] = None,
-            run_id: Optional[str | int] = None,
+            type: LogType = LogType.JAR_LOG,  # pyright: ignore[reportArgumentType]
+            datetime_format: TimeFormat | str | None = None,
+            entry_datetime_format: TimeFormat | str | None = None,
+            metadata: dict[str, Any] | None = None,
+            run_id: str | int | None = None,
         ):
         """
             Initialize and create the log file
-        
+
             Parameters
             ----------
             directory : PathLike | str
@@ -86,7 +84,6 @@ class Log:
             LogTypeJError
                 Type, datetime, entry datetime type invalid
         """
-        ...
 
 
     def log(
@@ -115,7 +112,6 @@ class Log:
             LogRuntimeJError
                 Log status invalid
         """
-        ...
 
 
     async def log_async(
@@ -144,7 +140,6 @@ class Log:
             LogRuntimeJError
                 Log status invalid
         """
-        ...
 
 
     def comment(
@@ -164,7 +159,6 @@ class Log:
             LogRuntimeJError
                 Log status invalid
         """
-        ...
 
 
     async def comment_async(
@@ -173,7 +167,7 @@ class Log:
         ) -> None:
         """
             Comment [ASYNC]
-        
+
             Parameters
             ----------
             message : str
@@ -184,7 +178,6 @@ class Log:
             LogRuntimeJError
                 Log status invalid
         """
-        ...
 
 
     def flush(
@@ -198,7 +191,6 @@ class Log:
             LogRuntimeJError
                 File status invalid
         """
-        ...
 
 
     def close(
@@ -219,7 +211,6 @@ class Log:
             LogRuntimeJError
                 Marker not found
         """
-        ...
 
 
     def _create_entry(
@@ -262,7 +253,7 @@ class Log:
     _entry_format: TimeFormat
     _created_at: Time
     _updated_at: Time
-    _closed_at: Optional[Time]
+    _closed_at: Time | None
     _sequence: int
     _sequence_lock: Lock
     _queue: Queue

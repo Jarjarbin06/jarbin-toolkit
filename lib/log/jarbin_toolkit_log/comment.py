@@ -10,8 +10,8 @@
 
 from typing import final
 
-from jarbin_toolkit_log.errors import LogTypeJError
 from jarbin_toolkit_log.enums import LogType
+from jarbin_toolkit_log.errors import LogTypeJError
 
 
 @final

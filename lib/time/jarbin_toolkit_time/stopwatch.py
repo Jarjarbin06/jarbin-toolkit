@@ -71,7 +71,7 @@ class StopWatch:
                 "StopWatch is not running"
             )
 
-        self._elapsed += monotonic() - self._start
+        self._elapsed += monotonic() - self._start  # pyright: ignore[reportOperatorIssue]
         self._start = None
         self._state = StopWatchState.PAUSED
 
@@ -109,7 +109,7 @@ class StopWatch:
                 "StopWatch is not running"
             )
 
-        self._elapsed += monotonic() - self._start
+        self._elapsed += monotonic() - self._start  # pyright: ignore[reportOperatorIssue]
         self._start = None
         self._stopped_at = time()
         self._state = StopWatchState.STOPPED
@@ -132,7 +132,7 @@ class StopWatch:
         ):
 
         if self._state == StopWatchState.RUNNING:
-            return self._elapsed + (
+            return self._elapsed + (  # pyright: ignore[reportOperatorIssue]
                 monotonic() - self._start
             )
 

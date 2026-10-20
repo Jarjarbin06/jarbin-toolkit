@@ -8,9 +8,9 @@
 # ============================================================================
 
 
-from jarbin_toolkit_console.error import ConsoleJError
-from jarbin_toolkit_console.ansi.cursor.enums import CursorStyles
 from jarbin_toolkit_console.ansi.ansi import CSI
+from jarbin_toolkit_console.ansi.cursor.enums import CursorStyles
+from jarbin_toolkit_console.error import ConsoleJError
 
 
 class CursorPosition(CSI):
@@ -328,8 +328,8 @@ class CursorMode(CSI):
 
 
 __all__ = [
+    'CursorMode',
     'CursorPosition',
     'CursorSave',
     'CursorStyle',
-    'CursorMode',
 ]

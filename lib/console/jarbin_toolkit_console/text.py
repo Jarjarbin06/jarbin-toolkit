@@ -6,7 +6,6 @@
 #
 # Author       : Jarjarbin06
 # ============================================================================
-from typing import LiteralString, SupportsIndex
 
 from wcwidth import width
 
@@ -32,7 +31,7 @@ class Text(str, Format):
         return width(str(self))
 
 
-    def split(
+    def split(  # pyright: ignore[reportIncompatibleMethodOverride]
             self,
             sep = None,
             maxsplit = -1,
@@ -42,7 +41,7 @@ class Text(str, Format):
         return [Text(text) for text in splited]
 
 
-    def splitlines(
+    def splitlines(  # pyright: ignore[reportIncompatibleMethodOverride]
             self,
             keepends = False
         ):

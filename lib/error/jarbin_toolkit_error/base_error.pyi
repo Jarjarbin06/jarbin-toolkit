@@ -1,17 +1,15 @@
 from typing import (
-    Optional,
     Any,
 )
 
 from jarbin_toolkit_error.enums import FormatType
 from jarbin_toolkit_error.error_link import ErrorLink
 
-
 class BaseJError(Exception):
     """
         Base error exception
         (Exception)
-    
+
         Attributes
         ----------
         message : str
@@ -30,14 +28,14 @@ class BaseJError(Exception):
             self,
             message: str,
             *,
-            error: Optional[str] = None,
-            format: FormatType = FormatType.COMPACT,
-            link: Optional[dict[str, Any]] = None,
+            error: str | None = None,
+            format: FormatType = FormatType.COMPACT,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
             Initialize the error
-        
+
             Parameters
             ----------
             message : str
@@ -63,21 +61,8 @@ class BaseJError(Exception):
             ValueError
                 Invalid link
         """
-        ...
 
 
-    def __str__(
-            self
-        ) -> str:
-        """
-            Representation of the error (following specified format)
-
-            Returns
-            ----------
-            str
-                Error's representation
-        """
-        ...
 
 
     _format: FormatType

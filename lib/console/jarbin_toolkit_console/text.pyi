@@ -8,13 +8,9 @@
 # ============================================================================
 
 
-from typing import (
-    Any,
-    Optional
-)
+from typing import Any
 
 from .format.format import Format
-
 
 class Text(str, Format):
     """
@@ -34,12 +30,11 @@ class Text(str, Format):
             int
                 Length
         """
-        ...
 
 
-    def split(
+    def split(  # pyright: ignore[reportIncompatibleMethodOverride]
             self,
-            sep: Optional[str] = None,
+            sep: str | None = None,
             maxsplit: int = -1,
         ) -> list[Text]:
         """
@@ -58,10 +53,9 @@ class Text(str, Format):
             list[Text]
                 Splited text
         """
-        ...
 
 
-    def splitlines(
+    def splitlines(  # pyright: ignore[reportIncompatibleMethodOverride]
             self,
             keepends: bool = False
         ) -> list[Text]:
@@ -78,7 +72,6 @@ class Text(str, Format):
             list[Text]
                 Splited text
         """
-        ...
 
 
     def __add__(
@@ -87,18 +80,17 @@ class Text(str, Format):
         ) -> Text:
         """
             Add 2 Text/strings together
-        
+
             Parameters
             ----------
             other : str
                 Other string
-        
+
             Returns
             ----------
             Text
                 New text
         """
-        ...
 
 
     def __radd__(
@@ -118,10 +110,9 @@ class Text(str, Format):
             Text
                 New text
         """
-        ...
 
 
-    def __mul__(
+    def __mul__(  # pyright: ignore[reportIncompatibleMethodOverride]
             self,
             other: int,
         ) -> Text:
@@ -138,10 +129,9 @@ class Text(str, Format):
             Text
                 New text
         """
-        ...
 
 
-    def __rmul__(
+    def __rmul__(  # pyright: ignore[reportIncompatibleMethodOverride]
             self,
             other: int,
         ) -> Text:
@@ -158,7 +148,6 @@ class Text(str, Format):
             Text
                 New text
         """
-        ...
 
 
     _can_format: bool = True
@@ -171,4 +160,6 @@ class Text(str, Format):
         ...
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'Text',
+]

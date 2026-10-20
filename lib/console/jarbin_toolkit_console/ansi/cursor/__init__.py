@@ -10,19 +10,16 @@
 
 from jarbin_toolkit_console.ansi.cursor.cursor import (
     CursorMode,
-    CursorStyle,
-    CursorSave,
     CursorPosition,
+    CursorSave,
+    CursorStyle,
 )
-
 from jarbin_toolkit_console.ansi.cursor.enums import CursorStyles
 
-
 __all__ = [
+    'CursorMode',
     'CursorPosition',
     'CursorSave',
     'CursorStyle',
-    'CursorMode',
-
     'CursorStyles',
 ]

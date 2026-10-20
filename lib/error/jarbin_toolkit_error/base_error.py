@@ -216,11 +216,6 @@ class BaseJError(Exception):
         if isinstance(format, str):
             format = FormatType(format)
 
-        if not isinstance(format, FormatType):
-            raise TypeError(
-                "Format must be of type FormatType or str"
-            )
-
         self._format = format
 
 

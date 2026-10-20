@@ -56,6 +56,6 @@ class ErrorColor(StrEnum):
 
 
 __all__ = [
-    'FormatType',
     'ErrorColor',
+    'FormatType',
 ]

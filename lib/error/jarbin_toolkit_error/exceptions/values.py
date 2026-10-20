@@ -8,9 +8,9 @@
 # ============================================================================
 
 
-from jarbin_toolkit_error.exceptions.exceptions import JException
 from jarbin_toolkit_error.empty_field import EmptyField
 from jarbin_toolkit_error.enums import FormatType
+from jarbin_toolkit_error.exceptions.exceptions import JException
 
 
 class JErrorType(JException):
@@ -41,11 +41,11 @@ class JErrorType(JException):
                 msg += f"  Value: {actual!r}\n"
 
         if message is not EmptyField:
-            msg += f"\n\n  → {message}"
+            msg += f"\n  → {message}"
 
         super().__init__(
             msg,
-            format = format,
+            format = format,  # pyright: ignore[reportArgumentType]
             link = link,
             do_raise = do_raise
         )
@@ -74,11 +74,11 @@ class JErrorValue(JException):
             msg += f"  Value: {value!r}\n"
 
         if message is not EmptyField:
-            msg += f"\n\n  → {message}"
+            msg += f"\n  → {message}"
 
         super().__init__(
             msg,
-            format = format,
+            format = format,  # pyright: ignore[reportArgumentType]
             link = link,
             do_raise = do_raise
         )
@@ -107,11 +107,11 @@ class JErrorAttribute(JException):
             msg += f"  Attribute: {attribute!r}\n"
 
         if message is not EmptyField:
-            msg += f"\n\n  → {message}"
+            msg += f"\n  → {message}"
 
         super().__init__(
             msg,
-            format = format,
+            format = format,  # pyright: ignore[reportArgumentType]
             link = link,
             do_raise = do_raise
         )
@@ -140,11 +140,11 @@ class JErrorName(JException):
             msg += f"  Name: {name!r}\n"
 
         if message is not EmptyField:
-            msg += f"\n\n  → {message}"
+            msg += f"\n  → {message}"
 
         super().__init__(
             msg,
-            format = format,
+            format = format,  # pyright: ignore[reportArgumentType]
             link = link,
             do_raise = do_raise
         )
@@ -174,16 +174,16 @@ class JErrorIndex(JException):
             msg += f"  Index: {index!r}\n"
 
         if obj is not EmptyField:
-            length= len(obj)
+            length= len(obj)  # pyright: ignore[reportArgumentType]
             msg += f"  Actual length: {length!r}\n"
             msg += f"  Last index: {length - 1!r}\n"
 
         if message is not EmptyField:
-            msg += f"\n\n  → {message}"
+            msg += f"\n  → {message}"
 
         super().__init__(
             msg,
-            format = format,
+            format = format,  # pyright: ignore[reportArgumentType]
             link = link,
             do_raise = do_raise
         )
@@ -212,21 +212,21 @@ class JErrorKey(JException):
             msg += f"  Key: {key!r}\n"
 
         if message is not EmptyField:
-            msg += f"\n\n  → {message}"
+            msg += f"\n  → {message}"
 
         super().__init__(
             msg,
-            format = format,
+            format = format,  # pyright: ignore[reportArgumentType]
             link = link,
             do_raise = do_raise
         )
 
 
 __all__ = [
-    'JErrorType',
-    'JErrorValue',
     'JErrorAttribute',
-    'JErrorName',
     'JErrorIndex',
     'JErrorKey',
+    'JErrorName',
+    'JErrorType',
+    'JErrorValue',
 ]

@@ -10,40 +10,31 @@
 
 __author__ = 'Nathan Jarjarbin'
 __email__ = 'nathan.amaraggi@epitech.eu'
-__version__ = "1.0.0.1"
+__version__ = "1.0.0.2"
 __license__ = "GPL"
 __github__ = "https://github.com/Jarjarbin06/jarbin-toolkit"
 
 
-import jarbin_toolkit_console.ansi as ANSI
-
-from jarbin_toolkit_console.text import Text
-
-import jarbin_toolkit_console.format as Format
-
-import jarbin_toolkit_console.console as Console
-
 import jarbin_toolkit_console.animation as Animation
-
+import jarbin_toolkit_console.ansi as ANSI
+import jarbin_toolkit_console.console as Console
+import jarbin_toolkit_console.format as Format
+from jarbin_toolkit_console.color import Color as _Color
 from jarbin_toolkit_console.color import (
     Color256,
-    ColorRGB,
     ColorHEX,
+    ColorRGB,
 )
-
 from jarbin_toolkit_console.enums import (
-    PresetSymbol,
     PresetBorder,
-    PresetColor,
     PresetBox,
+    PresetColor,
     PresetProgress,
     PresetSpinner,
+    PresetSymbol,
 )
-
 from jarbin_toolkit_console.error import ConsoleJError
-
-from jarbin_toolkit_console.color import Color as _Color
-
+from jarbin_toolkit_console.text import Text
 
 print = Console.Console.print
 
@@ -150,36 +141,26 @@ if _check_env():
 
 
 __all__ = [
-    '__author__',
-    '__email__',
-    '__version__',
-    '__license__',
-    '__github__',
-
     'ANSI',
-
-    'Text',
-
-    'Format',
-
-    'Console',
-
     'Animation',
-
     'Color256',
-    'ColorRGB',
     'ColorHEX',
-
-    'PresetSymbol',
+    'ColorRGB',
+    'Console',
+    'ConsoleJError',
+    'Format',
     'PresetBorder',
-    'PresetColor',
     'PresetBox',
+    'PresetColor',
     'PresetProgress',
     'PresetSpinner',
-
-    'ConsoleJError',
-
-    'print',
-
+    'PresetSymbol',
+    'Text',
     '_Color',
+    '__author__',
+    '__email__',
+    '__github__',
+    '__license__',
+    '__version__',
+    'print',
 ]

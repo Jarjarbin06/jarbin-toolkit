@@ -1,12 +1,10 @@
 from typing import (
-    Optional,
     Any,
 )
 
 from jarbin_toolkit_error.base_error import BaseJError
 from jarbin_toolkit_error.empty_field import EmptyField
 from jarbin_toolkit_error.enums import FormatType
-
 
 class JException(BaseJError):
     """
@@ -19,15 +17,15 @@ class JException(BaseJError):
     """
 
 
-    funny_message: Optional[bool] = None
+    funny_message: bool | None = None
 
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -55,7 +53,6 @@ class JException(BaseJError):
             ValueError
                 Invalid link
         """
-        ...
 
 
     def _show_funny(

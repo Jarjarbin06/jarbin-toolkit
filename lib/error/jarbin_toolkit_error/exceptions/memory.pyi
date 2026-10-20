@@ -1,12 +1,11 @@
 from typing import (
-    Optional,
     Any,
 )
 
-from .exceptions import JException
 from jarbin_toolkit_error.empty_field import EmptyField
 from jarbin_toolkit_error.enums import FormatType
 
+from .exceptions import JException
 
 class JErrorMemory(JException):
     """
@@ -17,10 +16,10 @@ class JErrorMemory(JException):
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -48,7 +47,6 @@ class JErrorMemory(JException):
             ValueError
                 Invalid link
         """
-        ...
 
 
 class JErrorBuffer(JException):
@@ -60,10 +58,10 @@ class JErrorBuffer(JException):
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -91,10 +89,9 @@ class JErrorBuffer(JException):
             ValueError
                 Invalid link
         """
-        ...
 
 
 __all__: list[str] = [
-    'JErrorMemory',
     'JErrorBuffer',
+    'JErrorMemory',
 ]

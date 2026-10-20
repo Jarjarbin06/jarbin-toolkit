@@ -77,7 +77,7 @@ def test_console_print_alignment():
         reset=False,
     )
 
-    assert stream.getvalue() == "\x1b[3GHello\n"
+    assert stream.getvalue() == "  Hello\n"
 
 
 def test_console_write():

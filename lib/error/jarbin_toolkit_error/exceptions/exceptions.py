@@ -36,8 +36,8 @@ class JException(BaseJError):
         ):
 
         super().__init__(
-            message if message is not EmptyField else "",
-            format = format,
+            message if message is not EmptyField else "",  # pyright: ignore[reportArgumentType]
+            format = format,  # pyright: ignore[reportArgumentType]
             link = link,
             do_raise = do_raise
         )

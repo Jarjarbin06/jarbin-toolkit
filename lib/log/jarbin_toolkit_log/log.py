@@ -9,24 +9,24 @@
 
 
 from pathlib import Path
+from queue import Queue
 from threading import Lock
 from uuid import uuid4
-from queue import Queue
 
 from jarbin_toolkit_time import (
     Time,
     TimeFormat,
 )
 
-from jarbin_toolkit_log.entry import LogEntry
 from jarbin_toolkit_log.comment import LogComment
+from jarbin_toolkit_log.entry import LogEntry
 from jarbin_toolkit_log.enums import (
-    LogType,
     LogLevel,
+    LogType,
 )
 from jarbin_toolkit_log.errors import (
-    LogTypeJError,
     LogRuntimeJError,
+    LogTypeJError,
 )
 from jarbin_toolkit_log.renderer import LogRenderer
 

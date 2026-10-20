@@ -1,9 +1,7 @@
 from typing import (
     Any,
-    Optional,
     TextIO,
 )
-
 
 __author__: str
 __email__: str
@@ -12,39 +10,38 @@ __license__: str
 __github__: str
 
 
-from . import ansi as ANSI
-from .text import Text
-from . import format as Format
-from . import console as Console
 from . import animation as Animation
+from . import ansi as ANSI
+from . import console as Console
+from . import format as Format
+from .color import Color as _Color
 from .color import (
     Color256,
-    ColorRGB,
     ColorHEX,
+    ColorRGB,
 )
 from .enums import (
-    PresetSymbol,
     PresetBorder,
-    PresetColor,
     PresetBox,
+    PresetColor,
     PresetProgress,
     PresetSpinner,
+    PresetSymbol,
 )
 from .error import ConsoleJError
-from .color import Color as _Color
-
+from .text import Text
 
 def print(
         *values: Any,
         separator: str = " ",
         end: str = "\n",
-        stream: Optional[TextIO] = None,
+        stream: TextIO | None = None,
         prefix: str = "",
         suffix: str = "",
         reset: bool = True,
-        width: Optional[int] = None,
-        align: Optional[Console.ConsoleAlign] = None,
-        overflow: Optional[Console.ConsoleOverflow] = None,
+        width: int | None = None,
+        align: Console.ConsoleAlign | None = None,
+        overflow: Console.ConsoleOverflow | None = None,
         wrap: bool = False,
         indent: int = 0,
         mode: Console.ConsoleOutputMode = Console.ConsoleOutputMode.NORMAL,
@@ -99,4 +96,27 @@ def print(
     """
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'ANSI',
+    'Animation',
+    'Color256',
+    'ColorHEX',
+    'ColorRGB',
+    'Console',
+    'ConsoleJError',
+    'Format',
+    'PresetBorder',
+    'PresetBox',
+    'PresetColor',
+    'PresetProgress',
+    'PresetSpinner',
+    'PresetSymbol',
+    'Text',
+    '_Color',
+    '__author__',
+    '__email__',
+    '__github__',
+    '__license__',
+    '__version__',
+    'print',
+]

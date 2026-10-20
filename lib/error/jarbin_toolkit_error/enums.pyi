@@ -1,10 +1,8 @@
 from enum import StrEnum
 from typing import (
     Self,
-    Optional,
     final,
 )
-
 
 @final
 class FormatType(StrEnum):
@@ -38,7 +36,7 @@ class FormatType(StrEnum):
     def _missing_(
             cls,
             value: object
-        ) -> Optional[Self]:
+        ) -> Self | None:
         ...
 
 
@@ -83,6 +81,6 @@ class ErrorColor(StrEnum):
 
 
 __all__: list[str] = [
-    'FormatType',
     'ErrorColor',
+    'FormatType',
 ]

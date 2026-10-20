@@ -10,40 +10,34 @@
 
 __author__ = 'Nathan Jarjarbin'
 __email__ = 'nathan.amaraggi@epitech.eu'
-__version__ = "1.0.0.1"
+__version__ = "1.0.0.2"
 __license__ = "GPL"
 __github__ = "https://github.com/Jarjarbin06/jarbin-toolkit"
 
 
-from jarbin_toolkit_time.time import Time
-from jarbin_toolkit_time.stopwatch import StopWatch
-
 from jarbin_toolkit_time.enums import (
-    TimeFormat,
     StopWatchState,
+    TimeFormat,
 )
-
 from jarbin_toolkit_time.errors import (
+    TimeStateJError,
     TimeTypeJError,
     TimeValueJError,
-    TimeStateJError,
 )
-
+from jarbin_toolkit_time.stopwatch import StopWatch
+from jarbin_toolkit_time.time import Time
 
 __all__ = [
-    '__author__',
-    '__email__',
-    '__version__',
-    '__license__',
-    '__github__',
-
-    'Time',
     'StopWatch',
-
-    'TimeFormat',
     'StopWatchState',
-
+    'Time',
+    'TimeFormat',
+    'TimeStateJError',
     'TimeTypeJError',
     'TimeValueJError',
-    'TimeStateJError',
+    '__author__',
+    '__email__',
+    '__github__',
+    '__license__',
+    '__version__',
 ]

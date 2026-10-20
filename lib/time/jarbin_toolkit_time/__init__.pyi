@@ -5,33 +5,29 @@ __license__: str
 __github__: str
 
 
-from .time import Time
-from .stopwatch import StopWatch
 from .enums import (
-    TimeFormat,
     StopWatchState,
+    TimeFormat,
 )
 from .errors import (
+    TimeStateJError,
     TimeTypeJError,
     TimeValueJError,
-    TimeStateJError,
 )
-
+from .stopwatch import StopWatch
+from .time import Time
 
 __all__: list[str] = [
-    '__author__',
-    '__email__',
-    '__version__',
-    '__license__',
-    '__github__',
-
-    'Time',
     'StopWatch',
-
-    'TimeFormat',
     'StopWatchState',
-
+    'Time',
+    'TimeFormat',
+    'TimeStateJError',
     'TimeTypeJError',
     'TimeValueJError',
-    'TimeStateJError',
+    '__author__',
+    '__email__',
+    '__github__',
+    '__license__',
+    '__version__',
 ]

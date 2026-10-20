@@ -185,17 +185,17 @@ class SGRColorMode(StrEnum):
 
 
 __all__ = [
-    'SGRAttribute',
     'SGRAdvancedUnderline',
-    'SGRFont',
-    'SGRReset',
-    'SGRStandardColorForeground',
-    'SGRStandardColorBackground',
-    'SGRStandardColorForegroundBright',
-    'SGRStandardColorBackgroundBright',
-    'SGRDecoration',
-    'SGRIdeogram',
-    'SGRPosition',
+    'SGRAttribute',
     'SGRColorExtender',
     'SGRColorMode',
+    'SGRDecoration',
+    'SGRFont',
+    'SGRIdeogram',
+    'SGRPosition',
+    'SGRReset',
+    'SGRStandardColorBackground',
+    'SGRStandardColorBackgroundBright',
+    'SGRStandardColorForeground',
+    'SGRStandardColorForegroundBright',
 ]

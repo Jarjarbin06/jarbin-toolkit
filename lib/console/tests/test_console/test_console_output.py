@@ -160,9 +160,9 @@ def test_print_reset():
 @pytest.mark.parametrize(
     "align, expected",
     [
-        (ConsoleAlign.LEFT, "\x1b[1GHello\n"),
-        (ConsoleAlign.CENTER, "\x1b[8GHello\n"),
-        (ConsoleAlign.RIGHT, "\x1b[16GHello\n"),
+        (ConsoleAlign.LEFT, "Hello\n"),
+        (ConsoleAlign.CENTER, "       Hello\n"),
+        (ConsoleAlign.RIGHT, "               Hello\n"),
     ],
 )
 def test_print_alignment(align, expected):

@@ -1,13 +1,12 @@
 from enum import IntEnum
 from typing import final
 
-
 @final
 class ActionStatus(IntEnum):
     """
         Action status enum
         (IntEnum)
-    
+
         Attributes
         ----------
         INACTIVE : int
@@ -63,6 +62,6 @@ class ActionAsync(IntEnum):
 
 
 __all__: list[str] = [
-    'ActionStatus',
     'ActionAsync',
+    'ActionStatus',
 ]

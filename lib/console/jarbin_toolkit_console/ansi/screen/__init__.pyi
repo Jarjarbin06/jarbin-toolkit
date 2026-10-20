@@ -1,20 +1,33 @@
-from .screen import (
-    ScreenErase,
-    ScreenEdit,
-    ScreenScroll,
-    ScreenMargins,
-    ScreenWriteMode,
-    ScreenBuffer,
-    ScreenTest,
-    ScreenRectangle,
-    ScreenMode,
-    ScreenSize,
-    ScreenControl,
-)
 from .enums import (
-    ScreenLineEraseMode,
     ScreenDisplayEraseMode,
+    ScreenLineEraseMode,
+)
+from .screen import (
+    ScreenBuffer,
+    ScreenControl,
+    ScreenEdit,
+    ScreenErase,
+    ScreenMargins,
+    ScreenMode,
+    ScreenRectangle,
+    ScreenScroll,
+    ScreenSize,
+    ScreenTest,
+    ScreenWriteMode,
 )
 
-
-__all__ : list[str]
+__all__ : list[str] = [
+    'ScreenBuffer',
+    'ScreenControl',
+    'ScreenDisplayEraseMode',
+    'ScreenEdit',
+    'ScreenErase',
+    'ScreenLineEraseMode',
+    'ScreenMargins',
+    'ScreenMode',
+    'ScreenRectangle',
+    'ScreenScroll',
+    'ScreenSize',
+    'ScreenTest',
+    'ScreenWriteMode',
+]

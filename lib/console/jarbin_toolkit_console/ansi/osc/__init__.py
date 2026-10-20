@@ -8,29 +8,26 @@
 # ============================================================================
 
 
+from jarbin_toolkit_console.ansi.osc.enums import OSCClipboardSelection
 from jarbin_toolkit_console.ansi.osc.osc import (
-    OSCTitle,
-    OSCColor,
-    OSCWindow,
-    OSCHyperlink,
-    OSCFileLink,
-    OSCNotification,
     OSCClipboard,
+    OSCColor,
+    OSCFileLink,
+    OSCHyperlink,
+    OSCNotification,
     OSCShell,
+    OSCTitle,
+    OSCWindow,
 )
 
-from jarbin_toolkit_console.ansi.osc.enums import OSCClipboardSelection
-
-
 __all__ = [
-    'OSCTitle',
-    'OSCColor',
-    'OSCWindow',
-    'OSCHyperlink',
-    'OSCFileLink',
-    'OSCNotification',
     'OSCClipboard',
-    'OSCShell',
-
     'OSCClipboardSelection',
+    'OSCColor',
+    'OSCFileLink',
+    'OSCHyperlink',
+    'OSCNotification',
+    'OSCShell',
+    'OSCTitle',
+    'OSCWindow',
 ]

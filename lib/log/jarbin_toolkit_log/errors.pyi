@@ -1,12 +1,11 @@
 from typing import final
 
 from jarbin_toolkit_error import (
+    JErrorRuntime,
     JErrorType,
     JErrorValue,
-    JErrorRuntime,
     JException,
 )
-
 
 @final
 class LogTypeJError(JErrorType):
@@ -28,7 +27,6 @@ class LogTypeJError(JErrorType):
             message : str
                 Message to be displayed when the error is raised
         """
-        ...
 
 
 @final
@@ -51,7 +49,6 @@ class LogValueJError(JErrorValue):
             message : str
                 Message to be displayed when the error is raised
         """
-        ...
 
 
 @final
@@ -74,7 +71,6 @@ class LogRuntimeJError(JErrorRuntime):
             message : str
                 Message to be displayed when the error is raised
         """
-        ...
 
 
 @final
@@ -97,12 +93,11 @@ class LogStateJError(JException):
             message : str
                 Message to be displayed when the error is raised
         """
-        ...
 
 
 __all__: list[str] = [
-    'LogTypeJError',
-    'LogValueJError',
     'LogRuntimeJError',
     'LogStateJError',
+    'LogTypeJError',
+    'LogValueJError',
 ]

@@ -1,8 +1,6 @@
 from typing import (
     final,
-    Optional,
 )
-
 
 @final
 class _EmptyField:
@@ -11,7 +9,7 @@ class _EmptyField:
     """
 
 
-    _instance: Optional[_EmptyField]
+    _instance: _EmptyField | None
 
 
     def __new__(
@@ -25,7 +23,6 @@ class _EmptyField:
             _EmptyField
                 New instance
         """
-        ...
 
 
 EmptyField: _EmptyField

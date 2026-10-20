@@ -8,8 +8,8 @@
 # ============================================================================
 
 
-from jarbin_toolkit_console.format.enums import FormatOrder
 from jarbin_toolkit_console.enums import PresetSymbol
+from jarbin_toolkit_console.format.enums import FormatOrder
 
 
 class Decoration:
@@ -23,7 +23,7 @@ class Decoration:
         if not getattr(self, "_can_format", False):
             return self
 
-        return self.__class__("".join(map(str, decoration)))
+        return self.__class__("".join(map(str, decoration)))  # pyright: ignore[reportCallIssue]
 
 
     def f_decoration_prefix(
@@ -100,7 +100,7 @@ class Decoration:
             width = None,
         ):
 
-        return self._get_decoration_text(f"{fill * (width or len(self))}")
+        return self._get_decoration_text(f"{fill * (width or len(self))}")  # pyright: ignore[reportArgumentType]
 
 
     def f_decoration_symbol(

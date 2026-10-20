@@ -287,10 +287,10 @@ class PresetProgress(Enum):
 
 
 __all__ = [
-    'PresetColor',
-    'PresetSymbol',
-    'PresetBox',
     'PresetBorder',
-    'PresetSpinner',
+    'PresetBox',
+    'PresetColor',
     'PresetProgress',
+    'PresetSpinner',
+    'PresetSymbol',
 ]

@@ -1,12 +1,11 @@
 from typing import (
-    Optional,
     Any,
 )
 
-from .exceptions import JException
 from jarbin_toolkit_error.empty_field import EmptyField
 from jarbin_toolkit_error.enums import FormatType
 
+from .exceptions import JException
 
 class JErrorAssertion(JException):
     """
@@ -17,10 +16,10 @@ class JErrorAssertion(JException):
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -48,7 +47,6 @@ class JErrorAssertion(JException):
             ValueError
                 Invalid link
         """
-        ...
 
 
 class JErrorLookup(JException):
@@ -60,10 +58,10 @@ class JErrorLookup(JException):
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -91,7 +89,6 @@ class JErrorLookup(JException):
             ValueError
                 Invalid link
         """
-        ...
 
 
 __all__: list[str] = [

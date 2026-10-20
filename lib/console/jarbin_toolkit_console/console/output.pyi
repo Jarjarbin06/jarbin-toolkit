@@ -1,7 +1,6 @@
 from typing import (
     Any,
     TextIO,
-    Optional,
 )
 
 from jarbin_toolkit_console.console.enums import (
@@ -10,7 +9,6 @@ from jarbin_toolkit_console.console.enums import (
     ConsoleOverflow,
 )
 from jarbin_toolkit_console.text import Text
-
 
 class Output:
     """
@@ -23,11 +21,11 @@ class Output:
             cls,
             value: str,
             *,
-            stream: Optional[TextIO] = None,
+            stream: TextIO | None = None,
         ) -> None:
         """
             Write a text onto stream (stdout if stream left empty)
-        
+
             Parameters
             ----------
             value : str
@@ -36,7 +34,6 @@ class Output:
             stream : Optional[TextIO]
                 Stream to write in
         """
-        ...
 
 
     @classmethod
@@ -45,13 +42,13 @@ class Output:
             *values: Any,
             separator: str = " ",
             end: str = "\n",
-            stream: Optional[TextIO] = None,
+            stream: TextIO | None = None,
             prefix: str = "",
             suffix: str = "",
             reset: bool = True,
-            width: Optional[int] = None,
-            align: Optional[ConsoleAlign] = None,
-            overflow: Optional[ConsoleOverflow] = None,
+            width: int | None = None,
+            align: ConsoleAlign | None = None,
+            overflow: ConsoleOverflow | None = None,
             wrap: bool = False,
             indent: int = 0,
             mode: ConsoleOutputMode = ConsoleOutputMode.NORMAL,
@@ -109,7 +106,6 @@ class Output:
             Text
                 Final printed text
         """
-        ...
 
 
     @classmethod
@@ -117,7 +113,7 @@ class Output:
             cls,
             value: Text,
             *,
-            stream: Optional[TextIO] = None,
+            stream: TextIO | None = None,
             flush: bool = True,
         ) -> None:
         """
@@ -134,18 +130,17 @@ class Output:
             flush : bool
                 Flush output to stdout after rendering
         """
-        ...
 
 
     @classmethod
     def flush(
             cls,
             *,
-            stream: Optional[TextIO] = None,
+            stream: TextIO | None = None,
         ) -> None:
         """
             Flush a stream (stdout if stream left empty)
-        
+
             Parameters
             ----------
             stream : Optional[TextIO]

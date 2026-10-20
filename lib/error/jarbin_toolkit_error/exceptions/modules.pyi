@@ -1,12 +1,11 @@
 from typing import (
-    Optional,
     Any,
 )
 
-from .exceptions import JException
 from jarbin_toolkit_error.empty_field import EmptyField
 from jarbin_toolkit_error.enums import FormatType
 
+from .exceptions import JException
 
 class JErrorImport(JException):
     """
@@ -17,12 +16,12 @@ class JErrorImport(JException):
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
-            from_name = EmptyField,
-            import_name = EmptyField,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            from_name: str = EmptyField,  # pyright: ignore[reportArgumentType]
+            import_name: str = EmptyField,  # pyright: ignore[reportArgumentType]
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -56,7 +55,6 @@ class JErrorImport(JException):
             ValueError
                 Invalid link
         """
-        ...
 
 
 class JErrorModuleNotFound(JException):
@@ -68,11 +66,11 @@ class JErrorModuleNotFound(JException):
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
-            name = EmptyField,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            name: str = EmptyField,  # pyright: ignore[reportArgumentType]
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -103,7 +101,6 @@ class JErrorModuleNotFound(JException):
             ValueError
                 Invalid link
         """
-        ...
 
 
 __all__: list[str] = [

@@ -13,8 +13,8 @@ from typing import final
 from jarbin_toolkit_time import Time
 
 from jarbin_toolkit_log.enums import (
-    LogType,
     LogLevel,
+    LogType,
     _log_level_max_len,
 )
 from jarbin_toolkit_log.errors import LogTypeJError
@@ -66,8 +66,6 @@ class LogEntry:
     def __repr__(
             self,
         ):
-
-        filling = " " * (_log_level_max_len - len(self.level))
 
         if self._type == LogType.JAR_LOG:
             return (

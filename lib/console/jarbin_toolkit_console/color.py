@@ -55,11 +55,11 @@ class Color256(Color):
             cls,
         ):  # pragma: no cover
 
-        from jarbin_toolkit_console.ansi.sgr.sgr import SGR
         from jarbin_toolkit_console.ansi.sgr.enums import (
             SGRColorExtender,
             SGRReset,
         )
+        from jarbin_toolkit_console.ansi.sgr.sgr import SGR
 
         def print_color(
                 color,
@@ -189,6 +189,6 @@ class ColorHEX(Color):
 __all__ = [
     'Color',
     'Color256',
-    'ColorRGB',
     'ColorHEX',
+    'ColorRGB',
 ]

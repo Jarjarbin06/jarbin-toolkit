@@ -11,13 +11,12 @@
 from time import monotonic
 
 from jarbin_toolkit_action.action import Action
-from jarbin_toolkit_action.errors import (
-    ActionTypeJError,
-    ActionArgumentJError,
-    ActionThreadJError,
-    ActionExecutionJError,
-)
 from jarbin_toolkit_action.enums import ActionStatus
+from jarbin_toolkit_action.errors import (
+    ActionArgumentJError,
+    ActionExecutionJError,
+    ActionTypeJError,
+)
 from jarbin_toolkit_action.time import ActionTimer
 
 
@@ -105,7 +104,7 @@ class ActionBatch:
         ):
 
         if isinstance(other, ActionBatch):
-            self._actions += other._action
+            self._actions += other._actions
 
         elif isinstance(other, Action):
             self._actions.append(other)

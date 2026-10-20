@@ -2,8 +2,8 @@ from typing import Any, Optional
 
 from jarbin_toolkit_console.enums import PresetSymbol
 from jarbin_toolkit_console.text import Text
-from .enums import FormatPosition
 
+from .enums import FormatPosition
 
 class Layout:
     """
@@ -26,7 +26,6 @@ class Layout:
             Text
                 New format
         """
-        ...
 
 
     def f_layout_pad_left(
@@ -43,7 +42,6 @@ class Layout:
             Text
                 New format
         """
-        ...
 
 
     def f_layout_pad_center(
@@ -60,7 +58,6 @@ class Layout:
             Text
                 New format
         """
-        ...
 
 
     def f_layout_pad_right(
@@ -77,7 +74,6 @@ class Layout:
             Text
                 New format
         """
-        ...
 
 
     def f_layout_align(
@@ -94,7 +90,6 @@ class Layout:
             Text
                 New format
         """
-        ...
 
 
     def f_layout_align_left(
@@ -109,7 +104,6 @@ class Layout:
             Text
                 New format
         """
-        ...
 
 
     def f_layout_align_center(
@@ -124,7 +118,6 @@ class Layout:
             Text
                 New format
         """
-        ...
 
 
     def f_layout_align_right(
@@ -139,7 +132,6 @@ class Layout:
             Text
                 New format
         """
-        ...
 
 
     def f_layout_indent(
@@ -158,7 +150,6 @@ class Layout:
             Text
                 New format
         """
-        ...
 
 
     def f_layout_dedent(
@@ -173,8 +164,6 @@ class Layout:
             Text
                 New format
         """
-        ...
-
 
     def f_layout_get_width(
             self,
@@ -187,7 +176,6 @@ class Layout:
             int
                 Text width
         """
-        ...
 
 
     def f_layout_get_height(
@@ -201,7 +189,6 @@ class Layout:
             int
                 Text height
         """
-        ...
 
 
     def f_layout_wrap(
@@ -218,7 +205,6 @@ class Layout:
             Text
                 New format
         """
-        ...
 
 
     def f_layout_truncate(
@@ -236,7 +222,6 @@ class Layout:
             Text
                 New format
         """
-        ...
 
 
     def f_layout_lines(
@@ -250,7 +235,6 @@ class Layout:
             list[Text]
                 Lines
         """
-        ...
 
 
     def f_layout_first_line(
@@ -264,7 +248,6 @@ class Layout:
             Text
                 First line
         """
-        ...
 
 
     def f_layout_last_line(
@@ -278,7 +261,6 @@ class Layout:
             Text
                 Last line
         """
-        ...
 
 
     def f_layout_prefix_lines(
@@ -293,7 +275,6 @@ class Layout:
             Text
                 New format
         """
-        ...
 
 
     def f_layout_suffix_lines(
@@ -308,7 +289,6 @@ class Layout:
             Text
                 New format
         """
-        ...
 
 
     def f_layout_number_lines(
@@ -324,7 +304,6 @@ class Layout:
             Text
                 New format
         """
-        ...
 
 
     def f_layout_reverse_lines(
@@ -338,13 +317,12 @@ class Layout:
             Text
                 New format
         """
-        ...
 
 
     def f_layout_hyperlink(
             self,
             *,
-            link: str = None,
+            link: str | None = None,
         ):
         """
             Create a hyperlink
@@ -354,13 +332,12 @@ class Layout:
             Text
                 New format
         """
-        ...
 
 
     def f_layout_file_link(
             self,
             *,
-            file: str = None,
+            file: str | None = None,
         ):
         """
             Create a file link
@@ -370,7 +347,6 @@ class Layout:
             Text
                 New format
         """
-        ...
 
 
     def _get_layout_text(

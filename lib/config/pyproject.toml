@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jarbin-toolkit-config"
-version = "1.0.0.1"
+version = "1.0.0.2"
 description = "Config tool (Create / Set / Read / etc...)"
 authors = [
     { name = "Nathan Jarjarbin", email = "nathan.amaraggi@epitech.eu" }
@@ -40,4 +40,3 @@ local_scheme = "dirty-tag"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["jarbin_toolkit_config*"]
-

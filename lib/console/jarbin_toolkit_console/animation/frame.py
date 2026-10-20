@@ -33,7 +33,7 @@ class Frame(Text):
             str(content),
         )
 
-        instance._duration = duration
+        instance._duration = duration  # pyright: ignore[reportAttributeAccessIssue]
 
         return instance
 
@@ -51,7 +51,7 @@ class Frame(Text):
             self,
         ):
 
-        return self._duration
+        return self._duration  # pyright: ignore[reportAttributeAccessIssue]
 
 
     def render(

@@ -1,12 +1,11 @@
 from typing import (
-    Optional,
     Any,
 )
 
-from .exceptions import JException
 from jarbin_toolkit_error.empty_field import EmptyField
 from jarbin_toolkit_error.enums import FormatType
 
+from .exceptions import JException
 
 class JErrorArithmetic(JException):
     """
@@ -17,10 +16,10 @@ class JErrorArithmetic(JException):
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -48,7 +47,6 @@ class JErrorArithmetic(JException):
             ValueError
                 Invalid link
         """
-        ...
 
 
 class JErrorZeroDivision(JException):
@@ -60,11 +58,11 @@ class JErrorZeroDivision(JException):
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
-            dividend: float | int = EmptyField,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            dividend: float = EmptyField,  # pyright: ignore[reportArgumentType]
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -95,7 +93,6 @@ class JErrorZeroDivision(JException):
             ValueError
                 Invalid link
         """
-        ...
 
 
 class JErrorOverflow(JException):
@@ -107,10 +104,10 @@ class JErrorOverflow(JException):
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -138,7 +135,6 @@ class JErrorOverflow(JException):
             ValueError
                 Invalid link
         """
-        ...
 
 
 class JErrorFloatingPoint(JException):
@@ -150,10 +146,10 @@ class JErrorFloatingPoint(JException):
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -181,12 +177,11 @@ class JErrorFloatingPoint(JException):
             ValueError
                 Invalid link
         """
-        ...
 
 
 __all__: list[str] = [
     'JErrorArithmetic',
-    'JErrorZeroDivision',
-    'JErrorOverflow',
     'JErrorFloatingPoint',
+    'JErrorOverflow',
+    'JErrorZeroDivision',
 ]

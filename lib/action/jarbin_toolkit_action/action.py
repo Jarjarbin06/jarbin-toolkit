@@ -8,12 +8,12 @@
 # ============================================================================
 
 
-from inspect import signature
 from ctypes import (
     c_ulong,
     py_object,
     pythonapi,
 )
+from inspect import signature
 from threading import (
     Event,
     Lock,
@@ -21,16 +21,16 @@ from threading import (
     get_ident,
 )
 
+from jarbin_toolkit_action.enums import (
+    ActionAsync,
+    ActionStatus,
+)
 from jarbin_toolkit_action.errors import (
-    ActionTypeJError,
-    ActionValueJError,
     ActionArgumentJError,
     ActionExecutionJError,
     ActionThreadJError,
-)
-from jarbin_toolkit_action.enums import (
-    ActionStatus,
-    ActionAsync,
+    ActionTypeJError,
+    ActionValueJError,
 )
 from jarbin_toolkit_action.time import ActionTimer
 
@@ -42,7 +42,7 @@ class _ActionCancelled(BaseException):
 class Action:
 
 
-    _thread_actions = {}
+    _thread_actions = {}  # noqa: RUF012
     _thread_actions_lock = Lock()
 
 
@@ -93,7 +93,7 @@ class Action:
             self._timer.start()
             self._output = self._function(**self._execution_kwargs)
             self._timer.stop()
-        except Exception as error:
+        except Exception as error:  # noqa: BLE001
             self._status = ActionStatus.FAILED
             self._error = error
         else:
@@ -141,7 +141,7 @@ class Action:
             )
         except _ActionCancelled:
             self._status = ActionStatus.CANCELLED
-        except Exception as error:
+        except Exception as error:  # noqa: BLE001
             self._error = error
             self._status = ActionStatus.FAILED
         else:

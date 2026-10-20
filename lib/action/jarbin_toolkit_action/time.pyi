@@ -2,7 +2,6 @@ from typing import final
 
 from jarbin_toolkit_time import StopWatch
 
-
 @final
 class ActionTimer(StopWatch):
     """
@@ -22,7 +21,6 @@ class ActionTimer(StopWatch):
             float
                 Elapsed time
         """
-        ...
 
 
 __all__: list[str] = [

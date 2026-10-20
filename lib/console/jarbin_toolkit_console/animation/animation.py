@@ -10,12 +10,12 @@
 
 from numbers import Real
 
-from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.animation.enums import (
     AnimationDirection,
     AnimationMode,
 )
 from jarbin_toolkit_console.animation.frame import Frame
+from jarbin_toolkit_console.error import ConsoleJError
 
 
 class Animation:
@@ -106,7 +106,7 @@ class Animation:
             duration = self._duration
 
         if duration is None:
-            raise ConsoleIRuntimeError(
+            raise ConsoleJError(
                 "Animation has no duration"
             )
 
@@ -414,10 +414,10 @@ class Animation:
         while not self._finished:
             duration = self._frame_duration()
 
-            if self._elapsed < duration:
+            if self._elapsed < duration:  # pyright: ignore[reportOperatorIssue]
                 break
 
-            self._elapsed -= duration
+            self._elapsed -= duration  # pyright: ignore[reportOperatorIssue]
 
             self._advance(
                 1

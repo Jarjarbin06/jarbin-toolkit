@@ -40,7 +40,7 @@ class AnimationState(IntEnum):
 
 
 __all__ = [
-    'AnimationMode',
     'AnimationDirection',
+    'AnimationMode',
     'AnimationState',
 ]

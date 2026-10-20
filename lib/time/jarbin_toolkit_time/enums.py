@@ -8,11 +8,7 @@
 # ============================================================================
 
 
-from enum import (
-    IntEnum,
-    StrEnum,
-    auto
-)
+from enum import IntEnum, StrEnum, auto
 from typing import final
 
 

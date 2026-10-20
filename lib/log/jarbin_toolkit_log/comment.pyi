@@ -2,12 +2,11 @@ from typing import final
 
 from .enums import LogType
 
-
 @final
 class LogComment:
     """
         Comment log entry
-    
+
         Attributes
         ----------
         PREFIX : str
@@ -43,21 +42,8 @@ class LogComment:
             LogTypeJError
                 Message, type type invalid
         """
-        ...
 
 
-    def __repr__(
-            self,
-        ) -> str:
-        """
-            Representation of the comment (formated comment)
-
-            Returns
-            ----------
-            str
-                Formated comment
-        """
-        ...
 
 
     _type: LogType

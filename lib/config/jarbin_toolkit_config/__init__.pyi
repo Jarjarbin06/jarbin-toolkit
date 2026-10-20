@@ -6,26 +6,22 @@ __github__: str
 
 
 from .config import Config
-
 from .errors import (
+    ConfigFileNotFoundJError,
     ConfigRuntimeJError,
     ConfigTypeJError,
     ConfigValueJError,
-    ConfigFileNotFoundJError,
 )
 
-
 __all__: list[str] = [
-    '__author__',
-    '__email__',
-    '__version__',
-    '__license__',
-    '__github__',
-
     'Config',
-
+    'ConfigFileNotFoundJError',
     'ConfigRuntimeJError',
     'ConfigTypeJError',
     'ConfigValueJError',
-    'ConfigFileNotFoundJError',
+    '__author__',
+    '__email__',
+    '__github__',
+    '__license__',
+    '__version__',
 ]

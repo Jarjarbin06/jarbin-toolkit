@@ -8,20 +8,20 @@
 # ============================================================================
 
 
-from jarbin_toolkit_console.error import ConsoleJError
-from jarbin_toolkit_console.format.enums import FormatPosition
-from jarbin_toolkit_console.console.enums import ConsoleOverflow
-from jarbin_toolkit_console.console.terminal import Terminal
 from jarbin_toolkit_console.ansi.cursor.cursor import CursorPosition
 from jarbin_toolkit_console.ansi.screen.screen import ScreenErase
-from jarbin_toolkit_console.ansi.sgr.sgr import SGR
 from jarbin_toolkit_console.ansi.sgr.enums import SGRReset
+from jarbin_toolkit_console.ansi.sgr.sgr import SGR
 from jarbin_toolkit_console.console.enums import (
     ConsoleAlign,
     ConsoleOutputMode,
+    ConsoleOverflow,
 )
-from jarbin_toolkit_console.text import Text
 from jarbin_toolkit_console.console.io import IO
+from jarbin_toolkit_console.console.terminal import Terminal
+from jarbin_toolkit_console.error import ConsoleJError
+from jarbin_toolkit_console.format.enums import FormatPosition
+from jarbin_toolkit_console.text import Text
 
 
 class Output:
@@ -90,14 +90,14 @@ class Output:
             new_text += SGR.reset(SGRReset.ALL)
 
         if overflow == ConsoleOverflow.ELLIPSIS:
-            new_text = new_text.f_layout_truncate(width)
+            new_text = new_text.f_layout_truncate(width)  # pyright: ignore[reportArgumentType]
         elif overflow == ConsoleOverflow.TRUNCATE:
-            new_text = new_text.f_layout_truncate(width + 1, suffix="")
+            new_text = new_text.f_layout_truncate(width + 1, suffix="")  # pyright: ignore[reportOptionalOperand]
         elif wrap:
-            new_text = new_text.f_layout_wrap(width)
+            new_text = new_text.f_layout_wrap(width)  # pyright: ignore[reportArgumentType]
 
         if align is not None:
-            new_text = new_text.f_layout_align(width, align=FormatPosition(align))
+            new_text = new_text.f_layout_align(width, align=FormatPosition(align))  # pyright: ignore[reportArgumentType]
 
         new_text = new_text.f_layout_indent(indent=indent)
 

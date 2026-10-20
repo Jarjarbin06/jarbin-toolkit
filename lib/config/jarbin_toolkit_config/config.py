@@ -10,15 +10,15 @@
 
 from configparser import ConfigParser
 from os import (
-    setxattr,
     getxattr,
     listxattr,
+    setxattr,
 )
 from pathlib import Path
 
 from jarbin_toolkit_config.errors import (
-    ConfigRuntimeJError,
     ConfigFileNotFoundJError,
+    ConfigRuntimeJError,
     ConfigValueJError,
 )
 

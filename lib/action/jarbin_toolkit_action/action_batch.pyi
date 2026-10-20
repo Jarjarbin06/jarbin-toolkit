@@ -1,9 +1,8 @@
-from typing import Optional, Any
+from typing import Any
 
 from jarbin_toolkit_action.action import Action
 from jarbin_toolkit_action.enums import ActionStatus
 from jarbin_toolkit_action.time import ActionTimer
-
 
 class ActionBatch:
     """
@@ -20,7 +19,7 @@ class ActionBatch:
 
 
     status: ActionStatus
-    duration: Optional[float]
+    duration: float | None
 
 
     def __init__(
@@ -40,7 +39,6 @@ class ActionBatch:
             ActionTypeError
                 Invalid argument type
         """
-        ...
 
     def __call__(
             self,
@@ -53,7 +51,6 @@ class ActionBatch:
             ActionExecutionError
                 Action already pending, running or paused
         """
-        ...
 
 
     def __add__(
@@ -78,7 +75,6 @@ class ActionBatch:
             ActionTypeError
                 Invalid argument type
         """
-        ...
 
 
     def __iadd__(
@@ -98,28 +94,15 @@ class ActionBatch:
             ActionTypeError
                 Invalid argument type
         """
-        ...
 
 
-    def __repr__(
-            self,
-        ) -> str:
-        """
-            Return a string representation of the ActionBatch.
-
-            Returns
-            -------
-            str
-                String representation of the ActionBatch.
-        """
-        ...
 
 
     def set_settings(
             self,
             *,
-            max_worker: Optional[int] = None,
-            time_out: Optional[float] = None,
+            max_worker: int | None = None,
+            time_out: float | None = None,
         ) -> None:
         """
             Set/override global action's settings
@@ -138,14 +121,13 @@ class ActionBatch:
                 Invalid setting.
                 Invalid value.
         """
-        ...
 
 
     def set_actions_settings(
             self,
             *,
-            catch: Optional[bool] = None,
-            asynchronous: Optional[bool] = None,
+            catch: bool | None = None,
+            asynchronous: bool | None = None,
         ) -> None:
         """
             Set/override all action's settings
@@ -164,7 +146,6 @@ class ActionBatch:
                 Invalid setting.
                 Invalid value.
         """
-        ...
 
 
     def run(
@@ -178,12 +159,11 @@ class ActionBatch:
             ActionExecutionError
                 No pending async execution.
         """
-        ...
 
 
     _actions: list[Action]
     _status: ActionStatus
-    _previous_status: Optional[ActionStatus]
+    _previous_status: ActionStatus | None
     _timer: ActionTimer
     _actions_settings: dict[str, Any]
     _settings: dict[str, Any]

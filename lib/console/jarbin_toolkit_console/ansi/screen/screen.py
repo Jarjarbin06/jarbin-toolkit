@@ -8,15 +8,15 @@
 # ============================================================================
 
 
-from jarbin_toolkit_console.error import ConsoleJError
-from jarbin_toolkit_console.ansi.screen.enums import (
-    ScreenDisplayEraseMode,
-    ScreenLineEraseMode,
-)
 from jarbin_toolkit_console.ansi.ansi import (
     CSI,
     ESC,
 )
+from jarbin_toolkit_console.ansi.screen.enums import (
+    ScreenDisplayEraseMode,
+    ScreenLineEraseMode,
+)
+from jarbin_toolkit_console.error import ConsoleJError
 
 
 class ScreenErase(CSI):
@@ -352,7 +352,7 @@ class ScreenMode(CSI):
             cls,
         ):
 
-        return cls(f"?3h")
+        return cls("?3h")
 
 
     @classmethod
@@ -360,7 +360,7 @@ class ScreenMode(CSI):
             cls,
         ):
 
-        return cls(f"?3l")
+        return cls("?3l")
 
 
     @classmethod
@@ -368,7 +368,7 @@ class ScreenMode(CSI):
             cls,
         ):
 
-        return cls(f"?40h")
+        return cls("?40h")
 
 
     @classmethod
@@ -376,7 +376,7 @@ class ScreenMode(CSI):
             cls,
         ):
 
-        return cls(f"?40l")
+        return cls("?40l")
 
 
     @classmethod
@@ -384,7 +384,7 @@ class ScreenMode(CSI):
             cls,
         ):
 
-        return cls(f"?95h")
+        return cls("?95h")
 
 
     @classmethod
@@ -392,7 +392,7 @@ class ScreenMode(CSI):
             cls,
         ):
 
-        return cls(f"?95l")
+        return cls("?95l")
 
 
     @classmethod
@@ -400,7 +400,7 @@ class ScreenMode(CSI):
             cls,
         ):
 
-        return cls(f"?5h")
+        return cls("?5h")
 
 
     @classmethod
@@ -408,7 +408,7 @@ class ScreenMode(CSI):
             cls,
         ):
 
-        return cls(f"?5l")
+        return cls("?5l")
 
 
     @classmethod
@@ -416,7 +416,7 @@ class ScreenMode(CSI):
             cls,
         ):
 
-        return cls(f"?4h")
+        return cls("?4h")
 
 
     @classmethod
@@ -424,7 +424,7 @@ class ScreenMode(CSI):
             cls,
         ):
 
-        return cls(f"?4l")
+        return cls("?4l")
 
 
 class ScreenSize(CSI):
@@ -479,15 +479,15 @@ class ScreenControl(ESC):
 
 
 __all__ = [
-    'ScreenErase',
-    'ScreenEdit',
-    'ScreenScroll',
-    'ScreenMargins',
-    'ScreenWriteMode',
     'ScreenBuffer',
-    'ScreenTest',
-    'ScreenRectangle',
-    'ScreenMode',
-    'ScreenSize',
     'ScreenControl',
+    'ScreenEdit',
+    'ScreenErase',
+    'ScreenMargins',
+    'ScreenMode',
+    'ScreenRectangle',
+    'ScreenScroll',
+    'ScreenSize',
+    'ScreenTest',
+    'ScreenWriteMode',
 ]

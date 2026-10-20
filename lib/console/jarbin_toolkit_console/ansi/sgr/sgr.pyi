@@ -1,19 +1,19 @@
+from jarbin_toolkit_console.ansi.ansi import CSI
+from jarbin_toolkit_console.color import (
+    Color,
+    Color256,
+    ColorRGB,
+)
+
 from .enums import (
+    SGRAdvancedUnderline,
+    SGRAttribute,
+    SGRColorExtender,
+    SGRPosition,
     SGRReset,
     SGRStandardColorForeground,
     SGRStandardColorForegroundBright,
-    SGRAttribute,
-    SGRColorExtender,
-    SGRAdvancedUnderline,
-    SGRPosition,
 )
-from jarbin_toolkit_console.color import (
-    Color,
-    ColorRGB,
-    Color256,
-)
-from jarbin_toolkit_console.ansi.ansi import CSI
-
 
 class SGR(CSI):
 
@@ -24,13 +24,12 @@ class SGR(CSI):
         ) -> SGR:
         """
             Create a new SGR ANSI sequence
-        
+
             Parameters
             ----------
             *values : str | Color
                 Ansi sequence (accepts colors for formatting)
         """
-        ...
 
 
     @classmethod
@@ -40,13 +39,12 @@ class SGR(CSI):
         ) -> SGR:
         """
             Reset sequence
-        
+
             Parameters
             ----------
             *resets : SGRReset
                 Reset type
         """
-        ...
 
 
     @classmethod
@@ -62,7 +60,6 @@ class SGR(CSI):
             *attributes : SGRAttribute
                 Text attributes
         """
-        ...
 
 
     @classmethod
@@ -78,7 +75,6 @@ class SGR(CSI):
             color : SGRStandardColorForeground | SGRStandardColorForegroundBright
                 Color for foreground
         """
-        ...
 
 
     @classmethod
@@ -94,7 +90,6 @@ class SGR(CSI):
             color : SGRStandardColorForeground | SGRStandardColorForegroundBright
                 Color for background
         """
-        ...
 
 
     @classmethod
@@ -114,7 +109,6 @@ class SGR(CSI):
             color : Color256 | ColorRGB
                 Color for text
         """
-        ...
 
 
     @classmethod
@@ -134,7 +128,6 @@ class SGR(CSI):
             color : Color256 | ColorRGB
                 Color for text
         """
-        ...
 
 
     @classmethod
@@ -150,8 +143,9 @@ class SGR(CSI):
             position : SGRPosition
                 Text position
         """
-        ...
 
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'SGR',
+]

@@ -8,16 +8,14 @@
 # ============================================================================
 
 
-from typing import Optional
 
 from .enums import StopWatchState
 from .time import Time
 
-
 class StopWatch:
     """
         StopWatch to measure time passing
-    
+
         Attributes
         ----------
         started_at : Optional[Time]
@@ -34,10 +32,10 @@ class StopWatch:
     """
 
 
-    started_at: Optional[Time]
-    stopped_at: Optional[Time]
+    started_at: Time | None
+    stopped_at: Time | None
     state: StopWatchState
-    saved: Optional[Time]
+    saved: Time | None
 
 
     def __init__(
@@ -53,7 +51,6 @@ class StopWatch:
             start : bool
                 Start at initialization
         """
-        ...
 
 
     def start(
@@ -74,7 +71,6 @@ class StopWatch:
             TimeStateJError
                 Status invalid
         """
-        ...
 
 
     def pause(
@@ -88,7 +84,6 @@ class StopWatch:
             TimeStateJError
                 Status invalid
         """
-        ...
 
 
     def resume(
@@ -102,7 +97,6 @@ class StopWatch:
             TimeStateJError
                 Status invalid
         """
-        ...
 
 
     def save(
@@ -116,7 +110,6 @@ class StopWatch:
             float | int
                 Saved elapsed time
         """
-        ...
 
 
     def stop(
@@ -130,7 +123,6 @@ class StopWatch:
             TimeStateJError
                 Status invalid
         """
-        ...
 
 
     def reset(
@@ -139,7 +131,6 @@ class StopWatch:
         """
             Reset the stopwatch
         """
-        ...
 
 
     def elapsed(
@@ -153,13 +144,12 @@ class StopWatch:
             float | int
                 Elapsed time
         """
-        ...
 
 
     _state: StopWatchState
-    _start: Optional[float | int]
-    _started_at: Optional[float | int]
-    _stopped_at: Optional[float | int]
+    _start: float | int | None
+    _started_at: float | int | None
+    _stopped_at: float | int | None
     _elapsed: float | int
     _saved: list[float | int]
 

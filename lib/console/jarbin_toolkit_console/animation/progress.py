@@ -10,8 +10,8 @@
 
 from numbers import Real
 
-from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.enums import PresetProgress
+from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.text import Text
 
 
@@ -46,7 +46,7 @@ class Progress:
         if not isinstance(value, Real) or isinstance(value, bool):
             raise ConsoleJError("Progress value must be a number")
 
-        if value < self._minimum or value > self._maximum:
+        if value < self._minimum or value > self._maximum:  # pyright: ignore[reportOperatorIssue]
             raise ConsoleJError("Progress value out of range")
 
 

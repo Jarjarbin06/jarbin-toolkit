@@ -1,13 +1,12 @@
+from collections.abc import Sized
 from typing import (
-    Optional,
     Any,
-    Sized,
 )
 
-from .exceptions import JException
 from jarbin_toolkit_error.empty_field import EmptyField
 from jarbin_toolkit_error.enums import FormatType
 
+from .exceptions import JException
 
 class JErrorType(JException):
     """
@@ -18,12 +17,12 @@ class JErrorType(JException):
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
-            expected: type = EmptyField,
+            expected: type = EmptyField,  # pyright: ignore[reportArgumentType]
             actual: object = EmptyField,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -57,7 +56,6 @@ class JErrorType(JException):
             ValueError
                 Invalid link
         """
-        ...
 
 
 class JErrorValue(JException):
@@ -69,11 +67,11 @@ class JErrorValue(JException):
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
             value: Any = EmptyField,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -104,7 +102,6 @@ class JErrorValue(JException):
             ValueError
                 Invalid link
         """
-        ...
 
 
 class JErrorAttribute(JException):
@@ -116,11 +113,11 @@ class JErrorAttribute(JException):
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
-            attribute: str = EmptyField,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            attribute: str = EmptyField,  # pyright: ignore[reportArgumentType]
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -151,7 +148,6 @@ class JErrorAttribute(JException):
             ValueError
                 Invalid link
         """
-        ...
 
 
 class JErrorName(JException):
@@ -163,11 +159,11 @@ class JErrorName(JException):
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
-            name: str = EmptyField,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            name: str = EmptyField,  # pyright: ignore[reportArgumentType]
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -198,7 +194,6 @@ class JErrorName(JException):
             ValueError
                 Invalid link
         """
-        ...
 
 
 class JErrorIndex(JException):
@@ -210,12 +205,12 @@ class JErrorIndex(JException):
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
-            index: int = EmptyField,
-            obj: Sized = EmptyField,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            index: int = EmptyField,  # pyright: ignore[reportArgumentType]
+            obj: Sized = EmptyField,  # pyright: ignore[reportArgumentType]
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -249,7 +244,6 @@ class JErrorIndex(JException):
             ValueError
                 Invalid link
         """
-        ...
 
 
 class JErrorKey(JException):
@@ -261,11 +255,11 @@ class JErrorKey(JException):
 
     def __init__(
             self,
-            message: str = EmptyField,
+            message: str = EmptyField,  # pyright: ignore[reportArgumentType]
             *,
             key: Any = EmptyField,
-            format: FormatType = FormatType.TRACEBACK,
-            link: Optional[dict[str, Any]] = None,
+            format: FormatType = FormatType.TRACEBACK,  # pyright: ignore[reportArgumentType]
+            link: dict[str, Any] | None = None,
             do_raise: bool = False,
         ):
         """
@@ -296,14 +290,13 @@ class JErrorKey(JException):
             ValueError
                 Invalid link
         """
-        ...
 
 
 __all__: list[str] = [
-    'JErrorType',
-    'JErrorValue',
     'JErrorAttribute',
-    'JErrorName',
     'JErrorIndex',
     'JErrorKey',
+    'JErrorName',
+    'JErrorType',
+    'JErrorValue',
 ]

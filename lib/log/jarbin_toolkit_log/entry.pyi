@@ -6,16 +6,15 @@ from jarbin_toolkit_time import (
 )
 
 from .enums import (
-    LogType,
     LogLevel,
+    LogType,
 )
-
 
 @final
 class LogEntry:
     """
         Log entry
-    
+
         Attributes
         ----------
         level : LogLevel
@@ -45,7 +44,7 @@ class LogEntry:
         ) -> None:
         """
             Initialize a log entry
-        
+
             Parameters
             ----------
             sequence : int
@@ -71,21 +70,8 @@ class LogEntry:
             LogTypeJError
                 Level, type type invalid
         """
-        ...
 
 
-    def __repr__(
-            self,
-        ) -> str:
-        """
-            Representation of the entry (formated entry)
-
-            Returns
-            ----------
-            str
-                Formated entry
-        """
-        ...
 
 
     @property
@@ -100,7 +86,6 @@ class LogEntry:
             int
                 Sequence index
         """
-        ...
 
 
     _sequence: int

@@ -8,9 +8,9 @@
 # ============================================================================
 
 
-from jarbin_toolkit_error.exceptions.exceptions import JException
 from jarbin_toolkit_error.empty_field import EmptyField
 from jarbin_toolkit_error.enums import FormatType
+from jarbin_toolkit_error.exceptions.exceptions import JException
 
 
 class JErrorIO(JException):
@@ -28,7 +28,7 @@ class JErrorIO(JException):
         msg = ""
 
         if message is not EmptyField:
-            msg += f"\n\n  → {message}"
+            msg += f"\n  → {message}"
 
         super().__init__(
             msg,
@@ -61,11 +61,11 @@ class JErrorFileNotFound(JException):
             msg += f"  Path: {path}\n"
 
         if message is not EmptyField:
-            msg += f"\n\n  → {message}"
+            msg += f"\n  → {message}"
 
         super().__init__(
             msg,
-            format = format,
+            format = format,  # pyright: ignore[reportArgumentType]
             link = link,
             do_raise = do_raise
         )
@@ -94,11 +94,11 @@ class JErrorFileExists(JException):
             msg += f"  Path: {path}\n"
 
         if message is not EmptyField:
-            msg += f"\n\n  → {message}"
+            msg += f"\n  → {message}"
 
         super().__init__(
             msg,
-            format = format,
+            format = format,  # pyright: ignore[reportArgumentType]
             link = link,
             do_raise = do_raise
         )
@@ -127,11 +127,11 @@ class JErrorPermission(JException):
             msg += f"  Path: {path}\n"
 
         if message is not EmptyField:
-            msg += f"\n\n  → {message}"
+            msg += f"\n  → {message}"
 
         super().__init__(
             msg,
-            format = format,
+            format = format,  # pyright: ignore[reportArgumentType]
             link = link,
             do_raise = do_raise
         )
@@ -160,11 +160,11 @@ class JErrorIsADirectory(JException):
             msg += f"  Path: {path}\n"
 
         if message is not EmptyField:
-            msg += f"\n\n  → {message}"
+            msg += f"\n  → {message}"
 
         super().__init__(
             msg,
-            format = format,
+            format = format,  # pyright: ignore[reportArgumentType]
             link = link,
             do_raise = do_raise
         )
@@ -193,11 +193,11 @@ class JErrorNotADirectory(JException):
             msg += f"  Path: {path}\n"
 
         if message is not EmptyField:
-            msg += f"\n\n  → {message}"
+            msg += f"\n  → {message}"
 
         super().__init__(
             msg,
-            format = format,
+            format = format,  # pyright: ignore[reportArgumentType]
             link = link,
             do_raise = do_raise
         )
@@ -226,22 +226,22 @@ class JErrorDirectoryNotEmpty(JException):
             msg += f"  Path: {path}\n"
 
         if message is not EmptyField:
-            msg += f"\n\n  → {message}"
+            msg += f"\n  → {message}"
 
         super().__init__(
             msg,
-            format = format,
+            format = format,  # pyright: ignore[reportArgumentType]
             link = link,
             do_raise = do_raise
         )
 
 
 __all__ = [
-    'JErrorIO',
-    'JErrorFileNotFound',
+    'JErrorDirectoryNotEmpty',
     'JErrorFileExists',
-    'JErrorPermission',
+    'JErrorFileNotFound',
+    'JErrorIO',
     'JErrorIsADirectory',
     'JErrorNotADirectory',
-    'JErrorDirectoryNotEmpty',
+    'JErrorPermission',
 ]

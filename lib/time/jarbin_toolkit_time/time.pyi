@@ -1,11 +1,9 @@
+from datetime import datetime
 from typing import (
     final,
-    Optional,
 )
-from datetime import datetime
 
 from .enums import TimeFormat
-
 
 @final
 class Time:
@@ -26,23 +24,23 @@ class Time:
             self,
             *,
             format: TimeFormat | str = TimeFormat.DEFAULT,
-            timestamp: Optional[float | int] = None,
-            year: Optional[int] = None,
-            month: Optional[int] = None,
-            day: Optional[int] = None,
-            hour: Optional[int] = None,
-            minute: Optional[int] = None,
-            second: Optional[int] = None,
-            millisecond: Optional[int] = None,
+            timestamp: float | None = None,
+            year: int | None = None,
+            month: int | None = None,
+            day: int | None = None,
+            hour: int | None = None,
+            minute: int | None = None,
+            second: int | None = None,
+            millisecond: int | None = None,
         ) -> None:
         """
             Initialize new Time object
-        
+
             Parameters
             ----------
             format : TimeFormat
                 Format of the time
-        
+
             Raises
             ----------
             TimeTypeJError
@@ -53,35 +51,10 @@ class Time:
                 Timestamp combined with date arguments
                 <other>
         """
-        ...
 
 
-    def __str__(
-            self,
-        ) -> str:
-        """
-            Represent the time into selected format
-
-            Returns
-            ----------
-            str
-                Time representation
-        """
-        ...
 
 
-    def __repr__(
-            self,
-        ) -> str:
-        """
-            Represent the time into selected format
-
-            Returns
-            ----------
-            str
-                Time representation
-        """
-        ...
 
 
     def timestamp(
@@ -95,7 +68,6 @@ class Time:
             float | int
                 Time representation
         """
-        ...
 
 
     @staticmethod
@@ -105,7 +77,7 @@ class Time:
         ) -> Time:
         """
             Get a Time object from a formated string
-        
+
             Parameters
             ----------
             value : str
@@ -118,13 +90,12 @@ class Time:
             ----------
             Time
                 New Time object
-        
+
             Raises
             ----------
             TimeTypeJError
                 Value, format type invalid
         """
-        ...
 
 
     @staticmethod
@@ -138,7 +109,6 @@ class Time:
             float | int
                 Time since Epoch
         """
-        ...
 
 
     @staticmethod
@@ -152,7 +122,6 @@ class Time:
             float | int
                 Monotonic tick
         """
-        ...
 
 
     _datetime: datetime

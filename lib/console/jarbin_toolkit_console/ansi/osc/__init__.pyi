@@ -1,13 +1,23 @@
+from .enums import OSCClipboardSelection
 from .osc import (
-    OSCTitle,
+    OSCClipboard,
     OSCColor,
-    OSCWindow,
+    OSCFileLink,
     OSCHyperlink,
     OSCNotification,
-    OSCClipboard,
     OSCShell,
+    OSCTitle,
+    OSCWindow,
 )
-from .enums import OSCClipboardSelection
 
-
-__all__: list[str]
+__all__: list[str] = [
+    'OSCClipboard',
+    'OSCClipboardSelection',
+    'OSCColor',
+    'OSCFileLink',
+    'OSCHyperlink',
+    'OSCNotification',
+    'OSCShell',
+    'OSCTitle',
+    'OSCWindow',
+]

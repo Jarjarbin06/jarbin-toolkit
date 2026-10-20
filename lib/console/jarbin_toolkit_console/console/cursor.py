@@ -8,10 +8,9 @@
 # ============================================================================
 
 
-from jarbin_toolkit_console.ansi.cursor.cursor import CursorMode
-from jarbin_toolkit_console.ansi.cursor.cursor import CursorPosition
-from jarbin_toolkit_console.console.output import Output
+from jarbin_toolkit_console.ansi.cursor.cursor import CursorMode, CursorPosition
 from jarbin_toolkit_console.ansi.query import Query
+from jarbin_toolkit_console.console.output import Output
 
 
 class Cursor:

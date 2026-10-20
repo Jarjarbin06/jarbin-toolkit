@@ -8,9 +8,9 @@
 # ============================================================================
 
 
-from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.ansi.screen.screen import ScreenBuffer
 from jarbin_toolkit_console.console.output import Output
+from jarbin_toolkit_console.error import ConsoleJError
 
 
 class _ContextMeta(type):
@@ -22,7 +22,7 @@ class _ContextMeta(type):
         Context.alternate_screen()
 
 
-    def __exit__(
+    def __exit__(  # noqa: PYI036
             self,
             exc_type,
             exc_value,

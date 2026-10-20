@@ -110,12 +110,12 @@ class DCS(ANSI):
 
 __all__ = [
     'ANSI',
-    'ESC',
     'CSI',
-    'OSC',
+    'DCS',
+    'ESC',
     'G0',
     'G1',
     'G2',
     'G3',
-    'DCS',
+    'OSC',
 ]

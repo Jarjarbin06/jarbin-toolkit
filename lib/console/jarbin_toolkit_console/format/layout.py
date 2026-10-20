@@ -8,8 +8,8 @@
 # ============================================================================
 
 
-from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.enums import PresetSymbol
+from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.format.enums import FormatPosition
 
 
@@ -24,7 +24,7 @@ class Layout:
         if not getattr(self, "_can_format", False):
             return self
 
-        return self.__class__("".join(map(str, layout)))
+        return self.__class__("".join(map(str, layout)))  # pyright: ignore[reportCallIssue]
 
 
     def f_layout_pad(
@@ -41,7 +41,7 @@ class Layout:
         if amount < 0:
             raise ConsoleJError("Amount must be non-negative")
 
-        lines = self.splitlines()
+        lines = self.splitlines()  # pyright: ignore[reportAttributeAccessIssue]
         new_text = []
 
         for line in lines:
@@ -101,21 +101,24 @@ class Layout:
         if width < 0:
             raise ConsoleJError("Width must be non-negative")
 
-        lines = self.splitlines()
+        lines = self.splitlines()  # pyright: ignore[reportAttributeAccessIssue]
         new_text = []
 
         for line in lines:
 
             remaining_width = width - len(line)
 
-            if remaining_width < 1 or align == FormatPosition.LEFT:
+            if remaining_width < 1:
+                new_text.append(f"{line[:width]}")
+
+            elif align == FormatPosition.LEFT:
                 new_text.append(f"{line}")
 
             elif align == FormatPosition.CENTER:
-                new_text.append(f"{" " * (remaining_width // 2)}{line}")
+                new_text.append(f"{' ' * (remaining_width // 2)}{line}")
 
             elif align == FormatPosition.RIGHT:
-                new_text.append(f"{" " * remaining_width}{line}")
+                new_text.append(f"{' ' * remaining_width}{line}")
 
         return self._get_layout_text("\n".join(new_text))
 
@@ -158,7 +161,7 @@ class Layout:
 
         new_text = []
 
-        for line in self.splitlines():
+        for line in self.splitlines():  # pyright: ignore[reportAttributeAccessIssue]
             new_text.append(f"{(fill * width) * indent}{line}")
 
         if first_line is not None:
@@ -172,7 +175,7 @@ class Layout:
             fill = " ",
         ):
 
-        lines = self.splitlines()
+        lines = self.splitlines()  # pyright: ignore[reportAttributeAccessIssue]
 
         if not lines:
             return self
@@ -195,14 +198,14 @@ class Layout:
             self,
         ):
 
-        return max(len(line) for line in self.splitlines())
+        return max(len(line) for line in self.splitlines())  # pyright: ignore[reportAttributeAccessIssue]
 
 
     def f_layout_get_height(
             self,
         ):
 
-        return len(self.splitlines())
+        return len(self.splitlines())  # pyright: ignore[reportAttributeAccessIssue]
 
 
     def f_layout_wrap(
@@ -218,7 +221,7 @@ class Layout:
         if not isinstance(break_long_words, bool):
             raise ConsoleJError("break_long_words must be a boolean")
 
-        words = self.split()
+        words = self.split()  # pyright: ignore[reportAttributeAccessIssue]
         lines = []
         current_line = ""
 
@@ -272,18 +275,18 @@ class Layout:
         if not isinstance(break_long_words, bool):
             raise ConsoleJError("break_long_words must be a boolean")
 
-        if len(self) <= width:
+        if len(self) <= width:  # pyright: ignore[reportArgumentType]
             return self
 
         if len(suffix) >= width:
             return self._get_layout_text(suffix[:width])
 
         available_width = width - len(suffix)
-        text = self[:available_width]
+        text = self[:available_width]  # pyright: ignore[reportIndexIssue]
 
-        if not break_long_words and available_width < len(self):
+        if not break_long_words and available_width < len(self):  # pyright: ignore[reportArgumentType]
             previous_char = text[-1:]
-            next_char = self[available_width:available_width + 1]
+            next_char = self[available_width:available_width + 1]  # pyright: ignore[reportIndexIssue]
 
             previous_is_word = (
                     previous_char.isalnum()
@@ -313,7 +316,7 @@ class Layout:
             self,
         ):
 
-        return [self.__class__(line) for line in self.splitlines()]
+        return [self.__class__(line) for line in self.splitlines()]  # pyright: ignore[reportCallIssue, reportAttributeAccessIssue]
 
 
     def f_layout_first_line(
@@ -337,7 +340,7 @@ class Layout:
 
         new_text = []
 
-        for line in self.splitlines():
+        for line in self.splitlines():  # pyright: ignore[reportAttributeAccessIssue]
             new_text.append(f"{prefix}{line}")
 
         return self._get_layout_text("\n".join(new_text))
@@ -350,7 +353,7 @@ class Layout:
 
         new_text = []
 
-        for line in self.splitlines():
+        for line in self.splitlines():  # pyright: ignore[reportAttributeAccessIssue]
             new_text.append(f"{line}{suffix}")
 
         return self._get_layout_text("\n".join(new_text))
@@ -362,11 +365,11 @@ class Layout:
             separator = ". ",
         ):
 
-        lines = self.splitlines()
+        lines = self.splitlines()  # pyright: ignore[reportAttributeAccessIssue]
         new_text = []
         len_num = len(str(len(lines) + start - 1))
 
-        for line in range(0, len(lines)):
+        for line in range(len(lines)):
             new_text.append(f"{line + start:0{len_num}d}{separator}{lines[line]}")
 
         return self._get_layout_text("\n".join(new_text))
@@ -376,7 +379,7 @@ class Layout:
             self,
         ):
 
-        new_text = self.splitlines()[::-1]
+        new_text = self.splitlines()[::-1]  # pyright: ignore[reportAttributeAccessIssue]
 
         return self._get_layout_text("\n".join(new_text))
 
@@ -387,7 +390,7 @@ class Layout:
             link = None,
         ):
 
-        OSC = self._get_osc()
+        OSC = self._get_osc()  # pyright: ignore[reportAttributeAccessIssue]
 
         new_text = [
             OSC.OSCHyperlink.open(link or self),
@@ -404,7 +407,7 @@ class Layout:
             file = None,
         ):
 
-        OSC = self._get_osc()
+        OSC = self._get_osc()  # pyright: ignore[reportAttributeAccessIssue]
 
         new_text = [
             OSC.OSCFileLink.open(file or self),

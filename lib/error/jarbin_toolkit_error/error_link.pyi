@@ -1,12 +1,10 @@
 from os import PathLike
 from types import FrameType
 from typing import (
-    Optional,
     final,
 )
 
 from jarbin_toolkit_error.enums import FormatType
-
 
 @final
 class ErrorLink:
@@ -38,29 +36,29 @@ class ErrorLink:
     """
 
 
-    file: Optional[str]
-    line: Optional[int]
-    column: Optional[int]
-    function: Optional[str]
-    module: Optional[str]
-    class_name: Optional[str]
-    code: Optional[str]
+    file: str | None
+    line: int | None
+    column: int | None
+    function: str | None
+    module: str | None
+    class_name: str | None
+    code: str | None
 
 
     def __init__(
             self,
             *,
-            file: Optional[PathLike | str] = None,
-            line: Optional[int] = None,
-            column: Optional[int] = None,
-            function: Optional[str] = None,
-            module: Optional[str] = None,
-            class_name: Optional[str] = None,
-            code: Optional[str] = None
+            file: PathLike | str | None = None,
+            line: int | None = None,
+            column: int | None = None,
+            function: str | None = None,
+            module: str | None = None,
+            class_name: str | None = None,
+            code: str | None = None
         ) -> None:
         """
             Initialize a link
-        
+
             Parameters
             ----------
             file : Optional[PathLike | str]
@@ -89,21 +87,8 @@ class ErrorLink:
             TypeError
                 File, line, column, function, module, class_name, code type invalid
         """
-        ...
 
 
-    def __repr__(
-            self
-        ) -> str:
-        """
-            Representation of the link
-
-            Returns
-            ----------
-            str
-                Link's representation
-        """
-        ...
 
 
     def resolve(
@@ -112,7 +97,6 @@ class ErrorLink:
         """
             Resolve exception context
         """
-        ...
 
 
     def display_link(
@@ -137,7 +121,6 @@ class ErrorLink:
             TypeError
                 Format type invalid
         """
-        ...
 
 
     @staticmethod
@@ -149,7 +132,7 @@ class ErrorLink:
 
     @staticmethod
     def _resolve_column(
-            frame: Optional[FrameType]
+            frame: FrameType | None
         ) -> int | None:
         ...
 
@@ -168,7 +151,7 @@ class ErrorLink:
 
     def _resolve_frame(
             self,
-            frame: Optional[FrameType]
+            frame: FrameType | None
         ) -> None:
         ...
 

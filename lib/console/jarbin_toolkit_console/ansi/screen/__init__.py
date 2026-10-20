@@ -8,39 +8,36 @@
 # ============================================================================
 
 
-from jarbin_toolkit_console.ansi.screen.screen import (
-    ScreenErase,
-    ScreenEdit,
-    ScreenScroll,
-    ScreenMargins,
-    ScreenWriteMode,
-    ScreenBuffer,
-    ScreenTest,
-    ScreenRectangle,
-    ScreenMode,
-    ScreenSize,
-    ScreenControl,
-)
-
 from jarbin_toolkit_console.ansi.screen.enums import (
-    ScreenLineEraseMode,
     ScreenDisplayEraseMode,
+    ScreenLineEraseMode,
 )
-
+from jarbin_toolkit_console.ansi.screen.screen import (
+    ScreenBuffer,
+    ScreenControl,
+    ScreenEdit,
+    ScreenErase,
+    ScreenMargins,
+    ScreenMode,
+    ScreenRectangle,
+    ScreenScroll,
+    ScreenSize,
+    ScreenTest,
+    ScreenWriteMode,
+)
 
 __all__ = [
-    'ScreenErase',
-    'ScreenEdit',
-    'ScreenScroll',
-    'ScreenMargins',
-    'ScreenWriteMode',
     'ScreenBuffer',
-    'ScreenTest',
-    'ScreenRectangle',
-    'ScreenMode',
-    'ScreenSize',
     'ScreenControl',
-
-    'ScreenLineEraseMode',
     'ScreenDisplayEraseMode',
+    'ScreenEdit',
+    'ScreenErase',
+    'ScreenLineEraseMode',
+    'ScreenMargins',
+    'ScreenMode',
+    'ScreenRectangle',
+    'ScreenScroll',
+    'ScreenSize',
+    'ScreenTest',
+    'ScreenWriteMode',
 ]

@@ -9,9 +9,8 @@
 
 
 from enum import (
-    IntEnum,
-    StrEnum,
     Enum,
+    IntEnum,
     auto,
 )
 from typing import final
@@ -62,8 +61,8 @@ class FormatStyle(Enum):
 
 
 __all__ = [
-    'FormatPosition',
     'FormatOrder',
+    'FormatPosition',
     'FormatStrength',
     'FormatStyle',
 ]

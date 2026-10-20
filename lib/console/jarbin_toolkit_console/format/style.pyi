@@ -1,16 +1,14 @@
 from typing import (
     Any,
-    Optional,
 )
 
 from jarbin_toolkit_console.ansi.sgr import SGRAdvancedUnderline
-from jarbin_toolkit_console.text import Text
 from jarbin_toolkit_console.color import (
-    ColorRGB,
     Color256,
     ColorHEX,
+    ColorRGB,
 )
-
+from jarbin_toolkit_console.text import Text
 
 class Style:
     """
@@ -29,7 +27,6 @@ class Style:
             Text
                 New format
         """
-        ...
 
 
     def f_style_bold(
@@ -45,7 +42,6 @@ class Style:
             Text
                 New format
         """
-        ...
 
 
     def f_style_faint(
@@ -61,7 +57,6 @@ class Style:
             Text
                 New format
         """
-        ...
 
 
     def f_style_dim(
@@ -77,7 +72,6 @@ class Style:
             Text
                 New format
         """
-        ...
 
 
     def f_style_italic(
@@ -93,14 +87,13 @@ class Style:
             Text
                 New format
         """
-        ...
 
 
     def f_style_underline(
             self,
             *,
-            style: Optional[SGRAdvancedUnderline] = None,
-            color: Optional[ColorRGB | Color256 | ColorHEX] = None,
+            style: SGRAdvancedUnderline | None = None,
+            color: ColorRGB | Color256 | ColorHEX | None = None,
             reset: bool = True,
         ) -> Text:
         """
@@ -111,7 +104,6 @@ class Style:
             Text
                 New format
         """
-        ...
 
 
     def f_style_strikethrough(
@@ -127,7 +119,6 @@ class Style:
             Text
                 New format
         """
-        ...
 
 
     def f_style_blink(
@@ -144,7 +135,6 @@ class Style:
             Text
                 New format
         """
-        ...
 
 
     def f_style_reverse(
@@ -160,7 +150,6 @@ class Style:
             Text
                 New format
         """
-        ...
 
 
     def f_style_hide(
@@ -176,7 +165,6 @@ class Style:
             Text
                 New format
         """
-        ...
 
 
     def f_style_show(
@@ -192,7 +180,6 @@ class Style:
             Text
                 New format
         """
-        ...
 
 
     def f_style_frame(
@@ -208,7 +195,6 @@ class Style:
             Text
                 New format
         """
-        ...
 
 
     def f_style_encircle(
@@ -224,7 +210,6 @@ class Style:
             Text
                 New format
         """
-        ...
 
 
     def f_style_overline(
@@ -240,7 +225,6 @@ class Style:
             Text
                 New format
         """
-        ...
 
 
     def f_style_superscript(
@@ -256,7 +240,6 @@ class Style:
             Text
                 New format
         """
-        ...
 
 
     def f_style_subscript(
@@ -272,7 +255,6 @@ class Style:
             Text
                 New format
         """
-        ...
 
 
     def _get_style_sequence(
@@ -282,4 +264,6 @@ class Style:
         ...
 
 
-__all__: list[str]
+__all__: list[str] = [
+    'Style',
+]

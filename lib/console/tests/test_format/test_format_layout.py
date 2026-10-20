@@ -63,23 +63,23 @@ def test_layout_pad_negative():
 def test_layout_align():
     assert str(
         Text("Hello").f_layout_align(10, align=FormatPosition.LEFT)
-    ) == "\x1b[1GHello"
+    ) == "Hello"
 
     assert str(
         Text("Hello").f_layout_align(10, align=FormatPosition.CENTER)
-    ) == "\x1b[3GHello"
+    ) == "  Hello"
 
     assert str(
         Text("Hello").f_layout_align(10, align=FormatPosition.RIGHT)
-    ) == "\x1b[6GHello"
+    ) == "     Hello"
 
 
 @pytest.mark.parametrize(
     "method, expected",
     [
-        (Text.f_layout_align_left, "\x1b[1GHello"),
-        (Text.f_layout_align_center, "\x1b[3GHello"),
-        (Text.f_layout_align_right, "\x1b[6GHello"),
+        (Text.f_layout_align_left, "Hello"),
+        (Text.f_layout_align_center, "  Hello"),
+        (Text.f_layout_align_right, "     Hello"),
     ],
 )
 def test_layout_align_shortcuts(method, expected):
@@ -89,7 +89,7 @@ def test_layout_align_shortcuts(method, expected):
 def test_layout_align_small_width():
     assert str(
         Text("Hello").f_layout_align(3)
-    ) == "\x1b[1GHel"
+    ) == "Hel"
 
 
 def test_layout_align_negative_width():

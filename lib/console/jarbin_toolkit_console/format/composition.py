@@ -8,13 +8,13 @@
 # ============================================================================
 
 
-from jarbin_toolkit_console.error import ConsoleJError
-from jarbin_toolkit_console.format.enums import FormatStyle
 from jarbin_toolkit_console.color import (
     Color256,
     ColorHEX,
     ColorRGB,
 )
+from jarbin_toolkit_console.error import ConsoleJError
+from jarbin_toolkit_console.format.enums import FormatStyle
 
 
 class Composition:
@@ -28,7 +28,7 @@ class Composition:
         if not getattr(self, "_can_format", False):
             return self
 
-        return self.__class__("".join(map(str, composition)))
+        return self.__class__("".join(map(str, composition)))  # pyright: ignore[reportCallIssue]
 
 
     def f_composition_style(
@@ -36,7 +36,7 @@ class Composition:
             *styles,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         if any(not isinstance(style, FormatStyle) for style in styles):
             raise ConsoleJError("Styles must be FormatStyle")
@@ -75,7 +75,7 @@ class Composition:
                     f"{name} must contain a Color256, ColorRGB or ColorHEX"
                 )
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         foreground_code = (
             SGR.SGR.color(

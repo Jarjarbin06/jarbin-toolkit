@@ -9,9 +9,8 @@
 
 
 from jarbin_toolkit_console.color import (
-    ColorRGB,
-    Color256,
     ColorHEX,
+    ColorRGB,
 )
 
 
@@ -26,14 +25,14 @@ class Style:
         if not getattr(self, "_can_format", False):
             return self
 
-        return self.__class__("".join(map(str, style)))
+        return self.__class__("".join(map(str, style)))  # pyright: ignore[reportCallIssue]
 
 
     def f_style_reset(
             self,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         sequence = [
             SGR.SGR(SGR.SGRReset.ALL),
@@ -49,7 +48,7 @@ class Style:
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         sequence = [
             SGR.SGR(SGR.SGRAttribute.BOLD),
@@ -70,7 +69,7 @@ class Style:
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         sequence = [
             SGR.SGR(SGR.SGRAttribute.FAINT),
@@ -100,7 +99,7 @@ class Style:
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         sequence = [
             SGR.SGR(SGR.SGRAttribute.ITALIC),
@@ -123,7 +122,7 @@ class Style:
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         if style is not None:
 
@@ -175,7 +174,7 @@ class Style:
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         sequence = [
             SGR.SGR(SGR.SGRAttribute.STRIKETHROUGH),
@@ -197,7 +196,7 @@ class Style:
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         sequence = [
             SGR.SGR(SGR.SGRAttribute.FAST_BLINK if is_fast else SGR.SGRAttribute.SLOW_BLINK),
@@ -218,7 +217,7 @@ class Style:
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         sequence = [
             SGR.SGR(SGR.SGRAttribute.REVERSE),
@@ -239,7 +238,7 @@ class Style:
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         sequence = [
             SGR.SGR(SGR.SGRAttribute.HIDE),
@@ -260,7 +259,7 @@ class Style:
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         sequence = [
             SGR.SGR(SGR.SGRReset.HIDE),
@@ -281,7 +280,7 @@ class Style:
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         sequence = [
             SGR.SGR(SGR.SGRDecoration.FRAME),
@@ -302,7 +301,7 @@ class Style:
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         sequence = [
             SGR.SGR(SGR.SGRDecoration.ENCIRCLE),
@@ -323,7 +322,7 @@ class Style:
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         sequence = [
             SGR.SGR(SGR.SGRDecoration.OVERLINE),
@@ -344,7 +343,7 @@ class Style:
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         sequence = [
             SGR.SGR(SGR.SGRPosition.SUPERSCRIPT),
@@ -365,7 +364,7 @@ class Style:
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         sequence = [
             SGR.SGR(SGR.SGRPosition.SUBSCRIPT),

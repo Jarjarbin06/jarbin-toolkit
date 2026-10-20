@@ -8,9 +8,9 @@
 # ============================================================================
 
 
-from jarbin_toolkit_error.exceptions.exceptions import JException
 from jarbin_toolkit_error.empty_field import EmptyField
 from jarbin_toolkit_error.enums import FormatType
+from jarbin_toolkit_error.exceptions.exceptions import JException
 
 
 class JErrorArithmetic(JException):
@@ -56,11 +56,11 @@ class JErrorZeroDivision(JException):
             msg += f"  Dividend: {dividend!r}\n"
 
         if message is not EmptyField:
-            msg += f"\n\n  → {message}"
+            msg += f"\n  → {message}"
 
         super().__init__(
             msg,
-            format = format,
+            format = format,  # pyright: ignore[reportArgumentType]
             link = link,
             do_raise = do_raise
         )
@@ -85,7 +85,7 @@ class JErrorOverflow(JException):
         )
 
         if message is not EmptyField:
-            msg += f"\n\n  → {message}"
+            msg += f"\n  → {message}"
 
         super().__init__(
             msg,
@@ -117,7 +117,7 @@ class JErrorFloatingPoint(JException):
 
 __all__ = [
     'JErrorArithmetic',
-    'JErrorZeroDivision',
-    'JErrorOverflow',
     'JErrorFloatingPoint',
+    'JErrorOverflow',
+    'JErrorZeroDivision',
 ]

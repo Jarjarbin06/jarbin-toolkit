@@ -1,22 +1,20 @@
+from collections.abc import Callable
 from inspect import Signature
-from typing import (
-    Any,
-    overload,
-    Callable,
-    Optional,
-)
 from threading import (
     Event,
     Lock,
     Thread,
 )
+from typing import (
+    Any,
+    overload,
+)
 
 from jarbin_toolkit_action.enums import (
-    ActionStatus,
     ActionAsync,
+    ActionStatus,
 )
 from jarbin_toolkit_action.time import ActionTimer
-
 
 class Action:
     """
@@ -42,10 +40,10 @@ class Action:
 
 
     name: str
-    output: Optional[Any]
+    output: Any | None
     status: ActionStatus
-    error: Optional[Exception]
-    duration: Optional[float]
+    error: Exception | None
+    duration: float | None
 
 
     @overload
@@ -78,7 +76,6 @@ class Action:
                 Invalid positional arguments.
                 Invalid keyword arguments (for the given function).
         """
-        ...
 
 
     @overload
@@ -104,7 +101,6 @@ class Action:
                 Invalid positional arguments.
                 Invalid keyword arguments (for the given function).
         """
-        ...
 
 
     def __call__(
@@ -133,28 +129,15 @@ class Action:
                 Caught exception during action execution (if `catch` setting disabled).
                 Action already pending, running or paused
         """
-        ...
 
 
-    def __repr__(
-            self,
-        ) -> str:
-        """
-            Return a string representation of the Action.
-
-            Returns
-            -------
-            str
-                String representation of the Action.
-        """
-        ...
 
 
     def set_settings(
             self,
             *,
-            catch: Optional[bool] = None,
-            asynchronous: Optional[bool] = None,
+            catch: bool | None = None,
+            asynchronous: bool | None = None,
         ) -> None:
         """
             Set/override action's settings
@@ -172,7 +155,6 @@ class Action:
             ActionArgumentError
                 Invalid setting.
         """
-        ...
 
 
     def start(
@@ -188,7 +170,6 @@ class Action:
                 Action not pending.
                 Thread already running.
         """
-        ...
 
 
     def pause(
@@ -202,7 +183,6 @@ class Action:
             ActionThreadError
                 Action not running.
         """
-        ...
 
 
     def resume(
@@ -216,7 +196,6 @@ class Action:
             ActionThreadError
                 Action not paused.
         """
-        ...
 
 
     def cancel(
@@ -230,7 +209,6 @@ class Action:
             ActionThreadError
                 Action not pending, running nor paused.
         """
-        ...
 
 
     @staticmethod
@@ -243,17 +221,17 @@ class Action:
 
     _thread_actions: dict[int, Any]
     _thread_actions_lock: Lock
-    _function: Callable[[...], Any]
+    _function: Callable[[...], Any]  # pyright: ignore[reportInvalidTypeForm]
     _signature: Signature
-    _output: Optional[Any]
+    _output: Any | None
     _kwargs: dict[str, Any]
     _execution_kwargs: dict[str, Any]
     _status: ActionStatus | int
-    _previous_status: Optional[ActionStatus | int]
-    _error: Optional[Exception]
+    _previous_status: ActionStatus | int | None
+    _error: Exception | None
     _timer: ActionTimer
     _settings: dict[str, Any]
-    _thread: Optional[Thread]
+    _thread: Thread | None
     _pause_event: Event
     _cancel_event: Event
     _execution_lock: Lock

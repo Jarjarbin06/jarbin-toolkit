@@ -1,11 +1,9 @@
 from typing import (
-    final,
     Any,
-    Optional,
+    final,
 )
 
 from jarbin_toolkit_time import Time
-
 
 @final
 class LogRenderer:
@@ -34,7 +32,7 @@ class LogRenderer:
     def header(
             run_id: str,
             start: Time,
-            metadata: Optional[dict[str, Any]] = None,
+            metadata: dict[str, Any] | None = None,
         ) -> str:
         """
             Get the log header
@@ -55,7 +53,6 @@ class LogRenderer:
             str
                 Formated header
         """
-        ...
 
 
     @staticmethod
@@ -99,7 +96,6 @@ class LogRenderer:
             str
                 Formated footer
         """
-        ...
 
 
 __all__: list[str] = [

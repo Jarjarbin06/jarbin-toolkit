@@ -9,9 +9,9 @@
 
 
 from jarbin_toolkit_console.color import (
-    ColorRGB,
     Color256,
     ColorHEX,
+    ColorRGB,
 )
 from jarbin_toolkit_console.enums import PresetColor
 
@@ -27,17 +27,17 @@ class Color:
         if not getattr(self, "_can_format", False):
             return self
 
-        return self.__class__("".join(map(str, color)))
+        return self.__class__("".join(map(str, color)))  # pyright: ignore[reportCallIssue]
 
 
     def f_color_foreground(
             self,
-            color = ColorRGB(255, 255, 255),
+            color = ColorRGB(255, 255, 255),  # noqa: B008
             *,
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         if isinstance(color, Color256 | ColorRGB | ColorHEX):
             color = color.to_rgb() if isinstance(color, ColorHEX) else color
@@ -69,12 +69,12 @@ class Color:
 
     def f_color_background(
             self,
-            color = ColorRGB(255, 255, 255),
+            color = ColorRGB(255, 255, 255),  # noqa: B008
             *,
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         if isinstance(color, Color256 | ColorRGB | ColorHEX):
             color = color.to_rgb() if isinstance(color, ColorHEX) else color
@@ -112,7 +112,7 @@ class Color:
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         if background:
             if bright:
@@ -134,7 +134,7 @@ class Color:
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         if background:
             if bright:
@@ -156,7 +156,7 @@ class Color:
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         if background:
             if bright:
@@ -178,7 +178,7 @@ class Color:
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         if background:
             if bright:
@@ -200,7 +200,7 @@ class Color:
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         if background:
             if bright:
@@ -222,7 +222,7 @@ class Color:
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         if background:
             if bright:
@@ -244,7 +244,7 @@ class Color:
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         if background:
             if bright:
@@ -266,7 +266,7 @@ class Color:
             reset = True,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         if background:
             if bright:
@@ -284,7 +284,7 @@ class Color:
             self,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         sequence = [
             SGR.SGR(SGR.SGRReset.FOREGROUND_COLOR),
@@ -298,7 +298,7 @@ class Color:
             self,
         ):
 
-        SGR = self._get_sgr()
+        SGR = self._get_sgr()  # pyright: ignore[reportAttributeAccessIssue]
 
         sequence = [
             SGR.SGR(SGR.SGRReset.BACKGROUND_COLOR),

@@ -9,12 +9,12 @@
 
 
 import select
-from time import monotonic
 import termios
 import tty
+from time import monotonic
 
-from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.console.io import IO
+from jarbin_toolkit_console.error import ConsoleJError
 
 
 class Input:

@@ -11,9 +11,9 @@
 from typing import final
 
 from jarbin_toolkit_error import (
+    JErrorRuntime,
     JErrorType,
     JErrorValue,
-    JErrorRuntime,
     JException,
 )
 
@@ -67,8 +67,8 @@ class LogStateJError(JException):
 
 
 __all__ = [
-    'LogTypeJError',
-    'LogValueJError',
     'LogRuntimeJError',
     'LogStateJError',
+    'LogTypeJError',
+    'LogValueJError',
 ]

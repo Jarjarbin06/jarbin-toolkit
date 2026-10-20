@@ -11,12 +11,11 @@
 import base64
 from pathlib import Path
 
-from jarbin_toolkit_console.error import ConsoleJError
-from jarbin_toolkit_console.color import ColorHEX
-from jarbin_toolkit_console.ansi.query import Query
-from jarbin_toolkit_console.ansi.osc.enums import OSCClipboardSelection
 from jarbin_toolkit_console.ansi.ansi import OSC
-
+from jarbin_toolkit_console.ansi.osc.enums import OSCClipboardSelection
+from jarbin_toolkit_console.ansi.query import Query
+from jarbin_toolkit_console.color import ColorHEX
+from jarbin_toolkit_console.error import ConsoleJError
 
 ST = "\x1b\\"
 
@@ -383,12 +382,12 @@ class OSCShell(OSC):
 
 
 __all__ = [
-    'OSCTitle',
-    'OSCColor',
-    'OSCWindow',
-    'OSCHyperlink',
-    'OSCFileLink',
-    'OSCNotification',
     'OSCClipboard',
+    'OSCColor',
+    'OSCFileLink',
+    'OSCHyperlink',
+    'OSCNotification',
     'OSCShell',
+    'OSCTitle',
+    'OSCWindow',
 ]

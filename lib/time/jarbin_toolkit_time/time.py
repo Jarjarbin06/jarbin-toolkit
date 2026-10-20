@@ -8,12 +8,12 @@
 # ============================================================================
 
 
+from datetime import datetime
 from time import (
     monotonic,
     time,
 )
 from typing import final
-from datetime import datetime
 
 from jarbin_toolkit_time.enums import TimeFormat
 from jarbin_toolkit_time.errors import (

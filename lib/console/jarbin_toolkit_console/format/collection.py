@@ -8,13 +8,13 @@
 # ============================================================================
 
 
+from jarbin_toolkit_console.enums import (
+    PresetBorder,
+    PresetBox,
+    PresetSymbol,
+)
 from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.format.enums import FormatStrength
-from jarbin_toolkit_console.enums import (
-    PresetSymbol,
-    PresetBox,
-    PresetBorder,
-)
 
 
 class Collection:
@@ -28,7 +28,7 @@ class Collection:
         if not getattr(self, "_can_format", False):
             return self
 
-        return self.__class__("".join(map(str, collection)))
+        return self.__class__("".join(map(str, collection)))  # pyright: ignore[reportCallIssue]
 
 
     def f_collection_list(
@@ -59,7 +59,7 @@ class Collection:
         len_items = len(items)
         len_num = len(str(len_items + start))
 
-        for line in range(0, len_items):
+        for line in range(len_items):
             new_text.append(f"{line + start:0{len_num}d}{separator}{items[line]}")
 
         return self._get_collection_text("\n".join(new_text))
@@ -291,7 +291,7 @@ class Collection:
         if lines:
             new_text = "\n".join(lines)
 
-        return self.__class__(new_text).f_border_title(language.upper(), border=border)
+        return self.__class__(new_text).f_border_title(language.upper(), border=border)  # pyright: ignore[reportAttributeAccessIssue, reportCallIssue]
 
 
 __all__ = [

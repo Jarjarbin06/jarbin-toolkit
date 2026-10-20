@@ -4,7 +4,6 @@ from enum import (
 )
 from typing import final
 
-
 @final
 class StopWatchState(IntEnum):
     """

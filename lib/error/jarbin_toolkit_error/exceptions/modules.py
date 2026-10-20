@@ -8,9 +8,9 @@
 # ============================================================================
 
 
-from jarbin_toolkit_error.exceptions.exceptions import JException
 from jarbin_toolkit_error.empty_field import EmptyField
 from jarbin_toolkit_error.enums import FormatType
+from jarbin_toolkit_error.exceptions.exceptions import JException
 
 
 class JErrorImport(JException):
@@ -40,11 +40,11 @@ class JErrorImport(JException):
             msg += f"  Import: {import_name!r}\n"
 
         if message is not EmptyField:
-            msg += f"\n\n  → {message}"
+            msg += f"\n  → {message}"
 
         super().__init__(
             msg,
-            format = format,
+            format = format,  # pyright: ignore[reportArgumentType]
             link = link,
             do_raise = do_raise
         )
@@ -73,11 +73,11 @@ class JErrorModuleNotFound(JException):
             msg += f"  Import: {name!r}\n"
 
         if message is not EmptyField:
-            msg += f"\n\n  → {message}"
+            msg += f"\n  → {message}"
 
         super().__init__(
             msg,
-            format = format,
+            format = format,  # pyright: ignore[reportArgumentType]
             link = link,
             do_raise = do_raise
         )

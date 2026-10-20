@@ -8,26 +8,26 @@
 # ============================================================================
 
 
-from jarbin_toolkit_console.error import ConsoleJError
+from jarbin_toolkit_console.ansi.ansi import CSI
 from jarbin_toolkit_console.ansi.sgr.enums import (
-    SGRReset,
-    SGRStandardColorBackgroundBright,
-    SGRStandardColorBackground,
-    SGRStandardColorForeground,
-    SGRStandardColorForegroundBright,
+    SGRAdvancedUnderline,
     SGRAttribute,
     SGRColorExtender,
-    SGRAdvancedUnderline,
-    SGRPosition,
     SGRColorMode,
+    SGRPosition,
+    SGRReset,
+    SGRStandardColorBackground,
+    SGRStandardColorBackgroundBright,
+    SGRStandardColorForeground,
+    SGRStandardColorForegroundBright,
 )
 from jarbin_toolkit_console.color import (
     Color,
+    Color256,
     ColorHEX,
     ColorRGB,
-    Color256,
 )
-from jarbin_toolkit_console.ansi.ansi import CSI
+from jarbin_toolkit_console.error import ConsoleJError
 
 
 class SGR(CSI):

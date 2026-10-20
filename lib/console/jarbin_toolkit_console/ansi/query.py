@@ -9,18 +9,18 @@
 
 
 import base64
+import os
 import re
 import select
 import sys
 import termios
 import time
 import tty
-import os
 from typing import final
 
-from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.ansi.ansi import CSI, DCS
 from jarbin_toolkit_console.ansi.osc.enums import OSCClipboardSelection
+from jarbin_toolkit_console.error import ConsoleJError
 
 
 @final
@@ -104,7 +104,7 @@ class Query:
         try:
             sys.stdout.write(str(sequence))
             sys.stdout.flush()
-        except (OSError, IOError):
+        except OSError:
             return None
 
         return cls._read(terminator)

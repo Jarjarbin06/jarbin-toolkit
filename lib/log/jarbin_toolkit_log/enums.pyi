@@ -1,10 +1,8 @@
 from enum import StrEnum
 from typing import (
-    final,
-    Optional,
     Self,
+    final,
 )
-
 
 @final
 class LogType(StrEnum):
@@ -30,7 +28,7 @@ class LogType(StrEnum):
 
     JAR_LOG: str
     LOG: str
-    name: str
+    name: str  # pyright: ignore[reportIncompatibleMethodOverride]
     datetime_format: str
 
 
@@ -38,7 +36,7 @@ class LogType(StrEnum):
     def _missing_(
             cls,
             value: object
-        ) -> Optional[Self]:
+        ) -> Self | None:
         ...
 
 
@@ -82,11 +80,15 @@ class LogLevel(StrEnum):
     def _missing_(
             cls,
             value: object
-        ) -> Optional[Self]:
+        ) -> Self | None:
         ...
 
 
+_log_level_max_len: int
+
+
 __all__: list[str] = [
-    'LogType',
     'LogLevel',
+    'LogType',
+    '_log_level_max_len',
 ]

@@ -11,11 +11,10 @@
 from typing import final
 
 from jarbin_toolkit_error import (
+    JErrorFileNotFound,
+    JErrorRuntime,
     JErrorType,
     JErrorValue,
-    JErrorRuntime,
-    JException,
-    #JErrorFileNotFound,
 )
 
 
@@ -56,7 +55,7 @@ class ConfigRuntimeJError(JErrorRuntime):
 
 
 @final
-class ConfigFileNotFoundJError(JException):
+class ConfigFileNotFoundJError(JErrorFileNotFound):
 
 
     def __init__(
@@ -68,8 +67,8 @@ class ConfigFileNotFoundJError(JException):
 
 
 __all__ = [
+    'ConfigFileNotFoundJError',
+    'ConfigRuntimeJError',
     'ConfigTypeJError',
     'ConfigValueJError',
-    'ConfigRuntimeJError',
-    'ConfigFileNotFoundJError',
 ]

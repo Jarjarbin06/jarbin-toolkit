@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jarbin-toolkit-log"
-version = "1.0.1.1"
+version = "1.0.1.2"
 description = "Log tool (Create / Log / Read / etc...)"
 authors = [
     { name = "Nathan Jarjarbin", email = "nathan.amaraggi@epitech.eu" }
@@ -40,4 +40,3 @@ local_scheme = "dirty-tag"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["jarbin_toolkit_log*"]
-

@@ -1,13 +1,11 @@
 from typing import final
 
 from jarbin_toolkit_error import (
+    JErrorFileNotFound,
+    JErrorRuntime,
     JErrorType,
     JErrorValue,
-    JErrorRuntime,
-    JException,
-    #JErrorFileNotFound,
 )
-
 
 @final
 class ConfigTypeJError(JErrorType):
@@ -29,14 +27,13 @@ class ConfigTypeJError(JErrorType):
             message : str
                 Message to be displayed when the error is raised
         """
-        ...
 
 
 @final
 class ConfigValueJError(JErrorValue):
     """
         Value error for Config
-        (JErrorType)
+        (JErrorValue)
     """
 
 
@@ -52,14 +49,13 @@ class ConfigValueJError(JErrorValue):
             message : str
                 Message to be displayed when the error is raised
         """
-        ...
 
 
 @final
 class ConfigRuntimeJError(JErrorRuntime):
     """
         Runtime error for Config
-        (JErrorType)
+        (JErrorRuntime)
     """
 
 
@@ -75,14 +71,13 @@ class ConfigRuntimeJError(JErrorRuntime):
             message : str
                 Message to be displayed when the error is raised
         """
-        ...
 
 
 @final
-class ConfigFileNotFoundJError(JException):
+class ConfigFileNotFoundJError(JErrorFileNotFound):
     """
         Fila not found error for Config
-        (JErrorType)
+        (JErrorFileNotFound)
     """
 
 
@@ -98,12 +93,11 @@ class ConfigFileNotFoundJError(JException):
             message : str
                 Message to be displayed when the error is raised
         """
-        ...
 
 
 __all__: list[str] = [
+    'ConfigFileNotFoundJError',
+    'ConfigRuntimeJError',
     'ConfigTypeJError',
     'ConfigValueJError',
-    'ConfigRuntimeJError',
-    'ConfigFileNotFoundJError',
 ]

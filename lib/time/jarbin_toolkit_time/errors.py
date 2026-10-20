@@ -54,7 +54,7 @@ class TimeStateJError(JException):
 
 
 __all__ = [
+    'TimeStateJError',
     'TimeTypeJError',
     'TimeValueJError',
-    'TimeStateJError',
 ]

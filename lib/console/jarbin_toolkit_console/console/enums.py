@@ -40,6 +40,6 @@ class ConsoleOutputMode(IntEnum):
 
 __all__ = [
     'ConsoleAlign',
-    'ConsoleOverflow',
     'ConsoleOutputMode',
+    'ConsoleOverflow',
 ]

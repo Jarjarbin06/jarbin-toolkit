@@ -8,8 +8,8 @@
 # ============================================================================
 
 
-from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.enums import PresetBorder
+from jarbin_toolkit_console.error import ConsoleJError
 
 
 class Border:
@@ -23,14 +23,14 @@ class Border:
         if not getattr(self, "_can_format", False):
             return self
 
-        return self.__class__("".join(map(str, border)))
+        return self.__class__("".join(map(str, border)))  # pyright: ignore[reportCallIssue]
 
 
     def _get_border_lines(
             self,
         ):
 
-        lines = self.splitlines()
+        lines = self.splitlines()  # pyright: ignore[reportAttributeAccessIssue]
 
         if not lines:
             return [""]

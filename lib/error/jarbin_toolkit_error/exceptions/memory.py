@@ -8,9 +8,9 @@
 # ============================================================================
 
 
-from jarbin_toolkit_error.exceptions.exceptions import JException
 from jarbin_toolkit_error.empty_field import EmptyField
 from jarbin_toolkit_error.enums import FormatType
+from jarbin_toolkit_error.exceptions.exceptions import JException
 
 
 class JErrorMemory(JException):
@@ -32,7 +32,7 @@ class JErrorMemory(JException):
         )
 
         if message is not EmptyField:
-            msg += f"\n\n  → {message}"
+            msg += f"\n  → {message}"
 
         super().__init__(
             msg,
@@ -61,7 +61,7 @@ class JErrorBuffer(JException):
         )
 
         if message is not EmptyField:
-            msg += f"\n\n  → {message}"
+            msg += f"\n  → {message}"
 
         super().__init__(
             msg,
@@ -72,6 +72,6 @@ class JErrorBuffer(JException):
 
 
 __all__ = [
-    'JErrorMemory',
     'JErrorBuffer',
+    'JErrorMemory',
 ]

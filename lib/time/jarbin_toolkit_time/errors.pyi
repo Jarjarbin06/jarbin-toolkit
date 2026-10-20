@@ -16,7 +16,6 @@ from jarbin_toolkit_error import (
     JException,
 )
 
-
 @final
 class TimeTypeJError(JErrorType):
     """
@@ -37,7 +36,6 @@ class TimeTypeJError(JErrorType):
             message : str
                 Message to be displayed when the error is raised
         """
-        ...
 
 
 @final
@@ -60,7 +58,6 @@ class TimeValueJError(JErrorValue):
             message : str
                 Message to be displayed when the error is raised
         """
-        ...
 
 
 @final
@@ -83,11 +80,10 @@ class TimeStateJError(JException):
             message : str
                 Message to be displayed when the error is raised
         """
-        ...
 
 
 __all__: list[str] = [
+    'TimeStateJError',
     'TimeTypeJError',
     'TimeValueJError',
-    'TimeStateJError',
 ]

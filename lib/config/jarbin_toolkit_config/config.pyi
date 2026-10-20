@@ -1,8 +1,7 @@
 from configparser import ConfigParser
 from os import PathLike
 from pathlib import Path
-from typing import Any, Optional
-
+from typing import Any
 
 class Config:
     """
@@ -31,7 +30,7 @@ class Config:
             directory: PathLike | str,
             name: str,
             *,
-            metadata: Optional[dict[str, Any]] = None,
+            metadata: dict[str, Any] | None = None,
             has_extension: bool = True,
             _token: object = None,
         ) -> None:
@@ -57,7 +56,6 @@ class Config:
             ConfigRuntimeJError
                 Config init used as is.
         """
-        ...
 
 
     def section_add(
@@ -77,7 +75,6 @@ class Config:
             ConfigValueJError
                 Section exists
         """
-        ...
 
 
     def section_remove(
@@ -97,7 +94,6 @@ class Config:
             ConfigValueJError
                 Section doesn't exist
         """
-        ...
 
 
     def section_rename(
@@ -122,7 +118,6 @@ class Config:
                 Old section doesn't exist
                 New section exists
         """
-        ...
 
 
     def set(
@@ -150,7 +145,6 @@ class Config:
             ConfigValueJError
                 Old section doesn't exist
         """
-        ...
 
 
     def set_batch(
@@ -165,7 +159,6 @@ class Config:
             data : dict[str, Any]
                 Data dictionary
         """
-        ...
 
 
     def option_remove(
@@ -189,7 +182,6 @@ class Config:
             ConfigValueJError
                 Section, option doesn't exist
         """
-        ...
 
 
     def section_exists(
@@ -209,7 +201,6 @@ class Config:
             bool
                 Section exists
         """
-        ...
 
 
     def option_exists(
@@ -219,7 +210,7 @@ class Config:
         ) -> bool:
         """
             Check is an option exists in the selected section
-        
+
             Parameters
             ----------
             section : str
@@ -233,7 +224,6 @@ class Config:
             bool
                 Option exists
         """
-        ...
 
 
     def get(
@@ -262,7 +252,6 @@ class Config:
             ConfigValueJError
                 Section, option doesn't exist
         """
-        ...
 
 
     def get_int(
@@ -292,7 +281,6 @@ class Config:
                 Section, option doesn't exist
                 Value is not an integer
         """
-        ...
 
 
     def get_float(
@@ -322,7 +310,6 @@ class Config:
                 Section, option doesn't exist
                 Value is not a floating point number
         """
-        ...
 
 
     def get_bool(
@@ -352,7 +339,6 @@ class Config:
                 Section, option doesn't exist
                 Value is not a boolean
         """
-        ...
 
 
     @classmethod
@@ -361,7 +347,7 @@ class Config:
             directory: PathLike | str,
             name: str,
             *,
-            metadata: Optional[dict[str, Any]] = None,
+            metadata: dict[str, Any] | None = None,
             has_extension: bool = True,
         ) -> Config:
         """
@@ -391,7 +377,6 @@ class Config:
             ConfigRuntimeJError
                 Creation failed
         """
-        ...
 
 
     @classmethod
@@ -426,7 +411,6 @@ class Config:
             ConfigFileNotFoundJError
                 File not found
         """
-        ...
 
 
     _CONSTRUCTOR_TOKEN: object

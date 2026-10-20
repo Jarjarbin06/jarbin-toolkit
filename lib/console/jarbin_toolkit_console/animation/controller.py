@@ -10,9 +10,9 @@
 
 from jarbin_toolkit_time import Time
 
-from jarbin_toolkit_console.error import ConsoleJError
 from jarbin_toolkit_console.animation.animation import Animation
 from jarbin_toolkit_console.animation.enums import AnimationState
+from jarbin_toolkit_console.error import ConsoleJError
 
 
 class AnimationController:
@@ -94,7 +94,7 @@ class AnimationController:
         if self._started_at is None:
             return self._elapsed
 
-        return self._elapsed + (
+        return self._elapsed + (  # pyright: ignore[reportOperatorIssue]
             self._clock() - self._started_at
         )
 
@@ -117,7 +117,7 @@ class AnimationController:
         if not self.running:
             return
 
-        self._elapsed += self._clock() - self._started_at
+        self._elapsed += self._clock() - self._started_at  # pyright: ignore[reportOperatorIssue]
         self._started_at = None
         self._state = AnimationState.PAUSED
 
@@ -138,7 +138,7 @@ class AnimationController:
         ):
 
         if self.running:
-            self._elapsed += self._clock() - self._started_at
+            self._elapsed += self._clock() - self._started_at  # pyright: ignore[reportOperatorIssue]
 
         self._started_at = None
         self._state = AnimationState.STOPPED
@@ -163,7 +163,7 @@ class AnimationController:
 
         if elapsed is None:
             now = self._clock()
-            elapsed = now - self._started_at
+            elapsed = now - self._started_at  # pyright: ignore[reportOperatorIssue]
             self._started_at = now
 
         if elapsed < 0:
